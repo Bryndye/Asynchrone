@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ManagerPlayers : MonoBehaviour
+public class ManagerPlayers : Singleton<ManagerPlayers>
 {
     [Header("Managers")]
     [SerializeField] Transform Player1;
     [SerializeField] Transform Player2;
 
-    [SerializeField] CameraSmooth cSmooth;
+    CameraSmooth cSmooth;
 
     [SerializeField] bool onPlayer1;
 
@@ -19,9 +19,11 @@ public class ManagerPlayers : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != this)
+            Destroy(this);
+
+        cSmooth = CameraSmooth.Instance;
         CameraManager();
-        Player1.GetComponent<PlayerController>().mP = this;
-        Player2.GetComponent<PlayerController>().mP = this;
     }
 
     private void Update()
@@ -42,8 +44,6 @@ public class ManagerPlayers : MonoBehaviour
                 QuelPlayer.text = Player1.name;
 
             cSmooth.Target = Player1;
-            Player1.GetComponent<PlayerController>().CanPlay = true;
-            Player2.GetComponent<PlayerController>().CanPlay = false;
         }
         else
         {
@@ -51,10 +51,14 @@ public class ManagerPlayers : MonoBehaviour
                 QuelPlayer.text = Player2.name;
 
             cSmooth.Target = Player2;
-            Player1.GetComponent<PlayerController>().CanPlay = false;
-            Player2.GetComponent<PlayerController>().CanPlay = true;
         }
+
+        Player1.GetComponent<PlayerController>().CanPlay = onPlayer1;
+        Player2.GetComponent<PlayerController>().CanPlay = !onPlayer1;
     }
 
-
+    public void RobotBackToHuman()
+    {
+        Player2.GetComponent<PlayerController>().nav.SetDestination(Player1.position);
+    }
 }

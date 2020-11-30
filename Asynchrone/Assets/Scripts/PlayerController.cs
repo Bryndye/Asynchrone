@@ -5,11 +5,12 @@ using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
-    NavMeshAgent nav;
-    public ManagerPlayers mP;
+    [HideInInspector] public NavMeshAgent nav;
+    ManagerPlayers mP;
     public bool CanPlay;
     private void Awake()
     {
+        mP = ManagerPlayers.Instance;
         nav = GetComponent<NavMeshAgent>();
     }
 
@@ -29,7 +30,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     private void OnClickMouse()
     {
         RaycastHit hit;
@@ -37,7 +37,6 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            //Instantiate(test, hit.point, Quaternion.identity);
             nav.SetDestination(hit.point);
         }
     }

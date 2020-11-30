@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraSmooth : MonoBehaviour
+public class CameraSmooth : Singleton<CameraSmooth>
 {
     public Transform Target;
 
@@ -15,5 +15,11 @@ public class CameraSmooth : MonoBehaviour
             Vector3 smooth = new Vector3(Target.position.x, 1, Target.position.z) - transform.position;
             transform.position += smooth / 20;
         }
+    }
+
+    private void Awake()
+    {
+        if (Instance != this)
+            Destroy(this);
     }
 }
