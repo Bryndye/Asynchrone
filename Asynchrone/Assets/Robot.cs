@@ -6,24 +6,41 @@ using UnityEngine.AI;
 public class Robot : MonoBehaviour
 {
     NavMeshAgent nav;
+    ManagerPlayers mP;
 
     public bool BackToHuman;
 
     private void Awake()
     {
         nav = GetComponent<NavMeshAgent>();
+        mP = ManagerPlayers.Instance;
     }
 
     void Update()
     {
-        
+        Linked();
     }
 
     public void Linked()
     {
-        if (true)
+        if (BackToHuman)
         {
+            nav.SetDestination(mP.Player1.position);
 
+            if (Vector3.Distance(mP.Player1.position, transform.position) < 1.1f)
+            {
+                BackToHuman = false;
+                mP.Hm.RobotIntoMe(true);
+                if (!mP.onPlayer1)
+                {
+                    mP.CameraManager();
+                }
+            }
         }
+    }
+
+    public void CancelBack()
+    {
+        nav.SetDestination(transform.position);
     }
 }
