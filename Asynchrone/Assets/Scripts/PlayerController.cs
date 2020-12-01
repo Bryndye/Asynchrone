@@ -8,10 +8,15 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public NavMeshAgent nav;
     ManagerPlayers mP;
     public bool CanPlay;
+
+    Vector3 finalDestination;
+
     private void Awake()
     {
         mP = ManagerPlayers.Instance;
         nav = GetComponent<NavMeshAgent>();
+
+        finalDestination = transform.position;
     }
 
     void Update()
@@ -20,6 +25,7 @@ public class PlayerController : MonoBehaviour
         {
             InputManager();
         }
+        WalkAnim();
     }
     
     private void InputManager()
@@ -38,6 +44,23 @@ public class PlayerController : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             nav.SetDestination(hit.point);
+            finalDestination = hit.point;
+        }
+    }
+
+    private void WalkAnim()
+    {
+        if (finalDestination != null)
+        {
+            if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(finalDestination.x, finalDestination.z)) > 1.1f)
+            {
+                //Debug.Log("je marche " + transform.name);
+            }
+            else
+            {
+                //Debug.Log("idle " + transform.name);
+            }
+            //Debug.Log(Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(finalDestination.x, finalDestination.z)) + " " + transform.name);
         }
     }
 }
