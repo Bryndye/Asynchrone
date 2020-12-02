@@ -7,6 +7,8 @@ public class Human : MonoBehaviour
 {
     ManagerPlayers mP;
     NavMeshAgent nav;
+    CapsuleCollider cc;
+    float size;
 
     float speed;
 
@@ -31,19 +33,35 @@ public class Human : MonoBehaviour
         mP = ManagerPlayers.Instance;
         nav = GetComponent<NavMeshAgent>();
         speed = nav.speed;
+        cc = GetComponent<CapsuleCollider>();
+        size = cc.height;
     }
 
     private void Update()
     {
-        if (Input.GetAxisRaw("Accroupir") > 0)
+        if (mP.onPlayer1)
         {
-            nav.height = 1;
-            nav.speed = speed / 2;
+            InputManager();
         }
-        else
+    }
+
+    private void InputManager()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftControl))
         {
-            nav.height = 2;
-            nav.speed = speed;
+            Accroupi(1,2,2,-0.5f);
         }
+        if (Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            Accroupi(2, 1, 1, 0);
+        }
+    }
+
+    private void Accroupi(int h, int sp, int si, float center)
+    {
+        nav.height = h;
+        nav.speed = speed / sp;
+        cc.height = size / si;
+        cc.center = new Vector3(cc.center.x, center, cc.center.z);
     }
 }
