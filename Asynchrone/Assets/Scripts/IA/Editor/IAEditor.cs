@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 
 [CustomEditor(typeof(anAI))]
-public class IA_FOVEditor : Editor
+public class IAEditor : Editor
 {
     private void OnSceneGUI()
     {
@@ -18,5 +18,25 @@ public class IA_FOVEditor : Editor
         Handles.DrawLine(myAI.transform.position, myAI.transform.position + ViewAngleB * myAI.ViewRadius);
 
         Handles.color = Color.red;
+    }
+
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector();
+
+        anAI myAI = (anAI)target;
+
+        if (GUILayout.Button("Add current position to patrol"))
+        {
+            myAI.AddPatrolPoint();
+        }
+        if (GUILayout.Button("Go to base position"))
+        {
+            myAI.ResetPositionToFirstPatrolPoint();
+        }
+        if (GUILayout.Button("Supprimer la patrouille"))
+        {
+            myAI.ResetPath();
+        }
     }
 }

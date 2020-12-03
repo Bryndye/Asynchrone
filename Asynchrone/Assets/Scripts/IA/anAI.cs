@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+public enum myBehaviour { Guard, Patrol };
+
 public class anAI : MonoBehaviour
 {
     [Header("Composants")]
     NavMeshAgent myNavMeshAgent;
-
-    [Header("TEST: Cible Manuelle")]
-    public Transform Target;
 
     [Header("Champ de vision")]
     public float ViewRadius;
@@ -18,7 +17,7 @@ public class anAI : MonoBehaviour
     [Space]
     public LayerMask CiblesMask;
     public LayerMask ObstacleMask;
-
+    [Space]
     public float MeshResolution;
     public int edgeResolveIterations;
     public float edgeDstThrehsold;
@@ -26,12 +25,17 @@ public class anAI : MonoBehaviour
     MeshFilter viewMeshFilter;
     Mesh viewMesh;
 
+    [Header("Comportement")]
+    public myBehaviour Comportement;
+    public List<Vector3> EtapesPatrouille;
+    int StepPatrolIndex;
+    public float Latence_InterEtapes;
+
     // Start is called before the first frame update
     void Awake()
     {
         viewMeshFilter = transform.GetChild(0).GetComponent<MeshFilter>();
         myNavMeshAgent = GetComponent<NavMeshAgent>();
-        myNavMeshAgent.SetDestination(Target.position);
     }
 
     private void Start()
@@ -39,11 +43,19 @@ public class anAI : MonoBehaviour
         viewMesh = new Mesh();
         viewMesh.name = "View Mesh";
         viewMeshFilter.mesh = viewMesh;
+
+        if(Comportement == myBehaviour.Patrol)
+            NextPatrolStep();
     }
 
     private void Update()
     {
-        FindVisibleTargets();      
+        FindVisibleTargets();
+        if(Comportement == myBehaviour.Patrol)
+        {
+            PatrolRoutine();
+        }
+       
     }
 
     private void LateUpdate()
@@ -134,6 +146,7 @@ public class anAI : MonoBehaviour
         }
 
         viewMesh.Clear();
+
         viewMesh.vertices = verticles;
         viewMesh.triangles = triangles;
         viewMesh.RecalculateNormals();
@@ -155,7 +168,7 @@ public class anAI : MonoBehaviour
 
         for (int i = 0; i < edgeResolveIterations; i++)
         {
-            float angle = (minAngle + maxAngle / 2);
+            float angle = (minAngle + maxAngle) / 2;
             ViewCastInfo newViewCast = viewCast(angle);
 
             bool edgeDstThresholdExceeded = Mathf.Abs(minViewCast.dst - newViewCast.dst) > edgeDstThrehsold;
@@ -203,4 +216,83 @@ public class anAI : MonoBehaviour
     }
 
     #endregion
+
+    #region Patrouille
+
+    #region Editor
+
+    public void AddPatrolPoint()
+    {
+        EtapesPatrouille.Add(transform.position);
+    }
+
+    public void ResetPositionToFirstPatrolPoint()
+    {
+        if(EtapesPatrouille.Count > 0)
+        {
+            transform.position = EtapesPatrouille[0];
+        }
+    }
+
+    public void ResetPath()
+    {
+        EtapesPatrouille.Clear();
+    }
+
+    #endregion
+
+    void NextPatrolStep()
+    {
+        StepPatrolIndex += 1;
+        if(StepPatrolIndex >= EtapesPatrouille.Count)
+        {
+            StepPatrolIndex = 0;
+        }
+
+        myNavMeshAgent.SetDestination(EtapesPatrouille[StepPatrolIndex]);
+    }
+
+    void PatrolRoutine()
+    {
+        if(myNavMeshAgent.remainingDistance < 0.1f)
+        {
+            NextPatrolStep();
+        }
+    }
+
+    #endregion
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+
+        if (myNavMeshAgent == null)
+            myNavMeshAgent = GetComponent<NavMeshAgent>();
+
+        for (int i = 0; i < EtapesPatrouille.Count; i++)
+        {
+            Vector3 BasePosition = EtapesPatrouille[i];
+            Vector3 TargetPosition = Vector3.zero;
+
+            if (i + 1 < EtapesPatrouille.Count)
+                TargetPosition = EtapesPatrouille[i + 1];
+            else
+                TargetPosition = EtapesPatrouille[0];
+
+            NavMeshPath myNavMeshPath = new NavMeshPath();
+            NavMesh.CalculatePath(BasePosition, TargetPosition, NavMesh.AllAreas, myNavMeshPath);
+
+            if(myNavMeshPath.corners.Length < 2)
+            {
+                Gizmos.DrawLine(BasePosition, TargetPosition);
+            }
+            else
+            {
+                for (int a = 0; a + 1 < myNavMeshPath.corners.Length; a++)
+                {
+                    Gizmos.DrawLine(myNavMeshPath.corners[a], myNavMeshPath.corners[a + 1]);
+                }
+            }
+        }
+    }
 }
