@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
                 targetInteraction = null;
             }
         }
-        Debug.Log(targetInteraction);
+        //Debug.Log(targetInteraction);
 
     }
 

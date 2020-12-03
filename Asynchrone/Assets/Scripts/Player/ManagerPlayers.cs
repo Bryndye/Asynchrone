@@ -80,6 +80,8 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
         }
     }
 
+    #region Huamn fct
+
     public void RobotBackToHuman()
     {
         Rbt.BackToHuman = !Rbt.BackToHuman;
@@ -88,4 +90,5 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
             Rbt.CancelBack();
         }
     }
+    #endregion
 }
