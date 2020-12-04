@@ -14,6 +14,8 @@ public class Robot : MonoBehaviour
     {
         nav = GetComponent<NavMeshAgent>();
         mP = ManagerPlayers.Instance;
+        mP.Rbt = this;
+        mP.Player2 = transform;
     }
 
     void Update()

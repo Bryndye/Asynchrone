@@ -32,9 +32,7 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
 
         cSmooth = CameraSmooth.Instance;
         pc1 = Player1.GetComponent<PlayerController>();
-        Hm = Player1.GetComponent<Human>();
         pc2 = Player2.GetComponent<PlayerController>();
-        Rbt = Player2.GetComponent<Robot>();
         CameraManager();
     }
 

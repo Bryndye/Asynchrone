@@ -44,6 +44,9 @@ public class Human : MonoBehaviour
     private void Awake()
     {
         mP = ManagerPlayers.Instance;
+        mP.Hm = this;
+        mP.Player1 = transform;
+
         nav = GetComponent<NavMeshAgent>();
         speed = nav.speed;
         cc = GetComponent<CapsuleCollider>();
