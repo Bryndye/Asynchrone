@@ -30,7 +30,7 @@ public class Robot : MonoBehaviour
     {
         nav.SetDestination(mP.Player1.position);
 
-        if (Vector3.Distance(mP.Player1.position, transform.position) < 1.1f)
+        if (Vector2.Distance(new Vector2(mP.Player1.position.x, mP.Player1.position.z), new Vector2(transform.position.x, transform.position.z)) < 1)
         {
             BackToHuman = false;
             mP.Hm.RobotIntoMe(true);

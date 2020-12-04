@@ -58,17 +58,17 @@ public class Human : MonoBehaviour
         if (mP.onPlayer1)
         {
             InputManager();
-            GestionDiv();
         }
+        GestionDiv();
     }
 
     private void InputManager()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             Accroupi(1,2,2,-0.5f, true);
         }
-        if (Input.GetKeyUp(KeyCode.LeftControl))
+        if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             Accroupi(2, 1, 1, 0, false);
         }
@@ -144,6 +144,10 @@ public class Human : MonoBehaviour
         if (canDiv)
         {
             CreateDiversion();
+        }
+        if (!mP.onPlayer1)
+        {
+            canDiv = false;
         }
         range.SetActive(canDiv);
         //bt_destroy.interactable = robot_div != null;

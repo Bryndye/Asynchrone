@@ -42,11 +42,11 @@ public class PlayerController : MonoBehaviour
         {
             OnClickMouseR();
         }
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKey(KeyCode.Mouse0))
         {
             OnClickMouseL();
         }
-        if (Input.GetKeyDown(KeyCode.Mouse1) && mP.Rbt.BackToHuman)
+        if (Input.GetKeyDown(KeyCode.Mouse1) && mP.Rbt.BackToHuman && !mP.onPlayer1)
         {
             mP.Rbt.BackToHuman = false;
             OnClickMouseR();
@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
     {
         if (targetInteraction != null)
         {
-            if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(targetInteraction.position.x, targetInteraction.position.z)) < 1.1f)
+            if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(targetInteraction.position.x, targetInteraction.position.z)) < 1)
             {
                 Interaction iem = targetInteraction.GetComponent<Interaction>();
                 if (iem != null)
