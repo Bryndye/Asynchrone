@@ -18,23 +18,23 @@ public class Robot : MonoBehaviour
 
     void Update()
     {
-        Linked();
+        if (BackToHuman)
+        {
+            Linked();
+        }
     }
 
     public void Linked()
     {
-        if (BackToHuman)
-        {
-            nav.SetDestination(mP.Player1.position);
+        nav.SetDestination(mP.Player1.position);
 
-            if (Vector3.Distance(mP.Player1.position, transform.position) < 1.1f)
+        if (Vector3.Distance(mP.Player1.position, transform.position) < 1.1f)
+        {
+            BackToHuman = false;
+            mP.Hm.RobotIntoMe(true);
+            if (!mP.onPlayer1)
             {
-                BackToHuman = false;
-                mP.Hm.RobotIntoMe(true);
-                if (!mP.onPlayer1)
-                {
-                    mP.CameraManager();
-                }
+                mP.CameraManager();
             }
         }
     }

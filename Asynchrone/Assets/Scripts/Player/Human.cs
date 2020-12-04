@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Human : MonoBehaviour
 {
+    #region var
     ManagerPlayers mP;
     NavMeshAgent nav;
     CapsuleCollider cc;
-    float size;
+    [SerializeField] GameObject meshPrincipal;
 
+    float size;
     float speed;
 
     [SerializeField] GameObject robotBeLike;
@@ -19,6 +22,12 @@ public class Human : MonoBehaviour
     [SerializeField] GameObject range;
     [SerializeField] LayerMask ignoreWall;
     [SerializeField] float rangeDis;
+    [HideInInspector] public bool canDiv;
+    [SerializeField] GameObject acrroupiMesh;
+    [HideInInspector] public GameObject robot_div;
+
+    #endregion
+
     public void RobotIntoMe(bool intoMoi)
     {
         intoMe = intoMoi;
@@ -46,56 +55,68 @@ public class Human : MonoBehaviour
         if (mP.onPlayer1)
         {
             InputManager();
-            CreateDiversion();
+            GestionDiv();
         }
-        range.transform.localScale = new Vector3(rangeDis * 10, rangeDis * 10, 1);
     }
 
     private void InputManager()
     {
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
-            Accroupi(1,2,2,-0.5f);
+            Accroupi(1,2,2,-0.5f, true);
         }
         if (Input.GetKeyUp(KeyCode.LeftControl))
         {
-            Accroupi(2, 1, 1, 0);
+            Accroupi(2, 1, 1, 0, false);
         }
-
+        if (Input.GetKeyDown(KeyCode.Z) && robot_div == null)
+        {
+            canDiv = !canDiv;
+        }
+        if (Input.GetKeyDown(KeyCode.Z) && robot_div != null)
+        {
+            Destroy(robot_div);
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            mP.RobotBackToHuman();
+        }
     }
 
-    private void Accroupi(int h, int sp, int si, float center)
+    private void Accroupi(int h, int sp, int si, float center, bool acr)
     {
+        acrroupiMesh.SetActive(acr);
+        meshPrincipal.SetActive(!acr);
+
         nav.height = h;
         nav.speed = speed / sp;
         cc.height = size / si;
         cc.center = new Vector3(cc.center.x, center, cc.center.z);
     }
 
-    //le sprite 5x, 5y pour faire 1.u
+
+    #region Diversion
+    //le sprite 1x, 1y pour faire 2.5u
     public void CreateDiversion()
     {
-        if (Input.GetAxisRaw("Diversion") > 0)
+        range.transform.localScale = new Vector3(rangeDis / 2.5f, rangeDis / 2.5f, 1);
+
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out hit) && Input.GetKeyDown(KeyCode.Mouse0))
         {
-            range.SetActive(true);
-
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out hit) && Input.GetKeyDown(KeyCode.Mouse0))
+            if (hit.collider.gameObject.layer != 10)
             {
                 Vector3 point = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-                Vector3 dir = (transform.position - hit.point).normalized;
+                Vector3 dir = (transform.position - point).normalized;
 
-                if (CheckWall(dir, hit.point))
+                if (CheckWall(dir, point))
                 {
-                   GameObject holo = Instantiate(Resources.Load<GameObject>("Player/Fake_Robot"), hit.point, Quaternion.identity);
+                    robot_div = Instantiate(Resources.Load<GameObject>("Player/Fake_Robot"), hit.point, Quaternion.identity);
+                    canDiv = false;
                 }
             }
-        }
-        else
-        {
-            range.SetActive(false);
         }
     }
 
@@ -105,7 +126,7 @@ public class Human : MonoBehaviour
 
         if (Physics.Raycast(point, dir, out it, rangeDis))
         {
-            Debug.Log(it.collider.name + "  " + it.collider.gameObject.layer);
+            //Debug.Log(it.collider.name + "  " + it.collider.gameObject.layer);
 
             if (it.collider.gameObject.layer == 9 || it.collider.gameObject.layer == 8)
             {         
@@ -114,4 +135,16 @@ public class Human : MonoBehaviour
         }
         return false;
     }
+
+    private void GestionDiv()
+    {
+        if (canDiv)
+        {
+            CreateDiversion();
+        }
+        range.SetActive(canDiv);
+        //bt_destroy.interactable = robot_div != null;
+    }
+
+    #endregion
 }

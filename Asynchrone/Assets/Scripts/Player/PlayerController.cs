@@ -46,6 +46,11 @@ public class PlayerController : MonoBehaviour
         {
             OnClickMouseL();
         }
+        if (Input.GetKeyDown(KeyCode.Mouse1) && mP.Rbt.BackToHuman)
+        {
+            mP.Rbt.BackToHuman = false;
+            OnClickMouseR();
+        }
     }
 
     #region Interaction element decor
