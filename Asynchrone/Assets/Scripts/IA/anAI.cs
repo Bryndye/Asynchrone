@@ -1,23 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
 public enum myBehaviour { Guard, Patrol };
+public enum Situation { None, PatrolMove, PatrolWait, Interrogation, Pursuit };
 
 public class anAI : MonoBehaviour
 {
     [Header("Composants")]
     NavMeshAgent myNavMeshAgent;
 
-    [Header("Champ de vision")]
+    [Header("Champ de vision"), HideInInspector]
+    public List<Transform> Vus;
+    float TempsInterrogation;
+    [Tooltip("Temps d'attente avant de commencer à poursuivre alors que l'IA a un joueur en vue")]
+    public float LatenceInterrogation;
+    [Space, Tooltip("Distance du champs de vision")]
     public float ViewRadius;
-    [Range(0,360)]
+    [Range(0,360), Tooltip("Angle du champs de vision en degrés")]
     public float ViewAngle;
-    [Space]
+    [Space, Tooltip("Englobe les layers considérées comme des cibles à voir et poursuivre")]
     public LayerMask CiblesMask;
+    [Tooltip("Englobe les layers considérées comme des obstacles à la vision")]
     public LayerMask ObstacleMask;
-    [Space]
+    [Space, Tooltip("Résolution du cône de vision. Plus elle est grande, plus le cône sera précis mais coûteux en ressources")]
     public float MeshResolution;
     public int edgeResolveIterations;
     public float edgeDstThrehsold;
@@ -27,9 +35,13 @@ public class anAI : MonoBehaviour
 
     [Header("Comportement")]
     public myBehaviour Comportement;
+    public Situation mySituation;
+
+    [Header("Patrouille")]
     public List<Vector3> EtapesPatrouille;
     int StepPatrolIndex;
     public float Latence_InterEtapes;
+    float Temps_InterEtapes;
 
     // Start is called before the first frame update
     void Awake()
@@ -50,10 +62,29 @@ public class anAI : MonoBehaviour
 
     private void Update()
     {
+        Vus.Clear();
         FindVisibleTargets();
         if(Comportement == myBehaviour.Patrol)
         {
             PatrolRoutine();
+        }
+        if (mySituation != Situation.Interrogation)
+        {
+            if (Vus.Count > 0)
+                StopPatrol();
+        }
+        else
+        {
+            if (Vus.Count > 0)
+            {
+                LookTo();
+                InInterrogation();
+            }
+            else
+            {
+                if(Comportement == myBehaviour.Patrol)
+                    NextPatrolStep();
+            }
         }
        
     }
@@ -80,10 +111,12 @@ public class anAI : MonoBehaviour
 
                 if(!Physics.Raycast(transform.position, dirToTarget, dstToTarget, ObstacleMask))
                 {
-
+                    Vus.Add(theTarget);
                 }
             }
         }
+
+        Vus = Vus.OrderBy(w => Vector3.Distance(w.position, transform.position)).ToList();
     }
 
     ViewCastInfo viewCast(float globalAngle)
@@ -215,6 +248,16 @@ public class anAI : MonoBehaviour
         }
     }
 
+    //
+
+    void LookTo()
+    {
+        Transform target = Vus[0];
+        Quaternion targetRotation = Quaternion.LookRotation(target.position - transform.position);
+
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
+    }
+
     #endregion
 
     #region Patrouille
@@ -243,6 +286,9 @@ public class anAI : MonoBehaviour
 
     void NextPatrolStep()
     {
+        if (myNavMeshAgent.isStopped)
+            myNavMeshAgent.isStopped = false;
+
         StepPatrolIndex += 1;
         if(StepPatrolIndex >= EtapesPatrouille.Count)
         {
@@ -250,13 +296,46 @@ public class anAI : MonoBehaviour
         }
 
         myNavMeshAgent.SetDestination(EtapesPatrouille[StepPatrolIndex]);
+        mySituation = Situation.PatrolMove;
     }
 
     void PatrolRoutine()
     {
-        if(myNavMeshAgent.remainingDistance < 0.1f)
+        if( mySituation == Situation.PatrolMove && myNavMeshAgent.remainingDistance < 0.1f)
         {
-            NextPatrolStep();
+            mySituation = Situation.PatrolWait;
+        }
+        else if(mySituation == Situation.PatrolWait)
+        {
+            Temps_InterEtapes += Time.deltaTime;
+            if(Temps_InterEtapes >= Latence_InterEtapes)
+            {
+                Temps_InterEtapes = 0;
+                NextPatrolStep();
+            }
+        }
+    }
+
+    void StopPatrol()
+    {
+        myNavMeshAgent.isStopped = true;
+        mySituation = Situation.Interrogation;
+
+        StepPatrolIndex -= 1;
+        if (StepPatrolIndex < 0)
+            StepPatrolIndex = EtapesPatrouille.Count - 1;
+    }
+
+    #endregion
+
+    #region Interrogation
+
+    void InInterrogation()
+    {
+        TempsInterrogation += Time.deltaTime;
+        if(TempsInterrogation >= LatenceInterrogation)
+        {
+            Debug.Log("Assez vu");
         }
     }
 
