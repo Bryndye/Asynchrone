@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public enum myBehaviour { Guard, Patrol };
-public enum Situation { None, PatrolMove, PatrolWait, Interrogation, Pursuit };
+public enum Situation { None, PatrolMove, PatrolWait, Interrogation, Pursuit, Dead };
 
 public class anAI : MonoBehaviour
 {
@@ -68,12 +68,12 @@ public class anAI : MonoBehaviour
         {
             PatrolRoutine();
         }
-        if (mySituation != Situation.Interrogation)
+        if (mySituation != Situation.Interrogation && mySituation != Situation.Pursuit)
         {
             if (Vus.Count > 0)
                 StopPatrol();
         }
-        else
+        else if(mySituation == Situation.Interrogation)
         {
             if (Vus.Count > 0)
             {
@@ -82,9 +82,19 @@ public class anAI : MonoBehaviour
             }
             else
             {
-                if(Comportement == myBehaviour.Patrol)
-                    NextPatrolStep();
+                TempsInterrogation -= Time.deltaTime;
+                if(TempsInterrogation <= 0)
+                {
+                    TempsInterrogation = Mathf.Clamp(TempsInterrogation, 0f, LatenceInterrogation);
+
+                    if (Comportement == myBehaviour.Patrol)
+                        NextPatrolStep();
+                }
             }
+        }
+        else if(mySituation == Situation.Pursuit)
+        {
+            Pursuit();
         }
        
     }
@@ -335,11 +345,48 @@ public class anAI : MonoBehaviour
         TempsInterrogation += Time.deltaTime;
         if(TempsInterrogation >= LatenceInterrogation)
         {
-            Debug.Log("Assez vu");
+            TempsInterrogation = Mathf.Clamp(TempsInterrogation, 0f, LatenceInterrogation);
+            StartPursuit();
         }
     }
 
     #endregion
+
+    #region Pursuit
+
+    void StartPursuit()
+    {
+        mySituation = Situation.Pursuit;
+        myNavMeshAgent.isStopped = false;
+        myNavMeshAgent.speed = 3.5f;
+        myNavMeshAgent.destination = Vus[0].position;
+    }
+
+    void Pursuit()
+    {
+        if(Vus.Count > 0)
+        {
+            myNavMeshAgent.SetDestination(Vus[0].position);
+        }
+        else
+        {
+            StopPursuit();
+        }
+    }
+
+    void StopPursuit()
+    {
+        mySituation = Situation.Interrogation;
+        myNavMeshAgent.isStopped = true;
+        myNavMeshAgent.speed = 1f;
+    }
+
+    #endregion
+
+    void Death()
+    {
+        Destroy(gameObject);
+    }
 
     private void OnDrawGizmosSelected()
     {
