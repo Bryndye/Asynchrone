@@ -373,6 +373,11 @@ public class anAI : MonoBehaviour
         if(Vus.Count > 0)
         {
             myNavMeshAgent.SetDestination(Vus[0].position);
+            Vector3 ScaledPosition = new Vector3(Vus[0].position.x, transform.position.y, Vus[0].position.z);
+            if(Vus[0].gameObject.name == "Fake_Robot(Clone)" && Vector3.Distance(ScaledPosition, transform.position) < 1.5f)
+            {
+                Destroy(Vus[0].gameObject);
+            }
         }
         else
         {

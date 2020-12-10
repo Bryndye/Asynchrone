@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class Human : MonoBehaviour
+public class Human : Singleton<Human>
 {
     #region var
     ManagerPlayers mP;
@@ -43,6 +43,9 @@ public class Human : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != this)
+            Destroy(this);
+
         mP = ManagerPlayers.Instance;
         mP.Hm = this;
         mP.Player1 = transform;
