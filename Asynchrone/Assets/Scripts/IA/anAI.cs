@@ -14,7 +14,8 @@ public class anAI : MonoBehaviour
 
     [Header("Champ de vision"), HideInInspector]
     public List<Transform> Vus;
-    float TempsInterrogation;
+    [HideInInspector]
+    public  float TempsInterrogation;
     [Tooltip("Temps d'attente avant de commencer à poursuivre alors que l'IA a un joueur en vue")]
     public float LatenceInterrogation;
     [Space, Tooltip("Distance du champs de vision")]
@@ -36,11 +37,13 @@ public class anAI : MonoBehaviour
     [Header("Comportement")]
     public myBehaviour Comportement;
     public Situation mySituation;
+    GameObject myUI;
 
     [Header("Patrouille")]
     public List<Vector3> EtapesPatrouille;
     int StepPatrolIndex;
     public float Latence_InterEtapes;
+    [HideInInspector]
     float Temps_InterEtapes;
 
     // Start is called before the first frame update
@@ -58,6 +61,9 @@ public class anAI : MonoBehaviour
 
         if(Comportement == myBehaviour.Patrol)
             NextPatrolStep();
+
+        myUI = Instantiate(Resources.Load<GameObject>("UI/aFollowingState"));
+        myUI.GetComponent<AIStateUI>().Declaration(this);
     }
 
     private void Update()
@@ -385,6 +391,7 @@ public class anAI : MonoBehaviour
 
     void Death()
     {
+        Destroy(myUI.gameObject);
         Destroy(gameObject);
     }
 
