@@ -17,6 +17,7 @@ public class Human : Singleton<Human>
 
     [SerializeField] GameObject robotBeLike;
     public bool intoMe;
+    public bool isAccroupi;
 
     [Header("Diversion")]
     [SerializeField] GameObject range;
@@ -91,6 +92,7 @@ public class Human : Singleton<Human>
 
     private void Accroupi(int h, int sp, int si, float center, bool acr)
     {
+        isAccroupi = acr;
         acrroupiMesh.SetActive(acr);
         meshPrincipal.SetActive(!acr);
 

@@ -26,13 +26,18 @@ public class anAI : MonoBehaviour
     public LayerMask CiblesMask;
     [Tooltip("Englobe les layers considérées comme des obstacles à la vision")]
     public LayerMask ObstacleMask;
+    public LayerMask ObstackeMaskWithoutWall;
+    public LayerMask ObstacleMaskWithoutLowWall;
     [Space, Tooltip("Résolution du cône de vision. Plus elle est grande, plus le cône sera précis mais coûteux en ressources")]
     public float MeshResolution;
     public int edgeResolveIterations;
     public float edgeDstThrehsold;
 
+    [Header("Meshs")]
     MeshFilter viewMeshFilter;
     Mesh viewMesh;
+    MeshFilter viewMeshFilter2;
+    Mesh viewMesh2;
 
     [Header("Comportement")]
     public myBehaviour Comportement;
@@ -46,10 +51,14 @@ public class anAI : MonoBehaviour
     [HideInInspector]
     float Temps_InterEtapes;
 
+    [Header("Effets visuels")]
+    float ShownAngle;
+
     // Start is called before the first frame update
     void Awake()
     {
         viewMeshFilter = transform.GetChild(0).GetComponent<MeshFilter>();
+        viewMeshFilter2 = transform.GetChild(1).GetComponent<MeshFilter>();
         myNavMeshAgent = GetComponent<NavMeshAgent>();
     }
 
@@ -59,11 +68,17 @@ public class anAI : MonoBehaviour
         viewMesh.name = "View Mesh";
         viewMeshFilter.mesh = viewMesh;
 
+        viewMesh2 = new Mesh();
+        viewMesh.name = "View Mesh 2";
+        viewMeshFilter2.mesh = viewMesh2;
+
         if(Comportement == myBehaviour.Patrol)
             NextPatrolStep();
 
         myUI = Instantiate(Resources.Load<GameObject>("UI/aFollowingState"));
         myUI.GetComponent<AIStateUI>().Declaration(this);
+
+        ShownAngle = ViewAngle;
     }
 
     private void Update()
@@ -112,6 +127,28 @@ public class anAI : MonoBehaviour
 
     #region Vision
 
+    float DeterminedAngle()
+    {
+        if (mySituation == Situation.Pursuit)
+        {
+            if(ShownAngle < 360)
+            {
+                ShownAngle += Time.deltaTime * 0.1f;
+                ShownAngle = Mathf.Clamp(ShownAngle, ViewAngle, 360f);
+            }
+        }
+        else
+        {
+            if (ShownAngle > 0)
+            {
+                ShownAngle -= Time.deltaTime * 0.1f;
+                ShownAngle = Mathf.Clamp(ShownAngle, ViewAngle, 360f);
+            }
+        }
+
+        return ShownAngle;
+    }
+
     void FindVisibleTargets()
     {
         Collider[] targetInViewRadius = Physics.OverlapSphere(transform.position, ViewRadius, CiblesMask);
@@ -121,11 +158,22 @@ public class anAI : MonoBehaviour
             Transform theTarget = targetInViewRadius[i].transform;
 
             Vector3 dirToTarget = (theTarget.position - transform.position).normalized;
-            if(Vector3.Angle(transform.forward, dirToTarget) < ViewAngle / 2)
+            if(Vector3.Angle(transform.forward, dirToTarget) < DeterminedAngle() / 2)
             {
                 float dstToTarget = Vector3.Distance(transform.position, theTarget.position);
 
-                if(!Physics.Raycast(transform.position, dirToTarget, dstToTarget, ObstacleMask))
+                bool HitWall = Physics.Raycast(transform.position, dirToTarget, dstToTarget, ObstacleMaskWithoutLowWall);
+                bool HitLowWall = Physics.Raycast(transform.position, dirToTarget, dstToTarget, ObstackeMaskWithoutWall);
+
+                if (HitLowWall)
+                {
+                    if(HitLowWall && theTarget.GetComponent<Human>() != null && !theTarget.GetComponent<Human>().isAccroupi)
+                        HitLowWall = false;
+                    else if(HitLowWall && theTarget.GetComponent<Human>() == null)
+                        HitLowWall = false;
+                }
+
+                if (!HitWall && !HitLowWall)
                 {
                     Vus.Add(theTarget);
                 }
@@ -135,12 +183,12 @@ public class anAI : MonoBehaviour
         Vus = Vus.OrderBy(w => Vector3.Distance(w.position, transform.position)).ToList();
     }
 
-    ViewCastInfo viewCast(float globalAngle)
+    ViewCastInfo viewCast(float globalAngle, LayerMask AffectedLayer)
     {
         Vector3 dir = DirFromAngle(globalAngle, true);
         RaycastHit hit;
 
-        if(Physics.Raycast(transform.position, dir, out hit, ViewRadius, ObstacleMask))
+        if(Physics.Raycast(transform.position, dir, out hit, ViewRadius, AffectedLayer))
         {
             return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
         }
@@ -152,21 +200,21 @@ public class anAI : MonoBehaviour
 
     void DrawFieldOfView()
     {
-        int stepCount = Mathf.RoundToInt(ViewAngle * MeshResolution);
-        float stepAngleSize = ViewAngle / stepCount;
+        int stepCount = Mathf.RoundToInt(DeterminedAngle() * MeshResolution);
+        float stepAngleSize = DeterminedAngle() / stepCount;
         List<Vector3> viewPoints = new List<Vector3>();
         ViewCastInfo oldViewCast = new ViewCastInfo();
 
         for (int i = 0; i <= stepCount; i++)
         {
-            float angle = transform.eulerAngles.y - ViewAngle/2 + stepAngleSize * i;
-            ViewCastInfo newViewCast = viewCast(angle);
+            float angle = transform.eulerAngles.y - DeterminedAngle() / 2 + stepAngleSize * i;
+            ViewCastInfo newViewCast = viewCast(angle, ObstacleMask);
             if(i > 0)
             {
                 bool edgeDstThresholdExceeded = Mathf.Abs(oldViewCast.dst - newViewCast.dst) > edgeDstThrehsold;
                 if(oldViewCast.hit != newViewCast.hit || (oldViewCast.hit && newViewCast.hit && edgeDstThresholdExceeded))
                 {
-                    EdgeInfo edge = FindEdge(oldViewCast, newViewCast);
+                    EdgeInfo edge = FindEdge(oldViewCast, newViewCast, ObstacleMask);
                     if(edge.PointA != Vector3.zero)
                         viewPoints.Add(edge.PointA);
                     if (edge.PointB != Vector3.zero)
@@ -199,6 +247,53 @@ public class anAI : MonoBehaviour
         viewMesh.vertices = verticles;
         viewMesh.triangles = triangles;
         viewMesh.RecalculateNormals();
+
+        // 2eme Mesh
+
+        viewPoints = new List<Vector3>();
+        oldViewCast = new ViewCastInfo();
+
+        for (int i = 0; i < stepCount; i++)
+        {
+            float angle = transform.eulerAngles.y - DeterminedAngle() / 2 + stepAngleSize * i;
+            ViewCastInfo newViewCast = viewCast(angle, ObstacleMaskWithoutLowWall);
+            if (i > 0)
+            {
+                bool edgeDstThresholdExceeded = Mathf.Abs(oldViewCast.dst - newViewCast.dst) > edgeDstThrehsold;
+                if (oldViewCast.hit != newViewCast.hit || (oldViewCast.hit && newViewCast.hit && edgeDstThresholdExceeded))
+                {
+                    EdgeInfo edge = FindEdge(oldViewCast, newViewCast, ObstacleMaskWithoutLowWall);
+                    if (edge.PointA != Vector3.zero)
+                        viewPoints.Add(edge.PointA);
+                    if (edge.PointB != Vector3.zero)
+                        viewPoints.Add(edge.PointB);
+                }
+            }
+            viewPoints.Add(newViewCast.point);
+            oldViewCast = newViewCast;
+        }        
+
+        vertCount = viewPoints.Count + 1;
+        verticles = new Vector3[vertCount];
+        triangles = new int[(vertCount - 2) * 3];
+
+        verticles[0] = Vector3.zero;
+        for (int i = 0; i < vertCount - 1; i++)
+        {
+            verticles[i + 1] = transform.InverseTransformPoint(viewPoints[i]);
+
+            if (i < vertCount - 2)
+            {
+                triangles[i * 3] = 0;
+                triangles[i * 3 + 1] = i + 1;
+                triangles[i * 3 + 2] = i + 2;
+            }
+        }
+
+        viewMesh2.Clear();
+        viewMesh2.vertices = verticles;
+        viewMesh2.triangles = triangles;
+        viewMesh2.RecalculateNormals();
     }
 
     public Vector3 DirFromAngle(float AngleInDegrees, bool AngleisGlobal)
@@ -208,7 +303,7 @@ public class anAI : MonoBehaviour
         return new Vector3(Mathf.Sin(AngleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(AngleInDegrees * Mathf.Deg2Rad));
     }
 
-    EdgeInfo FindEdge(ViewCastInfo minViewCast, ViewCastInfo maxViewCast)
+    EdgeInfo FindEdge(ViewCastInfo minViewCast, ViewCastInfo maxViewCast, LayerMask AffectedLayer)
     {
         float minAngle = minViewCast.angle;
         float maxAngle = maxViewCast.angle;
@@ -218,7 +313,7 @@ public class anAI : MonoBehaviour
         for (int i = 0; i < edgeResolveIterations; i++)
         {
             float angle = (minAngle + maxAngle) / 2;
-            ViewCastInfo newViewCast = viewCast(angle);
+            ViewCastInfo newViewCast = viewCast(angle, AffectedLayer);
 
             bool edgeDstThresholdExceeded = Mathf.Abs(minViewCast.dst - newViewCast.dst) > edgeDstThrehsold;
             if (newViewCast.hit == minViewCast.hit && !edgeDstThresholdExceeded)
