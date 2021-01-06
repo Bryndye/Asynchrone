@@ -6,11 +6,16 @@ using UnityEngine.AI;
 
 public enum myBehaviour { Guard, Patrol };
 public enum Situation { None, PatrolMove, PatrolWait, Interrogation, Pursuit, Dead };
+public enum Classe { Basic, Looper };
 
 public class anAI : MonoBehaviour
 {
     [Header("Composants")]
     NavMeshAgent myNavMeshAgent;
+
+    [Header("Global")]
+    public Classe myClasse;
+    [Space]
 
     [Header("Champ de vision"), HideInInspector]
     public List<Transform> Vus;
@@ -43,16 +48,17 @@ public class anAI : MonoBehaviour
     public myBehaviour Comportement;
     public Situation mySituation;
     GameObject myUI;
+    public Vector3 PursuitLastPosition;
 
     [Header("Patrouille")]
     public List<Vector3> EtapesPatrouille;
+    [SerializeField]
+    public int IndexStartPatrouilleSecondaire;
+    public List<Vector3> EtapesPatrouilleSecondaire;
     int StepPatrolIndex;
     public float Latence_InterEtapes;
     [HideInInspector]
     float Temps_InterEtapes;
-
-    [Header("Effets visuels")]
-    float ShownAngle;
 
     // Start is called before the first frame update
     void Awake()
@@ -77,8 +83,6 @@ public class anAI : MonoBehaviour
 
         myUI = Instantiate(Resources.Load<GameObject>("UI/aFollowingState"));
         myUI.GetComponent<AIStateUI>().Declaration(this);
-
-        ShownAngle = ViewAngle;
     }
 
     private void Update()
@@ -127,28 +131,6 @@ public class anAI : MonoBehaviour
 
     #region Vision
 
-    float DeterminedAngle()
-    {
-        if (mySituation == Situation.Pursuit)
-        {
-            if(ShownAngle < 360)
-            {
-                ShownAngle += Time.deltaTime * 0.1f;
-                ShownAngle = Mathf.Clamp(ShownAngle, ViewAngle, 360f);
-            }
-        }
-        else
-        {
-            if (ShownAngle > 0)
-            {
-                ShownAngle -= Time.deltaTime * 0.1f;
-                ShownAngle = Mathf.Clamp(ShownAngle, ViewAngle, 360f);
-            }
-        }
-
-        return ShownAngle;
-    }
-
     void FindVisibleTargets()
     {
         Collider[] targetInViewRadius = Physics.OverlapSphere(transform.position, ViewRadius, CiblesMask);
@@ -158,7 +140,7 @@ public class anAI : MonoBehaviour
             Transform theTarget = targetInViewRadius[i].transform;
 
             Vector3 dirToTarget = (theTarget.position - transform.position).normalized;
-            if(Vector3.Angle(transform.forward, dirToTarget) < DeterminedAngle() / 2)
+            if(Vector3.Angle(transform.forward, dirToTarget) < ViewAngle / 2)
             {
                 float dstToTarget = Vector3.Distance(transform.position, theTarget.position);
 
@@ -200,14 +182,14 @@ public class anAI : MonoBehaviour
 
     void DrawFieldOfView()
     {
-        int stepCount = Mathf.RoundToInt(DeterminedAngle() * MeshResolution);
-        float stepAngleSize = DeterminedAngle() / stepCount;
+        int stepCount = Mathf.RoundToInt(ViewAngle * MeshResolution);
+        float stepAngleSize = ViewAngle / stepCount;
         List<Vector3> viewPoints = new List<Vector3>();
         ViewCastInfo oldViewCast = new ViewCastInfo();
 
         for (int i = 0; i <= stepCount; i++)
         {
-            float angle = transform.eulerAngles.y - DeterminedAngle() / 2 + stepAngleSize * i;
+            float angle = transform.eulerAngles.y - ViewAngle / 2 + stepAngleSize * i;
             ViewCastInfo newViewCast = viewCast(angle, ObstacleMask);
             if(i > 0)
             {
@@ -255,7 +237,7 @@ public class anAI : MonoBehaviour
 
         for (int i = 0; i < stepCount; i++)
         {
-            float angle = transform.eulerAngles.y - DeterminedAngle() / 2 + stepAngleSize * i;
+            float angle = transform.eulerAngles.y - ViewAngle / 2 + stepAngleSize * i;
             ViewCastInfo newViewCast = viewCast(angle, ObstacleMaskWithoutLowWall);
             if (i > 0)
             {
@@ -380,6 +362,14 @@ public class anAI : MonoBehaviour
         EtapesPatrouille.Add(transform.position);
     }
 
+    public void AddSecondaryPatrolPoint()
+    {
+        if (EtapesPatrouilleSecondaire.Count == 0)
+            IndexStartPatrouilleSecondaire = EtapesPatrouille.Count;
+
+        EtapesPatrouilleSecondaire.Add(transform.position);
+    }
+
     public void ResetPositionToFirstPatrolPoint()
     {
         if(EtapesPatrouille.Count > 0)
@@ -391,6 +381,8 @@ public class anAI : MonoBehaviour
     public void ResetPath()
     {
         EtapesPatrouille.Clear();
+        EtapesPatrouilleSecondaire.Clear();
+        IndexStartPatrouilleSecondaire = 0;
     }
 
     #endregion
@@ -467,12 +459,17 @@ public class anAI : MonoBehaviour
     {
         if(Vus.Count > 0)
         {
-            myNavMeshAgent.SetDestination(Vus[0].position);
+            myNavMeshAgent.SetDestination(Vus[0].position);           
             Vector3 ScaledPosition = new Vector3(Vus[0].position.x, transform.position.y, Vus[0].position.z);
-            if(Vus[0].gameObject.name == "Fake_Robot(Clone)" && Vector3.Distance(ScaledPosition, transform.position) < 1.5f)
+            PursuitLastPosition = ScaledPosition;
+            if (Vus[0].gameObject.name == "Fake_Robot(Clone)" && Vector3.Distance(ScaledPosition, transform.position) < 1.5f)
             {
                 Destroy(Vus[0].gameObject);
             }
+        }
+        else if(Vector3.Distance(PursuitLastPosition, transform.position) > 1)
+        {
+            myNavMeshAgent.SetDestination(PursuitLastPosition);
         }
         else
         {
@@ -504,26 +501,85 @@ public class anAI : MonoBehaviour
 
         for (int i = 0; i < EtapesPatrouille.Count; i++)
         {
-            Vector3 BasePosition = EtapesPatrouille[i];
-            Vector3 TargetPosition = Vector3.zero;
-
-            if (i + 1 < EtapesPatrouille.Count)
-                TargetPosition = EtapesPatrouille[i + 1];
-            else
-                TargetPosition = EtapesPatrouille[0];
-
-            NavMeshPath myNavMeshPath = new NavMeshPath();
-            NavMesh.CalculatePath(BasePosition, TargetPosition, NavMesh.AllAreas, myNavMeshPath);
-
-            if(myNavMeshPath.corners.Length < 2)
+            if (myClasse == Classe.Basic || i + 1 < EtapesPatrouille.Count)
             {
-                Gizmos.DrawLine(BasePosition, TargetPosition);
+                Gizmos.DrawSphere(EtapesPatrouille[i], 0.1f);
+
+                Vector3 BasePosition = EtapesPatrouille[i];
+                Vector3 TargetPosition = Vector3.zero;
+
+                if (i + 1 < EtapesPatrouille.Count)
+                    TargetPosition = EtapesPatrouille[i + 1];
+                else
+                    TargetPosition = EtapesPatrouille[0];
+
+                NavMeshPath myNavMeshPath = new NavMeshPath();
+                NavMesh.CalculatePath(BasePosition, TargetPosition, NavMesh.AllAreas, myNavMeshPath);
+
+                if (myNavMeshPath.corners.Length < 2)
+                {
+                    Gizmos.DrawLine(BasePosition, TargetPosition);
+                }
+                else
+                {
+                    for (int a = 0; a + 1 < myNavMeshPath.corners.Length; a++)
+                    {
+                        Gizmos.DrawLine(myNavMeshPath.corners[a], myNavMeshPath.corners[a + 1]);
+                    }
+                }
+            }
+        }
+
+        Gizmos.color = Color.red;
+
+        if(EtapesPatrouilleSecondaire.Count > 0)
+        {
+            Vector3 FirstBasePosition = EtapesPatrouille[IndexStartPatrouilleSecondaire - 1];
+            Vector3 FirstTargetPosition = EtapesPatrouilleSecondaire[0];
+
+            NavMeshPath myFirstNavMeshPath = new NavMeshPath();
+            NavMesh.CalculatePath(FirstBasePosition, FirstTargetPosition, NavMesh.AllAreas, myFirstNavMeshPath);
+
+            if (myFirstNavMeshPath.corners.Length < 2)
+            {
+                Gizmos.DrawLine(FirstBasePosition, FirstTargetPosition);
             }
             else
             {
-                for (int a = 0; a + 1 < myNavMeshPath.corners.Length; a++)
+                for (int a = 0; a + 1 < myFirstNavMeshPath.corners.Length; a++)
                 {
-                    Gizmos.DrawLine(myNavMeshPath.corners[a], myNavMeshPath.corners[a + 1]);
+                    Gizmos.DrawLine(myFirstNavMeshPath.corners[a], myFirstNavMeshPath.corners[a + 1]);
+                }
+            }
+
+            for (int i = 0; i < EtapesPatrouilleSecondaire.Count; i++)
+            {
+                if (myClasse == Classe.Basic || i + 1 < EtapesPatrouilleSecondaire.Count)
+                {
+                    Gizmos.DrawSphere(EtapesPatrouilleSecondaire[i], 0.1f);
+
+                    Vector3 BasePosition = EtapesPatrouilleSecondaire[i];
+                    Vector3 TargetPosition = Vector3.zero;
+
+                    if (i + 1 < EtapesPatrouilleSecondaire.Count)
+                        TargetPosition = EtapesPatrouilleSecondaire[i + 1];
+                    else
+                        TargetPosition = EtapesPatrouille[0];
+
+                    NavMeshPath myNavMeshPath = new NavMeshPath();
+                    NavMesh.CalculatePath(BasePosition, TargetPosition, NavMesh.AllAreas, myNavMeshPath);
+
+                    if (myNavMeshPath.corners.Length < 2)
+                    {
+                        Gizmos.DrawLine(BasePosition, TargetPosition);
+                    }
+                    else
+                    {
+                        for (int a = 0; a + 1 < myNavMeshPath.corners.Length; a++)
+                        {
+                            Gizmos.DrawLine(myNavMeshPath.corners[a], myNavMeshPath.corners[a + 1]);
+                        }
+                    }
                 }
             }
         }

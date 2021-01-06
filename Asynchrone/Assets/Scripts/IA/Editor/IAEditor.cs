@@ -30,6 +30,10 @@ public class IAEditor : Editor
         {
             myAI.AddPatrolPoint();
         }
+        if (GUILayout.Button("Add current position to secondary patrol"))
+        {
+            myAI.AddSecondaryPatrolPoint();
+        }
         if (GUILayout.Button("Go to base position"))
         {
             myAI.ResetPositionToFirstPatrolPoint();
