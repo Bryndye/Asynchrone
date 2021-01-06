@@ -26,6 +26,8 @@ public class Human : Singleton<Human>
     [HideInInspector] public bool canDiv;
     [SerializeField] GameObject acrroupiMesh;
     [HideInInspector] public GameObject robot_div;
+    [SerializeField] float cdDiv;
+    bool canSpell = true;
 
     #endregion
 
@@ -71,12 +73,9 @@ public class Human : Singleton<Human>
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             Accroupi(1,2,2,-0.5f);
-        }/*
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            Accroupi(2, 1, 1, 0);
-        }*/
-        if (Input.GetKeyDown(KeyCode.Z) && robot_div == null)
+        }
+        
+        if (Input.GetKeyDown(KeyCode.Z) && robot_div == null && canSpell)
         {
             canDiv = !canDiv;
         }
@@ -140,6 +139,8 @@ public class Human : Singleton<Human>
                 {
                     robot_div = Instantiate(Resources.Load<GameObject>("Player/Fake_Robot"), hit.point, Quaternion.identity);
                     canDiv = false;
+                    canSpell = false;
+                    Invoke(nameof(ItsTime), cdDiv);
                 }
             }
         }
@@ -153,7 +154,7 @@ public class Human : Singleton<Human>
         {
             //Debug.Log(it.collider.name + "  " + it.collider.gameObject.layer);
 
-            if (it.collider.gameObject.layer == 9 || it.collider.gameObject.layer == 8)
+            if (it.collider.gameObject.layer == 9 || it.collider.gameObject.layer == 8 || it.collider.gameObject.layer == 12)
             {         
                 return true;
             }          
@@ -173,6 +174,11 @@ public class Human : Singleton<Human>
         }
         range.SetActive(canDiv);
         //bt_destroy.interactable = robot_div != null;
+    }
+
+    void ItsTime()
+    {
+        canSpell = true;
     }
 
     #endregion
