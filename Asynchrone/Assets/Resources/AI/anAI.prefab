@@ -274,6 +274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4993277999dffc04b8a7e852bfdbb822, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myClasse: 0
   Vus: []
   TempsInterrogation: 0
   LatenceInterrogation: 0.5
@@ -296,13 +297,16 @@ MonoBehaviour:
   edgeDstThrehsold: 5
   Comportement: 1
   mySituation: 0
+  PursuitLastPosition: {x: 0, y: 0, z: 0}
   EtapesPatrouille:
-  - {x: 4.54, y: 1.1, z: -5.75}
-  - {x: 4.56, y: 1.1, z: 0.84}
-  - {x: 6.8, y: 1.1, z: 8.31}
-  - {x: -3.59, y: 1.1, z: 7.23}
-  - {x: -2.69, y: 1.1, z: -7.49}
-  - {x: 2.8, y: 1.1, z: -9.43}
+  - {x: -2.21, y: 1.1, z: -18.76}
+  - {x: 3.85, y: 1.1, z: -16.27}
+  - {x: 3.33, y: 1.1, z: -21.7}
+  - {x: -1.84, y: 1.1, z: -23.28}
+  IndexStartPatrouilleSecondaire: 2
+  EtapesPatrouilleSecondaire:
+  - {x: 3.63, y: 1.1, z: -11.66}
+  - {x: -3.08, y: 1.1, z: -14.23}
   Latence_InterEtapes: 1
 --- !u!195 &8734465463775948674
 NavMeshAgent:
