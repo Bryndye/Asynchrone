@@ -70,12 +70,12 @@ public class Human : Singleton<Human>
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            Accroupi(1,2,2,-0.5f, true);
-        }
+            Accroupi(1,2,2,-0.5f);
+        }/*
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
-            Accroupi(2, 1, 1, 0, false);
-        }
+            Accroupi(2, 1, 1, 0);
+        }*/
         if (Input.GetKeyDown(KeyCode.Z) && robot_div == null)
         {
             canDiv = !canDiv;
@@ -90,11 +90,28 @@ public class Human : Singleton<Human>
         }
     }
 
-    private void Accroupi(int h, int sp, int si, float center, bool acr)
+    private void Accroupi(int h, int sp, int si, float center)
     {
-        isAccroupi = acr;
-        acrroupiMesh.SetActive(acr);
-        meshPrincipal.SetActive(!acr);
+        isAccroupi = !isAccroupi;
+        acrroupiMesh.SetActive(isAccroupi);
+        meshPrincipal.SetActive(!isAccroupi);
+
+        if (isAccroupi)
+        {
+            //1,2,2,-0.5f
+            h = 1;
+            sp = 2;
+            si = 2;
+            center = -0.5f;
+        }
+        else
+        {
+            //2, 1, 1, 0   
+            h = 2;
+            sp = 1;
+            si = 1;
+            center = 0;
+        }
 
         nav.height = h;
         nav.speed = speed / sp;
