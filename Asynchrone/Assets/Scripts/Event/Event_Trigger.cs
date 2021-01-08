@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof( AudioSource))]
 public class Event_Trigger : MonoBehaviour
 {
-    [SerializeField] string name;
+    [SerializeField] string nameEvent;
     bool done = false;
 
     [SerializeField] private GameObject[] iaToActivate;
@@ -61,11 +61,11 @@ public class Event_Trigger : MonoBehaviour
     {
         if (eventToTrigger == typeEvent.Audio)
         {
-            gameObject.name = "Evt audio " + name;
+            gameObject.name = "Evt audio " + nameEvent;
         }
         if (eventToTrigger == typeEvent.ActiveIA)
         {
-            gameObject.name = "Evt ia " + name;
+            gameObject.name = "Evt ia " + nameEvent;
         }
     }
 }
