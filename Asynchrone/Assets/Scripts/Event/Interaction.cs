@@ -15,7 +15,7 @@ public class Interaction : MonoBehaviour
     {
         if (!activated)
         {
-            Debug.Log("Event called");
+            //Debug.Log("Event called");
             activated = true;
 
             iem.CheckEvent(Event_, Influence);

@@ -16,8 +16,8 @@ public class Human : Singleton<Human>
     float speed;
 
     [SerializeField] GameObject robotBeLike;
-    public bool intoMe;
-    public bool isAccroupi;
+    [HideInInspector] public bool intoMe;
+    [HideInInspector] public bool isAccroupi;
 
     [Header("Diversion")]
     [SerializeField] GameObject range;
@@ -61,11 +61,14 @@ public class Human : Singleton<Human>
 
     private void Update()
     {
-        if (mP.onPlayer1)
+        if (!mP.pc1.InCinematic)
         {
-            InputManager();
+            if (mP.onPlayer1)
+            {
+                InputManager();
+            }
+            GestionDiv();
         }
-        GestionDiv();
     }
 
     private void InputManager()

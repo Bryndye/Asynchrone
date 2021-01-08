@@ -8,12 +8,12 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
     [Header("Player1")]
     public Transform Player1;
     [HideInInspector] public Human Hm;
-    PlayerController pc1;
+    [HideInInspector] public PlayerController pc1;
 
     [Header("Player 2")]
     public Transform Player2;
     [HideInInspector] public Robot Rbt;
-    PlayerController pc2;
+    [HideInInspector] public PlayerController pc2;
 
     CameraSmooth cSmooth;
 

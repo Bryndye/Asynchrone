@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     Vector3 finalDestination;
     Transform targetInteraction;
 
+    public bool InCinematic;
     #endregion
 
     private void Awake()
@@ -26,12 +27,15 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (CanPlay)
+        if (!InCinematic)
         {
-            InputManager();
-            CheckDisInteraction();
+            if (CanPlay)
+            {
+                InputManager();
+                CheckDisInteraction();
+            }
+            WalkAnim();
         }
-        WalkAnim();
     }
 
 
