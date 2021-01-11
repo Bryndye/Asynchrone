@@ -6,13 +6,20 @@ using UnityEngine;
 public class Event_Trigger : MonoBehaviour
 {
     [SerializeField] string nameEvent;
-    bool done = false;
+    private bool done = false;
 
     [SerializeField] private GameObject[] iaToActivate;
     [Space]
     AudioSource audioSource;
+    CanvasManager cm;
+
+    [Header("Dialogues")]
+    public string[] dialogues;
+    [SerializeField] [TextArea(5, 50)] string dialogue;
+
     private void Awake()
     {
+        cm = CanvasManager.Instance;
         audioSource = GetComponent<AudioSource>();
         for (int i = 0; i < iaToActivate.Length; i++)
         {
@@ -22,7 +29,7 @@ public class Event_Trigger : MonoBehaviour
     enum typeEvent
     {
         Audio,
-        ActiveIA
+        ActiveIA,
     }
     [SerializeField] typeEvent eventToTrigger;
 
@@ -38,6 +45,8 @@ public class Event_Trigger : MonoBehaviour
             {
                 EventIA();
             }
+            EventDialogue();
+
             done = true;
         }
     }
@@ -55,6 +64,14 @@ public class Event_Trigger : MonoBehaviour
             iaToActivate[i].SetActive(true);
         }
         Debug.Log("ia");
+    }
+
+    private void EventDialogue()
+    {
+        if (cm.dialogueHere && dialogues != null)
+        {
+            cm.StartDiaEffect(dialogues[0]);
+        }
     }
 
     private void OnDrawGizmos()

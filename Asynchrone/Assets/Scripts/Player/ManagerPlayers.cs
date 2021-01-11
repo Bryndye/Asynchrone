@@ -16,7 +16,7 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
     [HideInInspector] public PlayerController pc2;
 
     CameraSmooth cSmooth;
-
+    CanvasManager cm;
     public bool onPlayer1;
 
     [Header("UI")]
@@ -37,6 +37,7 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
         if (Player2 != null)
             pc2 = Player2.GetComponent<PlayerController>();
         CameraManager();
+        cm = CanvasManager.Instance;
     }
 
     private void Update()
@@ -44,6 +45,10 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
         if (Input.GetKeyDown(KeyCode.A))
         {
             CameraManager();
+        }
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            cm.FinishEffect();
         }
     }
 
