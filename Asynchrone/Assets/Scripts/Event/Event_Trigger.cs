@@ -15,7 +15,6 @@ public class Event_Trigger : MonoBehaviour
 
     [Header("Dialogues")]
     public string[] dialogues;
-    [SerializeField] [TextArea(5, 50)] string dialogue;
 
     private void Awake()
     {
@@ -70,7 +69,7 @@ public class Event_Trigger : MonoBehaviour
     {
         if (cm.dialogueHere && dialogues != null)
         {
-            cm.StartDiaEffect(dialogues[0]);
+            cm.StartDiaEffect(dialogues);
         }
     }
 

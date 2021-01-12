@@ -46,9 +46,9 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
         {
             CameraManager();
         }
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            cm.FinishEffect();
+            cm.NextDialogue();
         }
     }
 
