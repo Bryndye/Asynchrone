@@ -52,8 +52,11 @@ public class Event_Trigger : MonoBehaviour
 
     private void EventAudio()
     {
-        audioSource.Play();
-        Debug.Log("audio");
+        if (audioSource.clip)
+        {
+            audioSource.Play();
+            Debug.Log("audio");
+        }
     }
 
     private void EventIA()
@@ -67,7 +70,7 @@ public class Event_Trigger : MonoBehaviour
 
     private void EventDialogue()
     {
-        if (cm.dialogueHere && dialogues != null)
+        if (cm.dialogueHere && dialogues.Length > 0)
         {
             cm.StartDiaEffect(dialogues);
         }
