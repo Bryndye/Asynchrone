@@ -53,21 +53,18 @@ public class CanvasManager : Singleton<CanvasManager>
 
     public void NextDialogue()
     {
-        if (skip)
+        if (index < sentences.Length - 1)
         {
-            if (index < sentences.Length - 1)
-            {
-                index++;
-                dialogueHere.text = null;
-                StartCoroutine(Type());
-            }
-            else
-            {
-                dialogueHere.text = null;
-                isRuntime = false;
-            }
-            skip = false;
+            index++;
+            dialogueHere.text = null;
+            StartCoroutine(Type());
         }
+        else
+        {
+            dialogueHere.text = null;
+            isRuntime = false;
+        }
+        skip = false;
     }
 
     [SerializeField] float latence = 0.1f;
@@ -75,9 +72,10 @@ public class CanvasManager : Singleton<CanvasManager>
     #endregion
     void Update()
     {
-        if (isRuntime && dialogueHere.text == sentences[index])
+        if (isRuntime && dialogueHere.text == sentences[index] && !skip)
         {
             skip = true;
+            Invoke(nameof(NextDialogue), 2f);
         }
     }
 }
