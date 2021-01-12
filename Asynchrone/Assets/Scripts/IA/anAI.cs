@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 using UnityEngine.AI;
 
 public enum myBehaviour { Guard, Patrol };
@@ -51,9 +54,11 @@ public class anAI : MonoBehaviour
     public Vector3 PursuitLastPosition;
 
     [Header("Patrouille")]
+    [SerializeField]
     public List<Vector3> EtapesPatrouille;
     [SerializeField]
     public int IndexStartPatrouilleSecondaire;
+    [SerializeField]
     public List<Vector3> EtapesPatrouilleSecondaire;
     int StepPatrolIndex;
     public float Latence_InterEtapes;
@@ -360,6 +365,7 @@ public class anAI : MonoBehaviour
     public void AddPatrolPoint()
     {
         EtapesPatrouille.Add(transform.position);
+        SetObjectDirty(this);
     }
 
     public void AddSecondaryPatrolPoint()
@@ -368,6 +374,8 @@ public class anAI : MonoBehaviour
             IndexStartPatrouilleSecondaire = EtapesPatrouille.Count;
 
         EtapesPatrouilleSecondaire.Add(transform.position);
+
+        SetObjectDirty(this);
     }
 
     public void ResetPositionToFirstPatrolPoint()
@@ -376,30 +384,59 @@ public class anAI : MonoBehaviour
         {
             transform.position = EtapesPatrouille[0];
         }
+
+        SetObjectDirty(this);
     }
 
     public void ResetPath()
     {
         EtapesPatrouille.Clear();
+        EtapesPatrouille = new List<Vector3>();
         EtapesPatrouilleSecondaire.Clear();
+        EtapesPatrouille = new List<Vector3>();
         IndexStartPatrouilleSecondaire = 0;
+
+        SetObjectDirty(this);
+    }
+
+    public static void SetObjectDirty(Component comp)
+    {
+        if (Application.isPlaying)
+            return;
+
+        HandlePrefabInstance(comp.gameObject);
+        EditorUtility.SetDirty(comp);
+
+        EditorSceneManager.MarkSceneDirty(comp.gameObject.scene);
+    }
+
+    private static void HandlePrefabInstance(GameObject gameObject)
+    {
+        var myPrefabType = PrefabUtility.GetPrefabAssetType(gameObject);
+        if (myPrefabType != PrefabAssetType.NotAPrefab)
+        {
+            PrefabUtility.RecordPrefabInstancePropertyModifications(gameObject);
+        }
     }
 
     #endregion
 
     void NextPatrolStep()
     {
-        if (myNavMeshAgent.isStopped)
-            myNavMeshAgent.isStopped = false;
-
-        StepPatrolIndex += 1;
-        if(StepPatrolIndex >= EtapesPatrouille.Count)
+        if(EtapesPatrouille.Count > 0)
         {
-            StepPatrolIndex = 0;
-        }
+            if (myNavMeshAgent.isStopped)
+                myNavMeshAgent.isStopped = false;
 
-        myNavMeshAgent.SetDestination(EtapesPatrouille[StepPatrolIndex]);
-        mySituation = Situation.PatrolMove;
+            StepPatrolIndex += 1;
+            if (StepPatrolIndex >= EtapesPatrouille.Count)
+            {
+                StepPatrolIndex = 0;
+            }
+
+            myNavMeshAgent.SetDestination(EtapesPatrouille[StepPatrolIndex]);
+            mySituation = Situation.PatrolMove;
+        }
     }
 
     void PatrolRoutine()
