@@ -8,15 +8,15 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
     [Header("Player1")]
     public Transform Player1;
     [HideInInspector] public Human Hm;
-    PlayerController pc1;
+    [HideInInspector] public PlayerController pc1;
 
     [Header("Player 2")]
     public Transform Player2;
     [HideInInspector] public Robot Rbt;
-    PlayerController pc2;
+    [HideInInspector] public PlayerController pc2;
 
     CameraSmooth cSmooth;
-
+    CanvasManager cm;
     public bool onPlayer1;
 
     [Header("UI")]
@@ -31,9 +31,13 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
             Destroy(this);
 
         cSmooth = CameraSmooth.Instance;
-        pc1 = Player1.GetComponent<PlayerController>();
-        pc2 = Player2.GetComponent<PlayerController>();
+        if (Player1 != null)
+            pc1 = Player1.GetComponent<PlayerController>();
+
+        if (Player2 != null)
+            pc2 = Player2.GetComponent<PlayerController>();
         CameraManager();
+        cm = CanvasManager.Instance;
     }
 
     private void Update()
@@ -42,50 +46,70 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
         {
             CameraManager();
         }
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            cm.FinishEffect();
+        }
     }
 
     public void CameraManager()
     {
-        onPlayer1 = !onPlayer1;
-
-        if (onPlayer1)
+        if (Player2 != null)
         {
+            onPlayer1 = !onPlayer1;
+
+            if (onPlayer1)
+            {
+                if (QuelPlayer != null)
+                    QuelPlayer.text = Player1.name;
+
+                cSmooth.Target = Player1;
+            }
+            else
+            {
+                if (QuelPlayer != null)
+                    QuelPlayer.text = Player2.name;
+
+                cSmooth.Target = Player2;
+            }
+
+            pc1.CanPlay = onPlayer1;
+            pc2.CanPlay = !onPlayer1;
+
+            if (UIHuman != null && UIRobot != null)
+            {
+                UIHuman.SetActive(onPlayer1);
+                UIRobot.SetActive(!onPlayer1);
+            }
+
+            if (!onPlayer1 && Hm.intoMe)
+            {
+                Hm.RobotIntoMe(false);
+            }
+        }
+        else
+        {
+            onPlayer1 = true;
             if (QuelPlayer != null)
                 QuelPlayer.text = Player1.name;
 
             cSmooth.Target = Player1;
-        }
-        else
-        {
-            if (QuelPlayer != null)
-                QuelPlayer.text = Player2.name;
-
-            cSmooth.Target = Player2;
+            pc1.CanPlay = onPlayer1;
         }
 
-        pc1.CanPlay = onPlayer1;
-        pc2.CanPlay = !onPlayer1;
-
-        if (UIHuman != null && UIRobot != null)
-        {
-            UIHuman.SetActive(onPlayer1);
-            UIRobot.SetActive(!onPlayer1);
-        }
-
-        if (!onPlayer1 && Hm.intoMe)
-        {
-            Hm.RobotIntoMe(false);
-        }
     }
 
     #region Huamn fct
 
     public void RobotBackToHuman()
     {
-        Rbt.BackToHuman = !Rbt.BackToHuman;
-        if (!Rbt.BackToHuman)
+        if (Rbt)
         {
-            Rbt.CancelBack();
+            Rbt.BackToHuman = !Rbt.BackToHuman;
+            if (!Rbt.BackToHuman)
+            {
+                Rbt.CancelBack();
+            }
         }
     }
     #endregion

@@ -20,9 +20,12 @@ public class Robot : MonoBehaviour
 
     void Update()
     {
-        if (BackToHuman)
+        if (!mP.pc2.InCinematic)
         {
-            Linked();
+            if (BackToHuman)
+            {
+                Linked();
+            }
         }
     }
 

@@ -19,7 +19,7 @@ public class InteractionEventManager : Singleton<InteractionEventManager>
 
     public void Event_Button(Transform[] porte)
     {
-        Debug.Log("Event button called");
+        //Debug.Log("Event button called");
         for (int i = 0; i < porte.Length; i++)
         {
             if (porte[i] != null)
@@ -31,7 +31,7 @@ public class InteractionEventManager : Singleton<InteractionEventManager>
 
     public void Event_Alarme(Transform[] al)
     {
-        Debug.Log("Event Alarme called");
+        //Debug.Log("Event Alarme called");
     }
 
     public void CheckEvent(Event_int ei, Transform[] inf)

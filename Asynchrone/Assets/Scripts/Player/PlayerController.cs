@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     Vector3 finalDestination;
     Transform targetInteraction;
 
+    public bool InCinematic;
     #endregion
 
     private void Awake()
@@ -26,19 +27,22 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (CanPlay)
+        if (!InCinematic)
         {
-            InputManager();
-            CheckDisInteraction();
+            if (CanPlay)
+            {
+                InputManager();
+                CheckDisInteraction();
+            }
+            WalkAnim();
         }
-        WalkAnim();
     }
 
 
 
     private void InputManager()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        if (Input.GetKey(KeyCode.Mouse1))
         {
             OnClickMouseR();
         }
@@ -46,7 +50,7 @@ public class PlayerController : MonoBehaviour
         {
             OnClickMouseL();
         }
-        if (Input.GetKeyDown(KeyCode.Mouse1) && mP.Rbt.BackToHuman && !mP.onPlayer1)
+        if (Input.GetKeyDown(KeyCode.Mouse1) && !mP.onPlayer1 && mP.Rbt.BackToHuman )
         {
             mP.Rbt.BackToHuman = false;
             OnClickMouseR();
@@ -67,6 +71,14 @@ public class PlayerController : MonoBehaviour
                 finalDestination = hit.point;
                 targetInteraction = hit.collider.transform;
             }
+
+            anAI ia = hit.collider.GetComponent<anAI>();
+            if (ia != null && !mP.onPlayer1)
+            {
+                nav.SetDestination(hit.point);
+                finalDestination = hit.point;
+                targetInteraction = hit.collider.transform;
+            }
         }
     }
     private void CheckDisInteraction()
@@ -81,11 +93,16 @@ public class PlayerController : MonoBehaviour
                     iem.CallEvent();
                 }
 
+                anAI ia = targetInteraction.GetComponent<anAI>();
+                if (ia != null && !mP.onPlayer1)
+                {
+                    Debug.Log("T MORT");
+                }
+
                 targetInteraction = null;
             }
         }
         //Debug.Log(targetInteraction);
-
     }
 
     #endregion
