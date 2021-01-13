@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
 using UnityEngine.AI;
 
@@ -364,32 +362,39 @@ public class anAI : MonoBehaviour
 
     public void AddPatrolPoint()
     {
+#if UNITY_EDITOR
         EtapesPatrouille.Add(transform.position);
         SetObjectDirty(this);
+#endif
     }
 
     public void AddSecondaryPatrolPoint()
     {
+#if UNITY_EDITOR
         if (EtapesPatrouilleSecondaire.Count == 0)
             IndexStartPatrouilleSecondaire = EtapesPatrouille.Count;
 
         EtapesPatrouilleSecondaire.Add(transform.position);
 
         SetObjectDirty(this);
+#endif
     }
 
     public void ResetPositionToFirstPatrolPoint()
     {
-        if(EtapesPatrouille.Count > 0)
+#if UNITY_EDITOR
+        if (EtapesPatrouille.Count > 0)
         {
             transform.position = EtapesPatrouille[0];
         }
 
         SetObjectDirty(this);
+#endif
     }
 
     public void ResetPath()
     {
+#if UNITY_EDITOR
         EtapesPatrouille.Clear();
         EtapesPatrouille = new List<Vector3>();
         EtapesPatrouilleSecondaire.Clear();
@@ -397,26 +402,31 @@ public class anAI : MonoBehaviour
         IndexStartPatrouilleSecondaire = 0;
 
         SetObjectDirty(this);
+#endif
     }
 
     public static void SetObjectDirty(Component comp)
     {
+#if UNITY_EDITOR
         if (Application.isPlaying)
             return;
 
         HandlePrefabInstance(comp.gameObject);
-        EditorUtility.SetDirty(comp);
+        UnityEditor.EditorUtility.SetDirty(comp);
 
-        EditorSceneManager.MarkSceneDirty(comp.gameObject.scene);
+        UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(comp.gameObject.scene);
+#endif
     }
 
     private static void HandlePrefabInstance(GameObject gameObject)
     {
-        var myPrefabType = PrefabUtility.GetPrefabAssetType(gameObject);
-        if (myPrefabType != PrefabAssetType.NotAPrefab)
+#if UNITY_EDITOR
+        var myPrefabType = UnityEditor.PrefabUtility.GetPrefabAssetType(gameObject);
+        if (myPrefabType != UnityEditor.PrefabAssetType.NotAPrefab)
         {
-            PrefabUtility.RecordPrefabInstancePropertyModifications(gameObject);
+            UnityEditor.PrefabUtility.RecordPrefabInstancePropertyModifications(gameObject);
         }
+#endif
     }
 
     #endregion
