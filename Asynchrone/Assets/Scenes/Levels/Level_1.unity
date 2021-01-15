@@ -1335,72 +1335,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 305278046}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &324228829
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 324228832}
-  - component: {fileID: 324228831}
-  - component: {fileID: 324228830}
-  m_Layer: 0
-  m_Name: Evt audio test audio
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!65 &324228830
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 324228829}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 5, z: 20}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &324228831
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 324228829}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52ebabd560935b045960e13b3ac92e69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nameEvent: test audio
-  iaToActivate: []
-  dialogues:
-  - "Je m'appelle Jumes et je vais vous expliquer comment j'en suis arriv\xE9 l\xE0."
-  - "Je dois aller r\xE9cup\xE9rer de la feraille \xE0 l'usine."
-  - C'est ainsi que je tente de survivre.
-  - "*D\xE9place toi avec la souris en faisant clique droit*"
-  audioC: {fileID: 8300000, guid: 530903cee04499548ae6337c59b5d29f, type: 3}
-  eventToTrigger: 0
---- !u!4 &324228832
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 324228829}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.99, y: 0.96, z: 10.95}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 25
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &358211782
 GameObject:
   m_ObjectHideFlags: 0
@@ -3151,13 +3085,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameEvent: '#2'
+  eventToTrigger: 1
   iaToActivate:
   - {fileID: 152279859}
   - {fileID: 1437929679}
   - {fileID: 41017350}
   dialogues: []
   audioC: {fileID: 0}
-  eventToTrigger: 1
 --- !u!4 &712094152
 Transform:
   m_ObjectHideFlags: 0
@@ -3221,12 +3155,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameEvent: outro
+  eventToTrigger: 0
   iaToActivate: []
   dialogues:
   - Vous rencontrez Vatrek, un petit robot qui va vous surprendre
   - "D\xE9mo finie!"
   audioC: {fileID: 0}
-  eventToTrigger: 0
 --- !u!4 &741954450
 Transform:
   m_ObjectHideFlags: 0
@@ -3556,6 +3490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameEvent: IA + accroupi
+  eventToTrigger: 0
   iaToActivate: []
   dialogues:
   - "Un Garde! Faut \xE9viter de se faire voir."
@@ -3563,7 +3498,6 @@ MonoBehaviour:
   - Et quand je parle de nous... je parle des Humains
   - '*Appuye sur Left SHift pour t''accroupir*'
   audioC: {fileID: 0}
-  eventToTrigger: 0
 --- !u!4 &832609896
 Transform:
   m_ObjectHideFlags: 0
@@ -3849,11 +3783,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameEvent: '#1'
+  eventToTrigger: 1
   iaToActivate:
   - {fileID: 1130456913}
   dialogues: []
   audioC: {fileID: 0}
-  eventToTrigger: 1
 --- !u!4 &912534300
 Transform:
   m_ObjectHideFlags: 0
@@ -5947,11 +5881,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameEvent: interaction
+  eventToTrigger: 0
   iaToActivate: []
   dialogues:
   - "*Pour int\xE9ragir utilise la souris en faisant clique gauche"
   audioC: {fileID: 0}
-  eventToTrigger: 0
 --- !u!4 &1324114670
 Transform:
   m_ObjectHideFlags: 0
@@ -8233,14 +8167,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameEvent: Intro
+  eventToTrigger: 0
   iaToActivate: []
   dialogues:
   - "Je m'appelle Jumes et je vais vous expliquer comment j'en suis arriv\xE9 l\xE0."
   - "Je dois aller r\xE9cup\xE9rer de la feraille \xE0 l'usine."
   - C'est ainsi que je tente de survivre.
   - "*D\xE9place toi avec la souris en faisant clique droit*"
-  audioC: {fileID: 8300000, guid: b5e48aaee562b9046903b5f7832e8950, type: 3}
-  eventToTrigger: 0
+  audioC: {fileID: 0}
 --- !u!4 &1768284592
 Transform:
   m_ObjectHideFlags: 0
@@ -9959,9 +9893,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: eventToTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2382837117831925816, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
       propertyPath: m_Name
-      value: 'Evt audio '
+      value: 'Evt ia '
       objectReference: {fileID: 0}
     - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
       propertyPath: m_RootOrder
