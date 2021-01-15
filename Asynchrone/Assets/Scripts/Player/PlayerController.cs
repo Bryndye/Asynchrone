@@ -38,8 +38,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
-
     private void InputManager()
     {
         if (Input.GetKey(KeyCode.Mouse1))
@@ -114,8 +112,16 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            nav.SetDestination(hit.point);
-            finalDestination = hit.point;
+            if (hit.collider.gameObject.layer != 10)
+            {
+                nav.SetDestination(hit.point);
+                finalDestination = hit.point;
+            }
+            else
+            {
+                nav.SetDestination(transform.position);
+                finalDestination = transform.position;
+            }
         }
     }
 

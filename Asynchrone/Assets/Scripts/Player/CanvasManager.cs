@@ -11,6 +11,7 @@ public class CanvasManager : Singleton<CanvasManager>
     private bool skip;
     private int index =0;
     public string[] sentences;
+    [SerializeField] string[] sentencesStock;
     private bool isRuntime;
 
     void Awake()
@@ -45,10 +46,17 @@ public class CanvasManager : Singleton<CanvasManager>
 
     public void StartDiaEffect(string[] dia)
     {
-        sentences = dia;
-        isRuntime = true;
-        index = 0;
-        StartCoroutine(Type());
+        if (!isRuntime)
+        {
+            sentences = dia;
+            isRuntime = true;
+            index = 0;
+            StartCoroutine(Type());
+        }
+        else
+        {
+            sentencesStock = dia;
+        }
     }
 
     public void NextDialogue()
@@ -61,8 +69,18 @@ public class CanvasManager : Singleton<CanvasManager>
         }
         else
         {
+            sentences = null;
             dialogueHere.text = null;
             isRuntime = false;
+        }
+        if (sentencesStock != null && sentences == null)
+        {
+            isRuntime = true;
+            index = 0;
+            sentences = sentencesStock;
+            sentencesStock = null;
+            dialogueHere.text = null;
+            StartCoroutine(Type());
         }
         skip = false;
     }

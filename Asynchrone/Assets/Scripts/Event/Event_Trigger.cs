@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof( AudioSource))]
 public class Event_Trigger : MonoBehaviour
 {
     [SerializeField] string nameEvent;
@@ -10,16 +9,17 @@ public class Event_Trigger : MonoBehaviour
 
     [SerializeField] private GameObject[] iaToActivate;
     [Space]
-    AudioSource audioSource;
     CanvasManager cm;
+    CameraManager camM;
 
     [Header("Dialogues")]
     public string[] dialogues;
+    [SerializeField] AudioClip audioC;
 
     private void Awake()
     {
         cm = CanvasManager.Instance;
-        audioSource = GetComponent<AudioSource>();
+        camM = CameraManager.Instance;
         for (int i = 0; i < iaToActivate.Length; i++)
         {
             iaToActivate[i].SetActive(false);
@@ -52,10 +52,10 @@ public class Event_Trigger : MonoBehaviour
 
     private void EventAudio()
     {
-        if (audioSource.clip)
+        if (audioC)
         {
-            audioSource.Play();
-            Debug.Log("audio");
+            //Debug.Log(camM + " Manager Cam  " + audioC);
+            camM.LaunchSound(audioC);
         }
     }
 

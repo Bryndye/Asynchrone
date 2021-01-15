@@ -39,7 +39,7 @@ public class Robot : MonoBehaviour
             mP.Hm.RobotIntoMe(true);
             if (!mP.onPlayer1)
             {
-                mP.CameraManager();
+                mP.Camera_Manager();
             }
         }
     }

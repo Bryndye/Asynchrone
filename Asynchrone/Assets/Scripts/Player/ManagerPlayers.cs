@@ -15,7 +15,7 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
     [HideInInspector] public Robot Rbt;
     [HideInInspector] public PlayerController pc2;
 
-    CameraSmooth cSmooth;
+    CameraManager cSmooth;
     CanvasManager cm;
     public bool onPlayer1;
 
@@ -30,13 +30,13 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
         if (Instance != this)
             Destroy(this);
 
-        cSmooth = CameraSmooth.Instance;
+        cSmooth = CameraManager.Instance;
         if (Player1 != null)
             pc1 = Player1.GetComponent<PlayerController>();
 
         if (Player2 != null)
             pc2 = Player2.GetComponent<PlayerController>();
-        CameraManager();
+        Camera_Manager();
         cm = CanvasManager.Instance;
     }
 
@@ -44,15 +44,16 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            CameraManager();
+            Camera_Manager();
         }
+        /*
         if (Input.GetKeyDown(KeyCode.Space))
         {
             cm.NextDialogue();
-        }
+        }*/
     }
 
-    public void CameraManager()
+    public void Camera_Manager()
     {
         if (Player2 != null)
         {
