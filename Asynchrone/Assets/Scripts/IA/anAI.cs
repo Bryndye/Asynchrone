@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.AI;
 
 public enum myBehaviour { Guard, Patrol };
-public enum Situation { None, PatrolMove, PatrolWait, Interrogation, Pursuit, Dead };
+public enum Situation { None, GuardMove, PatrolMove, PatrolWait, Interrogation, Pursuit, Dead };
 public enum Classe { Basic, Looper };
 
 public class anAI : MonoBehaviour
@@ -51,6 +51,10 @@ public class anAI : MonoBehaviour
     GameObject myUI;
     public Vector3 PursuitLastPosition;
 
+    [Header("Garde")]
+    public Vector3 BasePosition;
+    public Vector3 RotationBase;
+
     [Header("Patrouille")]
     [SerializeField]
     public List<Vector3> EtapesPatrouille;
@@ -80,6 +84,9 @@ public class anAI : MonoBehaviour
         viewMesh2 = new Mesh();
         viewMesh.name = "View Mesh 2";
         viewMeshFilter2.mesh = viewMesh2;
+
+        RotationBase = transform.rotation.eulerAngles;
+        BasePosition = transform.position;
 
         if(Comportement == myBehaviour.Patrol)
             NextPatrolStep();
@@ -117,6 +124,8 @@ public class anAI : MonoBehaviour
 
                     if (Comportement == myBehaviour.Patrol)
                         NextPatrolStep();
+                    else if (Comportement == myBehaviour.Guard)
+                        GuardReturnToBase();
                 }
             }
         }
@@ -124,7 +133,15 @@ public class anAI : MonoBehaviour
         {
             Pursuit();
         }
-       
+        else if (mySituation == Situation.GuardMove)
+        {
+            GuardVerifyToBase();
+        }
+        else if (Comportement == myBehaviour.Guard && mySituation == Situation.None)
+        {
+            ForceLook();
+        }
+
     }
 
     private void LateUpdate()
@@ -356,7 +373,7 @@ public class anAI : MonoBehaviour
 
     #endregion
 
-    #region Patrouille
+    #region Patrouille et garde
 
     #region Editor
 
@@ -474,6 +491,30 @@ public class anAI : MonoBehaviour
         StepPatrolIndex -= 1;
         if (StepPatrolIndex < 0)
             StepPatrolIndex = EtapesPatrouille.Count - 1;
+    }
+
+    void GuardReturnToBase()
+    {
+        if (myNavMeshAgent.isStopped)
+            myNavMeshAgent.isStopped = false;
+
+        myNavMeshAgent.SetDestination(BasePosition);
+        mySituation = Situation.GuardMove;
+    }
+
+    void GuardVerifyToBase()
+    {
+        if (myNavMeshAgent.remainingDistance < 0.1f)
+        {
+            if (!myNavMeshAgent.isStopped)
+                myNavMeshAgent.isStopped = true;
+            mySituation = Situation.None;
+        }
+    }
+
+    void ForceLook()
+    {
+
     }
 
     #endregion
