@@ -67,8 +67,8 @@ public class Event_Trigger : MonoBehaviour
         for (int i = 0; i < iaToActivate.Length; i++)
         {
             iaToActivate[i].SetActive(true);
+            Debug.Log("ia");
         }
-        Debug.Log("ia");
     }
 
     private void EventDialogue()
@@ -106,24 +106,3 @@ public class Event_Trigger : MonoBehaviour
 
     #endregion
 }
-/*
-#if UNITY_EDITOR
-[CustomEditor(typeof(Event_Trigger))]
-public class Event_Trigger_Editor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        DrawDefaultInspector(); // for other non-HideInInspector fields
-
-        Event_Trigger script = (Event_Trigger)target;
-
-        // draw checkbox for the bool
-        //script.eventToTrigger = EditorGUILayout.Toggle("iaToActivate", script.eventToTrigger);
-        if (script.eventToTrigger == Event_Trigger.typeEvent.Audio) // if bool is true, show other fields
-        {
-            script.audioC = EditorGUILayout.ObjectField("Clip", script.audioC, typeof(AudioClip), true) as AudioClip;
-            //script.dialogues2 = EditorGUILayout.ObjectField("IA", script.dialogues2.GetType(), typeof(GameObject[]), true) as GameObject[];
-        }
-    }
-}
-#endif*/

@@ -61,11 +61,12 @@ public class CanvasManager : Singleton<CanvasManager>
 
     public void NextDialogue()
     {
-        if (index < sentences.Length - 1)
+        if (index < sentences.Length - 1 && sentences != null)
         {
             index++;
             dialogueHere.text = null;
             StartCoroutine(Type());
+            Debug.Log("Next");
         }
         else
         {
@@ -73,7 +74,7 @@ public class CanvasManager : Singleton<CanvasManager>
             dialogueHere.text = null;
             isRuntime = false;
         }
-        if (sentencesStock != null && sentences == null)
+        if (sentencesStock.Length > 0 && sentences ==  null)
         {
             isRuntime = true;
             index = 0;
@@ -81,6 +82,7 @@ public class CanvasManager : Singleton<CanvasManager>
             sentencesStock = null;
             dialogueHere.text = null;
             StartCoroutine(Type());
+            Debug.Log("next dialogues");
         }
         skip = false;
     }
