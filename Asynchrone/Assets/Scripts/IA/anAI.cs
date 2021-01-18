@@ -53,7 +53,7 @@ public class anAI : MonoBehaviour
 
     [Header("Garde")]
     public Vector3 BasePosition;
-    public Vector3 RotationBase;
+    public Vector3 ForwardRotationBase;
 
     [Header("Patrouille")]
     [SerializeField]
@@ -85,8 +85,8 @@ public class anAI : MonoBehaviour
         viewMesh.name = "View Mesh 2";
         viewMeshFilter2.mesh = viewMesh2;
 
-        RotationBase = transform.rotation.eulerAngles;
         BasePosition = transform.position;
+        ForwardRotationBase = BasePosition + transform.forward;       
 
         if(Comportement == myBehaviour.Patrol)
             NextPatrolStep();
@@ -107,6 +107,14 @@ public class anAI : MonoBehaviour
         {
             if (Vus.Count > 0)
                 StopPatrol();
+            else if (Comportement == myBehaviour.Guard && mySituation == Situation.GuardMove)
+            {
+                Debug.Log("Oui");
+                GuardVerifyToBase();
+            }
+            else if (Comportement == myBehaviour.Guard && mySituation == Situation.None)
+                ForceLook();
+
         }
         else if(mySituation == Situation.Interrogation)
         {
@@ -133,15 +141,6 @@ public class anAI : MonoBehaviour
         {
             Pursuit();
         }
-        else if (mySituation == Situation.GuardMove)
-        {
-            GuardVerifyToBase();
-        }
-        else if (Comportement == myBehaviour.Guard && mySituation == Situation.None)
-        {
-            ForceLook();
-        }
-
     }
 
     private void LateUpdate()
@@ -504,6 +503,7 @@ public class anAI : MonoBehaviour
 
     void GuardVerifyToBase()
     {
+        Debug.Log(myNavMeshAgent.remainingDistance);
         if (myNavMeshAgent.remainingDistance < 0.1f)
         {
             if (!myNavMeshAgent.isStopped)
@@ -514,7 +514,9 @@ public class anAI : MonoBehaviour
 
     void ForceLook()
     {
+        Quaternion targetRotation = Quaternion.LookRotation(ForwardRotationBase - transform.position);
 
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
     }
 
     #endregion
