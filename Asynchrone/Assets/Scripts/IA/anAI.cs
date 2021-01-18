@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.AI;
 
 public enum myBehaviour { Guard, Patrol };
-public enum Situation { None, GuardMove, PatrolMove, PatrolWait, Interrogation, Pursuit, Dead };
+public enum Situation { None, Interaction, GuardMove, PatrolMove, PatrolWait, Interrogation, Pursuit, Dead };
 public enum Classe { Basic, Looper };
 
 public class anAI : MonoBehaviour
@@ -63,9 +63,15 @@ public class anAI : MonoBehaviour
     [SerializeField]
     public List<Vector3> EtapesPatrouilleSecondaire;
     int StepPatrolIndex;
+    bool UseSecondaryPatrol;
     public float Latence_InterEtapes;
     [HideInInspector]
     float Temps_InterEtapes;
+
+    [Header("Interaction")]
+    Vector3 InteractionTarget;
+    float TempsInteraction;
+    bool AlreadyInteracted;
 
     // Start is called before the first frame update
     void Awake()
@@ -109,11 +115,20 @@ public class anAI : MonoBehaviour
                 StopPatrol();
             else if (Comportement == myBehaviour.Guard && mySituation == Situation.GuardMove)
             {
-                Debug.Log("Oui");
                 GuardVerifyToBase();
             }
             else if (Comportement == myBehaviour.Guard && mySituation == Situation.None)
                 ForceLook();
+
+            else if(Comportement == myBehaviour.Patrol && mySituation == Situation.Interaction)
+            {
+                TempsInteraction += Time.deltaTime;
+                if(TempsInteraction >= 3)
+                {
+                    TempsInteraction = 0;
+                    NextPatrolStep();
+                }
+            }
 
         }
         else if(mySituation == Situation.Interrogation)
@@ -451,17 +466,33 @@ public class anAI : MonoBehaviour
     {
         if(EtapesPatrouille.Count > 0)
         {
-            if (myNavMeshAgent.isStopped)
-                myNavMeshAgent.isStopped = false;
-
-            StepPatrolIndex += 1;
-            if (StepPatrolIndex >= EtapesPatrouille.Count)
+            bool InteractionValid = VerifyInteraction();
+            if (!InteractionValid || (InteractionValid && AlreadyInteracted))
             {
-                StepPatrolIndex = 0;
-            }
+                if (myNavMeshAgent.isStopped)
+                    myNavMeshAgent.isStopped = false;
 
-            myNavMeshAgent.SetDestination(EtapesPatrouille[StepPatrolIndex]);
-            mySituation = Situation.PatrolMove;
+                StepPatrolIndex += 1;
+                if (AlreadyInteracted)
+                {
+                    UseSecondaryPatrol = true;
+                    StepPatrolIndex = 0;
+                }
+                if (StepPatrolIndex >= LogicPatrol().Count)
+                {
+                    UseSecondaryPatrol = false;
+                    StepPatrolIndex = 0;
+                }
+
+                myNavMeshAgent.SetDestination(LogicPatrol()[StepPatrolIndex]);
+                mySituation = Situation.PatrolMove;
+                AlreadyInteracted = false;
+            }
+            else
+            {
+                mySituation = Situation.Interaction;
+                AlreadyInteracted = true;
+            }
         }
     }
 
@@ -482,6 +513,14 @@ public class anAI : MonoBehaviour
         }
     }
 
+    List<Vector3> LogicPatrol()
+    {
+        if (UseSecondaryPatrol)
+            return EtapesPatrouilleSecondaire;
+        else
+            return EtapesPatrouille;
+    }
+
     void StopPatrol()
     {
         myNavMeshAgent.isStopped = true;
@@ -490,6 +529,24 @@ public class anAI : MonoBehaviour
         StepPatrolIndex -= 1;
         if (StepPatrolIndex < 0)
             StepPatrolIndex = EtapesPatrouille.Count - 1;
+    }
+
+    bool VerifyInteraction()
+    {
+        Collider[] targetInViewRadius = Physics.OverlapSphere(transform.position, 2, ObstacleMaskWithoutLowWall);
+        bool HasInteraction = false;
+
+        for (int i = 0; i < targetInViewRadius.Length; i++)
+        {
+            if(targetInViewRadius[i].gameObject.tag == "InteractionTarget")
+            {
+                InteractionTarget = new Vector3(targetInViewRadius[i].transform.position.x, transform.position.y, targetInViewRadius[i].transform.position.z); 
+                HasInteraction = true;
+                break;
+            }
+        }
+
+        return HasInteraction;
     }
 
     void GuardReturnToBase()
@@ -514,7 +571,10 @@ public class anAI : MonoBehaviour
 
     void ForceLook()
     {
-        Quaternion targetRotation = Quaternion.LookRotation(ForwardRotationBase - transform.position);
+        Vector3 MyCostumPosition = ForwardRotationBase;
+        if (mySituation == Situation.Interaction)
+            MyCostumPosition = InteractionTarget;
+        Quaternion targetRotation = Quaternion.LookRotation(MyCostumPosition - transform.position);
 
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
     }
