@@ -188,7 +188,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4820895701246519789, guid: 8f7f8c1ea7e74e742abbbd052da33642, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: mission
+      value: Settings
       objectReference: {fileID: 0}
     - target: {fileID: 4820895701246519789, guid: 8f7f8c1ea7e74e742abbbd052da33642, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -765,8 +765,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 645.56, y: 201}
-  m_SizeDelta: {x: 491.47205, y: 338.90112}
+  m_AnchoredPosition: {x: 643.96, y: 201}
+  m_SizeDelta: {x: 488.3385, y: 338.90112}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &579788486
 MonoBehaviour:
@@ -1286,7 +1286,6 @@ GameObject:
   m_Component:
   - component: {fileID: 735979540}
   - component: {fileID: 735979541}
-  - component: {fileID: 735979542}
   m_Layer: 5
   m_Name: List_Bt
   m_TagString: Untagged
@@ -1339,40 +1338,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &735979542
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 735979539}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7a0b5509ea41bf4c8f7d2750ee8aa46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menu: {fileID: 86501365}
-  Bouton: {fileID: 4820895701961772976, guid: 8f7f8c1ea7e74e742abbbd052da33642, type: 3}
-  missions:
-  - Name: Level 1
-    LevelName: Level_1
-    Illustration: {fileID: 21300000, guid: 645df3de5d2cd3644b1dbaeb30fa2e65, type: 3}
-    Context: "Ca va p\xE9ter!"
-  - Name: 3C - test room
-    LevelName: 3C
-    Illustration: {fileID: 21300000, guid: 46911c8bdfe050044b6a6cb18e64fc56, type: 3}
-    Context: "Humain :   Se d\xE9placer ( Clic droit ) S\u2019accroupir ( MAJ gauche) 
-      Interagir avec des objets du d\xE9cor ( Clic gauche ) Switch avec le robot
-      ( A ) Faire diversion ( Z ) Activer / d\xE9sactiver la fonction \u201Crappel\u201D
-      ( E )   Robot :    Se d\xE9placer (flotte) ( Clic droit ) Interagir avec des
-      objets du d\xE9cor ( Clic gauche ) Switch avec l\u2019Humain ( A ) D\xE9sactiver
-      un ennemi ( Clic gauche )"
-  - Name: IA - test room
-    LevelName: FPS_Room
-    Illustration: {fileID: 21300000, guid: 6fc9fb371a605fa4eae535b882bf2641, type: 3}
-    Context: Test Room
-  illustration: {fileID: 579788486}
-  context: {fileID: 2044575708}
 --- !u!1 &759607420
 GameObject:
   m_ObjectHideFlags: 0
@@ -1708,6 +1673,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1071103793}
   m_CullTransparentMesh: 0
+--- !u!1 &1409482503
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1409482504}
+  - component: {fileID: 1409482505}
+  m_Layer: 5
+  m_Name: Zone_Settings
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1409482504
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409482503}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1454518329}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1409482505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409482503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36aa85d793cfd62469fa95bd1072c2db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Settings
+  Openned: 0
+  btAnim: []
 --- !u!1 &1454518325
 GameObject:
   m_ObjectHideFlags: 0
@@ -1801,6 +1817,7 @@ RectTransform:
   - {fileID: 468868776}
   - {fileID: 1990793017}
   - {fileID: 86501364}
+  - {fileID: 1409482504}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1963,6 +1980,7 @@ GameObject:
   - component: {fileID: 2043105426}
   - component: {fileID: 2043105425}
   - component: {fileID: 2043105427}
+  - component: {fileID: 2043105428}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -1985,6 +2003,7 @@ MonoBehaviour:
   menus:
   - {fileID: 1990793018}
   - {fileID: 86501365}
+  - {fileID: 1409482505}
   BackToTitleName: start
 --- !u!224 &2043105426
 RectTransform:
@@ -2101,6 +2120,41 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2043105428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2043105424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7a0b5509ea41bf4c8f7d2750ee8aa46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menu: {fileID: 86501365}
+  Bouton: {fileID: 4820895701961772976, guid: 8f7f8c1ea7e74e742abbbd052da33642, type: 3}
+  missions:
+  - Name: Level 1
+    LevelName: Level_1
+    Illustration: {fileID: 0}
+    Context: "Ca va p\xE9ter!"
+  - Name: 3C - test room
+    LevelName: 3C
+    Illustration: {fileID: 21300000, guid: 46911c8bdfe050044b6a6cb18e64fc56, type: 3}
+    Context: "Humain :   Se d\xE9placer ( Clic droit ) S\u2019accroupir ( MAJ gauche) 
+      Interagir avec des objets du d\xE9cor ( Clic gauche ) Switch avec le robot
+      ( A ) Faire diversion ( Z ) Activer / d\xE9sactiver la fonction \u201Crappel\u201D
+      ( E )   Robot :    Se d\xE9placer (flotte) ( Clic droit ) Interagir avec des
+      objets du d\xE9cor ( Clic gauche ) Switch avec l\u2019Humain ( A ) D\xE9sactiver
+      un ennemi ( Clic gauche )"
+  - Name: IA - test room
+    LevelName: FPS_Room
+    Illustration: {fileID: 21300000, guid: 6fc9fb371a605fa4eae535b882bf2641, type: 3}
+    Context: Test Room
+  illustration: {fileID: 579788486}
+  context: {fileID: 2044575708}
+  list_bt: {fileID: 735979540}
 --- !u!1 &2044575706
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,14 +14,14 @@ public class ManagerMission : MonoBehaviour
     [Space]
     [SerializeField] Image illustration;
     [SerializeField] Text context;
-
+    [SerializeField] Transform list_bt;
 
     private void Awake()
     {
         for (int i = 0; i < missions.Length; i++)
         {
             var bt = Instantiate(Bouton);
-            bt.transform.SetParent(transform);
+            bt.transform.SetParent(list_bt);
             bt.transform.localScale = new Vector3(1,1,1);
 
             Bt_On bo = bt.GetComponent<Bt_On>();
