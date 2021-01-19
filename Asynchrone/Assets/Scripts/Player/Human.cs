@@ -95,8 +95,8 @@ public class Human : Singleton<Human>
     private void Accroupi(int h, int sp, int si, float center)
     {
         isAccroupi = !isAccroupi;
-        acrroupiMesh.SetActive(isAccroupi);
-        meshPrincipal.SetActive(!isAccroupi);
+        //acrroupiMesh.SetActive(isAccroupi);
+        //meshPrincipal.SetActive(!isAccroupi);
 
         if (isAccroupi)
         {
@@ -144,6 +144,7 @@ public class Human : Singleton<Human>
                     canDiv = false;
                     canSpell = false;
                     Invoke(nameof(ItsTime), cdDiv);
+                    mP.pc1.DivAnim();
                 }
             }
         }

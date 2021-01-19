@@ -7,6 +7,7 @@ using UnityEngine.AI;
 public class PlayerController : MonoBehaviour
 {
     #region var
+    [SerializeField] Animator anim;
     [HideInInspector] public NavMeshAgent nav;
     ManagerPlayers mP;
     public bool CanPlay;
@@ -34,7 +35,11 @@ public class PlayerController : MonoBehaviour
                 InputManager();
                 CheckDisInteraction();
             }
-            WalkAnim();
+            if (anim)
+            {
+                WalkAnim();
+                CrouchedAnim();
+            }
         }
     }
 
@@ -131,16 +136,37 @@ public class PlayerController : MonoBehaviour
     {
         if (finalDestination != null)
         {
-            if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(finalDestination.x, finalDestination.z)) > 1)
+            if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(finalDestination.x, finalDestination.z)) > 0.1f)
             {
-                //Debug.Log("je marche " + transform.name);
+                anim.SetBool("Walking", true);
+                Debug.Log("je marche " + transform.name);
             }
             else
             {
+                anim.SetBool("Walking", false);
                 //Debug.Log("idle " + transform.name);
             }
             //Debug.Log(Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(finalDestination.x, finalDestination.z)) + " " + transform.name);
         }
+    }
+
+    private void CrouchedAnim()
+    {
+        if (mP.onPlayer1)
+        {
+            if (mP.Hm.isAccroupi)
+            {
+                anim.SetBool("Crouched", true);
+            }
+            else
+            {
+                anim.SetBool("Crouched", false);
+            }
+        }
+    }
+    public void DivAnim()
+    {
+        anim.SetTrigger("Div");
     }
     #endregion
 }
