@@ -132,18 +132,34 @@ public class PlayerController : MonoBehaviour
 
 
     #region AnimManager
+    private void SetAnim(string var, bool active, bool trigger)
+    {
+        if (anim)
+        {
+            if (trigger)
+            {
+                anim.SetTrigger(var);
+            }
+            else
+            {
+                anim.SetBool(var, active);
+            }
+        }
+    }
     private void WalkAnim()
     {
         if (finalDestination != null)
         {
             if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(finalDestination.x, finalDestination.z)) > 0.1f)
             {
-                anim.SetBool("Walking", true);
-                Debug.Log("je marche " + transform.name);
+                //anim.SetBool("Walking", true);
+                SetAnim("Walking", true, false);
+                //Debug.Log("je marche " + transform.name);
             }
             else
             {
-                anim.SetBool("Walking", false);
+                SetAnim("Walking", false, false);
+                //anim.SetBool("Walking", false);
                 //Debug.Log("idle " + transform.name);
             }
             //Debug.Log(Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(finalDestination.x, finalDestination.z)) + " " + transform.name);
@@ -156,17 +172,19 @@ public class PlayerController : MonoBehaviour
         {
             if (mP.Hm.isAccroupi)
             {
-                anim.SetBool("Crouched", true);
+                SetAnim("Crouched", true, false);
+                //anim.SetBool("Crouched", true);
             }
             else
             {
-                anim.SetBool("Crouched", false);
+                //anim.SetBool("Crouched", false);
+                SetAnim("Crouched", false, false);
             }
         }
     }
     public void DivAnim()
     {
-        anim.SetTrigger("Div");
+        SetAnim("Div", true, true);
     }
     #endregion
 }

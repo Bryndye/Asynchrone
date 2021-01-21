@@ -15,9 +15,11 @@ public class Human : Singleton<Human>
     float size;
     float speed;
 
+    [Header("Accroupi")]
     [SerializeField] GameObject robotBeLike;
     [HideInInspector] public bool intoMe;
     [HideInInspector] public bool isAccroupi;
+    [SerializeField] LayerMask accroupiLask;
 
     [Header("Diversion")]
     [SerializeField] GameObject range;
@@ -68,6 +70,10 @@ public class Human : Singleton<Human>
                 InputManager();
             }
             GestionDiv();
+            if (Input.GetKeyDown(KeyCode.N))
+            {
+                nav.areaMask += 1 << NavMesh.GetAreaFromName("Human");
+            }
         }
     }
 
@@ -94,6 +100,7 @@ public class Human : Singleton<Human>
 
     private void Accroupi(int h, int sp, int si, float center)
     {
+        //check  si le joueur est sur area Human ou pas pour se remettre debout
         isAccroupi = !isAccroupi;
         //acrroupiMesh.SetActive(isAccroupi);
         //meshPrincipal.SetActive(!isAccroupi);
@@ -105,6 +112,7 @@ public class Human : Singleton<Human>
             sp = 2;
             si = 2;
             center = -0.5f;
+            nav.areaMask += 1 << NavMesh.GetAreaFromName("Human");
         }
         else
         {
@@ -113,8 +121,8 @@ public class Human : Singleton<Human>
             sp = 1;
             si = 1;
             center = 0;
+            nav.areaMask -= 1 << NavMesh.GetAreaFromName("Human");
         }
-
         nav.height = h;
         nav.speed = speed / sp;
         cc.height = size / si;
@@ -180,7 +188,7 @@ public class Human : Singleton<Human>
         //bt_destroy.interactable = robot_div != null;
     }
 
-    void ItsTime()
+    private void ItsTime()
     {
         canSpell = true;
     }
