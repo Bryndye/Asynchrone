@@ -21,7 +21,7 @@ public class anAI : MonoBehaviour
     [Header("Champ de vision"), HideInInspector]
     public List<Transform> Vus;
     [HideInInspector]
-    public  float TempsInterrogation;
+    public  float TempsInterrogation, TempsRegard;
     [Tooltip("Temps d'attente avant de commencer à poursuivre alors que l'IA a un joueur en vue")]
     public float LatenceInterrogation;
     [Space, Tooltip("Distance du champs de vision")]
@@ -140,7 +140,14 @@ public class anAI : MonoBehaviour
             }
             else
             {
-                TempsInterrogation -= Time.deltaTime;
+                TempsInterrogation -= Time.deltaTime / 10;
+                TempsRegard += Time.deltaTime;
+                if(TempsRegard >= 3)
+                {
+                    TempsRegard = 0;
+                    PursuitLastPosition = transform.position + GetRandomPositionAround();
+                }
+
                 if(TempsInterrogation <= 0)
                 {
                     TempsInterrogation = Mathf.Clamp(TempsInterrogation, 0f, LatenceInterrogation);
@@ -149,6 +156,10 @@ public class anAI : MonoBehaviour
                         NextPatrolStep();
                     else if (Comportement == myBehaviour.Guard)
                         GuardReturnToBase();
+                }
+                else
+                {
+                    ForceLook();
                 }
             }
         }
@@ -574,9 +585,33 @@ public class anAI : MonoBehaviour
         Vector3 MyCostumPosition = ForwardRotationBase;
         if (mySituation == Situation.Interaction)
             MyCostumPosition = InteractionTarget;
+        else if (mySituation == Situation.Interrogation)
+            MyCostumPosition = PursuitLastPosition;
         Quaternion targetRotation = Quaternion.LookRotation(MyCostumPosition - transform.position);
 
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
+    }
+
+    Vector3 GetRandomPositionAround()
+    {
+        Vector3 toReturn = Vector3.forward;
+        int rnd = Random.Range(0, 4);
+        switch (rnd)
+        {
+            case 0:
+                toReturn = Vector3.forward;
+                break;
+            case 1:
+                toReturn = Vector3.right;
+                break;
+            case 2:
+                toReturn = Vector3.left;
+                break;
+            case 3:
+                toReturn = Vector3.back;
+                break;
+        }
+        return toReturn;
     }
 
     #endregion
@@ -632,6 +667,7 @@ public class anAI : MonoBehaviour
         mySituation = Situation.Interrogation;
         myNavMeshAgent.isStopped = true;
         myNavMeshAgent.speed = 1f;
+        PursuitLastPosition = transform.position + Vector3.forward;
     }
 
     #endregion
