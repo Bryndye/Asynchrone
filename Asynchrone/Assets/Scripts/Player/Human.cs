@@ -19,7 +19,6 @@ public class Human : Singleton<Human>
     [SerializeField] GameObject robotBeLike;
     [HideInInspector] public bool intoMe;
     [HideInInspector] public bool isAccroupi;
-    [SerializeField] LayerMask accroupiLask;
 
     [Header("Diversion")]
     [SerializeField] GameObject range;
@@ -70,10 +69,6 @@ public class Human : Singleton<Human>
                 InputManager();
             }
             GestionDiv();
-            if (Input.GetKeyDown(KeyCode.N))
-            {
-                nav.areaMask += 1 << NavMesh.GetAreaFromName("Human");
-            }
         }
     }
 
@@ -81,7 +76,7 @@ public class Human : Singleton<Human>
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            Accroupi(1,2,2,-0.5f);
+            CheckMask();
         }
         
         if (Input.GetKeyDown(KeyCode.Z) && robot_div == null && canSpell)
@@ -98,9 +93,23 @@ public class Human : Singleton<Human>
         }
     }
 
-    private void Accroupi(int h, int sp, int si, float center)
+    #region Accroupi
+    private void CheckMask()
     {
-        //check  si le joueur est sur area Human ou pas pour se remettre debout
+
+        NavMeshHit hit = new NavMeshHit();
+        nav.SamplePathPosition(NavMesh.AllAreas, 0.0f, out hit);
+        int ll = LayerMask.GetMask("Human");
+        Debug.Log("Agent is currently on " + hit.mask + "  " + ll);
+        if (hit.mask != ll)
+        {
+            Accroupi();
+        }
+    }
+    private void Accroupi()
+    {
+        int h, sp, si;
+        float center;
         isAccroupi = !isAccroupi;
         //acrroupiMesh.SetActive(isAccroupi);
         //meshPrincipal.SetActive(!isAccroupi);
@@ -129,6 +138,7 @@ public class Human : Singleton<Human>
         cc.center = new Vector3(cc.center.x, center, cc.center.z);
     }
 
+    #endregion
 
     #region Diversion
     //le sprite 1x, 1y pour faire 2.5u

@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     ManagerPlayers mP;
     public bool CanPlay;
 
+    [SerializeField] LayerMask ingoreEvent;
     Vector3 finalDestination;
     Transform targetInteraction;
 
@@ -110,26 +111,35 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
+    #region MoveR
     private void OnClickMouseR()
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
-            if (hit.collider.gameObject.layer != 10)
+            if (nav.CalculatePath(hit.point, nav.path))
             {
-                nav.SetDestination(hit.point);
-                finalDestination = hit.point;
-            }
-            else
-            {
-                nav.SetDestination(transform.position);
-                finalDestination = transform.position;
+                
+                if (hit.collider.gameObject.layer != 10)
+                {
+                    if (CanReachPosition(hit.point))
+                    {
+                        nav.SetDestination(hit.point);
+                        finalDestination = hit.point;
+                    }
+                }
             }
         }
     }
-
+    public bool CanReachPosition(Vector3 position)
+    {
+        NavMeshPath path = new NavMeshPath();
+        nav.CalculatePath(position, path);
+        return path.status == NavMeshPathStatus.PathComplete;
+    }
+    #endregion
 
     #region AnimManager
     private void SetAnim(string var, bool active, bool trigger)
@@ -148,6 +158,11 @@ public class PlayerController : MonoBehaviour
     }
     private void WalkAnim()
     {
+        if (nav.pathStatus == NavMeshPathStatus.PathInvalid)
+        {
+            Debug.Log("path completed");
+        }
+
         if (finalDestination != null)
         {
             if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(finalDestination.x, finalDestination.z)) > 0.1f)

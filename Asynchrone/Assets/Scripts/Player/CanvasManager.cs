@@ -74,7 +74,7 @@ public class CanvasManager : Singleton<CanvasManager>
             dialogueHere.text = null;
             isRuntime = false;
         }
-        if (sentencesStock.Length > 0 && sentences ==  null)
+        if (sentencesStock != null && sentencesStock.Length > 0 && sentences ==  null)
         {
             isRuntime = true;
             index = 0;
