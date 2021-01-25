@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     Transform targetInteraction;
 
     public bool InCinematic;
+    GameObject fd_faisceau;
     #endregion
 
     private void Awake()
@@ -36,11 +37,8 @@ public class PlayerController : MonoBehaviour
                 InputManager();
                 CheckDisInteraction();
             }
-            if (anim)
-            {
-                WalkAnim();
-                CrouchedAnim();
-            }
+            WalkAnim();
+            CrouchedAnim();
         }
     }
 
@@ -128,10 +126,20 @@ public class PlayerController : MonoBehaviour
                     {
                         nav.SetDestination(hit.point);
                         finalDestination = hit.point;
+                        Faisceau_(hit.point, true);
                     }
                 }
             }
         }
+    }
+    private void Faisceau_(Vector3 v, bool active)
+    {
+        if (!fd_faisceau)
+        {
+            fd_faisceau = Instantiate(Resources.Load<GameObject>("Feedback/Player/Particle_loading"));
+        }
+        fd_faisceau.SetActive(active);
+        fd_faisceau.transform.position = v;
     }
     public bool CanReachPosition(Vector3 position)
     {
@@ -167,14 +175,13 @@ public class PlayerController : MonoBehaviour
         {
             if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(finalDestination.x, finalDestination.z)) > 0.1f)
             {
-                //anim.SetBool("Walking", true);
                 SetAnim("Walking", true, false);
                 //Debug.Log("je marche " + transform.name);
             }
             else
             {
                 SetAnim("Walking", false, false);
-                //anim.SetBool("Walking", false);
+                Faisceau_(Vector3.zero, false);
                 //Debug.Log("idle " + transform.name);
             }
             //Debug.Log(Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(finalDestination.x, finalDestination.z)) + " " + transform.name);

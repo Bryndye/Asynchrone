@@ -100,7 +100,7 @@ public class Human : Singleton<Human>
         NavMeshHit hit = new NavMeshHit();
         nav.SamplePathPosition(NavMesh.AllAreas, 0.0f, out hit);
         int ll = LayerMask.GetMask("Human");
-        Debug.Log("Agent is currently on " + hit.mask + "  " + ll);
+        //Debug.Log("Agent is currently on " + hit.mask + "  " + ll);
         if (hit.mask != ll)
         {
             Accroupi();

@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class ManagerPlayers : Singleton<ManagerPlayers>
 {
-    [Header("Player1")]
+    [Header("Human")]
     public Transform Player1;
     [HideInInspector] public Human Hm;
     [HideInInspector] public PlayerController pc1;
 
-    [Header("Player 2")]
+    [Header("Robot")]
     public Transform Player2;
     [HideInInspector] public Robot Rbt;
     [HideInInspector] public PlayerController pc2;
@@ -23,7 +23,10 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
     [SerializeField] Text QuelPlayer;
     [SerializeField] GameObject UIHuman;
     [SerializeField] GameObject UIRobot;
-
+    [Space]
+    [SerializeField] Texture2D cursorTexture;
+    CursorMode cursorMode = CursorMode.Auto;
+    Vector2 hotSpot = Vector2.zero;
 
     private void Awake()
     {
@@ -46,11 +49,7 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
         {
             Camera_Manager();
         }
-        /*
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            cm.NextDialogue();
-        }*/
+        CursorStyle();
     }
 
     public void Camera_Manager()
@@ -114,4 +113,23 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
         }
     }
     #endregion
+
+    public void CursorStyle()
+    {
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.collider.CompareTag("Interaction"))
+            {
+                Debug.Log("Interact");
+                Cursor.SetCursor(cursorTexture, hotSpot, cursorMode);
+            }
+            else
+            {
+                Cursor.SetCursor(null, hotSpot, cursorMode);
+            }
+        }
+    }
 }
