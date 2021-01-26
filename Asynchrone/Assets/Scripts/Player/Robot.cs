@@ -29,6 +29,10 @@ public class Robot : MonoBehaviour
         }
     }
 
+    #region Attack
+    #endregion
+
+    #region WhenHumanCallHim
     public void Linked()
     {
         nav.SetDestination(mP.Player1.position);
@@ -48,4 +52,5 @@ public class Robot : MonoBehaviour
     {
         nav.SetDestination(transform.position);
     }
+    #endregion
 }

@@ -69,45 +69,78 @@ public class PlayerController : MonoBehaviour
         {
             if (hit.collider.tag == "Interaction")
             {
-                nav.SetDestination(hit.point);
-                finalDestination = hit.point;
-                targetInteraction = hit.collider.transform;
+                SetDesination(hit, true, true);
             }
 
+            
             anAI ia = hit.collider.GetComponent<anAI>();
             if (ia != null && !mP.onPlayer1)
             {
-                nav.SetDestination(hit.point);
-                finalDestination = hit.point;
-                targetInteraction = hit.collider.transform;
+                SetDesination(hit, true, true);
             }
         }
+    }
+
+    private void SetDesination(RaycastHit t, bool inter, bool active)
+    {
+        if (!fd_faisceau)
+        {
+            fd_faisceau = Instantiate(Resources.Load<GameObject>("Feedback/Player/Particle_loading"));
+        }
+        if (t.point != Vector3.zero)
+        {
+            nav.SetDestination(t.point);
+            finalDestination = t.point;
+        }
+        else
+        {
+            nav.SetDestination(transform.position);
+            finalDestination = transform.position;
+        }
+        if (inter)
+        {
+            print("inter");
+            targetInteraction = t.collider.transform;
+            fd_faisceau.transform.position = t.collider.transform.position;
+        }
+        else
+        {
+            fd_faisceau.transform.position = t.point;
+        }
+
+        print("mache");
+        fd_faisceau.SetActive(active);
     }
     private void CheckDisInteraction()
     {
         if (targetInteraction != null)
         {
-            if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(targetInteraction.position.x, targetInteraction.position.z)) < 1)
+            if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(targetInteraction.position.x, targetInteraction.position.z)) < 1.5f)
             {
                 Interaction iem = targetInteraction.GetComponent<Interaction>();
                 if (iem != null)
                 {
                     iem.CallEvent();
+                    RaycastHit it = new RaycastHit();
+                    SetDesination(it,false, false);
                 }
 
                 anAI ia = targetInteraction.GetComponent<anAI>();
+
                 if (ia != null && !mP.onPlayer1)
                 {
                     Debug.Log("T MORT");
                 }
-
                 targetInteraction = null;
+                RaycastHit hit = new RaycastHit();
+                SetDesination(hit, false, false);
             }
         }
         //Debug.Log(targetInteraction);
     }
 
     #endregion
+
 
     #region MoveR
     private void OnClickMouseR()
@@ -124,23 +157,13 @@ public class PlayerController : MonoBehaviour
                 {
                     if (CanReachPosition(hit.point))
                     {
-                        nav.SetDestination(hit.point);
-                        finalDestination = hit.point;
-                        Faisceau_(hit.point, true);
+                        SetDesination(hit, false, true);
                     }
                 }
             }
         }
     }
-    private void Faisceau_(Vector3 v, bool active)
-    {
-        if (!fd_faisceau)
-        {
-            fd_faisceau = Instantiate(Resources.Load<GameObject>("Feedback/Player/Particle_loading"));
-        }
-        fd_faisceau.SetActive(active);
-        fd_faisceau.transform.position = v;
-    }
+
     public bool CanReachPosition(Vector3 position)
     {
         NavMeshPath path = new NavMeshPath();
@@ -148,6 +171,7 @@ public class PlayerController : MonoBehaviour
         return path.status == NavMeshPathStatus.PathComplete;
     }
     #endregion
+
 
     #region AnimManager
     private void SetAnim(string var, bool active, bool trigger)
@@ -180,8 +204,9 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+                RaycastHit it = new RaycastHit();
                 SetAnim("Walking", false, false);
-                Faisceau_(Vector3.zero, false);
+                SetDesination(it, false, false);
                 //Debug.Log("idle " + transform.name);
             }
             //Debug.Log(Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(finalDestination.x, finalDestination.z)) + " " + transform.name);
@@ -195,11 +220,9 @@ public class PlayerController : MonoBehaviour
             if (mP.Hm.isAccroupi)
             {
                 SetAnim("Crouched", true, false);
-                //anim.SetBool("Crouched", true);
             }
             else
             {
-                //anim.SetBool("Crouched", false);
                 SetAnim("Crouched", false, false);
             }
         }
@@ -210,3 +233,41 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 }
+
+/*
+    /*
+    private void SetDesination(RaycastHit t, bool inter)
+    {
+        if (t.point != Vector3.zero)
+        {
+            nav.SetDestination(t.point);
+            finalDestination = t.point;
+        }
+        else
+        {
+            nav.SetDestination(transform.position);
+            finalDestination = transform.position;
+        }
+
+        if (inter)
+        {
+            targetInteraction = t.collider.transform;
+        }
+    }
+
+    private void Faisceau_(RaycastHit t, bool active, bool interaction)
+    {
+        if (!fd_faisceau)
+        {
+            fd_faisceau = Instantiate(Resources.Load<GameObject>("Feedback/Player/Particle_loading"));
+        }
+        if (interaction)
+        {
+            fd_faisceau.transform.position = t.collider.transform.position;
+        }
+        else
+        {
+            fd_faisceau.transform.position = t.point;
+        }
+        fd_faisceau.SetActive(active);
+**/

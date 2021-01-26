@@ -23,10 +23,6 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
     [SerializeField] Text QuelPlayer;
     [SerializeField] GameObject UIHuman;
     [SerializeField] GameObject UIRobot;
-    [Space]
-    [SerializeField] Texture2D cursorTexture;
-    CursorMode cursorMode = CursorMode.Auto;
-    Vector2 hotSpot = Vector2.zero;
 
     private void Awake()
     {
@@ -114,22 +110,43 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
     }
     #endregion
 
+    #region Cursor
+    [Space]
+    CursorMode cursorMode = CursorMode.Auto;
+    Vector2 hotSpot = Vector2.zero;
+    [SerializeField] LayerMask layerCursor;
+    private void SetCursor(string nom)
+    {
+        if (Resources.Load<Texture2D>("UI/Cursor/" + nom))
+        {
+            Cursor.SetCursor(Resources.Load<Texture2D>("UI/Cursor/" + nom), hotSpot, cursorMode);
+        }
+        else
+        {
+            Cursor.SetCursor(null, hotSpot, cursorMode);
+        }
+    }
     public void CursorStyle()
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerCursor))
         {
             if (hit.collider.CompareTag("Interaction"))
             {
-                Debug.Log("Interact");
-                Cursor.SetCursor(cursorTexture, hotSpot, cursorMode);
+                SetCursor("Interact");
             }
-            else
+            if (hit.collider.GetComponent<anAI>() != null && !onPlayer1)
             {
-                Cursor.SetCursor(null, hotSpot, cursorMode);
+                SetCursor("Attack");
             }
         }
+        else
+        {
+            SetCursor(null);
+        }
     }
+
+    #endregion
 }
