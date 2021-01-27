@@ -14,6 +14,10 @@ public class CanvasManager : Singleton<CanvasManager>
     [SerializeField] string[] sentencesStock;
     private bool isRuntime;
 
+    ManagerPlayers mp;
+    PlayerController pc;
+
+
     void Awake()
     {
         if (Instance != this)
@@ -22,6 +26,9 @@ public class CanvasManager : Singleton<CanvasManager>
         anim = GetComponent<Animator>();
         anim.SetTrigger("Disappear");
     }
+    #region SetBtn
+
+    #endregion
 
     #region visual
     public void BandeAppear()

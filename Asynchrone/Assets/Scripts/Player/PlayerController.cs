@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     ManagerPlayers mP;
     public bool CanPlay;
 
-    [SerializeField] LayerMask ingoreEvent;
+    private LayerMask ingorePlayers;
     Vector3 finalDestination;
     Transform targetInteraction;
 
@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
         nav = GetComponent<NavMeshAgent>();
 
         finalDestination = transform.position;
+        ingorePlayers = ~(1 << 8) + ~(1 << 9) + (1 << 0);
     }
 
     void Update()
@@ -71,7 +72,6 @@ public class PlayerController : MonoBehaviour
             {
                 SetDesination(hit, true, true);
             }
-
             
             anAI ia = hit.collider.GetComponent<anAI>();
             if (ia != null && !mP.onPlayer1)
@@ -107,8 +107,7 @@ public class PlayerController : MonoBehaviour
         {
             fd_faisceau.transform.position = t.point;
         }
-
-        print("mache");
+        //print("mache");
         fd_faisceau.SetActive(active);
     }
     private void CheckDisInteraction()
@@ -148,17 +147,13 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, ingorePlayers))
         {
             if (nav.CalculatePath(hit.point, nav.path))
             {
-                
-                if (hit.collider.gameObject.layer != 10)
+                if (CanReachPosition(hit.point))
                 {
-                    if (CanReachPosition(hit.point))
-                    {
-                        SetDesination(hit, false, true);
-                    }
+                    SetDesination(hit, false, true);
                 }
             }
         }

@@ -81,7 +81,7 @@ public class Human : Singleton<Human>
         
         if (Input.GetKeyDown(KeyCode.Z) && robot_div == null && canSpell)
         {
-            canDiv = !canDiv;
+            StartDiv();
         }
         if (Input.GetKeyDown(KeyCode.Z) && robot_div != null)
         {
@@ -94,9 +94,8 @@ public class Human : Singleton<Human>
     }
 
     #region Accroupi
-    private void CheckMask()
+    public void CheckMask()
     {
-
         NavMeshHit hit = new NavMeshHit();
         nav.SamplePathPosition(NavMesh.AllAreas, 0.0f, out hit);
         int ll = LayerMask.GetMask("Human");
@@ -141,6 +140,7 @@ public class Human : Singleton<Human>
     #endregion
 
     #region Diversion
+    public void StartDiv() => canDiv = !canDiv;
     //le sprite 1x, 1y pour faire 2.5u
     public void CreateDiversion()
     {

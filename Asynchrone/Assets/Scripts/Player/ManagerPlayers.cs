@@ -96,7 +96,6 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
     }
 
     #region Huamn fct
-
     public void RobotBackToHuman()
     {
         if (Rbt)
