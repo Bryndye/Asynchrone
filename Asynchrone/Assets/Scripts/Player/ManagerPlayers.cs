@@ -19,24 +19,21 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
     CanvasManager cm;
     public bool onPlayer1;
 
-    [Header("UI")]
-    [SerializeField] Text QuelPlayer;
-    [SerializeField] GameObject UIHuman;
-    [SerializeField] GameObject UIRobot;
-
     private void Awake()
     {
+        Time.timeScale = 1;
         if (Instance != this)
             Destroy(this);
 
         cSmooth = CameraManager.Instance;
+        cm = CanvasManager.Instance;
+
         if (Player1 != null)
             pc1 = Player1.GetComponent<PlayerController>();
 
         if (Player2 != null)
             pc2 = Player2.GetComponent<PlayerController>();
         Camera_Manager();
-        cm = CanvasManager.Instance;
     }
 
     private void Update()
@@ -50,21 +47,21 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
 
     public void Camera_Manager()
     {
-        if (Player2 != null|| Player1 != null)
+        if (Player2 != null)
         {
             onPlayer1 = !onPlayer1;
 
             if (onPlayer1)
             {
-                if (!QuelPlayer)
-                    QuelPlayer.text = Player1.name;
+                if (cm.QuelPlayer != null)
+                    cm.QuelPlayer.text = Player1.name;
 
                 cSmooth.Target = Player1;
             }
             else
             {
-                if (!QuelPlayer)
-                    QuelPlayer.text = Player2.name;
+                if (!cm.QuelPlayer)
+                    cm.QuelPlayer.text = Player2.name;
 
                 cSmooth.Target = Player2;
             }
@@ -72,10 +69,10 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
             pc1.CanPlay = onPlayer1;
             pc2.CanPlay = !onPlayer1;
 
-            if (UIHuman != null && UIRobot != null)
+            if (cm.UIHuman != null && cm.UIRobot != null)
             {
-                UIHuman.SetActive(onPlayer1);
-                UIRobot.SetActive(!onPlayer1);
+                cm.UIHuman.SetActive(onPlayer1);
+                cm.UIRobot.SetActive(!onPlayer1);
             }
 
             if (!onPlayer1 && Hm.intoMe)
@@ -86,8 +83,8 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
         else
         {
             onPlayer1 = true;
-            if (QuelPlayer != null)
-                QuelPlayer.text = Player1.name;
+            if (cm.QuelPlayer != null)
+                cm.QuelPlayer.text = Player1.name;
 
             cSmooth.Target = Player1;
             pc1.CanPlay = onPlayer1;

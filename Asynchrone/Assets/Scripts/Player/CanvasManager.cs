@@ -18,7 +18,9 @@ public class CanvasManager : Singleton<CanvasManager>
     PlayerController pc;
 
     [Header("Bts Spells")]
-    float time;
+    public Text QuelPlayer;
+    public GameObject UIHuman;
+    public GameObject UIRobot;
     void Awake()
     {
         if (Instance != this)
@@ -137,6 +139,7 @@ public class CanvasManager : Singleton<CanvasManager>
     [SerializeField] float latence = 0.1f;
 
     #endregion
+
     void Update()
     {
         if (isRuntime && dialogueHere.text == sentences[index] && !skip)
