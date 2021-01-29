@@ -12,8 +12,7 @@ public class PlayerController : MonoBehaviour
     ManagerPlayers mP;
     public bool CanPlay;
 
-    private LayerMask ingorePlayers;
-    Vector3 finalDestination;
+    [SerializeField] LayerMask ingorePlayers;
     Transform targetInteraction;
 
     public bool InCinematic;
@@ -24,9 +23,6 @@ public class PlayerController : MonoBehaviour
     {
         mP = ManagerPlayers.Instance;
         nav = GetComponent<NavMeshAgent>();
-
-        finalDestination = transform.position;
-        ingorePlayers = ~(1 << 8) + ~(1 << 9) + (1 << 0);
     }
 
     void Update()
@@ -87,16 +83,24 @@ public class PlayerController : MonoBehaviour
         {
             fd_faisceau = Instantiate(Resources.Load<GameObject>("Feedback/Player/Particle_loading"));
         }
+        fd_faisceau.SetActive(active);
         if (t.point != Vector3.zero)
         {
             nav.SetDestination(t.point);
-            finalDestination = t.point;
         }
         else
         {
+            //print("null");
             nav.SetDestination(transform.position);
-            finalDestination = transform.position;
+            //nav.isStopped = true;
         }
+        /*
+        if (nav.remainingDistance > 30)
+        {
+            print("loin" + nav.destination);
+            nav.SetDestination(transform.position);
+            fd_faisceau.SetActive(false);
+        }*/
         if (inter)
         {
             print("inter");
@@ -108,7 +112,6 @@ public class PlayerController : MonoBehaviour
             fd_faisceau.transform.position = t.point;
         }
         //print("mache");
-        fd_faisceau.SetActive(active);
     }
     private void CheckDisInteraction()
     {
@@ -120,8 +123,7 @@ public class PlayerController : MonoBehaviour
                 if (iem != null)
                 {
                     iem.CallEvent();
-                    RaycastHit it = new RaycastHit();
-                    SetDesination(it,false, false);
+                    SetDesination(raycastNull(), false, false);
                 }
 
                 anAI ia = targetInteraction.GetComponent<anAI>();
@@ -131,8 +133,7 @@ public class PlayerController : MonoBehaviour
                     Debug.Log("T MORT");
                 }
                 targetInteraction = null;
-                RaycastHit hit = new RaycastHit();
-                SetDesination(hit, false, false);
+                SetDesination(raycastNull(), false, false);
             }
         }
         //Debug.Log(targetInteraction);
@@ -147,7 +148,7 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, ingorePlayers))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ingorePlayers))
         {
             if (nav.CalculatePath(hit.point, nav.path))
             {
@@ -164,6 +165,12 @@ public class PlayerController : MonoBehaviour
         NavMeshPath path = new NavMeshPath();
         nav.CalculatePath(position, path);
         return path.status == NavMeshPathStatus.PathComplete;
+    }
+
+    private RaycastHit raycastNull()
+    {
+        RaycastHit hit = new RaycastHit();
+        return hit;
     }
     #endregion
 
@@ -190,18 +197,17 @@ public class PlayerController : MonoBehaviour
             Debug.Log("path completed");
         }
 
-        if (finalDestination != null)
+        if (nav.destination != null)
         {
-            if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(finalDestination.x, finalDestination.z)) > 0.1f)
+            if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(nav.destination.x, nav.destination.z)) > 0.1f)
             {
                 SetAnim("Walking", true, false);
                 //Debug.Log("je marche " + transform.name);
             }
             else
             {
-                RaycastHit it = new RaycastHit();
                 SetAnim("Walking", false, false);
-                SetDesination(it, false, false);
+                SetDesination(raycastNull(), false, false);
                 //Debug.Log("idle " + transform.name);
             }
             //Debug.Log(Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(finalDestination.x, finalDestination.z)) + " " + transform.name);

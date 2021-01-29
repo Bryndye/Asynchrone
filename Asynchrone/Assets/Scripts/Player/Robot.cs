@@ -21,10 +21,17 @@ public class Robot : MonoBehaviour
     void Update()
     {
         if (!mP.pc2.InCinematic)
-        {
+        {         
             if (BackToHuman)
             {
                 Linked();
+            }
+            if (!mP.onPlayer1)
+            {
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    mP.RobotBackToHuman();
+                }
             }
         }
     }
@@ -50,7 +57,10 @@ public class Robot : MonoBehaviour
 
     public void CancelBack()
     {
-        nav.SetDestination(transform.position);
+        if (gameObject.activeSelf)
+        {
+            nav.SetDestination(transform.position);
+        }
     }
     #endregion
 }

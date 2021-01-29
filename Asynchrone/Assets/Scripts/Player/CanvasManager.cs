@@ -17,17 +17,57 @@ public class CanvasManager : Singleton<CanvasManager>
     ManagerPlayers mp;
     PlayerController pc;
 
-
+    [Header("Bts Spells")]
+    float time;
     void Awake()
     {
         if (Instance != this)
             Destroy(this);
-
+        mp = ManagerPlayers.Instance;
         anim = GetComponent<Animator>();
         anim.SetTrigger("Disappear");
     }
-    #region SetBtn
 
+    #region SetBtn
+    public void CallFctSpell(int i)
+    {
+        switch (i)
+        {
+            default:
+                mp.Camera_Manager();
+                break;
+
+            case 0:
+                mp.Camera_Manager();
+                break;
+            case 1:
+                if (mp.onPlayer1 && !mp.Hm.robot_div)
+                {
+                    mp.Hm.StartDiv();
+                }
+                else
+                {
+                    Destroy(mp.Hm.robot_div);
+                }
+                break;
+            case 2:
+                if (!mp.Hm.intoMe)
+                {
+                    mp.RobotBackToHuman();
+                }
+                else
+                {
+                    mp.Hm.RobotIntoMe(false);
+                }
+                break;
+            case 3:
+                if (mp.onPlayer1)
+                {
+                    mp.Hm.CheckMask();
+                }
+                break;
+        }
+    }
     #endregion
 
     #region visual
@@ -73,7 +113,7 @@ public class CanvasManager : Singleton<CanvasManager>
             index++;
             dialogueHere.text = null;
             StartCoroutine(Type());
-            Debug.Log("Next");
+            //Debug.Log("Next");
         }
         else
         {
@@ -89,7 +129,7 @@ public class CanvasManager : Singleton<CanvasManager>
             sentencesStock = null;
             dialogueHere.text = null;
             StartCoroutine(Type());
-            Debug.Log("next dialogues");
+            //Debug.Log("next dialogues");
         }
         skip = false;
     }

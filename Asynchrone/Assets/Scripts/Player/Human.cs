@@ -28,22 +28,9 @@ public class Human : Singleton<Human>
     [SerializeField] GameObject acrroupiMesh;
     [HideInInspector] public GameObject robot_div;
     [SerializeField] float cdDiv;
-    bool canSpell = true;
+    [HideInInspector] public bool canSpell = true;
 
     #endregion
-
-    public void RobotIntoMe(bool intoMoi)
-    {
-        intoMe = intoMoi;
-
-        robotBeLike.SetActive(intoMe);
-        mP.Player2.gameObject.SetActive(!intoMe);
-
-        if (!intoMe)
-        {
-            mP.Player2.position = transform.position;
-        }
-    }
 
     private void Awake()
     {
@@ -87,9 +74,26 @@ public class Human : Singleton<Human>
         {
             Destroy(robot_div);
         }
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E)&& !intoMe)
         {
             mP.RobotBackToHuman();
+        }
+        else if (Input.GetKeyDown(KeyCode.E) && intoMe)
+        {
+            RobotIntoMe(false);
+        }
+    }
+
+    public void RobotIntoMe(bool intoMoi)
+    {
+        intoMe = intoMoi;
+
+        robotBeLike.SetActive(intoMe);
+        mP.Player2.gameObject.SetActive(!intoMe);
+
+        if (!intoMe)
+        {
+            mP.Player2.position = transform.position;
         }
     }
 

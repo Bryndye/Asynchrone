@@ -50,20 +50,20 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
 
     public void Camera_Manager()
     {
-        if (Player2 != null)
+        if (Player2 != null|| Player1 != null)
         {
             onPlayer1 = !onPlayer1;
 
             if (onPlayer1)
             {
-                if (QuelPlayer != null)
+                if (!QuelPlayer)
                     QuelPlayer.text = Player1.name;
 
                 cSmooth.Target = Player1;
             }
             else
             {
-                if (QuelPlayer != null)
+                if (!QuelPlayer)
                     QuelPlayer.text = Player2.name;
 
                 cSmooth.Target = Player2;
@@ -92,7 +92,6 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
             cSmooth.Target = Player1;
             pc1.CanPlay = onPlayer1;
         }
-
     }
 
     #region Huamn fct
