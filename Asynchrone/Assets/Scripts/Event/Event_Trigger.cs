@@ -23,7 +23,7 @@ public class Event_Trigger : MonoBehaviour
 
     [Header("Dialogues")]
     [ShowIf("audio")] public string[] dialogues;
-    [ShowIf("audio")] public AudioClip audioC;
+    [ShowIf("audio")] public AudioClip[] audioC;
 
     private void Awake()
     {
@@ -41,24 +41,13 @@ public class Event_Trigger : MonoBehaviour
         {
             if (eventToTrigger == typeEvent.Audio)
             {
-                EventAudio();
+                EventDialogue();
             }
             if (eventToTrigger == typeEvent.ActiveIA)
             {
                 EventIA();
             }
-            EventDialogue();
-
             done = true;
-        }
-    }
-
-    private void EventAudio()
-    {
-        if (audioC)
-        {
-            //Debug.Log(camM + " Manager Cam  " + audioC);
-            camM.LaunchSound(audioC);
         }
     }
 
@@ -75,7 +64,7 @@ public class Event_Trigger : MonoBehaviour
     {
         if (cm.dialogueHere && dialogues.Length > 0)
         {
-            cm.StartDiaEffect(dialogues);
+            cm.StartDiaEffect(dialogues, audioC);
         }
     }
 

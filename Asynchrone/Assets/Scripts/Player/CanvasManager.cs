@@ -6,12 +6,15 @@ using UnityEngine.UI;
 public class CanvasManager : Singleton<CanvasManager>
 {
     //[SerializeField] Button bt_continue;
+    CameraManager cm;
     Animator anim;
     public Text dialogueHere;
     private bool skip;
     private int index =0;
     public string[] sentences;
     [SerializeField] string[] sentencesStock;
+    public AudioClip[] audioc;
+    [SerializeField] AudioClip[] acStock;
     private bool isRuntime;
 
     ManagerPlayers mp;
@@ -86,18 +89,29 @@ public class CanvasManager : Singleton<CanvasManager>
     #region Daliogue
     IEnumerator Type()
     {
+        LaunchAudio();
         foreach (char letter in sentences[index].ToCharArray())
         {
             dialogueHere.text += letter;
             yield return new WaitForSeconds(latence);
         }
     }
+    private void LaunchAudio()
+    {
+        if (audioc.Length > 0 && index < audioc.Length)
+        {
+            cm.AS_dia.clip = audioc[index];
+            cm.AS_dia.Play();
+            //print("audio launch");
+        }
+    }
 
-    public void StartDiaEffect(string[] dia)
+    public void StartDiaEffect(string[] dia, AudioClip[] ac)
     {
         if (!isRuntime)
         {
             sentences = dia;
+            audioc = ac;
             isRuntime = true;
             index = 0;
             StartCoroutine(Type());
@@ -105,6 +119,7 @@ public class CanvasManager : Singleton<CanvasManager>
         else
         {
             sentencesStock = dia;
+            acStock = ac;
         }
     }
 
@@ -123,7 +138,12 @@ public class CanvasManager : Singleton<CanvasManager>
             dialogueHere.text = null;
             isRuntime = false;
         }
-        if (sentencesStock != null && sentencesStock.Length > 0 && sentences ==  null)
+        if (acStock != null && acStock.Length > 0)
+        {
+            audioc = acStock;
+            acStock = null;
+        }
+        if (sentencesStock != null && sentencesStock.Length > 0 && sentences == null)
         {
             isRuntime = true;
             index = 0;
