@@ -10,7 +10,6 @@ public class Human : Singleton<Human>
     ManagerPlayers mP;
     NavMeshAgent nav;
     CapsuleCollider cc;
-    [SerializeField] GameObject meshPrincipal;
 
     float size;
     float speed;
@@ -25,10 +24,8 @@ public class Human : Singleton<Human>
     [SerializeField] LayerMask ignoreWall;
     [SerializeField] float rangeDis;
     [HideInInspector] public bool canDiv;
-    [SerializeField] GameObject acrroupiMesh;
     [HideInInspector] public GameObject robot_div;
-    [SerializeField] float cdDiv;
-    [HideInInspector] public bool canSpell = true;
+    public int DivStock = 0;
 
     #endregion
 
@@ -66,7 +63,7 @@ public class Human : Singleton<Human>
             CheckMask();
         }
         
-        if (Input.GetKeyDown(KeyCode.Z) && robot_div == null && canSpell)
+        if (Input.GetKeyDown(KeyCode.Z) && robot_div == null && DivStock > 0)
         {
             StartDiv();
         }
@@ -146,29 +143,29 @@ public class Human : Singleton<Human>
     #region Diversion
     public void StartDiv() => canDiv = !canDiv;
     //le sprite 1x, 1y pour faire 2.5u
-    public void CreateDiversion()
+    public void CreateDiversion(RaycastHit hit)
     {
-        range.transform.localScale = new Vector3(rangeDis / 2.5f, rangeDis / 2.5f, 1);
-
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out hit) && Input.GetKeyDown(KeyCode.Mouse0))
+        if (hit.collider.gameObject.layer != 10)
         {
-            if (hit.collider.gameObject.layer != 10)
-            {
-                Vector3 point = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-                Vector3 dir = (transform.position - point).normalized;
+            Vector3 point = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+            Vector3 dir = (transform.position - point).normalized;
 
-                if (CheckWall(dir, point))
-                {
-                    robot_div = Instantiate(Resources.Load<GameObject>("Player/Fake_Robot"), hit.point, Quaternion.identity);
-                    canDiv = false;
-                    canSpell = false;
-                    Invoke(nameof(ItsTime), cdDiv);
-                    mP.pc1.DivAnim();
-                }
+            if (CheckWall(dir, point))
+            {
+                robot_div = Instantiate(Resources.Load<GameObject>("Player/Fake_Robot"), hit.point, Quaternion.identity);
+                StockDivManager();
+                canDiv = false;
+                mP.pc1.DivAnim();
             }
+        }
+    }
+
+    private void StockDivManager()
+    {
+        DivStock--;
+        if (DivStock <= 0)
+        {
+            DivStock = 0;
         }
     }
 
@@ -192,7 +189,8 @@ public class Human : Singleton<Human>
     {
         if (canDiv)
         {
-            CreateDiversion();
+            range.transform.localScale = new Vector3(rangeDis / 2.5f, rangeDis / 2.5f, 1);
+            //CreateDiversion();
         }
         if (!mP.onPlayer1)
         {
@@ -200,11 +198,6 @@ public class Human : Singleton<Human>
         }
         range.SetActive(canDiv);
         //bt_destroy.interactable = robot_div != null;
-    }
-
-    private void ItsTime()
-    {
-        canSpell = true;
     }
 
     #endregion

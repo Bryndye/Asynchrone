@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     ManagerPlayers mP;
     public bool CanPlay;
 
+    [SerializeField] LayerMask ingoreDiv;
     [SerializeField] LayerMask ingorePlayers;
     Transform targetInteraction;
 
@@ -32,8 +33,8 @@ public class PlayerController : MonoBehaviour
             if (CanPlay)
             {
                 InputManager();
-                CheckDisInteraction();
             }
+            CheckDisInteraction();
             WalkAnim();
             CrouchedAnim();
         }
@@ -41,13 +42,12 @@ public class PlayerController : MonoBehaviour
 
     private void InputManager()
     {
-        if (Input.GetKey(KeyCode.Mouse1))
+        if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             OnClickMouseR();
         }
         if (Input.GetKey(KeyCode.Mouse0))
         {
-            OnClickMouseL();
         }
         if (Input.GetKeyDown(KeyCode.Mouse1) && !mP.onPlayer1 && mP.Rbt.BackToHuman )
         {
@@ -56,25 +56,48 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    #region Interaction element decor
-    private void OnClickMouseL()
+    #region Mousse/Interaction element decor
+    private void OnClickMouseR()
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out hit))
+        if (mP.onPlayer1 && mP.Hm.canDiv && mP.Hm.DivStock > 0)
         {
-            if (hit.collider.tag == "Interaction")
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ingoreDiv))
             {
-                SetDesination(hit, true, true);
-            }
-            
-            anAI ia = hit.collider.GetComponent<anAI>();
-            if (ia != null && !mP.onPlayer1)
-            {
-                SetDesination(hit, true, true);
+                mP.Hm.CreateDiversion(hit);
             }
         }
+        else
+        {
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ingorePlayers))
+            {
+                if (nav.CalculatePath(hit.point, nav.path))
+                {
+                    if (CanReachPosition(hit.point))
+                    {
+                        SetDesination(hit, false, true);
+                    }
+                }
+                if (hit.collider.tag == "Interaction")
+                {
+                    SetDesination(hit, true, true);
+                }
+
+                anAI ia = hit.collider.GetComponent<anAI>();
+                if (ia != null && !mP.onPlayer1)
+                {
+                    SetDesination(hit, true, true);
+                }
+            }
+        }
+    }
+
+    public bool CanReachPosition(Vector3 position)
+    {
+        NavMeshPath path = new NavMeshPath();
+        nav.CalculatePath(position, path);
+        return path.status == NavMeshPathStatus.PathComplete;
     }
 
     private void SetDesination(RaycastHit t, bool inter, bool active)
@@ -90,17 +113,9 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            //print("null");
             nav.SetDestination(transform.position);
-            //nav.isStopped = true;
         }
-        /*
-        if (nav.remainingDistance > 30)
-        {
-            print("loin" + nav.destination);
-            nav.SetDestination(transform.position);
-            fd_faisceau.SetActive(false);
-        }*/
+
         if (inter)
         {
             print("inter");
@@ -139,41 +154,13 @@ public class PlayerController : MonoBehaviour
         //Debug.Log(targetInteraction);
     }
 
-    #endregion
-
-
-    #region MoveR
-    private void OnClickMouseR()
-    {
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ingorePlayers))
-        {
-            if (nav.CalculatePath(hit.point, nav.path))
-            {
-                if (CanReachPosition(hit.point))
-                {
-                    SetDesination(hit, false, true);
-                }
-            }
-        }
-    }
-
-    public bool CanReachPosition(Vector3 position)
-    {
-        NavMeshPath path = new NavMeshPath();
-        nav.CalculatePath(position, path);
-        return path.status == NavMeshPathStatus.PathComplete;
-    }
-
     private RaycastHit raycastNull()
     {
         RaycastHit hit = new RaycastHit();
         return hit;
     }
-    #endregion
 
+    #endregion
 
     #region AnimManager
     private void SetAnim(string var, bool active, bool trigger)
