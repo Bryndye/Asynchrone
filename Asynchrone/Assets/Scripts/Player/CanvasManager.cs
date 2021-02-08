@@ -100,8 +100,8 @@ public class CanvasManager : Singleton<CanvasManager>
     {
         if (audioc.Length > 0 && index < audioc.Length)
         {
-            cm.AS_dia.clip = audioc[index];
-            cm.AS_dia.Play();
+            //cm.AS_dia.clip = audioc[index];
+            //cm.AS_dia.Play();
             //print("audio launch");
         }
     }

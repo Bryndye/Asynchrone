@@ -88,6 +88,12 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
 
             cSmooth.Target = Player1;
             pc1.CanPlay = onPlayer1;
+
+            if (cm.UIHuman != null && cm.UIRobot != null)
+            {
+                cm.UIHuman.SetActive(true);
+                cm.UIRobot.SetActive(false);
+            }
         }
     }
 
