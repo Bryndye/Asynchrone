@@ -46,10 +46,22 @@ public class PlayerController : MonoBehaviour
         {
             OnClickMouseR();
         }
-        if (Input.GetKey(KeyCode.Mouse0))
+        if (Input.GetKey(KeyCode.Mouse1) && canMove)
         {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ingorePlayers))
+            {
+                if (nav.CalculatePath(hit.point, nav.path))
+                {
+                    if (CanReachPosition(hit.point))
+                    {
+                        SetDesination(hit, false, true);
+                    }
+                }
+            }
         }
-        if (Input.GetKeyDown(KeyCode.Mouse1) && !mP.onPlayer1 && mP.Rbt.BackToHuman )
+        if (Input.GetKeyDown(KeyCode.Mouse1) && !mP.onPlayer1 && mP.Rbt.BackToHuman)
         {
             mP.Rbt.BackToHuman = false;
             OnClickMouseR();
@@ -57,6 +69,7 @@ public class PlayerController : MonoBehaviour
     }
 
     #region Mousse/Interaction element decor
+    [SerializeField] private bool canMove = true;
     private void OnClickMouseR()
     {
         RaycastHit hit;
@@ -66,6 +79,8 @@ public class PlayerController : MonoBehaviour
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ingoreDiv))
             {
                 mP.Hm.CreateDiversion(hit);
+                canMove = false;
+                Invoke(nameof(OnClickStay),0.6f);
             }
         }
         else
@@ -90,6 +105,13 @@ public class PlayerController : MonoBehaviour
                     SetDesination(hit, true, true);
                 }
             }
+        }
+    }
+    private void OnClickStay()
+    {
+        if (!canMove)
+        {
+            canMove = true;
         }
     }
 
@@ -118,7 +140,7 @@ public class PlayerController : MonoBehaviour
 
         if (inter)
         {
-            print("inter");
+            //print("inter");
             targetInteraction = t.collider.transform;
             fd_faisceau.transform.position = t.collider.transform.position;
         }
