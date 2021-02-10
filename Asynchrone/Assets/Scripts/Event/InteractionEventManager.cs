@@ -1,14 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NaughtyAttributes;
 public enum Event_int
 {
     bouton,
-    alarme
+    PorteCondition
 }
 
 public class InteractionEventManager : Singleton<InteractionEventManager>
 {
+
+
     private void Awake()
     {
         if (Instance != this)
@@ -17,8 +20,9 @@ public class InteractionEventManager : Singleton<InteractionEventManager>
         }
     }
 
-    public void Event_Button(Transform[] porte)
+    public void Event_Button(Interaction it)
     {
+        Transform[] porte = it.Influence;
         //Debug.Log("Event button called");
         for (int i = 0; i < porte.Length; i++)
         {
@@ -29,20 +33,11 @@ public class InteractionEventManager : Singleton<InteractionEventManager>
         }
     }
 
-    public void Event_Alarme(Transform[] al)
+    public void CheckEvent(Event_int ei, Interaction it)
     {
-        //Debug.Log("Event Alarme called");
-    }
-
-    public void CheckEvent(Event_int ei, Transform[] inf)
-    {
-        if (Event_int.alarme == ei)
-        {
-            Event_Alarme(inf);
-        }
         if (Event_int.bouton == ei)
         {
-            Event_Button(inf);
+            Event_Button(it);
         }
     }
 }

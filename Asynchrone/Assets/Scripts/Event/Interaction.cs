@@ -7,7 +7,7 @@ public class Interaction : MonoBehaviour
     public Event_int Event_;
     bool activated;
 
-    [SerializeField] Transform[] Influence;
+    public Transform[] Influence;
 
     InteractionEventManager iem;
 
@@ -18,7 +18,7 @@ public class Interaction : MonoBehaviour
             //Debug.Log("Event called");
             activated = true;
 
-            iem.CheckEvent(Event_, Influence);
+            iem.CheckEvent(Event_, this);
         }
     }
 

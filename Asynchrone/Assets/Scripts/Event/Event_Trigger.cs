@@ -15,6 +15,7 @@ public class Event_Trigger : MonoBehaviour
     {
         Audio,
         ActiveIA,
+        Porte1side,
     }
     public typeEvent eventToTrigger;
 
@@ -24,6 +25,9 @@ public class Event_Trigger : MonoBehaviour
     [Header("Dialogues")]
     [ShowIf("audio")] public string[] dialogues;
     [ShowIf("audio")] public AudioClip[] audioC;
+
+    [Header("Porte")]
+    [ShowIf("porte")] public GameObject PorteMesh;
 
     private void Awake()
     {
@@ -39,15 +43,29 @@ public class Event_Trigger : MonoBehaviour
     {
         if (other.CompareTag("Player") && !done)
         {
-            if (eventToTrigger == typeEvent.Audio)
+            switch (eventToTrigger)
             {
-                EventDialogue();
-            }
-            if (eventToTrigger == typeEvent.ActiveIA)
-            {
-                EventIA();
+                case typeEvent.Audio:
+                    EventDialogue();
+                    break;
+                case typeEvent.ActiveIA:
+                    EventIA();
+                    break;
+                default:
+                    break;
             }
             done = true;
+        }
+        if (other.CompareTag("Player"))
+        {
+            switch (eventToTrigger)
+            {
+                case typeEvent.Porte1side:
+                    PorteTime();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -68,9 +86,22 @@ public class Event_Trigger : MonoBehaviour
         }
     }
 
+    #region Porte
+    private void PorteTime()
+    {
+        PorteMesh.SetActive(false);
+        Invoke(nameof(ActivePorte),5f);
+    }
+    private void ActivePorte()
+    {
+        PorteMesh.SetActive(true);
+    }
+    #endregion
+
     #region EditMoi
     bool audio;
     bool ia;
+    bool porte;
     private void OnDrawGizmos()
     {
         if (eventToTrigger == typeEvent.Audio)
@@ -90,6 +121,15 @@ public class Event_Trigger : MonoBehaviour
         else
         {
             ia = false;
+        }
+        if (eventToTrigger == typeEvent.Porte1side)
+        {
+            gameObject.name = "Evt Porte " + nameEvent;
+            porte = true;
+        }
+        else
+        {
+            porte = false;
         }
     }
 
