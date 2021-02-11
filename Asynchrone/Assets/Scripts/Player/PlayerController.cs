@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] LayerMask ingoreDiv;
     [SerializeField] LayerMask ingorePlayers;
-    Transform targetInteraction;
+    [SerializeField] Transform targetInteraction;
 
     public bool InCinematic;
     GameObject fd_faisceau;
@@ -35,10 +35,11 @@ public class PlayerController : MonoBehaviour
             if (CanPlay)
             {
                 InputManager();
+                /*
                 if (Input.GetKeyDown(KeyCode.T))
                 {
                     sm.Respawn();
-                }
+                }*/
             }
             CheckDisInteraction();
             WalkAnim();
@@ -51,6 +52,10 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             OnClickMouseR();
+            if (!mP.onPlayer1 && mP.Rbt.BackToHuman)
+            {
+                mP.Rbt.BackToHuman = false;
+            }
         }
         if (Input.GetKey(KeyCode.Mouse1) && canMove)
         {
@@ -66,11 +71,6 @@ public class PlayerController : MonoBehaviour
                     }
                 }
             }
-        }
-        if (Input.GetKeyDown(KeyCode.Mouse1) && !mP.onPlayer1 && mP.Rbt.BackToHuman)
-        {
-            mP.Rbt.BackToHuman = false;
-            OnClickMouseR();
         }
     }
 
@@ -104,12 +104,13 @@ public class PlayerController : MonoBehaviour
                 {
                     SetDesination(hit, true, true);
                 }
-
+                /*
                 anAI ia = hit.collider.GetComponent<anAI>();
                 if (ia != null && !mP.onPlayer1)
                 {
                     SetDesination(hit, true, true);
-                }
+                    Debug.Log("La");
+                }*/
             }
         }
     }
@@ -154,7 +155,6 @@ public class PlayerController : MonoBehaviour
         {
             fd_faisceau.transform.position = t.point;
         }
-        //print("mache");
     }
     private void CheckDisInteraction()
     {
@@ -173,13 +173,13 @@ public class PlayerController : MonoBehaviour
 
                 if (ia != null && !mP.onPlayer1)
                 {
+                    ia.Death();
                     Debug.Log("T MORT");
                 }
                 targetInteraction = null;
                 SetDesination(raycastNull(), false, false);
             }
         }
-        //Debug.Log(targetInteraction);
     }
 
     private RaycastHit raycastNull()
