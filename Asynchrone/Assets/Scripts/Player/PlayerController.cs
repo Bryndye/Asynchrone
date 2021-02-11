@@ -7,9 +7,10 @@ using UnityEngine.AI;
 public class PlayerController : MonoBehaviour
 {
     #region var
-    [SerializeField] Animator anim;
+    public Animator anim;
     [HideInInspector] public NavMeshAgent nav;
     ManagerPlayers mP;
+    SpawnMANAGER sm;
     public bool CanPlay;
 
     [SerializeField] LayerMask ingoreDiv;
@@ -23,6 +24,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         mP = ManagerPlayers.Instance;
+        sm = SpawnMANAGER.Instance;
         nav = GetComponent<NavMeshAgent>();
     }
 
@@ -33,6 +35,10 @@ public class PlayerController : MonoBehaviour
             if (CanPlay)
             {
                 InputManager();
+                if (Input.GetKeyDown(KeyCode.T))
+                {
+                    sm.Respawn();
+                }
             }
             CheckDisInteraction();
             WalkAnim();
@@ -242,42 +248,10 @@ public class PlayerController : MonoBehaviour
         SetAnim("Div", true, true);
     }
     #endregion
+
+    public void Death()
+    {
+        sm.Respawn();
+    }
 }
 
-/*
-    /*
-    private void SetDesination(RaycastHit t, bool inter)
-    {
-        if (t.point != Vector3.zero)
-        {
-            nav.SetDestination(t.point);
-            finalDestination = t.point;
-        }
-        else
-        {
-            nav.SetDestination(transform.position);
-            finalDestination = transform.position;
-        }
-
-        if (inter)
-        {
-            targetInteraction = t.collider.transform;
-        }
-    }
-
-    private void Faisceau_(RaycastHit t, bool active, bool interaction)
-    {
-        if (!fd_faisceau)
-        {
-            fd_faisceau = Instantiate(Resources.Load<GameObject>("Feedback/Player/Particle_loading"));
-        }
-        if (interaction)
-        {
-            fd_faisceau.transform.position = t.collider.transform.position;
-        }
-        else
-        {
-            fd_faisceau.transform.position = t.point;
-        }
-        fd_faisceau.SetActive(active);
-**/

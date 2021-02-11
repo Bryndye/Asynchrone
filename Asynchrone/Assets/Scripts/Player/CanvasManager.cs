@@ -7,7 +7,9 @@ public class CanvasManager : Singleton<CanvasManager>
 {
     //[SerializeField] Button bt_continue;
     CameraManager cm;
-    Animator anim;
+    [HideInInspector] public Animator anim;
+
+    [Header("Char anim")]
     public Text dialogueHere;
     private bool skip;
     private int index =0;
