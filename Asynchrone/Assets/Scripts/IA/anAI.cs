@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.AI;
 
 public enum myBehaviour { Guard, Patrol };
-public enum Situation { None, Interaction, GuardMove, PatrolMove, PatrolWait, Interrogation, Pursuit, Dead };
-public enum Classe { Basic, Looper };
+public enum Situation { None, Interaction, GuardMove, PatrolMove, PatrolWait, Interrogation, Pursuit, Dead, Loop };
+public enum Classe { Basic, Drone };
 
 public class anAI : MonoBehaviour
 {
@@ -129,7 +129,6 @@ public class anAI : MonoBehaviour
                     NextPatrolStep();
                 }
             }
-
         }
         else if(mySituation == Situation.Interrogation)
         {
@@ -672,7 +671,7 @@ public class anAI : MonoBehaviour
 
     #endregion
 
-    void Death()
+    public void Death()
     {
         Destroy(myUI.gameObject);
         Destroy(gameObject);
