@@ -105,13 +105,13 @@ public class PlayerController : MonoBehaviour
                 {
                     SetDesination(hit, true, true);
                 }
-                /*
+                
                 anAI ia = hit.collider.GetComponent<anAI>();
                 if (ia != null && !mP.onPlayer1)
                 {
                     SetDesination(hit, true, true);
                     Debug.Log("La");
-                }*/
+                }
             }
         }
     }
@@ -150,7 +150,7 @@ public class PlayerController : MonoBehaviour
         {
             //print("inter");
             targetInteraction = t.collider.transform;
-            fd_faisceau.transform.position = t.collider.transform.position;
+            fd_faisceau.transform.position = t.collider.transform.localPosition;
         }
         else
         {

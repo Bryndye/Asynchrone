@@ -129,8 +129,9 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
     }
     public void CursorStyle()
     {
-        RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerCursor))
         {

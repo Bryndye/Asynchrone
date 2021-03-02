@@ -5,7 +5,6 @@ using UnityEngine;
 public class CameraManager : Singleton<CameraManager>
 {
     public Transform Target;
-    public AudioSource AS_dia;
 
     void Update() => SmoothFollow();
 

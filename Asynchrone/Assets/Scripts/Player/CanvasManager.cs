@@ -7,7 +7,11 @@ public class CanvasManager : Singleton<CanvasManager>
 {
     //[SerializeField] Button bt_continue;
     CameraManager cm;
+    ManagerPlayers mp;
+    PlayerController pc;
+
     [HideInInspector] public Animator anim;
+    [SerializeField] private GameObject checkpoint_t;
 
     [Header("Char anim")]
     public Text dialogueHere;
@@ -19,13 +23,12 @@ public class CanvasManager : Singleton<CanvasManager>
     [HideInInspector] AudioClip[] acStock;
     private bool isRuntime;
 
-    ManagerPlayers mp;
-    PlayerController pc;
-
     [Header("Bts Spells")]
     public Text QuelPlayer;
     public GameObject UIHuman;
     public GameObject UIRobot;
+
+
     void Awake()
     {
         if (Instance != this)
@@ -85,6 +88,17 @@ public class CanvasManager : Singleton<CanvasManager>
     public void BandeDisAppear()
     {
         anim.SetTrigger("Disappear");
+    }
+
+    public void ActiveCheckpointText()
+    {
+        checkpoint_t.SetActive(true);
+        Invoke(nameof(DesactiveI),2f);
+    }
+
+    private void DesactiveI()
+    {
+        checkpoint_t.SetActive(false);
     }
     #endregion
 

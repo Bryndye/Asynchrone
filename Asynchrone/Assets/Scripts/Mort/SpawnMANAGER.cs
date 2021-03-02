@@ -23,7 +23,7 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
     //private void 
     public void GetSpawn(Vector3 posH, Vector3 posR, bool die)
     {
-        Debug.Log("get the spawns");
+        //Debug.Log("get the spawns");
         SpawnPointR = posR;
         SpawnPointH = posH;
         if (die)
