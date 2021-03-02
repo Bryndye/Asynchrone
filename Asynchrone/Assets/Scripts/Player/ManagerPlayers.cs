@@ -138,7 +138,7 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
             {
                 SetCursor("Interact");
             }
-            if (hit.collider.GetComponent<anAI>() != null && !onPlayer1)
+            if (hit.collider.GetComponent<anAI>() != null && onPlayer1)
             {
                 SetCursor("Attack");
             }

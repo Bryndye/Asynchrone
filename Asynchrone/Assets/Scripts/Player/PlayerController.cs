@@ -74,17 +74,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
     #region Mousse/Interaction element decor
     [SerializeField] private bool canMove = true;
     private void OnClickMouseR()
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (mP.onPlayer1 && mP.Hm.canDiv && mP.Hm.DivStock > 0)
+        if (!mP.onPlayer1 && mP.Rbt.canDiv && mP.Rbt.DivStock > 0)
         {
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ingoreDiv))
             {
-                mP.Hm.CreateDiversion(hit);
+                mP.Rbt.CreateDiversion(hit);
                 canMove = false;
                 Invoke(nameof(OnClickStay),0.6f);
             }
@@ -171,7 +172,7 @@ public class PlayerController : MonoBehaviour
 
                 anAI ia = targetInteraction.GetComponent<anAI>();
 
-                if (ia != null && !mP.onPlayer1)
+                if (ia != null && mP.onPlayer1)
                 {
                     ia.Death();
                     Debug.Log("T MORT");

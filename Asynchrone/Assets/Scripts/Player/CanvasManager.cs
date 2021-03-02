@@ -13,10 +13,10 @@ public class CanvasManager : Singleton<CanvasManager>
     public Text dialogueHere;
     private bool skip;
     private int index =0;
-    public string[] sentences;
-    [SerializeField] string[] sentencesStock;
-    public AudioClip[] audioc;
-    [SerializeField] AudioClip[] acStock;
+    [HideInInspector] public string[] sentences;
+    [HideInInspector] string[] sentencesStock;
+    [HideInInspector] public AudioClip[] audioc;
+    [HideInInspector] AudioClip[] acStock;
     private bool isRuntime;
 
     ManagerPlayers mp;
@@ -48,13 +48,13 @@ public class CanvasManager : Singleton<CanvasManager>
                 mp.Camera_Manager();
                 break;
             case 1:
-                if (mp.onPlayer1 && !mp.Hm.robot_div)
+                if (mp.onPlayer1 && !mp.Rbt.robot_div)
                 {
-                    mp.Hm.StartDiv();
+                    mp.Rbt.StartDiv();
                 }
                 else
                 {
-                    Destroy(mp.Hm.robot_div);
+                    Destroy(mp.Rbt.robot_div);
                 }
                 break;
             case 2:

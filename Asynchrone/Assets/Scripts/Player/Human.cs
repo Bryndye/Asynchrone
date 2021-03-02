@@ -18,15 +18,6 @@ public class Human : Singleton<Human>
     [SerializeField] GameObject robotBeLike;
     [HideInInspector] public bool intoMe;
     [HideInInspector] public bool isAccroupi;
-
-    [Header("Diversion")]
-    [SerializeField] GameObject range;
-    [SerializeField] LayerMask ignoreWall;
-    [SerializeField] float rangeDis;
-    [HideInInspector] public bool canDiv;
-    [HideInInspector] public GameObject robot_div;
-    public int DivStock = 0;
-
     #endregion
 
     private void Awake()
@@ -52,7 +43,6 @@ public class Human : Singleton<Human>
             {
                 InputManager();
             }
-            GestionDiv();
         }
     }
 
@@ -62,15 +52,7 @@ public class Human : Singleton<Human>
         {
             CheckMask();
         }
-        
-        if (Input.GetKeyDown(KeyCode.Z) && robot_div == null && DivStock > 0)
-        {
-            StartDiv();
-        }
-        if (Input.GetKeyDown(KeyCode.Z) && robot_div != null)
-        {
-            Destroy(robot_div);
-        }
+
         if (Input.GetKeyDown(KeyCode.E)&& !intoMe)
         {
             mP.RobotBackToHuman();
@@ -136,68 +118,6 @@ public class Human : Singleton<Human>
         nav.speed = speed / sp;
         cc.height = size / si;
         cc.center = new Vector3(cc.center.x, center, cc.center.z);
-    }
-
-    #endregion
-
-    #region Diversion
-    public void StartDiv() => canDiv = !canDiv;
-    //le sprite 1x, 1y pour faire 2.5u
-    public void CreateDiversion(RaycastHit hit)
-    {
-        if (hit.collider.gameObject.layer != 10)
-        {
-            Vector3 point = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-            Vector3 dir = (transform.position - point).normalized;
-
-            if (CheckWall(dir, point))
-            {
-                robot_div = Instantiate(Resources.Load<GameObject>("Player/Fake_Robot"), hit.point, Quaternion.identity);
-                StockDivManager();
-                canDiv = false;
-                mP.pc1.DivAnim();
-            }
-        }
-    }
-
-    private void StockDivManager()
-    {
-        DivStock--;
-        if (DivStock <= 0)
-        {
-            DivStock = 0;
-        }
-    }
-
-    private bool CheckWall(Vector3 dir, Vector3 point)
-    {
-        RaycastHit it;
-
-        if (Physics.Raycast(point, dir, out it, rangeDis))
-        {
-            //Debug.Log(it.collider.name + "  " + it.collider.gameObject.layer);
-
-            if (it.collider.gameObject.layer == 9 || it.collider.gameObject.layer == 8 || it.collider.gameObject.layer == 12)
-            {         
-                return true;
-            }          
-        }
-        return false;
-    }
-
-    private void GestionDiv()
-    {
-        if (canDiv)
-        {
-            range.transform.localScale = new Vector3(rangeDis / 2.5f, rangeDis / 2.5f, 1);
-            //CreateDiversion();
-        }
-        if (!mP.onPlayer1)
-        {
-            canDiv = false;
-        }
-        range.SetActive(canDiv);
-        //bt_destroy.interactable = robot_div != null;
     }
 
     #endregion
