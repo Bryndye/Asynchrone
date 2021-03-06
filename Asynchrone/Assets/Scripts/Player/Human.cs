@@ -53,11 +53,11 @@ public class Human : Singleton<Human>
             CheckMask();
         }
 
-        if (Input.GetKeyDown(KeyCode.E)&& !intoMe)
+        if (Input.GetKeyDown(KeyCode.Z)&& !intoMe)
         {
             mP.RobotBackToHuman();
         }
-        else if (Input.GetKeyDown(KeyCode.E) && intoMe)
+        else if (Input.GetKeyDown(KeyCode.Z) && intoMe)
         {
             RobotIntoMe(false);
         }

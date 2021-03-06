@@ -27,7 +27,7 @@ public class CanvasManager : Singleton<CanvasManager>
     public Text QuelPlayer;
     public GameObject UIHuman;
     public GameObject UIRobot;
-
+    [SerializeField] private Button bt_divRbt;
 
     void Awake()
     {
@@ -51,7 +51,7 @@ public class CanvasManager : Singleton<CanvasManager>
                 mp.Camera_Manager();
                 break;
             case 1:
-                if (mp.onPlayer1 && !mp.Rbt.robot_div)
+                if (!mp.onPlayer1 && !mp.Rbt.robot_div)
                 {
                     mp.Rbt.StartDiv();
                 }
@@ -99,6 +99,21 @@ public class CanvasManager : Singleton<CanvasManager>
     private void DesactiveI()
     {
         checkpoint_t.SetActive(false);
+    }
+
+    private void NombreDiversion()
+    {
+        if (bt_divRbt != null)
+        {
+            if (mp.Rbt.DivStock > 0)
+            {
+                bt_divRbt.interactable = true;
+            }
+            else
+            {
+                bt_divRbt.interactable = false;
+            }
+        }
     }
     #endregion
 
@@ -183,5 +198,6 @@ public class CanvasManager : Singleton<CanvasManager>
             skip = true;
             Invoke(nameof(NextDialogue), 2f);
         }
+        NombreDiversion();
     }
 }

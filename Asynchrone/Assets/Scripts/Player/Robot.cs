@@ -36,15 +36,15 @@ public class Robot : MonoBehaviour
             }
             if (!mP.onPlayer1)
             {
-                if (Input.GetKeyDown(KeyCode.E))
+                if (Input.GetKeyDown(KeyCode.Z))
                 {
                     mP.RobotBackToHuman();
                 }
-                if (Input.GetKeyDown(KeyCode.Z) && robot_div == null && DivStock > 0)
+                if (Input.GetKeyDown(KeyCode.E) && robot_div == null && DivStock > 0)
                 {
                     StartDiv();
                 }
-                if (Input.GetKeyDown(KeyCode.Z) && robot_div != null)
+                if (Input.GetKeyDown(KeyCode.E) && robot_div != null)
                 {
                     Destroy(robot_div);
                 }
@@ -56,7 +56,7 @@ public class Robot : MonoBehaviour
     #region Diversion
 
     public void StartDiv() { canDiv = !canDiv;
-        Debug.Log("OUPS");
+        //Debug.Log("OUPS");
     }
     //le sprite 1x, 1y pour faire 2.5u
     public void CreateDiversion(RaycastHit hit)
