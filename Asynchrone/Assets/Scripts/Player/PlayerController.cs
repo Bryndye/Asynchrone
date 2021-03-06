@@ -150,7 +150,7 @@ public class PlayerController : MonoBehaviour
         {
             //print("inter");
             targetInteraction = t.collider.transform;
-            fd_faisceau.transform.position = t.collider.transform.localPosition;
+            fd_faisceau.transform.position = t.collider.transform.position;
         }
         else
         {
@@ -171,12 +171,18 @@ public class PlayerController : MonoBehaviour
                 }
 
                 anAI ia = targetInteraction.GetComponent<anAI>();
-
                 if (ia != null && mP.onPlayer1)
                 {
                     ia.Death();
                     Debug.Log("T MORT");
                 }
+
+                trap_interaction ti = targetInteraction.GetComponent<trap_interaction>();
+                if (ti != null && !mP.onPlayer1)
+                {
+                    ti.Called();
+                }
+                Debug.Log(targetInteraction.name);
                 targetInteraction = null;
                 SetDesination(raycastNull(), false, false);
             }
