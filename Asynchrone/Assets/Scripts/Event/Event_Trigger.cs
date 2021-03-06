@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using NaughtyAttributes;
+using UnityEngine.SceneManagement;
 
 public class Event_Trigger : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class Event_Trigger : MonoBehaviour
         Audio,
         ActiveIA,
         Porte1side,
+        FinNiveau
     }
     public typeEvent eventToTrigger;
 
@@ -28,6 +30,9 @@ public class Event_Trigger : MonoBehaviour
 
     [Header("Porte")]
     [ShowIf("porte")] public GameObject PorteMesh;
+
+    [Header("Fin de niveau")]
+    [ShowIf("end")] [SerializeField] private string nameOfNextlevel;
 
     private void Awake()
     {
@@ -50,6 +55,9 @@ public class Event_Trigger : MonoBehaviour
                     break;
                 case typeEvent.ActiveIA:
                     EventIA();
+                    break;
+                case typeEvent.FinNiveau:
+                    SceneManager.LoadScene(nameOfNextlevel);
                     break;
                 default:
                     break;
@@ -86,6 +94,11 @@ public class Event_Trigger : MonoBehaviour
         }
     }
 
+    private void EndofLevel()
+    {
+
+    }
+
     #region Porte
     private void PorteTime()
     {
@@ -102,6 +115,7 @@ public class Event_Trigger : MonoBehaviour
     bool audio;
     bool ia;
     bool porte;
+    bool end;
     private void OnDrawGizmos()
     {
         if (eventToTrigger == typeEvent.Audio)
@@ -130,6 +144,15 @@ public class Event_Trigger : MonoBehaviour
         else
         {
             porte = false;
+        }
+        if (eventToTrigger == typeEvent.FinNiveau)
+        {
+            gameObject.name = "Evt End " + nameEvent;
+            end = true;
+        }
+        else
+        {
+            end = false;
         }
     }
 

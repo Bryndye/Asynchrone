@@ -10,15 +10,23 @@ public class Trap_script : MonoBehaviour
     [SerializeField] private GameObject trap1;
     [SerializeField] private GameObject trap2;
 
+    [SerializeField] private bool activeVisualLink;
+
     private void OnDrawGizmosSelected()
     {
-        if (trap1 != null && trap2 != null)
+        lr = GetComponent<LineRenderer>();
+
+        if (trap1 != null && trap2 != null && activeVisualLink)
         {
-            lr = GetComponent<LineRenderer>();
+            lr.enabled = true;
 
             lr.SetPosition(0, trap1.transform.position);
             lr.SetPosition(1, trap2.transform.position);
             //Debug.Log("called");
+        }
+        else
+        {
+            lr.enabled = false;
         }
     }
 
