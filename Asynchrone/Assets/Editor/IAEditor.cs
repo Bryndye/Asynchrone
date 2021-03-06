@@ -26,6 +26,11 @@ public class IAEditor : Editor
 
         anAI myAI = (anAI)target;
 
+        if (GUILayout.Button("Change Class"))
+        {
+            myAI.ChangeClass();
+        }
+
         if (GUILayout.Button("Add current position to patrol"))
         {
             myAI.AddPatrolPoint();
