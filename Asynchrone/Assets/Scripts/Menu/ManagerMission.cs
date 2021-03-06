@@ -12,6 +12,7 @@ public class ManagerMission : MonoBehaviour
     [SerializeField] GameObject Bouton;
     public MissionDetails[] missions;
     [Space]
+    [Header("Place")]
     [SerializeField] Image illustration;
     [SerializeField] Text context;
     [SerializeField] Transform list_bt;
@@ -55,5 +56,5 @@ public class MissionDetails
     public string LevelName;
 
     public Sprite Illustration;
-    public string Context;
+    [TextArea(5, 30)] public string Context;
 }

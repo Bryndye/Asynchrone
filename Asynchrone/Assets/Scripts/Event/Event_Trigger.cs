@@ -94,16 +94,11 @@ public class Event_Trigger : MonoBehaviour
         }
     }
 
-    private void EndofLevel()
-    {
-
-    }
-
     #region Porte
     private void PorteTime()
     {
         PorteMesh.SetActive(false);
-        Invoke(nameof(ActivePorte),5f);
+        Invoke(nameof(ActivePorte),2f);
     }
     private void ActivePorte()
     {

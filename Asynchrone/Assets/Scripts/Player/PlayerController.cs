@@ -35,11 +35,11 @@ public class PlayerController : MonoBehaviour
             if (CanPlay)
             {
                 InputManager();
-                /*
+                
                 if (Input.GetKeyDown(KeyCode.T))
                 {
                     sm.Respawn();
-                }*/
+                }
             }
             CheckDisInteraction();
             WalkAnim();
@@ -182,7 +182,7 @@ public class PlayerController : MonoBehaviour
                 {
                     ti.Called();
                 }
-                Debug.Log(targetInteraction.name);
+                //Debug.Log(targetInteraction.name);
                 targetInteraction = null;
                 SetDesination(raycastNull(), false, false);
             }

@@ -44,13 +44,13 @@ public class Trap_script : MonoBehaviour
 
         if (trapIndex == trap1)
         {
-            Debug.Log(trap1 + " called!");
+            Debug.Log(trap1.name + " called!");
             mp.pc2.nav.Warp(trap2.transform.position);
 
         }
         if (trapIndex == trap2)
         {
-            Debug.Log(trap2 + " called!");
+            Debug.Log(trap2.name + " called!");
             mp.pc2.nav.Warp(trap1.transform.position);
         }
     }

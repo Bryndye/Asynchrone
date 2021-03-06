@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class Interaction : MonoBehaviour
 {
-    public Event_int Event_;
     bool activated;
 
     public Transform[] Influence;
-
-    InteractionEventManager iem;
 
     public void CallEvent()
     {
@@ -18,12 +15,13 @@ public class Interaction : MonoBehaviour
             //Debug.Log("Event called");
             activated = true;
 
-            iem.CheckEvent(Event_, this);
+            for (int i = 0; i < Influence.Length; i++)
+            {
+                if (Influence[i] != null)
+                {
+                    Influence[i].gameObject.SetActive(!Influence[i].gameObject.activeSelf);
+                }
+            }
         }
-    }
-
-    private void Awake()
-    {
-        iem = InteractionEventManager.Instance;
     }
 }
