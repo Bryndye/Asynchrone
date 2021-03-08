@@ -176,9 +176,9 @@ GameObject:
   - component: {fileID: 8734465463775948686}
   - component: {fileID: 8734465463775948675}
   - component: {fileID: 8734465463775948674}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: anAI
-  m_TagString: Untagged
+  m_TagString: Interaction
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -275,8 +275,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myClasse: 0
+  NormalSpeed: 0
+  PursuitSpeed: 0
   Vus: []
   TempsInterrogation: 0
+  TempsRegard: 0
   LatenceInterrogation: 0.5
   ViewRadius: 10
   ViewAngle: 90
@@ -298,6 +301,8 @@ MonoBehaviour:
   Comportement: 1
   mySituation: 0
   PursuitLastPosition: {x: 0, y: 0, z: 0}
+  BasePosition: {x: 0, y: 0, z: 0}
+  ForwardRotationBase: {x: 0, y: 0, z: 0}
   EtapesPatrouille: []
   IndexStartPatrouilleSecondaire: 0
   EtapesPatrouilleSecondaire: []
