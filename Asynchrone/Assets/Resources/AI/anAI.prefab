@@ -275,8 +275,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myClasse: 0
-  NormalSpeed: 0
-  PursuitSpeed: 0
+  NormalSpeed: 1
+  PursuitSpeed: 3.5
   Vus: []
   TempsInterrogation: 0
   TempsRegard: 0
@@ -303,7 +303,11 @@ MonoBehaviour:
   PursuitLastPosition: {x: 0, y: 0, z: 0}
   BasePosition: {x: 0, y: 0, z: 0}
   ForwardRotationBase: {x: 0, y: 0, z: 0}
-  EtapesPatrouille: []
+  EtapesPatrouille:
+  - {x: 4.78, y: 1.1, z: -11.69}
+  - {x: 14.8, y: 1.1, z: 0.66}
+  - {x: -0.6, y: 1.1, z: 19.08}
+  - {x: -5.96, y: 1.1, z: 4.19}
   IndexStartPatrouilleSecondaire: 0
   EtapesPatrouilleSecondaire: []
   Latence_InterEtapes: 1
@@ -327,5 +331,5 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 1
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 3
   m_ObstacleAvoidanceType: 4
