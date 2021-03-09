@@ -103,7 +103,7 @@ public class CanvasManager : Singleton<CanvasManager>
 
     private void NombreDiversion()
     {
-        if (bt_divRbt != null)
+        if (mp.Rbt != null && bt_divRbt != null)
         {
             if (mp.Rbt.DivStock > 0)
             {
