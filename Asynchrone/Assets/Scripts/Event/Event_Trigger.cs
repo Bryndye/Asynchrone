@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class Event_Trigger : MonoBehaviour
 {
+    private BoxCollider bc;
+
     CanvasManager cm;
     CameraManager camM;
     [SerializeField] string nameEvent;
@@ -34,6 +36,7 @@ public class Event_Trigger : MonoBehaviour
     [Header("Fin de niveau")]
     [ShowIf("end")] [SerializeField] private string nameOfNextlevel;
 
+
     private void Awake()
     {
         cm = CanvasManager.Instance;
@@ -43,6 +46,8 @@ public class Event_Trigger : MonoBehaviour
             iaToActivate[i].SetActive(false);
         }
     }
+
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -77,6 +82,8 @@ public class Event_Trigger : MonoBehaviour
         }
     }
 
+
+
     private void EventIA()
     {
         for (int i = 0; i < iaToActivate.Length; i++)
@@ -106,12 +113,31 @@ public class Event_Trigger : MonoBehaviour
     }
     #endregion
 
+
     #region EditMoi
+
     bool audio;
     bool ia;
     bool porte;
     bool end;
+
     private void OnDrawGizmos()
+    {
+        bc = GetComponent<BoxCollider>();
+        EditNom();
+        if (eventToTrigger == typeEvent.Porte1side)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawCube(transform.localPosition + new Vector3(0, 1, -1), new Vector3(2, 2, 1));
+        }
+        else
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawCube(transform.localPosition, new Vector3(1,1,1)) ;
+        }
+    }
+
+    private void EditNom()
     {
         if (eventToTrigger == typeEvent.Audio)
         {
@@ -135,6 +161,7 @@ public class Event_Trigger : MonoBehaviour
         {
             gameObject.name = "Evt Porte " + nameEvent;
             porte = true;
+
         }
         else
         {

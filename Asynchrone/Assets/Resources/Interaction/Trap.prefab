@@ -90,8 +90,8 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 5.47, y: 0.5, z: 4.4300003}
-  - {x: 9.469999, y: 0.5, z: 4.4300003}
+  - {x: 5.47, y: 0.5, z: 4.2469997}
+  - {x: 9.469999, y: 0.5, z: 4.2469997}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -160,12 +160,13 @@ GameObject:
   - component: {fileID: 1176866599266346804}
   - component: {fileID: 1176866599266346807}
   - component: {fileID: 1176866599266346802}
+  - component: {fileID: 1804018138}
   m_Layer: 13
   m_Name: Trap#2
   m_TagString: Interaction
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1176866599266346806
 Transform:
@@ -209,7 +210,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c139af13b3ff5bf448070e1c901581af, type: 2}
+  - {fileID: 2100000, guid: 0e6d655d78a33b54ab758e8eb9a30e86, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -256,6 +257,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f239f81c6b57d428370f93bf0d4c65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!208 &1804018138
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1176866599266346809}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &1176866599502189656
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,12 +286,13 @@ GameObject:
   - component: {fileID: 1176866599502189655}
   - component: {fileID: 1176866599502189654}
   - component: {fileID: 1176866599502189653}
+  - component: {fileID: 1900519249}
   m_Layer: 13
   m_Name: Trap#1
   m_TagString: Interaction
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1176866599502189657
 Transform:
@@ -318,7 +336,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c139af13b3ff5bf448070e1c901581af, type: 2}
+  - {fileID: 2100000, guid: 0e6d655d78a33b54ab758e8eb9a30e86, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -365,6 +383,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f239f81c6b57d428370f93bf0d4c65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!208 &1900519249
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1176866599502189656}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &7898783961454136783
 GameObject:
   m_ObjectHideFlags: 0
