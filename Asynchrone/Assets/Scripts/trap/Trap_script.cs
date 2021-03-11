@@ -30,13 +30,13 @@ public class Trap_script : MonoBehaviour
 
         if (trapIndex == trap1)
         {
-            Debug.Log(trap1.name + " called!");           
+            //Debug.Log(trap1.name + " called!");           
             mp.pc2.nav.Warp(trap2.transform.GetChild(0).position);
 
         }
         if (trapIndex == trap2)
         {
-            Debug.Log(trap2.name + " called!");
+            //Debug.Log(trap2.name + " called!");
             mp.pc2.nav.Warp(trap1.transform.GetChild(0).position);
         }
     }
@@ -47,8 +47,14 @@ public class Trap_script : MonoBehaviour
 
 
 
-    private void OnDrawGizmosSelected()
+
+    private void OnDrawGizmos()
     {
+        Gizmos.color = Color.red;
+
+        Gizmos.DrawSphere(trap1.transform.GetChild(0).position, 0.2f);
+        Gizmos.DrawSphere(trap2.transform.GetChild(0).position, 0.2f);
+
         lr = GetComponent<LineRenderer>();
 
         if (trap1 != null && trap2 != null && activeVisualLink)
@@ -63,15 +69,5 @@ public class Trap_script : MonoBehaviour
         {
             lr.enabled = false;
         }
-
-    }
-
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-
-        Gizmos.DrawSphere(trap1.transform.GetChild(0).position, 0.2f);
-        Gizmos.DrawSphere(trap2.transform.GetChild(0).position, 0.2f);
     }
 }

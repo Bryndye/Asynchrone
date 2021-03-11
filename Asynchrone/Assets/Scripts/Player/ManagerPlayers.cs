@@ -137,7 +137,18 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
         {
             if (hit.collider.CompareTag("Interaction"))
             {
-                SetCursor("Interact");
+                if (hit.collider.GetComponent<trap_interaction>() != null && !onPlayer1)
+                {
+                    SetCursor("Interact");
+                }
+                else
+                {
+                    SetCursor(null);
+                }
+                if (hit.collider.GetComponent<trap_interaction>() == null)
+                {
+                    SetCursor("Interact");
+                }
             }
             if (hit.collider.GetComponent<anAI>() != null && onPlayer1)
             {

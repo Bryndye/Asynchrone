@@ -123,6 +123,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
+
+
     public bool CanReachPosition(Vector3 position)
     {
         NavMeshPath path = new NavMeshPath();
@@ -137,6 +140,7 @@ public class PlayerController : MonoBehaviour
             fd_faisceau = Instantiate(Resources.Load<GameObject>("Feedback/Player/Particle_loading"));
         }
         fd_faisceau.SetActive(active);
+
         if (t.point != Vector3.zero)
         {
             nav.SetDestination(t.point);
@@ -149,14 +153,23 @@ public class PlayerController : MonoBehaviour
         if (inter)
         {
             //print("inter");
+            anAI ia = t.collider.GetComponent<anAI>();
+
+            if (ia == null)
+            {
+                fd_faisceau.transform.position = t.collider.transform.position;
+            }
             targetInteraction = t.collider.transform;
-            fd_faisceau.transform.position = t.collider.transform.position;
+
         }
         else
         {
             fd_faisceau.transform.position = t.point;
         }
     }
+
+
+
     private void CheckDisInteraction()
     {
         if (targetInteraction != null)
@@ -174,7 +187,7 @@ public class PlayerController : MonoBehaviour
                 if (ia != null && mP.onPlayer1)
                 {
                     ia.Death();
-                    Debug.Log("T MORT");
+                    //Debug.Log("T MORT");
                 }
 
                 trap_interaction ti = targetInteraction.GetComponent<trap_interaction>();
@@ -196,6 +209,8 @@ public class PlayerController : MonoBehaviour
     }
 
     #endregion
+
+
 
     #region AnimManager
     private void SetAnim(string var, bool active, bool trigger)
@@ -255,6 +270,8 @@ public class PlayerController : MonoBehaviour
         SetAnim("Div", true, true);
     }
     #endregion
+
+
 
     public void Death()
     {
