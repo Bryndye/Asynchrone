@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 477cc4148fad3449482a3bc3178594e2, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -876,7 +876,7 @@ NavMeshObstacle:
   m_Shape: 1
   m_Extents: {x: 0.5, y: 0.5, z: 0.5}
   m_MoveThreshold: 0.1
-  m_Carve: 0
+  m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
@@ -1356,7 +1356,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8734465463775948673, guid: d2da71f02cbd7cc499192101932b1c3a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.96
+      value: 1.74
       objectReference: {fileID: 0}
     - target: {fileID: 8734465463775948673, guid: d2da71f02cbd7cc499192101932b1c3a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1364,23 +1364,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8734465463775948673, guid: d2da71f02cbd7cc499192101932b1c3a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.19
+      value: 10.06
       objectReference: {fileID: 0}
     - target: {fileID: 8734465463775948673, guid: d2da71f02cbd7cc499192101932b1c3a, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.716724
       objectReference: {fileID: 0}
     - target: {fileID: 8734465463775948673, guid: d2da71f02cbd7cc499192101932b1c3a, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8734465463775948673, guid: d2da71f02cbd7cc499192101932b1c3a, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.697357
       objectReference: {fileID: 0}
     - target: {fileID: 8734465463775948673, guid: d2da71f02cbd7cc499192101932b1c3a, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8734465463775948673, guid: d2da71f02cbd7cc499192101932b1c3a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1388,11 +1388,67 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8734465463775948673, guid: d2da71f02cbd7cc499192101932b1c3a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -88.431
       objectReference: {fileID: 0}
     - target: {fileID: 8734465463775948673, guid: d2da71f02cbd7cc499192101932b1c3a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8734465463775948674, guid: d2da71f02cbd7cc499192101932b1c3a, type: 3}
+      propertyPath: m_WalkableMask
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8734465463775948675, guid: d2da71f02cbd7cc499192101932b1c3a, type: 3}
+      propertyPath: myClasse
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8734465463775948675, guid: d2da71f02cbd7cc499192101932b1c3a, type: 3}
+      propertyPath: Comportement
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8734465463775948675, guid: d2da71f02cbd7cc499192101932b1c3a, type: 3}
+      propertyPath: EtapesPatrouille.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8734465463775948675, guid: d2da71f02cbd7cc499192101932b1c3a, type: 3}
+      propertyPath: EtapesPatrouille.Array.data[0].y
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8734465463775948675, guid: d2da71f02cbd7cc499192101932b1c3a, type: 3}
+      propertyPath: EtapesPatrouille.Array.data[1].x
+      value: 4.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 8734465463775948675, guid: d2da71f02cbd7cc499192101932b1c3a, type: 3}
+      propertyPath: EtapesPatrouille.Array.data[1].y
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8734465463775948675, guid: d2da71f02cbd7cc499192101932b1c3a, type: 3}
+      propertyPath: EtapesPatrouille.Array.data[1].z
+      value: -1.37
+      objectReference: {fileID: 0}
+    - target: {fileID: 8734465463775948675, guid: d2da71f02cbd7cc499192101932b1c3a, type: 3}
+      propertyPath: EtapesPatrouille.Array.data[2].x
+      value: 2.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 8734465463775948675, guid: d2da71f02cbd7cc499192101932b1c3a, type: 3}
+      propertyPath: EtapesPatrouille.Array.data[2].y
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8734465463775948675, guid: d2da71f02cbd7cc499192101932b1c3a, type: 3}
+      propertyPath: EtapesPatrouille.Array.data[2].z
+      value: 11.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 8734465463775948675, guid: d2da71f02cbd7cc499192101932b1c3a, type: 3}
+      propertyPath: EtapesPatrouille.Array.data[3].x
+      value: -5.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 8734465463775948675, guid: d2da71f02cbd7cc499192101932b1c3a, type: 3}
+      propertyPath: EtapesPatrouille.Array.data[3].y
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8734465463775948675, guid: d2da71f02cbd7cc499192101932b1c3a, type: 3}
+      propertyPath: EtapesPatrouille.Array.data[3].z
+      value: -0.57
       objectReference: {fileID: 0}
     - target: {fileID: 8734465463775948685, guid: d2da71f02cbd7cc499192101932b1c3a, type: 3}
       propertyPath: m_Name

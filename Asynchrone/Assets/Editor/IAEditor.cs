@@ -30,6 +30,7 @@ public class IAEditor : Editor
         {
             myAI.ChangeClass();
         }
+        EditorGUILayout.Space();
 
         if (GUILayout.Button("Add current position to patrol"))
         {
@@ -39,13 +40,16 @@ public class IAEditor : Editor
         {
             myAI.AddSecondaryPatrolPoint();
         }
-        if (GUILayout.Button("Go to base position"))
-        {
-            myAI.ResetPositionToFirstPatrolPoint();
-        }
         if (GUILayout.Button("Supprimer la patrouille"))
         {
             myAI.ResetPath();
+        }
+        EditorGUILayout.Space();
+
+        EditorGUILayout.Space();
+        if (GUILayout.Button("Go to base position"))
+        {
+            myAI.ResetPositionToFirstPatrolPoint();
         }
     }
 }

@@ -240,8 +240,6 @@ public class anAI : MonoBehaviour
                 {
                     if(HitLowWall && theTarget.GetComponent<Human>() != null && !theTarget.GetComponent<Human>().isAccroupi)
                         HitLowWall = false;
-                    else if(HitLowWall && theTarget.GetComponent<Human>() == null)
-                        HitLowWall = false;
                 }
 
                 if (!HitWall && !HitLowWall)
