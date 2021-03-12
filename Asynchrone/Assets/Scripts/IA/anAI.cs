@@ -60,7 +60,10 @@ public class anAI : MonoBehaviour
 
     [Header("Garde")]
     public Vector3 BasePosition;
-    public Vector3 ForwardRotationBase;
+    public List<Vector3> EtapesRotation;
+    int StepRotationIndex;
+    float Temps_InterRotations;
+    public float Latence_InterRotations;
 
     [Header("Patrouille")]
     [SerializeField]
@@ -99,7 +102,8 @@ public class anAI : MonoBehaviour
         viewMeshFilter2.mesh = viewMesh2;
 
         BasePosition = transform.position;
-        ForwardRotationBase = BasePosition + transform.forward;
+        if (Comportement == myBehaviour.Guard && EtapesRotation.Count == 0)
+            EtapesRotation.Add(BasePosition + transform.forward);
 
         if (Comportement == myBehaviour.Patrol)
             NextPatrolStep();
@@ -125,7 +129,20 @@ public class anAI : MonoBehaviour
                 GuardVerifyToBase();
             }
             else if (Comportement == myBehaviour.Guard && mySituation == Situation.None)
+            {
                 ForceLook();
+                Temps_InterRotations += Time.deltaTime;
+                if(Temps_InterRotations >= Latence_InterRotations)
+                {
+                    Temps_InterRotations = 0;
+                    StepRotationIndex += 1;
+                    if(StepRotationIndex >= EtapesRotation.Count)
+                    {
+                        StepRotationIndex = 0;
+                    }
+                }
+            }
+                
 
             else if(Comportement == myBehaviour.Patrol && mySituation == Situation.Interaction)
             {
@@ -442,7 +459,7 @@ public class anAI : MonoBehaviour
 
     #region Patrouille et garde
 
-    #region Editor
+    #region Editor_Patrouille
 
     public void AddPatrolPoint()
     {
@@ -510,6 +527,27 @@ public class anAI : MonoBehaviour
         {
             UnityEditor.PrefabUtility.RecordPrefabInstancePropertyModifications(gameObject);
         }
+#endif
+    }
+
+    #endregion
+
+    #region Editor_Rotation
+
+    public void AddRotationPoint()
+    {
+#if UNITY_EDITOR
+        EtapesRotation.Add(transform.position + transform.forward);
+        SetObjectDirty(this);
+#endif
+    }
+
+    public void ResetRotations()
+    {
+#if UNITY_EDITOR
+        EtapesRotation.Clear();
+        EtapesRotation = new List<Vector3>();
+        SetObjectDirty(this);
 #endif
     }
 
@@ -624,7 +662,7 @@ public class anAI : MonoBehaviour
 
     void ForceLook()
     {
-        Vector3 MyCostumPosition = ForwardRotationBase;
+        Vector3 MyCostumPosition = EtapesRotation[StepRotationIndex];
         if (mySituation == Situation.Interaction)
             MyCostumPosition = InteractionTarget;
         else if (mySituation == Situation.Interrogation)
@@ -722,70 +760,22 @@ public class anAI : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.yellow;
-
-        if (myNavMeshAgent == null)
-            myNavMeshAgent = GetComponent<NavMeshAgent>();
-
-        for (int i = 0; i < EtapesPatrouille.Count; i++)
+        if(Comportement == myBehaviour.Patrol)
         {
-            Gizmos.DrawSphere(EtapesPatrouille[i], 0.1f);
+            Gizmos.color = Color.yellow;
 
-            Vector3 BasePosition = EtapesPatrouille[i];
-            Vector3 TargetPosition = Vector3.zero;
+            if (myNavMeshAgent == null)
+                myNavMeshAgent = GetComponent<NavMeshAgent>();
 
-            if (i + 1 < EtapesPatrouille.Count)
-                TargetPosition = EtapesPatrouille[i + 1];
-            else
-                TargetPosition = EtapesPatrouille[0];
-
-            NavMeshPath myNavMeshPath = new NavMeshPath();
-            NavMesh.CalculatePath(BasePosition, TargetPosition, NavMesh.AllAreas, myNavMeshPath);
-
-            if (myNavMeshPath.corners.Length < 2)
+            for (int i = 0; i < EtapesPatrouille.Count; i++)
             {
-                Gizmos.DrawLine(BasePosition, TargetPosition);
-            }
-            else
-            {
-                for (int a = 0; a + 1 < myNavMeshPath.corners.Length; a++)
-                {
-                    Gizmos.DrawLine(myNavMeshPath.corners[a], myNavMeshPath.corners[a + 1]);
-                }
-            }
-        }
+                Gizmos.DrawSphere(EtapesPatrouille[i], 0.1f);
 
-        Gizmos.color = Color.red;
-
-        if(EtapesPatrouilleSecondaire.Count > 0)
-        {
-            Vector3 FirstBasePosition = EtapesPatrouille[IndexStartPatrouilleSecondaire - 1];
-            Vector3 FirstTargetPosition = EtapesPatrouilleSecondaire[0];
-
-            NavMeshPath myFirstNavMeshPath = new NavMeshPath();
-            NavMesh.CalculatePath(FirstBasePosition, FirstTargetPosition, NavMesh.AllAreas, myFirstNavMeshPath);
-
-            if (myFirstNavMeshPath.corners.Length < 2)
-            {
-                Gizmos.DrawLine(FirstBasePosition, FirstTargetPosition);
-            }
-            else
-            {
-                for (int a = 0; a + 1 < myFirstNavMeshPath.corners.Length; a++)
-                {
-                    Gizmos.DrawLine(myFirstNavMeshPath.corners[a], myFirstNavMeshPath.corners[a + 1]);
-                }
-            }
-
-            for (int i = 0; i < EtapesPatrouilleSecondaire.Count; i++)
-            {
-                Gizmos.DrawSphere(EtapesPatrouilleSecondaire[i], 0.1f);
-
-                Vector3 BasePosition = EtapesPatrouilleSecondaire[i];
+                Vector3 BasePosition = EtapesPatrouille[i];
                 Vector3 TargetPosition = Vector3.zero;
 
-                if (i + 1 < EtapesPatrouilleSecondaire.Count)
-                    TargetPosition = EtapesPatrouilleSecondaire[i + 1];
+                if (i + 1 < EtapesPatrouille.Count)
+                    TargetPosition = EtapesPatrouille[i + 1];
                 else
                     TargetPosition = EtapesPatrouille[0];
 
@@ -803,6 +793,69 @@ public class anAI : MonoBehaviour
                         Gizmos.DrawLine(myNavMeshPath.corners[a], myNavMeshPath.corners[a + 1]);
                     }
                 }
+            }
+
+            Gizmos.color = Color.red;
+
+            if (EtapesPatrouilleSecondaire.Count > 0)
+            {
+                Vector3 FirstBasePosition = EtapesPatrouille[IndexStartPatrouilleSecondaire - 1];
+                Vector3 FirstTargetPosition = EtapesPatrouilleSecondaire[0];
+
+                NavMeshPath myFirstNavMeshPath = new NavMeshPath();
+                NavMesh.CalculatePath(FirstBasePosition, FirstTargetPosition, NavMesh.AllAreas, myFirstNavMeshPath);
+
+                if (myFirstNavMeshPath.corners.Length < 2)
+                {
+                    Gizmos.DrawLine(FirstBasePosition, FirstTargetPosition);
+                }
+                else
+                {
+                    for (int a = 0; a + 1 < myFirstNavMeshPath.corners.Length; a++)
+                    {
+                        Gizmos.DrawLine(myFirstNavMeshPath.corners[a], myFirstNavMeshPath.corners[a + 1]);
+                    }
+                }
+
+                for (int i = 0; i < EtapesPatrouilleSecondaire.Count; i++)
+                {
+                    Gizmos.DrawSphere(EtapesPatrouilleSecondaire[i], 0.1f);
+
+                    Vector3 BasePosition = EtapesPatrouilleSecondaire[i];
+                    Vector3 TargetPosition = Vector3.zero;
+
+                    if (i + 1 < EtapesPatrouilleSecondaire.Count)
+                        TargetPosition = EtapesPatrouilleSecondaire[i + 1];
+                    else
+                        TargetPosition = EtapesPatrouille[0];
+
+                    NavMeshPath myNavMeshPath = new NavMeshPath();
+                    NavMesh.CalculatePath(BasePosition, TargetPosition, NavMesh.AllAreas, myNavMeshPath);
+
+                    if (myNavMeshPath.corners.Length < 2)
+                    {
+                        Gizmos.DrawLine(BasePosition, TargetPosition);
+                    }
+                    else
+                    {
+                        for (int a = 0; a + 1 < myNavMeshPath.corners.Length; a++)
+                        {
+                            Gizmos.DrawLine(myNavMeshPath.corners[a], myNavMeshPath.corners[a + 1]);
+                        }
+                    }
+                }
+            }
+        }
+
+        if(Comportement == myBehaviour.Guard)
+        {
+            Gizmos.color = Color.blue;
+
+            for (int i = 0; i < EtapesRotation.Count; i++)
+            {
+                Vector3 Direction = EtapesRotation[i] - transform.position;
+                Vector3 DirectionEtape = transform.position + Direction * ViewRadius;
+                Gizmos.DrawLine(transform.position, DirectionEtape);
             }
         }
     }

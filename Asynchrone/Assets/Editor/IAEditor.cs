@@ -26,17 +26,17 @@ public class IAEditor : Editor
 
         anAI myAI = (anAI)target;
 
-        if (GUILayout.Button("Change Class"))
+        if (GUILayout.Button("Changer l'ennemi de classe"))
         {
             myAI.ChangeClass();
         }
         EditorGUILayout.Space();
 
-        if (GUILayout.Button("Add current position to patrol"))
+        if (GUILayout.Button("Ajouter la position actuelle à la patrouille"))
         {
             myAI.AddPatrolPoint();
         }
-        if (GUILayout.Button("Add current position to secondary patrol"))
+        if (GUILayout.Button("Ajouter la position actuelle à la patrouille secondaire"))
         {
             myAI.AddSecondaryPatrolPoint();
         }
@@ -46,8 +46,18 @@ public class IAEditor : Editor
         }
         EditorGUILayout.Space();
 
+        if (GUILayout.Button("Ajouter la rotation actuelles au balayage de garde"))
+        {
+            myAI.AddRotationPoint();
+        }
+        if (GUILayout.Button("Supprimer le balayage de garde"))
+        {
+            myAI.ResetRotations();
+        }
         EditorGUILayout.Space();
-        if (GUILayout.Button("Go to base position"))
+
+        EditorGUILayout.Space();
+        if (GUILayout.Button("Aller à la position de base"))
         {
             myAI.ResetPositionToFirstPatrolPoint();
         }
