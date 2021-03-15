@@ -662,11 +662,13 @@ public class anAI : MonoBehaviour
 
     void ForceLook()
     {
-        Vector3 MyCostumPosition = EtapesRotation[StepRotationIndex];
+        Vector3 MyCostumPosition = transform.position + transform.forward;
         if (mySituation == Situation.Interaction)
             MyCostumPosition = InteractionTarget;
         else if (mySituation == Situation.Interrogation)
             MyCostumPosition = PursuitLastPosition;
+        else
+            MyCostumPosition = EtapesRotation[StepRotationIndex];
         Quaternion targetRotation = Quaternion.LookRotation(MyCostumPosition - transform.position);
 
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
