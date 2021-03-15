@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    #region Mousse/Interaction element decor
+    #region Mouse/Interaction element decor
     [SerializeField] private bool canMove = true;
     private void OnClickMouseR()
     {
@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour
                 if (ia != null && !mP.onPlayer1)
                 {
                     SetDesination(hit, true, true);
-                    Debug.Log("La");
+                    //Debug.Log("La");
                 }
             }
         }
