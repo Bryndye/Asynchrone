@@ -14,7 +14,7 @@ public class Robot : MonoBehaviour
     [SerializeField] GameObject range;
     [SerializeField] LayerMask ignoreWall;
     [SerializeField] float rangeDis;
-    public bool canDiv;
+    [HideInInspector] public bool canDiv;
     [HideInInspector] public GameObject robot_div;
     public int DivStock = 0;
 
@@ -126,6 +126,9 @@ public class Robot : MonoBehaviour
         {
             BackToHuman = false;
             mP.Hm.RobotIntoMe(true);
+
+            mP.pc2.fd_faisceau.SetActive(false);
+
             if (!mP.onPlayer1)
             {
                 mP.Camera_Manager();

@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class Interaction : MonoBehaviour
 {
-    bool activated;
+    private bool activated;
+    [SerializeField] private bool cinematic = false;
+    private CameraManager cm;
 
     public Transform[] Influence;
+
+    private void Awake() => cm = CameraManager.Instance;
 
     public void CallEvent()
     {
@@ -20,6 +24,8 @@ public class Interaction : MonoBehaviour
                 if (Influence[i] != null)
                 {
                     Influence[i].gameObject.SetActive(!Influence[i].gameObject.activeSelf);
+                    if (cm != null && cinematic)
+                        cm.GetTargetPorte(Influence);
                 }
             }
         }

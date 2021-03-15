@@ -35,6 +35,7 @@ public class Event_Trigger : MonoBehaviour
 
     [Header("Fin de niveau")]
     [ShowIf("end")] [SerializeField] private string nameOfNextlevel;
+    [SerializeField] private List<GameObject> players;
 
 
     private void Awake()
@@ -61,9 +62,7 @@ public class Event_Trigger : MonoBehaviour
                 case typeEvent.ActiveIA:
                     EventIA();
                     break;
-                case typeEvent.FinNiveau:
-                    SceneManager.LoadScene(nameOfNextlevel);
-                    break;
+
                 default:
                     break;
             }
@@ -71,13 +70,42 @@ public class Event_Trigger : MonoBehaviour
         }
         if (other.CompareTag("Player"))
         {
-            switch (eventToTrigger)
+            if (eventToTrigger == typeEvent.Porte1side)
             {
-                case typeEvent.Porte1side:
-                    PorteTime();
-                    break;
-                default:
-                    break;
+                PorteTime();
+            }
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (eventToTrigger == typeEvent.FinNiveau)
+        {
+            if (other.CompareTag("Player"))
+            {
+                if (!players.Contains(other.gameObject))
+                {
+                    players.Add(other.gameObject);
+                }
+            }
+
+            if (players.Count >= 2)
+            {
+                SceneManager.LoadScene(nameOfNextlevel);
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (eventToTrigger == typeEvent.FinNiveau)
+        {
+            if (other.CompareTag("Player"))
+            {
+                if (players.Contains(other.gameObject))
+                {
+                    players.Remove(other.gameObject);
+                }
             }
         }
     }
