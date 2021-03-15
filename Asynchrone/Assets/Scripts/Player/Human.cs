@@ -18,7 +18,11 @@ public class Human : Singleton<Human>
     [HideInInspector] public bool isAccroupi;
     #endregion
 
-    private void Awake()
+
+
+
+
+    private void Awake()                            //AWAKE
     {
         if (Instance != this)
             Destroy(this);
@@ -33,7 +37,11 @@ public class Human : Singleton<Human>
         size = cc.height;
     }
 
-    private void Update()
+
+
+
+
+    private void Update()                           //UPDATE
     {
         if (!mP.pc1.InCinematic)
         {
@@ -44,6 +52,16 @@ public class Human : Singleton<Human>
         }
     }
 
+
+
+
+
+
+
+
+
+
+
     private void InputManager()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -51,6 +69,10 @@ public class Human : Singleton<Human>
             CheckMask();
         }
     }
+
+
+
+
 
 
     #region Accroupi
@@ -65,6 +87,9 @@ public class Human : Singleton<Human>
             Accroupi();
         }
     }
+
+
+
     private void Accroupi()
     {
         int h, sp, si;

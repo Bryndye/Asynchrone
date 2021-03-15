@@ -20,8 +20,8 @@ public class PlayerController : MonoBehaviour
 
     [Space]
     public bool InCinematic;
-    [SerializeField] private GameObject feedbackClick;
-    [HideInInspector] public GameObject fd_faisceau;
+    public GameObject feedbackClick;
+    public GameObject fd_faisceau;
     #endregion
 
 
@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
                 {
                     if (CanReachPosition(hit.point))
                     {
-                        SetDesination(hit, false, true);
+                        SetDesination(hit, false);
                     }
                 }
             }
@@ -107,22 +107,26 @@ public class PlayerController : MonoBehaviour
         {
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ingorePlayers))
             {
+
+                Instantiate(feedbackClick, hit.point, transform.rotation); // play particle system
+
+
                 if (nav.CalculatePath(hit.point, nav.path))
                 {
                     if (CanReachPosition(hit.point))
                     {
-                        SetDesination(hit, false, true);
+                        SetDesination(hit, false);
                     }
                 }
                 if (hit.collider.tag == "Interaction")
                 {
-                    SetDesination(hit, true, true);
+                    SetDesination(hit, true);
                 }
                 
                 anAI ia = hit.collider.GetComponent<anAI>();
                 if (ia != null && !mP.onPlayer1)
                 {
-                    SetDesination(hit, true, true);
+                    SetDesination(hit, true);
                     //Debug.Log("La");
                 }
             }
@@ -146,15 +150,9 @@ public class PlayerController : MonoBehaviour
         return path.status == NavMeshPathStatus.PathComplete;
     }
 
-    private void SetDesination(RaycastHit t, bool inter, bool active)
+    private void SetDesination(RaycastHit t, bool inter)
     {
         
-        if (!fd_faisceau && feedbackClick != null)
-        {
-            fd_faisceau = Instantiate(Resources.Load<GameObject>("Feedback/Player/" + feedbackClick.name));
-        }
-        fd_faisceau.SetActive(active);
-
         if (t.point != Vector3.zero)
         {
             nav.SetDestination(t.point);
@@ -171,14 +169,10 @@ public class PlayerController : MonoBehaviour
 
             if (ia == null)
             {
-                fd_faisceau.transform.position = t.collider.transform.position;
+                //Instantiate(fd_faisceau, t.collider.transform.position, fd_faisceau.transform.rotation);
             }
             targetInteraction = t.collider.transform;
 
-        }
-        else
-        {
-            fd_faisceau.transform.position = t.point;
         }
     }
 
@@ -201,7 +195,7 @@ public class PlayerController : MonoBehaviour
                     {
                         iem.CallEvent();
                     }
-                    SetDesination(raycastNull(), false, false);
+                    SetDesination(raycastNull(), false);
                 }
 
                 anAI ia = targetInteraction.GetComponent<anAI>();
@@ -218,7 +212,7 @@ public class PlayerController : MonoBehaviour
                 }
                 //Debug.Log(targetInteraction.name);
                 targetInteraction = null;
-                SetDesination(raycastNull(), false, false);
+                SetDesination(raycastNull(), false);
             }
         }
     }
@@ -268,7 +262,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 SetAnim("Walking", false, false);
-                SetDesination(raycastNull(), false, false);
+                SetDesination(raycastNull(), false);
                 //Debug.Log("idle " + transform.name);
             }
             //Debug.Log(Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(finalDestination.x, finalDestination.z)) + " " + transform.name);
