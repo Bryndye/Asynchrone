@@ -4,13 +4,24 @@ using UnityEngine;
 
 public class Interaction : MonoBehaviour
 {
+    private CameraManager cm;
+    private ManagerPlayers mp;
+
+    public bool distributeur;
     private bool activated;
     [SerializeField] private bool cinematic = false;
-    private CameraManager cm;
+
 
     public Transform[] Influence;
 
-    private void Awake() => cm = CameraManager.Instance;
+
+
+
+
+    private void Awake() { 
+        cm = CameraManager.Instance;
+        mp = ManagerPlayers.Instance;
+    }
 
     public void CallEvent()
     {
@@ -28,6 +39,25 @@ public class Interaction : MonoBehaviour
                         cm.GetTargetPorte(Influence);
                 }
             }
+        }
+    }
+
+    public void CallDistri() 
+    {
+        activated = true;
+
+        if (mp.Rbt.DivStock <= 0)
+        {
+            //trigger Anim successfull
+            mp.Rbt.DivStock = 1;
+        }
+        else
+        {
+            CanvasManager cm = CanvasManager.Instance;
+            string[] dia = new string[1];
+            dia[0] = "Je suis déjà rechagé à bloc!";
+            cm.StartDiaEffect(dia, null);
+            //trigger anim cancel = texte ta mere
         }
     }
 }

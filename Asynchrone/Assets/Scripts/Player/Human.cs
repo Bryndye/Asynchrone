@@ -15,8 +15,6 @@ public class Human : Singleton<Human>
     float speed;
 
     [Header("Accroupi")]
-    [SerializeField] GameObject robotBeLike;
-    [HideInInspector] public bool intoMe;
     [HideInInspector] public bool isAccroupi;
     #endregion
 
@@ -52,29 +50,8 @@ public class Human : Singleton<Human>
         {
             CheckMask();
         }
-
-        if (Input.GetKeyDown(KeyCode.Z)&& !intoMe)
-        {
-            mP.RobotBackToHuman();
-        }
-        else if (Input.GetKeyDown(KeyCode.Z) && intoMe)
-        {
-            RobotIntoMe(false);
-        }
     }
 
-    public void RobotIntoMe(bool intoMoi)
-    {
-        intoMe = intoMoi;
-
-        robotBeLike.SetActive(intoMe);
-        mP.Player2.gameObject.SetActive(!intoMe);
-
-        if (!intoMe)
-        {
-            mP.Player2.position = transform.position;
-        }
-    }
 
     #region Accroupi
     public void CheckMask()

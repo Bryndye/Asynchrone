@@ -33,7 +33,7 @@ public class CameraManager : Singleton<CameraManager>
         if (TargetPorte.Length > 0)
         {
             timer += Time.deltaTime;
-            Debug.Log("timing...");
+            //Debug.Log("timing...");
 
             Vector3 smooth = new Vector3(TargetPorte[index].position.x, 1, TargetPorte[index].position.z) - transform.position;
             transform.position += smooth / 40;
@@ -71,11 +71,11 @@ public class CameraManager : Singleton<CameraManager>
         if (TargetPorte.Length > index)
         {
             timer = 0;
-            Debug.Log("reset time");
+            //Debug.Log("reset time");
         }
         else
         {
-            Debug.Log("reset array");
+            //Debug.Log("reset array");
             TargetPorte = new Transform[0];
         }
     }

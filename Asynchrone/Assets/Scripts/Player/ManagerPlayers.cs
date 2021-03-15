@@ -19,6 +19,8 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
     CanvasManager cm;
     public bool onPlayer1;
 
+
+
     private void Awake()
     {
         Time.timeScale = 1;
@@ -74,11 +76,6 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
                 cm.UIHuman.SetActive(onPlayer1);
                 cm.UIRobot.SetActive(!onPlayer1);
             }
-
-            if (!onPlayer1 && Hm.intoMe)
-            {
-                Hm.RobotIntoMe(false);
-            }
         }
         else
         {
@@ -97,21 +94,7 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
         }
     }
 
-    #region Huamn fct
-    public void RobotBackToHuman()
-    {
-        if (Rbt)
-        {
-            pc2.fd_faisceau.SetActive(false);
 
-            Rbt.BackToHuman = !Rbt.BackToHuman;
-            if (!Rbt.BackToHuman)
-            {
-                Rbt.CancelBack();
-            }
-        }
-    }
-    #endregion
 
     #region Cursor
     [Space]

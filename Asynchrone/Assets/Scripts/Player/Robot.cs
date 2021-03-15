@@ -8,7 +8,6 @@ public class Robot : MonoBehaviour
     NavMeshAgent nav;
     ManagerPlayers mP;
 
-    public bool BackToHuman;
 
     [Header("Diversion")]
     [SerializeField] GameObject range;
@@ -30,26 +29,20 @@ public class Robot : MonoBehaviour
     {
         if (!mP.pc2.InCinematic)
         {         
-            if (BackToHuman)
-            {
-                Linked();
-            }
+
             if (!mP.onPlayer1)
             {
-                if (Input.GetKeyDown(KeyCode.Z))
-                {
-                    mP.RobotBackToHuman();
-                }
-                if (Input.GetKeyDown(KeyCode.E) && robot_div == null && DivStock > 0)
+                GestionDiv();
+
+                if (Input.GetKeyDown(KeyCode.Z) && robot_div == null && DivStock > 0)
                 {
                     StartDiv();
                 }
-                if (Input.GetKeyDown(KeyCode.E) && robot_div != null)
+                if (Input.GetKeyDown(KeyCode.Z) && robot_div != null)
                 {
                     Destroy(robot_div);
                 }
             }
-            GestionDiv();
         }
     }
 
@@ -115,33 +108,5 @@ public class Robot : MonoBehaviour
         //bt_destroy.interactable = robot_div != null;
     }
 
-    #endregion
-
-    #region WhenHumanCallHim
-    public void Linked()
-    {
-        nav.SetDestination(mP.Player1.position);
-
-        if (Vector2.Distance(new Vector2(mP.Player1.position.x, mP.Player1.position.z), new Vector2(transform.position.x, transform.position.z)) < 1)
-        {
-            BackToHuman = false;
-            mP.Hm.RobotIntoMe(true);
-
-            mP.pc2.fd_faisceau.SetActive(false);
-
-            if (!mP.onPlayer1)
-            {
-                mP.Camera_Manager();
-            }
-        }
-    }
-
-    public void CancelBack()
-    {
-        if (gameObject.activeSelf)
-        {
-            nav.SetDestination(transform.position);
-        }
-    }
     #endregion
 }

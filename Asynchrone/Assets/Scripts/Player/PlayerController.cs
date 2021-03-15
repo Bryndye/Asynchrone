@@ -66,10 +66,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             OnClickMouseR();
-            if (!mP.onPlayer1 && mP.Rbt.BackToHuman)
-            {
-                mP.Rbt.BackToHuman = false;
-            }
         }
         if (Input.GetKey(KeyCode.Mouse1) && canMove)
         {
@@ -197,7 +193,14 @@ public class PlayerController : MonoBehaviour
                 Interaction iem = targetInteraction.GetComponent<Interaction>();
                 if (iem != null)
                 {
-                    iem.CallEvent();
+                    if (!mP.onPlayer1 && iem.distributeur)
+                    {
+                        iem.CallDistri();
+                    }
+                    if (!iem.distributeur)
+                    {
+                        iem.CallEvent();
+                    }
                     SetDesination(raycastNull(), false, false);
                 }
 

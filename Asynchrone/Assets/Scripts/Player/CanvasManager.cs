@@ -29,7 +29,12 @@ public class CanvasManager : Singleton<CanvasManager>
     public GameObject UIRobot;
     [SerializeField] private Button bt_divRbt;
 
-    void Awake()
+
+
+
+
+
+    void Awake()                                        //AWAKE
     {
         if (Instance != this)
             Destroy(this);
@@ -37,6 +42,21 @@ public class CanvasManager : Singleton<CanvasManager>
         anim = GetComponent<Animator>();
         anim.SetTrigger("Disappear");
     }
+
+    void Update()                                       //UPDATE
+    {
+        if (isRuntime && dialogueHere.text == sentences[index] && !skip)
+        {
+            skip = true;
+            Invoke(nameof(NextDialogue), 2f);
+        }
+        NombreDiversion();
+    }
+
+
+
+
+
 
     #region SetBtn
     public void CallFctSpell(int i)
@@ -51,7 +71,7 @@ public class CanvasManager : Singleton<CanvasManager>
                 mp.Camera_Manager();
                 break;
             case 1:
-                if (!mp.onPlayer1 && !mp.Rbt.robot_div)
+                if (!mp.onPlayer1 && !mp.Rbt.robot_div && mp.Rbt.DivStock > 0)
                 {
                     mp.Rbt.StartDiv();
                 }
@@ -60,16 +80,7 @@ public class CanvasManager : Singleton<CanvasManager>
                     Destroy(mp.Rbt.robot_div);
                 }
                 break;
-            case 2:
-                if (!mp.Hm.intoMe)
-                {
-                    mp.RobotBackToHuman();
-                }
-                else
-                {
-                    mp.Hm.RobotIntoMe(false);
-                }
-                break;
+
             case 3:
                 if (mp.onPlayer1)
                 {
@@ -79,6 +90,8 @@ public class CanvasManager : Singleton<CanvasManager>
         }
     }
     #endregion
+
+
 
     #region visual
     public void BandeAppear()
@@ -117,6 +130,8 @@ public class CanvasManager : Singleton<CanvasManager>
     }
     #endregion
 
+
+
     #region Daliogue
     IEnumerator Type()
     {
@@ -129,7 +144,7 @@ public class CanvasManager : Singleton<CanvasManager>
     }
     private void LaunchAudio()
     {
-        if (audioc.Length > 0 && index < audioc.Length)
+        if (audioc != null && index < audioc.Length)
         {
             //cm.AS_dia.clip = audioc[index];
             //cm.AS_dia.Play();
@@ -187,17 +202,10 @@ public class CanvasManager : Singleton<CanvasManager>
         skip = false;
     }
 
+    [Space]
     [SerializeField] float latence = 0.1f;
 
     #endregion
 
-    void Update()
-    {
-        if (isRuntime && dialogueHere.text == sentences[index] && !skip)
-        {
-            skip = true;
-            Invoke(nameof(NextDialogue), 2f);
-        }
-        NombreDiversion();
-    }
+
 }
