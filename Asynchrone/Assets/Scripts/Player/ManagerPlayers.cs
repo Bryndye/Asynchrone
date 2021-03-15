@@ -102,6 +102,8 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
     {
         if (Rbt)
         {
+            pc2.fd_faisceau.SetActive(false);
+
             Rbt.BackToHuman = !Rbt.BackToHuman;
             if (!Rbt.BackToHuman)
             {

@@ -7,28 +7,38 @@ using UnityEngine.AI;
 public class PlayerController : MonoBehaviour
 {
     #region var
-    public Animator anim;
+    [HideInInspector] public Animator anim;
     [HideInInspector] public NavMeshAgent nav;
-    ManagerPlayers mP;
-    SpawnMANAGER sm;
-    public bool CanPlay;
+    private ManagerPlayers mP;
+    private SpawnMANAGER sm;
+    [HideInInspector] public bool CanPlay;
 
+    [Space]
     [SerializeField] LayerMask ingoreDiv;
     [SerializeField] LayerMask ingorePlayers;
-    [SerializeField] Transform targetInteraction;
+    [HideInInspector] Transform targetInteraction;
 
+    [Space]
     public bool InCinematic;
-    GameObject fd_faisceau;
+    [SerializeField] private GameObject feedbackClick;
+    [HideInInspector] public GameObject fd_faisceau;
     #endregion
 
-    private void Awake()
+
+
+
+
+
+    private void Awake()                                //AWAKE
     {
         mP = ManagerPlayers.Instance;
         sm = SpawnMANAGER.Instance;
         nav = GetComponent<NavMeshAgent>();
+
+        anim = GetComponentInChildren<Animator>();
     }
 
-    void Update()
+    void Update()                                       //UPDATE
     {
         if (!InCinematic)
         {
@@ -46,6 +56,10 @@ public class PlayerController : MonoBehaviour
             CrouchedAnim();
         }
     }
+
+
+
+
 
     private void InputManager()
     {
@@ -73,6 +87,9 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+
+
 
 
     #region Mouse/Interaction element decor
@@ -135,9 +152,10 @@ public class PlayerController : MonoBehaviour
 
     private void SetDesination(RaycastHit t, bool inter, bool active)
     {
+        
         if (!fd_faisceau)
         {
-            fd_faisceau = Instantiate(Resources.Load<GameObject>("Feedback/Player/Particle_loading"));
+            fd_faisceau = Instantiate(Resources.Load<GameObject>("Feedback/Player/" + feedbackClick.name));
         }
         fd_faisceau.SetActive(active);
 
@@ -212,6 +230,9 @@ public class PlayerController : MonoBehaviour
 
 
 
+
+
+
     #region AnimManager
     private void SetAnim(string var, bool active, bool trigger)
     {
@@ -270,6 +291,8 @@ public class PlayerController : MonoBehaviour
         SetAnim("Div", true, true);
     }
     #endregion
+
+
 
 
 
