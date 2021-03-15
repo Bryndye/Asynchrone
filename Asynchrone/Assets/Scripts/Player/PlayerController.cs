@@ -153,7 +153,7 @@ public class PlayerController : MonoBehaviour
     private void SetDesination(RaycastHit t, bool inter, bool active)
     {
         
-        if (!fd_faisceau)
+        if (!fd_faisceau && feedbackClick != null)
         {
             fd_faisceau = Instantiate(Resources.Load<GameObject>("Feedback/Player/" + feedbackClick.name));
         }
