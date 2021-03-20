@@ -26,7 +26,7 @@ public class Trap_script : MonoBehaviour
 
     public void Called(GameObject trapIndex)
     {
-        Debug.Log(trapIndex+" called!");
+        //Debug.Log(trapIndex+" called!");
 
         if (trapIndex == trap1)
         {

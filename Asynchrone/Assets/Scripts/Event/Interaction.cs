@@ -8,7 +8,7 @@ public class Interaction : MonoBehaviour
     private ManagerPlayers mp;
 
     public bool distributeur;
-    private bool activated;
+    [SerializeField] public bool activated;
     [SerializeField] private bool cinematic = false;
 
 
@@ -22,6 +22,9 @@ public class Interaction : MonoBehaviour
         cm = CameraManager.Instance;
         mp = ManagerPlayers.Instance;
     }
+
+
+
 
     public void CallEvent()
     {
