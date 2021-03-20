@@ -63,9 +63,6 @@ public class CanvasManager : Singleton<CanvasManager>
     {
         switch (i)
         {
-            default:
-                mp.Camera_Manager();
-                break;
 
             case 0:
                 mp.Camera_Manager();
@@ -86,6 +83,10 @@ public class CanvasManager : Singleton<CanvasManager>
                 {
                     mp.Hm.CheckMask();
                 }
+                break;
+
+            default:
+                mp.Camera_Manager();
                 break;
         }
     }
