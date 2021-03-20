@@ -20,6 +20,7 @@ public class CheckPoint : MonoBehaviour
         if (other.CompareTag("Player") && !done)
         {
             sm.GetSpawn(mp.Player1.position, mp.Player2.position, false);
+            sm.AiCheck();
             cm.ActiveCheckpointText();
             done = true;
         }

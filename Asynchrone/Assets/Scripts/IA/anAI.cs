@@ -11,6 +11,9 @@ public enum Classe { Basic, Drone };
 
 public class anAI : MonoBehaviour
 {
+    [Header("Externe")]
+    SpawnMANAGER SM;
+
     [Header("Composants")]
     NavMeshAgent myNavMeshAgent;
 
@@ -60,6 +63,7 @@ public class anAI : MonoBehaviour
 
     [Header("Garde")]
     public Vector3 BasePosition;
+    public Quaternion BaseRotation;
     public List<Vector3> EtapesRotation;
     int StepRotationIndex;
     float Temps_InterRotations;
@@ -89,6 +93,7 @@ public class anAI : MonoBehaviour
         viewMeshFilter = transform.GetChild(0).GetComponent<MeshFilter>();
         viewMeshFilter2 = transform.GetChild(1).GetComponent<MeshFilter>();
         myNavMeshAgent = GetComponent<NavMeshAgent>();
+        SM = SpawnMANAGER.Instance;
     }
 
     private void Start()
@@ -102,6 +107,7 @@ public class anAI : MonoBehaviour
         viewMeshFilter2.mesh = viewMesh2;
 
         BasePosition = transform.position;
+        BaseRotation = transform.rotation;
         if (Comportement == myBehaviour.Guard && EtapesRotation.Count == 0)
             EtapesRotation.Add(BasePosition + transform.forward);
 
@@ -110,85 +116,91 @@ public class anAI : MonoBehaviour
 
         myUI = Instantiate(Resources.Load<GameObject>("UI/aFollowingState"));
         myUI.GetComponent<AIStateUI>().Declaration(this);
+
+        if(!SM.myAIs.Contains(this))
+            SM.myAIs.Add(this);
     }
 
     private void Update()
     {
         Vus.Clear();
-        FindVisibleTargets();
-        if(Comportement == myBehaviour.Patrol)
+        if (SM.mySpawnSituation == SpawnSituation.Playing)
         {
-            PatrolRoutine();
-        }
-        if (mySituation != Situation.Interrogation && mySituation != Situation.Pursuit)
-        {
-            if (Vus.Count > 0)
-                StopPatrol();
-            else if (Comportement == myBehaviour.Guard && mySituation == Situation.GuardMove)
+            FindVisibleTargets();
+            if (Comportement == myBehaviour.Patrol)
             {
-                GuardVerifyToBase();
+                PatrolRoutine();
             }
-            else if (Comportement == myBehaviour.Guard && mySituation == Situation.None)
+            if (mySituation != Situation.Interrogation && mySituation != Situation.Pursuit)
             {
-                ForceLook();
-                Temps_InterRotations += Time.deltaTime;
-                if(Temps_InterRotations >= Latence_InterRotations)
+                if (Vus.Count > 0)
+                    StopPatrol();
+                else if (Comportement == myBehaviour.Guard && mySituation == Situation.GuardMove)
                 {
-                    Temps_InterRotations = 0;
-                    StepRotationIndex += 1;
-                    if(StepRotationIndex >= EtapesRotation.Count)
+                    GuardVerifyToBase();
+                }
+                else if (Comportement == myBehaviour.Guard && mySituation == Situation.None)
+                {
+                    ForceLook();
+                    Temps_InterRotations += Time.deltaTime;
+                    if (Temps_InterRotations >= Latence_InterRotations)
                     {
-                        StepRotationIndex = 0;
+                        Temps_InterRotations = 0;
+                        StepRotationIndex += 1;
+                        if (StepRotationIndex >= EtapesRotation.Count)
+                        {
+                            StepRotationIndex = 0;
+                        }
+                    }
+                }
+
+
+                else if (Comportement == myBehaviour.Patrol && mySituation == Situation.Interaction)
+                {
+                    TempsInteraction += Time.deltaTime;
+                    if (TempsInteraction >= 3)
+                    {
+                        TempsInteraction = 0;
+                        NextPatrolStep();
                     }
                 }
             }
-                
-
-            else if(Comportement == myBehaviour.Patrol && mySituation == Situation.Interaction)
+            else if (mySituation == Situation.Interrogation)
             {
-                TempsInteraction += Time.deltaTime;
-                if(TempsInteraction >= 3)
+                if (Vus.Count > 0)
                 {
-                    TempsInteraction = 0;
-                    NextPatrolStep();
-                }
-            }
-        }
-        else if(mySituation == Situation.Interrogation)
-        {
-            if (Vus.Count > 0)
-            {
-                LookTo();
-                InInterrogation();
-            }
-            else
-            {
-                TempsInterrogation -= Time.deltaTime / 10;
-                TempsRegard += Time.deltaTime;
-                if(TempsRegard >= 3)
-                {
-                    TempsRegard = 0;
-                    PursuitLastPosition = transform.position + GetRandomPositionAround();
-                }
-
-                if(TempsInterrogation <= 0)
-                {
-                    TempsInterrogation = Mathf.Clamp(TempsInterrogation, 0f, LatenceInterrogation);
-
-                    if (Comportement == myBehaviour.Patrol)
-                        NextPatrolStep();
-                    else if (Comportement == myBehaviour.Guard)
-                        GuardReturnToBase();
+                    LookTo();
+                    InInterrogation();
                 }
                 else
                 {
-                    ForceLook();
+                    TempsInterrogation -= Time.deltaTime / 10;
+                    TempsRegard += Time.deltaTime;
+                    if (TempsRegard >= 3)
+                    {
+                        TempsRegard = 0;
+                        PursuitLastPosition = transform.position + GetRandomPositionAround();
+                    }
+
+                    if (TempsInterrogation <= 0)
+                    {
+                        TempsInterrogation = Mathf.Clamp(TempsInterrogation, 0f, LatenceInterrogation);
+
+                        if (Comportement == myBehaviour.Patrol)
+                            NextPatrolStep();
+                        else if (Comportement == myBehaviour.Guard)
+                            GuardReturnToBase();
+                    }
+                    else
+                    {
+                        ForceLook();
+                    }
                 }
             }
-        }
-        else if(mySituation == Situation.Pursuit)
-        {
-            Pursuit();
+            else if (mySituation == Situation.Pursuit)
+            {
+                Pursuit();
+            }
         }
     }
 
@@ -651,7 +663,7 @@ public class anAI : MonoBehaviour
 
     void GuardVerifyToBase()
     {
-        Debug.Log(myNavMeshAgent.remainingDistance);
+        //Debug.Log(myNavMeshAgent.remainingDistance);
         if (myNavMeshAgent.remainingDistance < 0.1f)
         {
             if (!myNavMeshAgent.isStopped)
@@ -732,6 +744,11 @@ public class anAI : MonoBehaviour
             if (Vus[0].gameObject.name == "Fake_Robot(Clone)" && Vector3.Distance(ScaledPosition, transform.position) < 1.5f)
             {
                 Destroy(Vus[0].gameObject);
+                StopPursuit();
+            }
+            else if (Vus[0].GetComponent<PlayerController>() && Vector3.Distance(ScaledPosition, transform.position) < 1.5f)
+            {
+                Kill();
             }
         }
         else if(Vector3.Distance(PursuitLastPosition, transform.position) > 1)
@@ -752,12 +769,61 @@ public class anAI : MonoBehaviour
         PursuitLastPosition = transform.position + Vector3.forward;
     }
 
+    void Kill()
+    {
+        Vus[0].GetComponent<PlayerController>().Death();
+        SM.mySpawnSituation = SpawnSituation.DeathProcess;
+    }
+
+    #endregion
+
+    void ResetVisionAndInterrogation()
+    {
+        if (Comportement == myBehaviour.Guard)
+        {
+            mySituation = Situation.GuardMove;
+        }
+        else
+        {
+            mySituation = Situation.PatrolMove;
+        }
+        myNavMeshAgent.isStopped = false;
+        myNavMeshAgent.speed = NormalSpeed;
+    }
+
+    #region Reset and Respawn
+
+    public void AIReset()
+    {
+        transform.position = BasePosition;
+        transform.rotation = BaseRotation;
+        myNavMeshAgent.Warp(transform.position);
+
+        StepPatrolIndex = 0;
+        StepRotationIndex = 0;
+        Vus = new List<Transform>();
+
+        if (Comportement == myBehaviour.Guard && EtapesRotation.Count == 0)
+            EtapesRotation.Add(BasePosition + transform.forward);
+
+        if (Comportement == myBehaviour.Patrol)
+            NextPatrolStep();
+
+        if (!myUI)
+        {
+            myUI = Instantiate(Resources.Load<GameObject>("UI/aFollowingState"));
+            myUI.GetComponent<AIStateUI>().Declaration(this);
+        }
+
+        ResetVisionAndInterrogation();
+    }
+
     #endregion
 
     public void Death()
     {
-        Destroy(myUI.gameObject);
-        Destroy(gameObject);
+        myUI.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     private void OnDrawGizmosSelected()
