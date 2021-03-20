@@ -8,6 +8,7 @@ public class Event_Trigger : MonoBehaviour
 {
     private BoxCollider bc;
 
+    ManagerPlayers mp;
     CanvasManager cm;
     CameraManager camM;
     [SerializeField] string nameEvent;
@@ -41,6 +42,7 @@ public class Event_Trigger : MonoBehaviour
     {
         cm = CanvasManager.Instance;
         camM = CameraManager.Instance;
+        mp = ManagerPlayers.Instance;
         for (int i = 0; i < iaToActivate.Length; i++)
         {
             iaToActivate[i].SetActive(false);
@@ -88,7 +90,7 @@ public class Event_Trigger : MonoBehaviour
                 }
             }
 
-            if (players.Count >= 2)
+            if (players.Count >= 2 || mp.Player2 == null && players.Count >= 1)
             {
                 SceneManager.LoadScene(nameOfNextlevel);
             }
