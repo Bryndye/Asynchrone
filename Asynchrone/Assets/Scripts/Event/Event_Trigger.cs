@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using NaughtyAttributes;
 using UnityEngine.SceneManagement;
 
 public class Event_Trigger : MonoBehaviour
@@ -24,17 +23,17 @@ public class Event_Trigger : MonoBehaviour
     public typeEvent eventToTrigger;
 
     [Header("IA a activer")]
-    [ShowIf("ia")] public GameObject[] iaToActivate;
+    public GameObject[] iaToActivate;
 
     [Header("Dialogues")]
-    [ShowIf("audio")] public string[] dialogues;
-    [ShowIf("audio")] public AudioClip[] audioC;
+    public string[] dialogues;
+    public AudioClip[] audioC;
 
     [Header("Porte")]
-    [ShowIf("porte")] public GameObject PorteMesh;
+    public GameObject PorteMesh;
 
     [Header("Fin de niveau")]
-    [ShowIf("end")] [SerializeField] private string nameOfNextlevel;
+    [SerializeField] private string nameOfNextlevel;
     [SerializeField] private List<GameObject> players;
 
 
