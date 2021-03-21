@@ -50,6 +50,7 @@ public class anAI : MonoBehaviour
     public float edgeDstThrehsold;
 
     [Header("Meshs")]
+    Vector3 RaycastPosition;
     MeshFilter viewMeshFilter;
     Mesh viewMesh;
     MeshFilter viewMeshFilter2;
@@ -92,8 +93,12 @@ public class anAI : MonoBehaviour
     {
         viewMeshFilter = transform.GetChild(0).GetComponent<MeshFilter>();
         viewMeshFilter2 = transform.GetChild(1).GetComponent<MeshFilter>();
+        RaycastPosition = viewMeshFilter.transform.position;
         myNavMeshAgent = GetComponent<NavMeshAgent>();
         SM = SpawnMANAGER.Instance;
+
+        if (!SM.myAIs.Contains(this))
+            SM.myAIs.Add(this);
     }
 
     private void Start()
@@ -116,9 +121,6 @@ public class anAI : MonoBehaviour
 
         myUI = Instantiate(Resources.Load<GameObject>("UI/aFollowingState"));
         myUI.GetComponent<AIStateUI>().Declaration(this);
-
-        if(!SM.myAIs.Contains(this))
-            SM.myAIs.Add(this);
     }
 
     private void Update()
@@ -789,6 +791,9 @@ public class anAI : MonoBehaviour
         }
         myNavMeshAgent.isStopped = false;
         myNavMeshAgent.speed = NormalSpeed;
+
+        TempsInterrogation = 0;
+        TempsRegard = 0;
     }
 
     #region Reset and Respawn
@@ -814,6 +819,8 @@ public class anAI : MonoBehaviour
             myUI = Instantiate(Resources.Load<GameObject>("UI/aFollowingState"));
             myUI.GetComponent<AIStateUI>().Declaration(this);
         }
+        else if (!myUI.gameObject.activeSelf)
+            myUI.SetActive(true);
 
         ResetVisionAndInterrogation();
     }

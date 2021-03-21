@@ -33,6 +33,11 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
         mp = ManagerPlayers.Instance;
         cm = CanvasManager.Instance;
     }
+
+    private void Start()
+    {
+        AiCheck();
+    }
     //private void 
     public void GetSpawn(Vector3 posH, Vector3 posR, bool die)
     {
