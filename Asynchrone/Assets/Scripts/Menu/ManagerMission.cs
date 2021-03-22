@@ -30,14 +30,14 @@ public class ManagerMission : MonoBehaviour
             bo.InitBt(i, this);
 
             Button b = bt.GetComponentInChildren<Button>();
-            string lvl = missions[i].LevelName;
-            b.onClick.AddListener(delegate { LoadScene(lvl); });
+            int index = missions[i].indexLevel;
+            b.onClick.AddListener(delegate { LoadScene(index); });
             
             Text t = bt.GetComponentInChildren<Text>();
             t.text = "MISSION " + i + " : " + missions[i].Name;
         }
     }
-    public void LoadScene(string kk) => SceneManager.LoadScene(kk, LoadSceneMode.Single);
+    public void LoadScene(int i) => SceneManager.LoadScene(i, LoadSceneMode.Single);
 
     public void LoadDetails(int index)
     {
@@ -53,7 +53,7 @@ public class ManagerMission : MonoBehaviour
 public class MissionDetails
 {
     public string Name;
-    public string LevelName;
+    public int indexLevel;
 
     public Sprite Illustration;
     [TextArea(5, 30)] public string Context;

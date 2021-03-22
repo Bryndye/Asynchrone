@@ -34,7 +34,7 @@ public class Event_Trigger : MonoBehaviour
     public GameObject PorteMesh;
 
     [Header("Fin de niveau")]
-    [SerializeField] private string nameOfNextlevel;
+    [SerializeField] private int indexOfNextlevel;
     [SerializeField] private List<GameObject> players;
 
 
@@ -92,7 +92,7 @@ public class Event_Trigger : MonoBehaviour
 
             if (players.Count >= 2 || mp.Player2 == null && players.Count >= 1)
             {
-                SceneManager.LoadScene(nameOfNextlevel);
+                SceneManager.LoadScene(indexOfNextlevel);
             }
         }
     }
