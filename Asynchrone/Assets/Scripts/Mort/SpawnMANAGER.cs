@@ -42,7 +42,7 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
     public void GetSpawn(Vector3 posH, Vector3 posR, bool die)
     {
         //Debug.Log("get the spawns");
-        SpawnPointR = posR;
+        if(mp.Rbt) SpawnPointR = posR;
         SpawnPointH = posH;
         if (die)
         {
@@ -54,7 +54,7 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
     {
         //Debug.Log("RESPAWN");
         mp.pc1.InCinematic = true;
-        mp.pc2.InCinematic = true;
+        if (mp.Rbt) mp.pc2.InCinematic = true;
         cm.anim.SetTrigger("dead");
 
         if (SpawnPointR != null && !done)
@@ -71,7 +71,7 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
             mp.pc1.nav.Warp(SpawnPointH);
             mp.pc1.anim.SetBool("Walking", false);
         }
-        if (SpawnPointR != null)
+        if (SpawnPointR != null && mp.Rbt)
         {
             mp.pc2.nav.Warp(SpawnPointR);
             //mp.pc2.anim.SetBool("Walking", false);
@@ -85,7 +85,7 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
         //Debug.Log("is finished");
 
         mp.pc1.InCinematic = false;
-        mp.pc2.InCinematic = false;
+        if (mp.Rbt) mp.pc2.InCinematic = false;
         done = false;
 
         mySpawnSituation = SpawnSituation.Playing;
