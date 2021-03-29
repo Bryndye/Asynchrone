@@ -123,9 +123,8 @@ GameObject:
   - component: {fileID: 7220147169615713749}
   - component: {fileID: 5830089765789636130}
   - component: {fileID: 5092167335827694603}
-  - component: {fileID: 8194367636079582432}
   m_Layer: 13
-  m_Name: Cube
+  m_Name: MeshCuvbe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -194,19 +193,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8194367636079582432
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4532060375958451546}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.0000005, y: 1, z: 1.0000005}
-  m_Center: {x: -0.0000019073495, y: 0, z: 0.00000023841858}
 --- !u!1 &6508073628525515284
 GameObject:
   m_ObjectHideFlags: 0
@@ -253,7 +239,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.1, y: 1, z: 1.1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6508073628525515279
 MonoBehaviour:
@@ -267,6 +253,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bedd869d7fe02f7429ed1d8e3d5e7b77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  distributeur: 0
+  activated: 0
   cinematic: 1
   Influence:
   - {fileID: 1101013228}
