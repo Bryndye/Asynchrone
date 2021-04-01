@@ -19,6 +19,7 @@ public class anAI : MonoBehaviour
 
     [Header("Global")]
     public Classe myClasse;
+    bool EnnemiTué;
     [Space]
 
     [Header("Speeds")]
@@ -163,8 +164,6 @@ public class anAI : MonoBehaviour
                         }
                     }
                 }
-
-
                 else if (Comportement == myBehaviour.Patrol && mySituation == Situation.Interaction)
                 {
                     TempsInteraction += Time.deltaTime;
@@ -189,7 +188,8 @@ public class anAI : MonoBehaviour
                     if (TempsRegard >= 3)
                     {
                         TempsRegard = 0;
-                        PursuitLastPosition = transform.position + GetRandomPositionAround();
+                        if(!EnnemiTué)
+                            PursuitLastPosition = transform.position + GetRandomPositionAround();
                     }
 
                     if (TempsInterrogation <= 0)
@@ -823,6 +823,7 @@ public class anAI : MonoBehaviour
             PursuitLastPosition = ScaledPosition;
             if (Vus[0].gameObject.name == "Fake_Robot(Clone)" && Vector3.Distance(ScaledPosition, transform.position) < 1.5f)
             {
+                EnnemiTué = true;
                 Destroy(Vus[0].gameObject);
                 StopPursuit();
             }
@@ -846,7 +847,7 @@ public class anAI : MonoBehaviour
         mySituation = Situation.Interrogation;
         myNavMeshAgent.isStopped = true;
         myNavMeshAgent.speed = NormalSpeed;
-        PursuitLastPosition = transform.position + Vector3.forward;
+        PursuitLastPosition = transform.position + transform.forward;
     }
 
     void Kill()
