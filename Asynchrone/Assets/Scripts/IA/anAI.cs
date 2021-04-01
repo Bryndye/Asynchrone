@@ -36,6 +36,7 @@ public class anAI : MonoBehaviour
     [Header("Champs de vision")]
     [Space, Tooltip("Distance du champs de vision")]
     public float ViewRadius;
+    public float HearsRadius;
     [Range(0,360), Tooltip("Angle du champs de vision en degrés")]
     public float ViewAngle;
     [Space, Tooltip("Englobe les layers considérées comme des cibles à voir et poursuivre")]
@@ -55,6 +56,8 @@ public class anAI : MonoBehaviour
     Mesh viewMesh;
     MeshFilter viewMeshFilter2;
     Mesh viewMesh2;
+    MeshFilter viewMeshFilter3;
+    Mesh viewMesh3;
 
     [Header("Comportement")]
     public myBehaviour Comportement;
@@ -93,6 +96,7 @@ public class anAI : MonoBehaviour
     {
         viewMeshFilter = transform.GetChild(0).GetComponent<MeshFilter>();
         viewMeshFilter2 = transform.GetChild(1).GetComponent<MeshFilter>();
+        viewMeshFilter3 = transform.GetChild(2).GetComponent<MeshFilter>();
         RaycastPosition = viewMeshFilter.transform.position;
         myNavMeshAgent = GetComponent<NavMeshAgent>();
         SM = SpawnMANAGER.Instance;
@@ -108,8 +112,12 @@ public class anAI : MonoBehaviour
         viewMeshFilter.mesh = viewMesh;
 
         viewMesh2 = new Mesh();
-        viewMesh.name = "View Mesh 2";
+        viewMesh2.name = "View Mesh 2";
         viewMeshFilter2.mesh = viewMesh2;
+
+        viewMesh3 = new Mesh();
+        viewMesh3.name = "View Mesh 3";
+        viewMeshFilter3.mesh = viewMesh3;
 
         BasePosition = transform.position;
         BaseRotation = transform.rotation;
@@ -280,21 +288,42 @@ public class anAI : MonoBehaviour
             }
         }
 
+        Collider[] targetInHearsRadius = Physics.OverlapSphere(transform.position, HearsRadius, CiblesMask);
+
+        for (int i = 0; i < targetInHearsRadius.Length; i++)
+        {
+            Transform theTarget = targetInHearsRadius[i].transform;
+
+            Vector3 dirToTarget = (theTarget.position - transform.position).normalized;
+            float dstToTarget = Vector3.Distance(transform.position, theTarget.position);
+
+            bool HitWall = Physics.Raycast(transform.position, dirToTarget, dstToTarget, ObstacleMaskWithoutLowWall);
+
+            if (!HitWall)
+            {
+                if ((!theTarget.GetComponent<NavMeshAgent>() || theTarget.GetComponent<NavMeshAgent>().speed > 0.5f) && (!theTarget.GetComponent<Human>() || !theTarget.GetComponent<Human>().isAccroupi))
+                    Vus.Add(theTarget);
+            }
+        }
+
         Vus = Vus.OrderBy(w => Vector3.Distance(w.position, transform.position)).ToList();
     }
 
-    ViewCastInfo viewCast(float globalAngle, LayerMask AffectedLayer)
+    ViewCastInfo viewCast(float globalAngle, LayerMask AffectedLayer, bool UseViewRadius = true)
     {
+        float newViewRadius = ViewRadius;
+        if (!UseViewRadius) newViewRadius = HearsRadius;
+
         Vector3 dir = DirFromAngle(globalAngle, true);
         RaycastHit hit;
 
-        if(Physics.Raycast(transform.position, dir, out hit, ViewRadius, AffectedLayer))
+        if(Physics.Raycast(transform.position, dir, out hit, newViewRadius, AffectedLayer))
         {
             return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
         }
         else
         {
-            return new ViewCastInfo(false, transform.position + dir * ViewRadius, ViewRadius, globalAngle);
+            return new ViewCastInfo(false, transform.position + dir * newViewRadius, newViewRadius, globalAngle);
         }
     }
 
@@ -371,7 +400,7 @@ public class anAI : MonoBehaviour
             }
             viewPoints.Add(newViewCast.point);
             oldViewCast = newViewCast;
-        }        
+        }
 
         vertCount = viewPoints.Count + 1;
         verticles = new Vector3[vertCount];
@@ -394,6 +423,55 @@ public class anAI : MonoBehaviour
         viewMesh2.vertices = verticles;
         viewMesh2.triangles = triangles;
         viewMesh2.RecalculateNormals();
+
+        // 3eme Mesh
+
+        viewPoints = new List<Vector3>();
+        oldViewCast = new ViewCastInfo();
+
+        int stepCount2 = Mathf.RoundToInt(360 * MeshResolution);
+
+        for (int i = 0; i < stepCount2; i++)
+        {
+            float angle = transform.eulerAngles.y - 360 / 2 + stepAngleSize * i;
+            ViewCastInfo newViewCast = viewCast(angle, ObstacleMaskWithoutLowWall, false);
+            if (i > 0)
+            {
+                bool edgeDstThresholdExceeded = Mathf.Abs(oldViewCast.dst - newViewCast.dst) > edgeDstThrehsold;
+                if (oldViewCast.hit != newViewCast.hit || (oldViewCast.hit && newViewCast.hit && edgeDstThresholdExceeded))
+                {
+                    EdgeInfo edge = FindEdge(oldViewCast, newViewCast, ObstacleMaskWithoutLowWall);
+                    if (edge.PointA != Vector3.zero)
+                        viewPoints.Add(edge.PointA);
+                    if (edge.PointB != Vector3.zero)
+                        viewPoints.Add(edge.PointB);
+                }
+            }
+            viewPoints.Add(newViewCast.point);
+            oldViewCast = newViewCast;
+        }
+
+        vertCount = viewPoints.Count + 1;
+        verticles = new Vector3[vertCount];
+        triangles = new int[((vertCount - 2) * 3) + 3];
+
+        verticles[0] = Vector3.zero;
+        for (int i = 0; i < vertCount - 1; i++)
+        {
+            verticles[i + 1] = transform.InverseTransformPoint(viewPoints[i]);
+
+            if (i < vertCount - 2)
+            {
+                triangles[i * 3] = 0;
+                triangles[i * 3 + 1] = i + 1;
+                triangles[i * 3 + 2] = i + 2;
+            }
+        }
+
+        viewMesh3.Clear();
+        viewMesh3.vertices = verticles;
+        viewMesh3.triangles = triangles;
+        viewMesh3.RecalculateNormals();
     }
 
     public Vector3 DirFromAngle(float AngleInDegrees, bool AngleisGlobal)
