@@ -193,7 +193,7 @@ public class PlayerController : MonoBehaviour
                     }
                     if (!iem.distributeur)
                     {
-                        iem.CallEvent();
+                        iem.CallEvent(this);
                     }
                     SetDesination(raycastNull(), false);
                 }

@@ -2,18 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum whichPlayer
+{
+    Human,
+    Robot
+}
 public class Interaction : MonoBehaviour
 {
     private CameraManager cm;
     private ManagerPlayers mp;
 
+    [SerializeField] private whichPlayer _whichPlayer;
+    private PlayerController _pc;
+
     public bool distributeur;
     [SerializeField] public bool activated;
-    [SerializeField] private bool cinematic = false;
+    [SerializeField] private bool cinematic = true;
 
 
     public Transform[] Influence;
-
+    [SerializeField] private GameObject _feedBackActivated;
 
 
 
@@ -21,14 +29,21 @@ public class Interaction : MonoBehaviour
     private void Awake() { 
         cm = CameraManager.Instance;
         mp = ManagerPlayers.Instance;
+
+        if (_feedBackActivated != null)
+            _feedBackActivated.SetActive(false);
     }
 
 
 
 
-    public void CallEvent()
+    public void CallEvent(PlayerController pcCalled)
     {
-        if (!activated)
+        //Set which player has the right to use it
+        _pc = _whichPlayer == whichPlayer.Human ? mp.pc1 : mp.pc2; 
+
+
+        if (!activated && _pc == pcCalled)
         {
             //Debug.Log("Event called");
             activated = true;
@@ -42,8 +57,12 @@ public class Interaction : MonoBehaviour
                         cm.GetTargetPorte(Influence);
                 }
             }
+
+            if (_feedBackActivated != null)
+                _feedBackActivated.SetActive(true);
         }
     }
+
 
     public void CallDistri() 
     {
