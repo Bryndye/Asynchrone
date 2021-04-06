@@ -107,11 +107,29 @@ public class Interaction : MonoBehaviour
         }
     }
 
+
+    [Space]
+    public bool SetColor;
     private void OnDrawGizmos()
     {
-        if (_feedBackActivated != null)
+        if (SetColor)
         {
-            _feedBackActivated.GetComponent<Light>().color = _whichPlayer == whichPlayer.Human ? Color.cyan : Color.red;
+            if (_feedBackActivated != null)
+            {
+                _feedBackActivated.GetComponent<Light>().color = _whichPlayer == whichPlayer.Human ? Color.cyan : Color.red;
+            }
+
+            MeshRenderer _mesh = GetComponent<MeshRenderer>();
+            if (_mesh != null)
+            {
+                Color _color = _whichPlayer == whichPlayer.Human ? Color.cyan : Color.red;
+                //Debug.Log(_mesh.material.GetColor("_Color"));
+                if (_mesh.material.HasProperty("_Color"))
+                {
+                    _mesh.material.SetColor("_Color", _color);
+                }
+            }
+            SetColor = false;
         }
     }
 }
