@@ -187,14 +187,19 @@ public class PlayerController : MonoBehaviour
                 Interaction iem = targetInteraction.GetComponent<Interaction>();
                 if (iem != null)
                 {
-                    if (!mP.onPlayer1 && iem.distributeur)
+                    if (!mP.onPlayer1 && iem.Distributeur)
                     {
                         iem.CallDistri();
                     }
-                    if (!iem.distributeur)
+                    else if (iem.Pince)
+                    {
+                        iem.ActivePince = true;
+                    }
+                    else
                     {
                         iem.CallEvent(this);
                     }
+
                     SetDesination(raycastNull(), false);
                 }
 
@@ -202,6 +207,7 @@ public class PlayerController : MonoBehaviour
                 if (ia != null && mP.onPlayer1)
                 {
                     ia.Death();
+                    return;
                     //Debug.Log("T MORT");
                 }
 

@@ -15,7 +15,11 @@ public class Interaction : MonoBehaviour
     [SerializeField] private whichPlayer _whichPlayer;
     private PlayerController _pc;
 
-    public bool distributeur;
+    public bool Pince;
+    public bool Distributeur;
+    [SerializeField] Transform _pointArrive;
+    [HideInInspector] public bool ActivePince;
+
     [SerializeField] public bool activated;
     [SerializeField] private bool cinematic = true;
 
@@ -35,6 +39,12 @@ public class Interaction : MonoBehaviour
     }
 
 
+    private void Update()
+    {
+        CallPince();
+    }
+
+
 
 
     public void CallEvent(PlayerController pcCalled)
@@ -45,7 +55,7 @@ public class Interaction : MonoBehaviour
 
         if (!activated && _pc == pcCalled)
         {
-            //Debug.Log("Event called");
+            Debug.Log("Event called");
             activated = true;
 
             for (int i = 0; i < Influence.Length; i++)
@@ -80,6 +90,28 @@ public class Interaction : MonoBehaviour
             dia[0] = "Je suis déjà rechagé à bloc!";
             cm.StartDiaEffect(dia, null);
             //trigger anim cancel = texte ta mere
+        }
+    }
+
+
+    public void CallPince()
+    {
+        if (ActivePince && !activated)
+        {
+            Influence[0].position = Vector3.Lerp(Influence[0].transform.position, _pointArrive.position, 0.01f);
+
+            if (Influence[0].position.y + 0.01f > _pointArrive.position.y)
+            {
+                activated = true;
+            }
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (_feedBackActivated != null)
+        {
+            _feedBackActivated.GetComponent<Light>().color = _whichPlayer == whichPlayer.Human ? Color.cyan : Color.red;
         }
     }
 }
