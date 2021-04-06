@@ -879,6 +879,10 @@ PrefabInstance:
       propertyPath: m_BoundingSphereOverride.z
       value: -1
       objectReference: {fileID: 0}
+    - target: {fileID: 7813283154556382156, guid: a38e5e05cc52b974caa8d0894108ddda, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8716558454318549394, guid: a38e5e05cc52b974caa8d0894108ddda, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -5096,6 +5100,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6508073628525515279, guid: a38e5e05cc52b974caa8d0894108ddda, type: 3}
+      propertyPath: SetColor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6508073628525515279, guid: a38e5e05cc52b974caa8d0894108ddda, type: 3}
       propertyPath: _whichPlayer
       value: 1
       objectReference: {fileID: 0}
@@ -5161,19 +5169,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6519066448886548043, guid: a38e5e05cc52b974caa8d0894108ddda, type: 3}
       propertyPath: m_BoundingSphereOverride.w
-      value: 1e-45
+      value: -5.873235e-28
       objectReference: {fileID: 0}
     - target: {fileID: 6519066448886548043, guid: a38e5e05cc52b974caa8d0894108ddda, type: 3}
       propertyPath: m_BoundingSphereOverride.x
-      value: 0
+      value: 7.08e-43
       objectReference: {fileID: 0}
     - target: {fileID: 6519066448886548043, guid: a38e5e05cc52b974caa8d0894108ddda, type: 3}
       propertyPath: m_BoundingSphereOverride.y
-      value: 0
+      value: -1.0972666e+21
       objectReference: {fileID: 0}
     - target: {fileID: 6519066448886548043, guid: a38e5e05cc52b974caa8d0894108ddda, type: 3}
       propertyPath: m_BoundingSphereOverride.z
-      value: -0.02
+      value: 7.06e-43
       objectReference: {fileID: 0}
     - target: {fileID: 7220147169615713749, guid: a38e5e05cc52b974caa8d0894108ddda, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5186,7 +5194,7 @@ PrefabInstance:
     - target: {fileID: 8716558454318549394, guid: a38e5e05cc52b974caa8d0894108ddda, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1677988962}
+      objectReference: {fileID: 1689906301}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a38e5e05cc52b974caa8d0894108ddda, type: 3}
 --- !u!21 &919829571
@@ -9775,14 +9783,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d809718cd6a89e641bddb2229d34147a, type: 3}
   m_PrefabInstance: {fileID: 1674065496}
   m_PrefabAsset: {fileID: 0}
---- !u!21 &1677988962
+--- !u!21 &1689906301
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Outline_test (Instance)
+  m_Name: Outline_test (Instance) (Instance)
   m_Shader: {fileID: -6465566751694194690, guid: 84ffb966b6a1fa54ebe9ad4c8bf800d6, type: 3}
   m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 4

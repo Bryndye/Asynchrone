@@ -12,9 +12,11 @@ public class Interaction : MonoBehaviour
     private CameraManager cm;
     private ManagerPlayers mp;
 
+    public bool SetColor;
     [SerializeField] private whichPlayer _whichPlayer;
     private PlayerController _pc;
 
+    [Space]
     public bool Pince;
     public bool Distributeur;
     [SerializeField] Transform _pointArrive;
@@ -108,8 +110,7 @@ public class Interaction : MonoBehaviour
     }
 
 
-    [Space]
-    public bool SetColor;
+
     private void OnDrawGizmos()
     {
         if (SetColor)
