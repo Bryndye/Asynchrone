@@ -120,7 +120,11 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerCursor))
         {
-            if (hit.collider.CompareTag("Interaction"))
+            if (hit.collider.GetComponent<anAI>() != null && onPlayer1)
+            {
+                SetCursor("Attack");
+            }
+            else if (hit.collider.CompareTag("Interaction"))
             {
                 if (hit.collider.GetComponent<trap_interaction>() != null && !onPlayer1)
                 {
@@ -134,10 +138,6 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
                 {
                     SetCursor("Interact");
                 }
-            }
-            if (hit.collider.GetComponent<anAI>() != null && onPlayer1)
-            {
-                SetCursor("Attack");
             }
         }
         else

@@ -906,6 +906,14 @@ public class anAI : MonoBehaviour
 
     #endregion
 
+    public bool Killable()
+    {
+        if (mySituation != Situation.Pursuit && mySituation != Situation.Interrogation)
+            return true;
+        else
+            return false;
+    }
+
     public void Death()
     {
         myUI.gameObject.SetActive(false);
