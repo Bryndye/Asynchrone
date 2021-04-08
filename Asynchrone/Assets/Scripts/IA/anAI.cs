@@ -64,7 +64,7 @@ public class anAI : MonoBehaviour
     public myBehaviour Comportement;
     public Situation mySituation;
     GameObject myUI;
-    bool PositionChecked;
+    public bool PositionChecked;
     public Vector3 PursuitLastPosition;
 
     [Header("Garde")]
@@ -180,15 +180,17 @@ public class anAI : MonoBehaviour
                 {
                     LookTo();
                     InInterrogation();
+                    PositionChecked = false;
                 }
                 else if (!PositionChecked)
                 {
-                    Vector3 Direction = (new Vector3(PursuitLastPosition.x, transform.position.y, PursuitLastPosition.z) - transform.position).normalized;
-                    if (Vector2.Angle(Direction, (transform.forward - transform.position)) > 1)
+                    Vector3 Direction = (new Vector3(PursuitLastPosition.x, transform.position.y, PursuitLastPosition.z) - transform.position);
+                    if (Vector3.Angle(Direction, (transform.forward)) > 10)
+                    {
                         ForceLook();
+                    }
                     else
                         PositionChecked = true;
-
                 }
                 else
                 {
@@ -200,6 +202,7 @@ public class anAI : MonoBehaviour
                         if(!EnnemiTué)
                             PursuitLastPosition = transform.position + GetRandomPositionAround();
                     }
+
 
                     if (TempsInterrogation <= 0)
                     {
@@ -555,7 +558,7 @@ public class anAI : MonoBehaviour
     {
         Transform target = Vus[0];
         Quaternion targetRotation = Quaternion.LookRotation(target.position - transform.position);
-
+        PursuitLastPosition = target.position;
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
     }
 
@@ -1036,10 +1039,11 @@ public class anAI : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.tag.Equals("Player"))
+        if (collision.gameObject.tag.Equals("Player") && mySituation != Situation.Interrogation && mySituation != Situation.Pursuit)
         {
+            PositionChecked = false;
             mySituation = Situation.Interrogation;
             PursuitLastPosition = collision.gameObject.transform.position;
         }
