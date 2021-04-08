@@ -1038,7 +1038,6 @@ public class anAI : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Oui");
         if (collision.gameObject.tag.Equals("Player"))
         {
             mySituation = Situation.Interrogation;
