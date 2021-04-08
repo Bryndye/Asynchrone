@@ -64,6 +64,7 @@ public class anAI : MonoBehaviour
     public myBehaviour Comportement;
     public Situation mySituation;
     GameObject myUI;
+    bool PositionChecked;
     public Vector3 PursuitLastPosition;
 
     [Header("Garde")]
@@ -179,6 +180,15 @@ public class anAI : MonoBehaviour
                 {
                     LookTo();
                     InInterrogation();
+                }
+                else if (!PositionChecked)
+                {
+                    Vector3 Direction = (new Vector3(PursuitLastPosition.x, transform.position.y, PursuitLastPosition.z) - transform.position).normalized;
+                    if (Vector2.Angle(Direction, (transform.forward - transform.position)) > 1)
+                        ForceLook();
+                    else
+                        PositionChecked = true;
+
                 }
                 else
                 {
@@ -315,13 +325,13 @@ public class anAI : MonoBehaviour
     {
         float newViewRadius = ViewRadius;
         if (!UseViewRadius) newViewRadius = HearsRadius;
-
         Vector3 dir = DirFromAngle(globalAngle, true);
         RaycastHit hit;
 
         if(Physics.Raycast(RaycastPosition, dir, out hit, newViewRadius, AffectedLayer))
         {
-            return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
+            Vector3 HitPointToReturn = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+            return new ViewCastInfo(true, HitPointToReturn, hit.distance, globalAngle);
         }
         else
         {
@@ -796,6 +806,8 @@ public class anAI : MonoBehaviour
 
     void InInterrogation()
     {
+        if (TempsInteraction == 0)
+            PositionChecked = false;
         TempsInterrogation += Time.deltaTime;
         if(TempsInterrogation >= LatenceInterrogation)
         {
@@ -1021,6 +1033,16 @@ public class anAI : MonoBehaviour
                 Vector3 DirectionEtape = transform.position + Direction * ViewRadius;
                 Gizmos.DrawLine(transform.position, DirectionEtape);
             }
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Oui");
+        if (collision.gameObject.tag.Equals("Player"))
+        {
+            mySituation = Situation.Interrogation;
+            PursuitLastPosition = collision.gameObject.transform.position;
         }
     }
 }
