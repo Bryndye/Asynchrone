@@ -98,7 +98,6 @@ public class anAI : MonoBehaviour
         viewMeshFilter = transform.GetChild(0).GetComponent<MeshFilter>();
         viewMeshFilter2 = transform.GetChild(1).GetComponent<MeshFilter>();
         viewMeshFilter3 = transform.GetChild(2).GetComponent<MeshFilter>();
-        RaycastPosition = viewMeshFilter.transform.position;
         myNavMeshAgent = GetComponent<NavMeshAgent>();
         SM = SpawnMANAGER.Instance;
 
@@ -261,19 +260,21 @@ public class anAI : MonoBehaviour
 
     void FindVisibleTargets()
     {
-        Collider[] targetInViewRadius = Physics.OverlapSphere(transform.position, ViewRadius, CiblesMask);
+        RaycastPosition = viewMeshFilter.transform.position;
+        Collider[] targetInViewRadius = Physics.OverlapSphere(RaycastPosition, ViewRadius, CiblesMask);
 
         for (int i = 0; i < targetInViewRadius.Length; i++)
         {
             Transform theTarget = targetInViewRadius[i].transform;
+            Vector3 theTargetRelocalised = new Vector3(theTarget.position.x, RaycastPosition.y, theTarget.position.z);
 
-            Vector3 dirToTarget = (theTarget.position - transform.position).normalized;
+            Vector3 dirToTarget = (theTargetRelocalised - RaycastPosition).normalized;
             if(Vector3.Angle(transform.forward, dirToTarget) < ViewAngle / 2)
             {
                 float dstToTarget = Vector3.Distance(transform.position, theTarget.position);
 
-                bool HitWall = Physics.Raycast(transform.position, dirToTarget, dstToTarget, ObstacleMaskWithoutLowWall);
-                bool HitLowWall = Physics.Raycast(transform.position, dirToTarget, dstToTarget, ObstackeMaskWithoutWall);
+                bool HitWall = Physics.Raycast(RaycastPosition, dirToTarget, dstToTarget, ObstacleMaskWithoutLowWall);
+                bool HitLowWall = Physics.Raycast(RaycastPosition, dirToTarget, dstToTarget, ObstackeMaskWithoutWall);
 
                 if (HitLowWall)
                 {
@@ -288,16 +289,17 @@ public class anAI : MonoBehaviour
             }
         }
 
-        Collider[] targetInHearsRadius = Physics.OverlapSphere(transform.position, HearsRadius, CiblesMask);
+        Collider[] targetInHearsRadius = Physics.OverlapSphere(RaycastPosition, HearsRadius, CiblesMask);
 
         for (int i = 0; i < targetInHearsRadius.Length; i++)
         {
             Transform theTarget = targetInHearsRadius[i].transform;
+            Vector3 theTargetRelocalised = new Vector3(theTarget.position.x, RaycastPosition.y, theTarget.position.z);
 
-            Vector3 dirToTarget = (theTarget.position - transform.position).normalized;
+            Vector3 dirToTarget = (theTargetRelocalised - RaycastPosition).normalized;
             float dstToTarget = Vector3.Distance(transform.position, theTarget.position);
 
-            bool HitWall = Physics.Raycast(transform.position, dirToTarget, dstToTarget, ObstacleMaskWithoutLowWall);
+            bool HitWall = Physics.Raycast(RaycastPosition, dirToTarget, dstToTarget, ObstacleMaskWithoutLowWall);
 
             if (!HitWall)
             {
@@ -317,7 +319,7 @@ public class anAI : MonoBehaviour
         Vector3 dir = DirFromAngle(globalAngle, true);
         RaycastHit hit;
 
-        if(Physics.Raycast(transform.position, dir, out hit, newViewRadius, AffectedLayer))
+        if(Physics.Raycast(RaycastPosition, dir, out hit, newViewRadius, AffectedLayer))
         {
             return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
         }

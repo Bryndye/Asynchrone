@@ -204,7 +204,7 @@ public class PlayerController : MonoBehaviour
                 }
 
                 anAI ia = targetInteraction.GetComponent<anAI>();
-                if (ia != null && mP.onPlayer1)
+                if (ia != null && mP.onPlayer1 && ia.Killable())
                 {
                     ia.Death();
                     return;
