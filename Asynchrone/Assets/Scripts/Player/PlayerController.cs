@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask ingoreDiv;
     [SerializeField] LayerMask ingorePlayers;
     [HideInInspector] Transform targetInteraction;
+    private GameObject targetAI = null;
 
     [Space]
     public bool InCinematic;
@@ -45,11 +46,11 @@ public class PlayerController : MonoBehaviour
             if (CanPlay)
             {
                 InputManager();
-                
+                /*
                 if (Input.GetKeyDown(KeyCode.T))
                 {
                     sm.Respawn();
-                }
+                }*/
             }
             CheckDisInteraction();
             WalkAnim();
@@ -150,39 +151,47 @@ public class PlayerController : MonoBehaviour
         return path.status == NavMeshPathStatus.PathComplete;
     }
 
-    private void SetDesination(RaycastHit t, bool inter)
+    private void SetDesination(RaycastHit raycastHit, bool inter)
     {
         
-        if (t.point != Vector3.zero)
+        if (raycastHit.collider != null && inter)
         {
-            nav.SetDestination(t.point);
+            //nav.SetDestination(raycastHit.collider.transform.position);
+            targetAI = raycastHit.collider.gameObject;
+            targetInteraction = raycastHit.collider.transform;
+            Debug.Log("Destination GameObject: "+ raycastHit.collider.gameObject.name);
+        }
+        else if(raycastHit.point != Vector3.zero)
+        {
+            nav.SetDestination(raycastHit.point);
         }
         else
         {
             nav.SetDestination(transform.position);
         }
 
+        /*
         if (inter)
         {
             //print("inter");
-            anAI ia = t.collider.GetComponent<anAI>();
+            anAI ia = raycastHit.collider.GetComponent<anAI>();
 
-            if (ia == null)
-            {
-                //Instantiate(fd_faisceau, t.collider.transform.position, fd_faisceau.transform.rotation);
-            }
-            targetInteraction = t.collider.transform;
-
-        }
+            targetInteraction = raycastHit.collider.transform;
+        }*/
     }
 
 
 
     private void CheckDisInteraction()
     {
+        if (targetAI != null)
+        {
+            nav.destination = targetAI.transform.position;
+        }
+
         if (targetInteraction != null)
         {
-            if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(targetInteraction.position.x, targetInteraction.position.z)) < 1.5f)
+            if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(targetInteraction.position.x, targetInteraction.position.z)) < 2f)
             {
                 Interaction iem = targetInteraction.GetComponent<Interaction>();
                 if (iem != null)
@@ -203,11 +212,11 @@ public class PlayerController : MonoBehaviour
                     SetDesination(raycastNull(), false);
                 }
 
-                anAI ia = targetInteraction.GetComponent<anAI>();
-                if (ia != null && mP.onPlayer1 && ia.Killable())
+                anAI ia = targetAI.GetComponent<anAI>();
+                if (ia != null && mP.onPlayer1 &&ia.Killable())
                 {
                     ia.Death();
-                    return;
+                    targetAI = null;
                     //Debug.Log("T MORT");
                 }
 

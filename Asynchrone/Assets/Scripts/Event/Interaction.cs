@@ -12,7 +12,7 @@ public class Interaction : MonoBehaviour
     private CameraManager cm;
     private ManagerPlayers mp;
 
-    public bool SetColor;
+    public bool SetColor = false;
     [SerializeField] private whichPlayer _whichPlayer;
     private PlayerController _pc;
 
