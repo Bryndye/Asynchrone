@@ -109,7 +109,7 @@ Transform:
   m_GameObject: {fileID: 6315238859079664125}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5354608429085583898}
   - {fileID: 545058816518489080}
@@ -157,10 +157,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bedd869d7fe02f7429ed1d8e3d5e7b77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distributeur: 1
+  SetColor: 0
+  _whichPlayer: 1
+  Pince: 0
+  Distributeur: 1
+  _pointArrive: {fileID: 0}
+  ActivePince: 0
   activated: 0
   cinematic: 0
   Influence: []
+  _feedBackActivated: {fileID: 0}
 --- !u!1001 &7539791113151507
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -224,6 +230,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4965799493753012402, guid: 12015f3ebae61c7429606a652b740fd0, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3078167d717b846468d1e6098b7b5257, type: 2}
     - target: {fileID: 919132149155446097, guid: 12015f3ebae61c7429606a652b740fd0, type: 3}
       propertyPath: m_Name
       value: Distributeur
