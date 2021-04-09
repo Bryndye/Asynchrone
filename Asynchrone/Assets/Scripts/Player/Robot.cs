@@ -38,11 +38,11 @@ public class Robot : MonoBehaviour
                 {
                     StartDiv();
                 }
-                /*
+                
                 if (Input.GetKeyDown(KeyCode.Z) && robot_div != null)
                 {
                     Destroy(robot_div);
-                }*/
+                }
             }
         }
     }

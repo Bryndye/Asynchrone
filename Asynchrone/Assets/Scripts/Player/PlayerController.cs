@@ -157,7 +157,15 @@ public class PlayerController : MonoBehaviour
         if (raycastHit.collider != null && inter)
         {
             //nav.SetDestination(raycastHit.collider.transform.position);
-            targetAI = raycastHit.collider.gameObject;
+            anAI ia = raycastHit.collider.GetComponent<anAI>();
+            if (ia != null)
+            {
+                targetAI = raycastHit.collider.gameObject;
+            }
+            else
+            {
+                nav.SetDestination(raycastHit.collider.transform.position);
+            }
             targetInteraction = raycastHit.collider.transform;
             Debug.Log("Destination GameObject: "+ raycastHit.collider.gameObject.name);
         }
@@ -191,7 +199,7 @@ public class PlayerController : MonoBehaviour
 
         if (targetInteraction != null)
         {
-            if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(targetInteraction.position.x, targetInteraction.position.z)) < 2f)
+            if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(targetInteraction.position.x, targetInteraction.position.z)) < 1.8f)
             {
                 Interaction iem = targetInteraction.GetComponent<Interaction>();
                 if (iem != null)
@@ -212,7 +220,10 @@ public class PlayerController : MonoBehaviour
                     SetDesination(raycastNull(), false);
                 }
 
-                anAI ia = targetAI.GetComponent<anAI>();
+                anAI ia = null;
+                if (targetAI != null)
+                    ia = targetAI.GetComponent<anAI>();
+
                 if (ia != null && mP.onPlayer1 &&ia.Killable())
                 {
                     ia.Death();
