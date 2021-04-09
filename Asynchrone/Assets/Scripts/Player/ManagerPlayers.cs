@@ -120,7 +120,7 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerCursor))
         {
-            if (hit.collider.GetComponent<anAI>() != null && onPlayer1)
+            if (hit.collider.GetComponent<anAI>() != null && hit.collider.GetComponent<anAI>().Killable() && onPlayer1)
             {
                 SetCursor("Attack");
             }

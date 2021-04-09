@@ -235,11 +235,11 @@ public class anAI : MonoBehaviour
 
     public void ChangeClass()
     {
-        if(myClasse == Classe.Basic)
-        {
-            if (!myNavMeshAgent)
-                myNavMeshAgent = GetComponent<NavMeshAgent>();
+        if (!myNavMeshAgent)
+            myNavMeshAgent = GetComponent<NavMeshAgent>();
 
+        if (myClasse == Classe.Basic)
+        {
             myClasse = Classe.Drone;
             myNavMeshAgent.areaMask = 8;
             transform.position = new Vector3(transform.position.x, 4.17f, transform.position.z);
@@ -255,6 +255,10 @@ public class anAI : MonoBehaviour
 
             SkinDrone.SetActive(true);
             SkinRobot.SetActive(false);
+
+            transform.GetChild(0).position -= new Vector3(0, 3, 0);
+            transform.GetChild(1).position -= new Vector3(0, 3, 0);
+            transform.GetChild(2).position -= new Vector3(0, 3, 0);
 
             SetObjectDirty(this);
         }
@@ -273,6 +277,10 @@ public class anAI : MonoBehaviour
                 EtapesPatrouille[i] = new Vector3(EtapesPatrouilleSecondaire[i].x, 1.1f, EtapesPatrouilleSecondaire[i].z);
             }
 
+            transform.GetChild(0).position += new Vector3(0, 3, 0);
+            transform.GetChild(1).position += new Vector3(0, 3, 0);
+            transform.GetChild(2).position += new Vector3(0, 3, 0);
+
             SkinDrone.SetActive(false);
             SkinRobot.SetActive(true);
 
@@ -285,30 +293,56 @@ public class anAI : MonoBehaviour
     void FindVisibleTargets()
     {
         RaycastPosition = viewMeshFilter.transform.position;
-        Collider[] targetInViewRadius = Physics.OverlapSphere(RaycastPosition, ViewRadius, CiblesMask);
-
-        for (int i = 0; i < targetInViewRadius.Length; i++)
+        if(myClasse == Classe.Basic)
         {
-            Transform theTarget = targetInViewRadius[i].transform;
-            Vector3 theTargetRelocalised = new Vector3(theTarget.position.x, RaycastPosition.y, theTarget.position.z);
+            Collider[] targetInViewRadius = Physics.OverlapSphere(RaycastPosition, ViewRadius, CiblesMask);
 
-            Vector3 dirToTarget = (theTargetRelocalised - RaycastPosition).normalized;
-            if(Vector3.Angle(transform.forward, dirToTarget) < ViewAngle / 2)
+            for (int i = 0; i < targetInViewRadius.Length; i++)
             {
-                float dstToTarget = Vector3.Distance(transform.position, theTarget.position);
+                Transform theTarget = targetInViewRadius[i].transform;
+                Vector3 theTargetRelocalised = new Vector3(theTarget.position.x, RaycastPosition.y, theTarget.position.z);
 
-                bool HitWall = Physics.Raycast(RaycastPosition, dirToTarget, dstToTarget, ObstacleMaskWithoutLowWall);
-                bool HitLowWall = Physics.Raycast(RaycastPosition, dirToTarget, dstToTarget, ObstackeMaskWithoutWall);
-
-                if (HitLowWall)
+                Vector3 dirToTarget = (theTargetRelocalised - RaycastPosition).normalized;
+                if (Vector3.Angle(transform.forward, dirToTarget) < ViewAngle / 2)
                 {
-                    if(HitLowWall && theTarget.GetComponent<Human>() != null && !theTarget.GetComponent<Human>().isAccroupi)
-                        HitLowWall = false;
+                    float dstToTarget = Vector3.Distance(transform.position, theTarget.position);
+
+                    bool HitWall = Physics.Raycast(RaycastPosition, dirToTarget, dstToTarget, ObstacleMaskWithoutLowWall);
+                    bool HitLowWall = Physics.Raycast(RaycastPosition, dirToTarget, dstToTarget, ObstackeMaskWithoutWall);
+
+                    if (HitLowWall)
+                    {
+                        if (HitLowWall && theTarget.GetComponent<Human>() != null && !theTarget.GetComponent<Human>().isAccroupi)
+                            HitLowWall = false;
+                    }
+
+                    if (!HitWall && !HitLowWall)
+                    {
+                        Vus.Add(theTarget);
+                    }
                 }
+            }
+        }
+        else if(myClasse == Classe.Drone)
+        {
+            Collider[] targetInViewRadius = Physics.OverlapSphere(RaycastPosition, ViewRadius, CiblesMask);
 
-                if (!HitWall && !HitLowWall)
+            for (int i = 0; i < targetInViewRadius.Length; i++)
+            {
+                Transform theTarget = targetInViewRadius[i].transform;
+                Vector3 theTargetRelocalised = new Vector3(theTarget.position.x, RaycastPosition.y, theTarget.position.z);
+
+                Vector3 dirToTarget = (theTargetRelocalised - RaycastPosition).normalized;
+                if (Vector3.Angle(transform.forward, dirToTarget) < ViewAngle / 2)
                 {
-                    Vus.Add(theTarget);
+                    float dstToTarget = Vector3.Distance(transform.position, theTarget.position);
+
+                    bool HitWall = Physics.Raycast(RaycastPosition, dirToTarget, dstToTarget, ObstacleMaskWithoutLowWall);
+
+                    if (!HitWall)
+                    {
+                        Vus.Add(theTarget);
+                    }
                 }
             }
         }
@@ -360,16 +394,20 @@ public class anAI : MonoBehaviour
         List<Vector3> viewPoints = new List<Vector3>();
         ViewCastInfo oldViewCast = new ViewCastInfo();
 
+        LayerMask myMask = ObstacleMask;
+        if (myClasse == Classe.Drone)
+            myMask = ObstacleMaskWithoutLowWall;
+
         for (int i = 0; i <= stepCount; i++)
         {
             float angle = transform.eulerAngles.y - ViewAngle / 2 + stepAngleSize * i;
-            ViewCastInfo newViewCast = viewCast(angle, ObstacleMask);
+            ViewCastInfo newViewCast = viewCast(angle, myMask);
             if(i > 0)
             {
                 bool edgeDstThresholdExceeded = Mathf.Abs(oldViewCast.dst - newViewCast.dst) > edgeDstThrehsold;
                 if(oldViewCast.hit != newViewCast.hit || (oldViewCast.hit && newViewCast.hit && edgeDstThresholdExceeded))
                 {
-                    EdgeInfo edge = FindEdge(oldViewCast, newViewCast, ObstacleMask);
+                    EdgeInfo edge = FindEdge(oldViewCast, newViewCast, myMask);
                     if(edge.PointA != Vector3.zero)
                         viewPoints.Add(edge.PointA);
                     if (edge.PointB != Vector3.zero)
@@ -405,50 +443,53 @@ public class anAI : MonoBehaviour
 
         // 2eme Mesh
 
-        viewPoints = new List<Vector3>();
-        oldViewCast = new ViewCastInfo();
-
-        for (int i = 0; i < stepCount; i++)
+        if(myClasse != Classe.Drone)
         {
-            float angle = transform.eulerAngles.y - ViewAngle / 2 + stepAngleSize * i;
-            ViewCastInfo newViewCast = viewCast(angle, ObstacleMaskWithoutLowWall);
-            if (i > 0)
+            viewPoints = new List<Vector3>();
+            oldViewCast = new ViewCastInfo();
+
+            for (int i = 0; i < stepCount; i++)
             {
-                bool edgeDstThresholdExceeded = Mathf.Abs(oldViewCast.dst - newViewCast.dst) > edgeDstThrehsold;
-                if (oldViewCast.hit != newViewCast.hit || (oldViewCast.hit && newViewCast.hit && edgeDstThresholdExceeded))
+                float angle = transform.eulerAngles.y - ViewAngle / 2 + stepAngleSize * i;
+                ViewCastInfo newViewCast = viewCast(angle, ObstacleMaskWithoutLowWall);
+                if (i > 0)
                 {
-                    EdgeInfo edge = FindEdge(oldViewCast, newViewCast, ObstacleMaskWithoutLowWall);
-                    if (edge.PointA != Vector3.zero)
-                        viewPoints.Add(edge.PointA);
-                    if (edge.PointB != Vector3.zero)
-                        viewPoints.Add(edge.PointB);
+                    bool edgeDstThresholdExceeded = Mathf.Abs(oldViewCast.dst - newViewCast.dst) > edgeDstThrehsold;
+                    if (oldViewCast.hit != newViewCast.hit || (oldViewCast.hit && newViewCast.hit && edgeDstThresholdExceeded))
+                    {
+                        EdgeInfo edge = FindEdge(oldViewCast, newViewCast, ObstacleMaskWithoutLowWall);
+                        if (edge.PointA != Vector3.zero)
+                            viewPoints.Add(edge.PointA);
+                        if (edge.PointB != Vector3.zero)
+                            viewPoints.Add(edge.PointB);
+                    }
+                }
+                viewPoints.Add(newViewCast.point);
+                oldViewCast = newViewCast;
+            }
+
+            vertCount = viewPoints.Count + 1;
+            verticles = new Vector3[vertCount];
+            triangles = new int[(vertCount - 2) * 3];
+
+            verticles[0] = Vector3.zero;
+            for (int i = 0; i < vertCount - 1; i++)
+            {
+                verticles[i + 1] = transform.InverseTransformPoint(viewPoints[i]);
+
+                if (i < vertCount - 2)
+                {
+                    triangles[i * 3] = 0;
+                    triangles[i * 3 + 1] = i + 1;
+                    triangles[i * 3 + 2] = i + 2;
                 }
             }
-            viewPoints.Add(newViewCast.point);
-            oldViewCast = newViewCast;
+
+            viewMesh2.Clear();
+            viewMesh2.vertices = verticles;
+            viewMesh2.triangles = triangles;
+            viewMesh2.RecalculateNormals();
         }
-
-        vertCount = viewPoints.Count + 1;
-        verticles = new Vector3[vertCount];
-        triangles = new int[(vertCount - 2) * 3];
-
-        verticles[0] = Vector3.zero;
-        for (int i = 0; i < vertCount - 1; i++)
-        {
-            verticles[i + 1] = transform.InverseTransformPoint(viewPoints[i]);
-
-            if (i < vertCount - 2)
-            {
-                triangles[i * 3] = 0;
-                triangles[i * 3 + 1] = i + 1;
-                triangles[i * 3 + 2] = i + 2;
-            }
-        }
-
-        viewMesh2.Clear();
-        viewMesh2.vertices = verticles;
-        viewMesh2.triangles = triangles;
-        viewMesh2.RecalculateNormals();
 
         // 3eme Mesh
 
@@ -936,7 +977,7 @@ public class anAI : MonoBehaviour
 
     public bool Killable()
     {
-        if (mySituation != Situation.Pursuit && mySituation != Situation.Interrogation)
+        if (mySituation != Situation.Pursuit && mySituation != Situation.Interrogation && myClasse != Classe.Drone)
             return true;
         else
             return false;
