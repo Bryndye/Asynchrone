@@ -16,6 +16,8 @@ public class anAI : MonoBehaviour
 
     [Header("Composants")]
     NavMeshAgent myNavMeshAgent;
+    public GameObject SkinRobot;
+    public GameObject SkinDrone;
 
     [Header("Global")]
     public Classe myClasse;
@@ -235,6 +237,9 @@ public class anAI : MonoBehaviour
     {
         if(myClasse == Classe.Basic)
         {
+            if (!myNavMeshAgent)
+                myNavMeshAgent = GetComponent<NavMeshAgent>();
+
             myClasse = Classe.Drone;
             myNavMeshAgent.areaMask = 8;
             transform.position = new Vector3(transform.position.x, 4.17f, transform.position.z);
@@ -247,6 +252,9 @@ public class anAI : MonoBehaviour
             {
                 EtapesPatrouille[i] = new Vector3(EtapesPatrouilleSecondaire[i].x, 4.17f, EtapesPatrouilleSecondaire[i].z);
             }
+
+            SkinDrone.SetActive(true);
+            SkinRobot.SetActive(false);
 
             SetObjectDirty(this);
         }
@@ -264,6 +272,9 @@ public class anAI : MonoBehaviour
             {
                 EtapesPatrouille[i] = new Vector3(EtapesPatrouilleSecondaire[i].x, 1.1f, EtapesPatrouilleSecondaire[i].z);
             }
+
+            SkinDrone.SetActive(false);
+            SkinRobot.SetActive(true);
 
             SetObjectDirty(this);
         }
