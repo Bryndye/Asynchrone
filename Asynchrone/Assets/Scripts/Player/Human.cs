@@ -64,7 +64,7 @@ public class Human : Singleton<Human>
 
     private void InputManager()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
             CheckMask();
         }
