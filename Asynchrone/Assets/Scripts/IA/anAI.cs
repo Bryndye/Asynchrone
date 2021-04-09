@@ -300,6 +300,7 @@ public class anAI : MonoBehaviour
             for (int i = 0; i < targetInViewRadius.Length; i++)
             {
                 Transform theTarget = targetInViewRadius[i].transform;
+                float HightDistance = Mathf.Abs(theTarget.position.y - transform.position.y);
                 Vector3 theTargetRelocalised = new Vector3(theTarget.position.x, RaycastPosition.y, theTarget.position.z);
 
                 Vector3 dirToTarget = (theTargetRelocalised - RaycastPosition).normalized;
@@ -316,7 +317,7 @@ public class anAI : MonoBehaviour
                             HitLowWall = false;
                     }
 
-                    if (!HitWall && !HitLowWall)
+                    if (!HitWall && !HitLowWall && HightDistance <= 1)
                     {
                         Vus.Add(theTarget);
                     }
@@ -330,6 +331,7 @@ public class anAI : MonoBehaviour
             for (int i = 0; i < targetInViewRadius.Length; i++)
             {
                 Transform theTarget = targetInViewRadius[i].transform;
+                float HightDistance = Mathf.Abs(theTarget.position.y - transform.position.y);
                 Vector3 theTargetRelocalised = new Vector3(theTarget.position.x, RaycastPosition.y, theTarget.position.z);
 
                 Vector3 dirToTarget = (theTargetRelocalised - RaycastPosition).normalized;
@@ -339,7 +341,7 @@ public class anAI : MonoBehaviour
 
                     bool HitWall = Physics.Raycast(RaycastPosition, dirToTarget, dstToTarget, ObstacleMaskWithoutLowWall);
 
-                    if (!HitWall)
+                    if (!HitWall && HightDistance <= 4)
                     {
                         Vus.Add(theTarget);
                     }
@@ -352,6 +354,7 @@ public class anAI : MonoBehaviour
         for (int i = 0; i < targetInHearsRadius.Length; i++)
         {
             Transform theTarget = targetInHearsRadius[i].transform;
+            float HightDistance = Mathf.Abs(theTarget.position.y - transform.position.y);
             Vector3 theTargetRelocalised = new Vector3(theTarget.position.x, RaycastPosition.y, theTarget.position.z);
 
             Vector3 dirToTarget = (theTargetRelocalised - RaycastPosition).normalized;
@@ -359,7 +362,7 @@ public class anAI : MonoBehaviour
 
             bool HitWall = Physics.Raycast(RaycastPosition, dirToTarget, dstToTarget, ObstacleMaskWithoutLowWall);
 
-            if (!HitWall)
+            if (!HitWall && HightDistance <= 1)
             {
                 if ((!theTarget.GetComponent<NavMeshAgent>() || theTarget.GetComponent<NavMeshAgent>().speed > 0.5f) && (!theTarget.GetComponent<Human>() || !theTarget.GetComponent<Human>().isAccroupi))
                     Vus.Add(theTarget);
