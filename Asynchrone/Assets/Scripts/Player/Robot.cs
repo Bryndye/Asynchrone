@@ -62,7 +62,7 @@ public class Robot : MonoBehaviour
 
             if (CheckWall(dir, point))
             {
-                robot_div = Instantiate(Resources.Load<GameObject>("Player/Fake_Robot"), hit.point, Quaternion.identity);
+                robot_div = Instantiate(Resources.Load<GameObject>("Player/Fake_Robot"), point, Quaternion.identity);
                 StockDivManager();
                 canDiv = false;
             }
