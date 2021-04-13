@@ -137,7 +137,7 @@ public class CanvasManager : Singleton<CanvasManager>
     IEnumerator Type()
     {
         LaunchAudio();
-        foreach (char letter in sentences[²].ToCharArray())
+        foreach (char letter in sentences[index].ToCharArray())
         {
             dialogueHere.text += letter;
             yield return new WaitForSeconds(latence);
