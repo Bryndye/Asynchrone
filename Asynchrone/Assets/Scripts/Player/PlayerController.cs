@@ -72,6 +72,7 @@ public class PlayerController : MonoBehaviour
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ingorePlayers))
             {
                 if (nav.CalculatePath(hit.point, nav.path))
@@ -101,49 +102,46 @@ public class PlayerController : MonoBehaviour
             {
                 mP.Rbt.CreateDiversion(hit);
                 canMove = false;
-                Invoke(nameof(OnClickStay),0.6f);
+                Invoke(nameof(CanMove),0.6f);
             }
         }
         else
         {
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ingorePlayers))
             {
+                // play particle system
+                Instantiate(feedbackClick, hit.point, transform.rotation); 
 
-                Instantiate(feedbackClick, hit.point, transform.rotation); // play particle system
-
-
-                if (nav.CalculatePath(hit.point, nav.path))
+                if (!nav.CalculatePath(hit.point, nav.path))
                 {
-                    if (CanReachPosition(hit.point))
-                    {
-                        SetDesination(hit, false);
-                    }
+                    return;
                 }
+
+                //check s'il y a une interaction d'abord. S'il n'y en a pas, Set la destination au point donnée
                 if (hit.collider.tag == "Interaction")
                 {
                     SetDesination(hit, true);
+                    //Debug.Log("New Interaction Path");
+
                 }
-                
-                anAI ia = hit.collider.GetComponent<anAI>();
-                if (ia != null && !mP.onPlayer1)
+                else
                 {
-                    SetDesination(hit, true);
-                    //Debug.Log("La");
+                    //Debug.Log("New Path");
+                    SetDesination(hit, false);
                 }
+
             }
         }
     }
-    private void OnClickStay()
-    {
-        if (!canMove)
-        {
-            canMove = true;
-        }
-    }
+
+    private void CanMove() => canMove = true;
+
+    #endregion
 
 
 
 
+    #region Position/Destination
     public bool CanReachPosition(Vector3 position)
     {
         NavMeshPath path = new NavMeshPath();
@@ -151,13 +149,14 @@ public class PlayerController : MonoBehaviour
         return path.status == NavMeshPathStatus.PathComplete;
     }
 
+
     private void SetDesination(RaycastHit raycastHit, bool inter)
     {
-        
+        //Debug.Log("Interaction " + inter);
         if (raycastHit.collider != null && inter)
         {
-            //nav.SetDestination(raycastHit.collider.transform.position);
             anAI ia = raycastHit.collider.GetComponent<anAI>();
+
             if (ia != null)
             {
                 targetAI = raycastHit.collider.gameObject;
@@ -166,26 +165,19 @@ public class PlayerController : MonoBehaviour
             {
                 nav.SetDestination(raycastHit.collider.transform.position);
             }
+
             targetInteraction = raycastHit.collider.transform;
             Debug.Log("Destination GameObject: "+ raycastHit.collider.gameObject.name);
         }
         else if(raycastHit.point != Vector3.zero)
         {
             nav.SetDestination(raycastHit.point);
+            //Debug.Log("Path to the point");
         }
         else
         {
             nav.SetDestination(transform.position);
         }
-
-        /*
-        if (inter)
-        {
-            //print("inter");
-            anAI ia = raycastHit.collider.GetComponent<anAI>();
-
-            targetInteraction = raycastHit.collider.transform;
-        }*/
     }
 
 
@@ -202,8 +194,10 @@ public class PlayerController : MonoBehaviour
             if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(targetInteraction.position.x, targetInteraction.position.z)) < 1.8f)
             {
                 Interaction iem = targetInteraction.GetComponent<Interaction>();
+
                 if (iem != null)
                 {
+
                     if (!mP.onPlayer1 && iem.Distributeur)
                     {
                         iem.CallDistri();
@@ -228,7 +222,6 @@ public class PlayerController : MonoBehaviour
                 {
                     ia.Death();
                     targetAI = null;
-                    //Debug.Log("T MORT");
                 }
 
                 trap_interaction ti = targetInteraction.GetComponent<trap_interaction>();
@@ -236,9 +229,7 @@ public class PlayerController : MonoBehaviour
                 {
                     ti.Called();
                 }
-                //Debug.Log(targetInteraction.name);
                 targetInteraction = null;
-                SetDesination(raycastNull(), false);
             }
         }
     }
@@ -321,6 +312,7 @@ public class PlayerController : MonoBehaviour
 
     public void Death()
     {
+        targetAI = null;
         sm.Respawn();
     }
 }
