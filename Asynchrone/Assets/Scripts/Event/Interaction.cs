@@ -14,7 +14,8 @@ public class Interaction : MonoBehaviour
 
     public bool SetColor = false;
     [SerializeField] private whichPlayer _whichPlayer;
-    private PlayerController _pc;
+    private PlayerController _playerControlRef;
+    private PlayerController _playerControlGet;
 
     [Space]
     public bool Pince;
@@ -49,13 +50,20 @@ public class Interaction : MonoBehaviour
 
 
 
-    public void CallEvent(PlayerController pcCalled)
+
+
+
+
+
+
+
+    public void CallEvent()
     {
         //Set which player has the right to use it
-        _pc = _whichPlayer == whichPlayer.Human ? mp.pc1 : mp.pc2; 
+        _playerControlRef = _whichPlayer == whichPlayer.Human ? mp.pc1 : mp.pc2; 
 
 
-        if (!activated && _pc == pcCalled)
+        if (!activated && _playerControlRef == _playerControlGet)
         {
             Debug.Log("Event called");
             activated = true;
@@ -80,7 +88,7 @@ public class Interaction : MonoBehaviour
     {
         activated = true;
 
-        if (mp.Rbt.DivStock <= 0)
+        if (mp.Rbt.DivStock <= 0 && !mp.onPlayer1)
         {
             //trigger Anim successfull
             mp.Rbt.DivStock = 1;
@@ -89,16 +97,27 @@ public class Interaction : MonoBehaviour
         {
             CanvasManager cm = CanvasManager.Instance;
             string[] dia = new string[1];
-            dia[0] = "Je suis déjà rechagé à bloc!";
-            cm.StartDiaEffect(dia, null);
-            //trigger anim cancel = texte ta mere
+
+            if (mp.onPlayer1)
+            {
+                dia[0] = "Je ne peux pas l'utiliser. Vatrek devrait réussir.";
+                cm.StartDiaEffect(dia);
+            }
+            else
+            {
+                dia[0] = "Je suis déjà rechargé à bloc!";
+                cm.StartDiaEffect(dia);
+            }
         }
     }
 
 
     public void CallPince()
     {
-        if (ActivePince && !activated)
+        //Set which player has the right to use it
+        _playerControlRef = _whichPlayer == whichPlayer.Human ? mp.pc1 : mp.pc2;
+
+        if (ActivePince && !activated && _playerControlRef == _playerControlGet)
         {
             Influence[0].position = Vector3.Lerp(Influence[0].transform.position, _pointArrive.position, 0.01f);
 
@@ -108,6 +127,15 @@ public class Interaction : MonoBehaviour
             }
         }
     }
+
+
+
+
+
+
+
+
+    public void SetPlayerController(PlayerController pcCalled) => _playerControlGet = pcCalled;
 
 
 

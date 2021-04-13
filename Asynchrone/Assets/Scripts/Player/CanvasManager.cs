@@ -137,12 +137,13 @@ public class CanvasManager : Singleton<CanvasManager>
     IEnumerator Type()
     {
         LaunchAudio();
-        foreach (char letter in sentences[index].ToCharArray())
+        foreach (char letter in sentences[²].ToCharArray())
         {
             dialogueHere.text += letter;
             yield return new WaitForSeconds(latence);
         }
     }
+
     private void LaunchAudio()
     {
         if (audioc != null && index < audioc.Length)
@@ -153,20 +154,20 @@ public class CanvasManager : Singleton<CanvasManager>
         }
     }
 
-    public void StartDiaEffect(string[] dia, AudioClip[] ac)
+    public void StartDiaEffect(string[] _dialogues, AudioClip[] _audioClips = null)
     {
         if (!isRuntime)
         {
-            sentences = dia;
-            audioc = ac;
+            sentences = _dialogues;
+            audioc = _audioClips;
             isRuntime = true;
             index = 0;
             StartCoroutine(Type());
         }
         else
         {
-            sentencesStock = dia;
-            acStock = ac;
+            sentencesStock = _dialogues;
+            acStock = _audioClips;
         }
     }
 

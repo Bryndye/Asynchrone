@@ -112,24 +112,18 @@ public class PlayerController : MonoBehaviour
                 // play particle system
                 Instantiate(feedbackClick, hit.point, transform.rotation); 
 
-                if (!nav.CalculatePath(hit.point, nav.path))
-                {
-                    return;
-                }
-
-                //check s'il y a une interaction d'abord. S'il n'y en a pas, Set la destination au point donnée
-                if (hit.collider.tag == "Interaction")
-                {
-                    SetDesination(hit, true);
-                    //Debug.Log("New Interaction Path");
-
-                }
-                else
+                if (nav.CalculatePath(hit.point, nav.path))
                 {
                     //Debug.Log("New Path");
                     SetDesination(hit, false);
                 }
 
+                //check s'il y a une interaction pour ensuite appeler la fonction de celle-ci
+                if (hit.collider.tag == "Interaction")
+                {
+                    SetDesination(hit, true);
+                    Debug.Log("New Interaction Path");
+                }
             }
         }
     }
@@ -204,11 +198,13 @@ public class PlayerController : MonoBehaviour
                     }
                     else if (iem.Pince)
                     {
+                        iem.SetPlayerController(this);
                         iem.ActivePince = true;
                     }
                     else
                     {
-                        iem.CallEvent(this);
+                        iem.SetPlayerController(this);
+                        iem.CallEvent();
                     }
 
                     SetDesination(raycastNull(), false);
