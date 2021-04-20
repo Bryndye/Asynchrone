@@ -147,17 +147,18 @@ public class Interaction : MonoBehaviour
             {
                 _feedBackActivated.GetComponent<Light>().color = _whichPlayer == whichPlayer.Human ? Color.cyan : Color.red;
             }
-
+            /*
             MeshRenderer _mesh = GetComponent<MeshRenderer>();
             if (_mesh != null)
             {
                 Color _color = _whichPlayer == whichPlayer.Human ? Color.cyan : Color.red;
                 //Debug.Log(_mesh.material.GetColor("_Color"));
+                MaterialPropertyBlock mpb = new MaterialPropertyBlock();
                 if (_mesh.material.HasProperty("_Color"))
                 {
                     _mesh.material.SetColor("_Color", _color);
                 }
-            }
+            }*/
             SetColor = false;
         }
     }
