@@ -499,7 +499,7 @@ public class anAI : MonoBehaviour
         viewPoints = new List<Vector3>();
         oldViewCast = new ViewCastInfo();
 
-        int stepCount2 = Mathf.RoundToInt(360 * MeshResolution);
+        int stepCount2 = Mathf.RoundToInt(361 * MeshResolution);
 
         for (int i = 0; i < stepCount2; i++)
         {
