@@ -23,6 +23,10 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
 
     private void Awake()
     {
+        if (!enabled)
+        {
+            return;
+        }
         Time.timeScale = 1;
         if (Instance != this)
             Destroy(this);
