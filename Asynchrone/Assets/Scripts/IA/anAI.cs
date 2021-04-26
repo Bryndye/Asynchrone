@@ -21,7 +21,7 @@ public class anAI : MonoBehaviour
 
     [Header("Global")]
     public Classe myClasse;
-    bool EnnemiTué;
+    public bool EnnemiTué;
     [Space]
 
     [Header("Speeds")]
@@ -186,18 +186,23 @@ public class anAI : MonoBehaviour
                 }
                 else if (!PositionChecked)
                 {
-                    Vector3 Direction = (new Vector3(PursuitLastPosition.x, transform.position.y, PursuitLastPosition.z) - transform.position);
+                    Vector3 Direction = (new Vector3(PursuitLastPosition.x + transform.forward.x, transform.position.y, PursuitLastPosition.z + transform.forward.z) - transform.position);
                     if (Vector3.Angle(Direction, (transform.forward)) > 10)
                     {
                         ForceLook();
                     }
                     else
+                    { 
                         PositionChecked = true;
+                    }     
                 }
                 else
                 {
-                    TempsInterrogation -= Time.deltaTime / 10;
-                    TempsRegard += Time.deltaTime;
+                    int mult = 1;
+                    if (EnnemiTué)
+                        mult = 2;
+                    TempsInterrogation -= Time.deltaTime * mult / 10;
+                    TempsRegard += Time.deltaTime * mult;
                     if (TempsRegard >= 3)
                     {
                         TempsRegard = 0;
@@ -361,10 +366,11 @@ public class anAI : MonoBehaviour
             float dstToTarget = Vector3.Distance(transform.position, theTarget.position);
 
             bool HitWall = Physics.Raycast(RaycastPosition, dirToTarget, dstToTarget, ObstacleMaskWithoutLowWall);
-
-            if (!HitWall && HightDistance <= 1)
+            float Max = 1;
+            if (myClasse == Classe.Drone) Max = 4;
+            if (!HitWall && HightDistance <= Max)
             {
-                if ((!theTarget.GetComponent<NavMeshAgent>() || theTarget.GetComponent<NavMeshAgent>().speed > 0.5f) && (!theTarget.GetComponent<Human>() || !theTarget.GetComponent<Human>().isAccroupi))
+                if ((!theTarget.GetComponent<NavMeshAgent>() || theTarget.GetComponent<NavMeshAgent>().velocity.magnitude > 0.5f) && (!theTarget.GetComponent<Human>() || !theTarget.GetComponent<Human>().isAccroupi))
                     Vus.Add(theTarget);
             }
         }
@@ -827,9 +833,9 @@ public class anAI : MonoBehaviour
         Vector3 MyCostumPosition = transform.position + transform.forward;
         if (mySituation == Situation.Interaction)
             MyCostumPosition = InteractionTarget;
-        else if (mySituation == Situation.Interrogation)
+        else if (mySituation == Situation.Interrogation && !EnnemiTué)
             MyCostumPosition = PursuitLastPosition;
-        else
+        else if (mySituation != Situation.Interrogation)
             MyCostumPosition = EtapesRotation[StepRotationIndex];
         Quaternion targetRotation = Quaternion.LookRotation(MyCostumPosition - transform.position);
 
@@ -980,7 +986,7 @@ public class anAI : MonoBehaviour
 
     public bool Killable()
     {
-        if (mySituation != Situation.Pursuit && mySituation != Situation.Interrogation && myClasse != Classe.Drone)
+        if (mySituation != Situation.Pursuit && Vus.Count == 0 && myClasse != Classe.Drone)
             return true;
         else
             return false;
