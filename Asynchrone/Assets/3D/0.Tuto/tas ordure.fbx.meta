@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ce5410c7d894c4747b4a1623d02484c9
+guid: be411fc14d0d8a540b99c3eec5960a4d
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable: []
@@ -7,13 +7,28 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: blanc
-    second: {fileID: 2100000, guid: dd231150a07723e40bb029d5c4f38320, type: 2}
+      name: bleu_clair
+    second: {fileID: 2100000, guid: 4f1fa1ba67d5b31488ad102b52af2cb9, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: blanc1
-    second: {fileID: 2100000, guid: dd231150a07723e40bb029d5c4f38320, type: 2}
+      name: bleu_voiture
+    second: {fileID: 2100000, guid: 9d76a4e3c7b05764a83d6f97f68a9830, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: gris_clair
+    second: {fileID: 2100000, guid: c9ad5a7c716925c42ae446d46008ea86, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "gris_fonc\xE9"
+    second: {fileID: 2100000, guid: 12d40085a0f86744a8381d7bf85e6bb8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: jaune
+    second: {fileID: 2100000, guid: b3ac55baab0132d49b1f538c44582410, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -22,8 +37,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: marron
-    second: {fileID: 2100000, guid: 2a415aa89b950a14680024b9d0387468, type: 2}
+      name: lambert12
+    second: {fileID: 2100000, guid: be8afe50047ad1a48b182e876dcd8adf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert5
+    second: {fileID: 2100000, guid: dd87010f21566e242a407a055907df35, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -32,58 +52,43 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: pasted__bleu_1
-    second: {fileID: 2100000, guid: 582f5afae32a4244bade686b80ba8017, type: 2}
+      name: noir1
+    second: {fileID: 2100000, guid: d5ee9538cac2b764f882c9eace567487, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: pasted__bleu_2
-    second: {fileID: 2100000, guid: 9d76a4e3c7b05764a83d6f97f68a9830, type: 2}
+      name: pasted__pasted__Bleu_transparent
+    second: {fileID: 2100000, guid: 8bc151ac3b28ecb4684c313c7910066a, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: pasted__bleu_3
-    second: {fileID: 2100000, guid: 4f1fa1ba67d5b31488ad102b52af2cb9, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: pasted__bleu_4
-    second: {fileID: 2100000, guid: 9eb7941fe7b76e64dad17d15a46424f0, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: "pasted__gris_fonc\xE9"
-    second: {fileID: 2100000, guid: 12d40085a0f86744a8381d7bf85e6bb8, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: "pasted__gris_fonc\xE91"
-    second: {fileID: 2100000, guid: 61bebb4bcc63e934f887b337d8920517, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: "pasted__gris_fonc\xE92"
-    second: {fileID: 2100000, guid: 12d40085a0f86744a8381d7bf85e6bb8, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: "pasted__gris_fonc\xE9\xE9"
+      name: pasted__pasted__clous1
     second: {fileID: 2100000, guid: aa883df4a043d4547a71e3abb4061639, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: pasted__noir
-    second: {fileID: 2100000, guid: da4816010eb25f04d8044514c63151a5, type: 2}
+      name: pasted__pasted__marron1
+    second: {fileID: 2100000, guid: e8223b95c517d8347b2e9a116d85002f, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: pasted__noir1
-    second: {fileID: 2100000, guid: da4816010eb25f04d8044514c63151a5, type: 2}
+      name: rose
+    second: {fileID: 2100000, guid: 5ff10b50b24bee74282c60452899d96b, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: pasted__noir2
-    second: {fileID: 2100000, guid: da4816010eb25f04d8044514c63151a5, type: 2}
+      name: rouge
+    second: {fileID: 2100000, guid: f5b5a228b3f15db498cba3e6a74d8faa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: vert
+    second: {fileID: 2100000, guid: b04943732c489cf46b8bd540043bfca6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: vitre
+    second: {fileID: 2100000, guid: 7fad1f4a0a3091242b1d351311f8a20d, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
