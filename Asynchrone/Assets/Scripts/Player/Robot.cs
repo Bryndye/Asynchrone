@@ -10,12 +10,22 @@ public class Robot : MonoBehaviour
 
 
     [Header("Diversion")]
-    [SerializeField] GameObject range;
     [SerializeField] LayerMask ignoreWall;
     [SerializeField] float rangeDis;
     [HideInInspector] public bool canDiv;
     [HideInInspector] public GameObject robot_div;
+    MeshFilter viewMeshFilter;
+    Mesh viewMesh;
     public int DivStock = 0;
+
+    [Header("Valeurs Graphiques")]
+    float ShownDistance;
+    public float MeshResolution;
+    public int edgeResolveIterations;
+    public float edgeDstThrehsold;
+    Vector3 RaycastPosition;
+    [Space]
+    public LayerMask ObstacleMask;
 
     private void Awake()
     {
@@ -23,6 +33,12 @@ public class Robot : MonoBehaviour
         mP = ManagerPlayers.Instance;
         mP.Rbt = this;
         mP.Player2 = transform;
+
+        viewMeshFilter = transform.GetChild(1).GetComponent<MeshFilter>();
+
+        viewMesh = new Mesh();
+        viewMesh.name = "View Mesh";
+        viewMeshFilter.mesh = viewMesh;
     }
 
     void Update()
@@ -45,6 +61,9 @@ public class Robot : MonoBehaviour
                 }
             }
         }
+
+        UpdateDiversionRangeShown();
+        DrawFieldOfView();
     }
 
     #region Diversion
@@ -98,16 +117,176 @@ public class Robot : MonoBehaviour
     {
         if (canDiv)
         {
-            range.transform.localScale = new Vector3(rangeDis / 2.5f, rangeDis / 2.5f, 1);
             //CreateDiversion();
         }
         if (mP.onPlayer1)
         {
             canDiv = false;
         }
-        range.SetActive(canDiv);
         //bt_destroy.interactable = robot_div != null;
     }
+
+    #region MeshDiversion
+
+    void UpdateDiversionRangeShown()
+    {
+        if(canDiv && ShownDistance < rangeDis)
+        {
+            ShownDistance += Time.deltaTime * 50;
+            ShownDistance = Mathf.Clamp(ShownDistance, 0, rangeDis);
+        }
+        else if (!canDiv && ShownDistance > 0)
+        {
+            ShownDistance -= Time.deltaTime * 50;
+            ShownDistance = Mathf.Clamp(ShownDistance, 0, rangeDis);
+        }
+    }
+
+    bool AlreadyClear = true;
+    void DrawFieldOfView()
+    {
+        if(ShownDistance > 0)
+        {
+            RaycastPosition = viewMeshFilter.transform.position;
+            int stepCount = Mathf.RoundToInt(361 * MeshResolution);
+            float stepAngleSize = 361f / (float)stepCount;
+            List<Vector3> viewPoints = new List<Vector3>();
+            ViewCastInfo oldViewCast = new ViewCastInfo();
+
+            LayerMask myMask = ObstacleMask;
+
+            for (int i = 0; i < stepCount; i++)
+            {
+                float angle = transform.eulerAngles.y - 360 / 2 + stepAngleSize * i;
+                ViewCastInfo newViewCast = viewCast(angle, ObstacleMask);
+                if (i > 0)
+                {
+                    bool edgeDstThresholdExceeded = Mathf.Abs(oldViewCast.dst - newViewCast.dst) > edgeDstThrehsold;
+                    if (oldViewCast.hit != newViewCast.hit || (oldViewCast.hit && newViewCast.hit && edgeDstThresholdExceeded))
+                    {
+                        EdgeInfo edge = FindEdge(oldViewCast, newViewCast, ObstacleMask);
+                        if (edge.PointA != Vector3.zero)
+                            viewPoints.Add(edge.PointA);
+                        if (edge.PointB != Vector3.zero)
+                            viewPoints.Add(edge.PointB);
+                    }
+                }
+                viewPoints.Add(newViewCast.point);
+                oldViewCast = newViewCast;
+            }
+
+            int vertCount = viewPoints.Count + 1;
+            Vector3[] verticles = new Vector3[vertCount];
+            int[] triangles = new int[((vertCount - 2) * 3) + 3];
+
+            verticles[0] = Vector3.zero;
+            for (int i = 0; i < vertCount - 1; i++)
+            {
+                verticles[i + 1] = transform.InverseTransformPoint(viewPoints[i]);
+
+                if (i < vertCount - 2)
+                {
+                    triangles[i * 3] = 0;
+                    triangles[i * 3 + 1] = i + 1;
+                    triangles[i * 3 + 2] = i + 2;
+                }
+            }
+
+            viewMesh.Clear();
+            viewMesh.vertices = verticles;
+            viewMesh.triangles = triangles;
+            viewMesh.RecalculateNormals();
+
+            AlreadyClear = false;
+        }
+
+        if(ShownDistance == 0 && !AlreadyClear)
+        {
+            AlreadyClear = true;
+            viewMesh.Clear();
+        }
+    }
+
+    ViewCastInfo viewCast(float globalAngle, LayerMask AffectedLayer)
+    {
+        Vector3 dir = DirFromAngle(globalAngle, true);
+        RaycastHit hit;
+
+        if (Physics.Raycast(RaycastPosition, dir, out hit, ShownDistance, AffectedLayer))
+        {
+            Vector3 HitPointToReturn = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+            return new ViewCastInfo(true, HitPointToReturn, hit.distance, globalAngle);
+        }
+        else
+        {
+            return new ViewCastInfo(false, transform.position + dir * ShownDistance, rangeDis, globalAngle);
+        }
+    }
+
+    EdgeInfo FindEdge(ViewCastInfo minViewCast, ViewCastInfo maxViewCast, LayerMask AffectedLayer)
+    {
+        float minAngle = minViewCast.angle;
+        float maxAngle = maxViewCast.angle;
+        Vector3 minPoint = Vector3.zero;
+        Vector3 maxPoint = Vector3.zero;
+
+        for (int i = 0; i < edgeResolveIterations; i++)
+        {
+            float angle = (minAngle + maxAngle) / 2;
+            ViewCastInfo newViewCast = viewCast(angle, AffectedLayer);
+
+            bool edgeDstThresholdExceeded = Mathf.Abs(minViewCast.dst - newViewCast.dst) > edgeDstThrehsold;
+            if (newViewCast.hit == minViewCast.hit && !edgeDstThresholdExceeded)
+            {
+                minAngle = angle;
+                minPoint = newViewCast.point;
+            }
+            else
+            {
+                maxAngle = angle;
+                maxPoint = newViewCast.point;
+            }
+        }
+
+        return new EdgeInfo(minPoint, maxPoint);
+    }
+
+    public Vector3 DirFromAngle(float AngleInDegrees, bool AngleisGlobal)
+    {
+        if (!AngleisGlobal)
+            AngleInDegrees += transform.eulerAngles.y;
+        return new Vector3(Mathf.Sin(AngleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(AngleInDegrees * Mathf.Deg2Rad));
+    }
+
+    public struct ViewCastInfo
+    {
+        public bool hit;
+        public Vector3 point;
+        public float dst;
+        public float angle;
+
+        public ViewCastInfo(bool _hit, Vector3 _point, float _dst, float _angle)
+        {
+            hit = _hit;
+            point = _point;
+            dst = _dst;
+            angle = _angle;
+        }
+    }
+
+    public struct EdgeInfo
+    {
+        public Vector3 PointA;
+        public Vector3 PointB;
+
+        public EdgeInfo(Vector3 _PointA, Vector3 _PointB)
+        {
+            PointA = _PointA;
+            PointB = _PointB;
+        }
+    }
+
+    #endregion
 
     #endregion
 }
