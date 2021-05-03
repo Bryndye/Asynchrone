@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraManager : MonoBehaviour
+public class CameraManager : Singleton<CameraManager>
 {
-    public static CameraManager Instance;
+    //public static CameraManager Instance;
 
     public Transform Target;
     public Transform[] TargetPorte;
@@ -17,9 +17,9 @@ public class CameraManager : MonoBehaviour
 
     private void Awake()                                           //AWAKE
     {
-        if (Instance != null)
+        if (Instance != this)
             Destroy(this);
-        Instance = this;
+
         audioS = GetComponent<AudioSource>();
     }
 

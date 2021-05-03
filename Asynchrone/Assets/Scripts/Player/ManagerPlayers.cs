@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ManagerPlayers : MonoBehaviour
+public class ManagerPlayers : Singleton<ManagerPlayers>
 {
-    public static ManagerPlayers Instance;
+    //public static ManagerPlayers Instance;
 
     [Header("Human")]
     public Transform Player1;
@@ -31,9 +31,8 @@ public class ManagerPlayers : MonoBehaviour
         }
         Time.timeScale = 1;
 
-        if (Instance != null)
+        if (Instance != this)
             Destroy(this);
-        Instance = this;
         
         if (CameraManager.Instance != null)
         {

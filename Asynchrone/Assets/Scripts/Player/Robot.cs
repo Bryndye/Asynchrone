@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Robot : MonoBehaviour
+public class Robot : Singleton<Robot>
 {
     NavMeshAgent nav;
     ManagerPlayers mP;

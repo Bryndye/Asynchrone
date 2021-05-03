@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CanvasManager : MonoBehaviour
+public class CanvasManager : Singleton<CanvasManager>
 {
-    public static CanvasManager Instance;
+    //public static CanvasManager Instance;
 
     //[SerializeField] Button bt_continue;
     CameraManager cm;
@@ -39,9 +39,8 @@ public class CanvasManager : MonoBehaviour
 
     void Awake()                                        //AWAKE
     {
-        if (Instance != null)
+        if (Instance != this)
             Destroy(this);
-        Instance = this;
 
         mp = ManagerPlayers.Instance;
         anim = GetComponent<Animator>();
