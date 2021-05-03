@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Inherit from this base class to create a singleton.
@@ -33,7 +34,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
                     m_Instance = (T)FindObjectOfType(typeof(T));
 
                     // Create new instance if one doesn't already exist.
-                    if (m_Instance == null)
+                    if (m_Instance == null && SceneManager.GetActiveScene().buildIndex < 6)
                     {
                         // Need to create a new GameObject to attach the singleton to.
                         var singletonObject = new GameObject();

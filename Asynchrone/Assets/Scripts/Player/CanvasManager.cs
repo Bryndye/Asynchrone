@@ -42,7 +42,10 @@ public class CanvasManager : Singleton<CanvasManager>
         if (Instance != this)
             Destroy(this);
 
-        mp = ManagerPlayers.Instance;
+        if (ManagerPlayers.Instance != null)
+        {
+            mp = ManagerPlayers.Instance;
+        }
         anim = GetComponent<Animator>();
 
         audioSource = GetComponent<AudioSource>();
