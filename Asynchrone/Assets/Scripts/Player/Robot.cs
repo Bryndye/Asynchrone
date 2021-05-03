@@ -48,7 +48,6 @@ public class Robot : MonoBehaviour
 
             if (!mP.onPlayer1)
             {
-                GestionDiv();
 
                 if (Input.GetKeyDown(KeyCode.Z) && robot_div == null && DivStock > 0)
                 {
@@ -61,7 +60,6 @@ public class Robot : MonoBehaviour
                 }
             }
         }
-
         UpdateDiversionRangeShown();
         DrawFieldOfView();
     }
@@ -113,24 +111,17 @@ public class Robot : MonoBehaviour
         return false;
     }
 
-    private void GestionDiv()
-    {
-        if (canDiv)
-        {
-            //CreateDiversion();
-        }
-        if (mP.onPlayer1)
-        {
-            canDiv = false;
-        }
-        //bt_destroy.interactable = robot_div != null;
-    }
 
     #region MeshDiversion
 
     void UpdateDiversionRangeShown()
     {
-        if(canDiv && ShownDistance < rangeDis)
+        if (mP.onPlayer1)
+        {
+            canDiv = false;
+        }
+
+        if (canDiv && ShownDistance < rangeDis)
         {
             ShownDistance += Time.deltaTime * 50;
             ShownDistance = Mathf.Clamp(ShownDistance, 0, rangeDis);
