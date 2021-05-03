@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ManagerPlayers : Singleton<ManagerPlayers>
+public class ManagerPlayers : MonoBehaviour
 {
+    public static ManagerPlayers Instance;
+
     [Header("Human")]
     public Transform Player1;
     [HideInInspector] public Human Hm;
@@ -28,18 +30,31 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
             return;
         }
         Time.timeScale = 1;
-        if (Instance != this)
-            Destroy(this);
 
-        cSmooth = CameraManager.Instance;
-        cm = CanvasManager.Instance;
+        if (Instance != null)
+            Destroy(this);
+        Instance = this;
+        
+        if (CameraManager.Instance != null)
+        {
+            cSmooth = CameraManager.Instance;
+        }
+        if (CanvasManager.Instance != null)
+        {
+            cm = CanvasManager.Instance;
+        }
+
 
         if (Player1 != null)
             pc1 = Player1.GetComponent<PlayerController>();
 
         if (Player2 != null)
             pc2 = Player2.GetComponent<PlayerController>();
-        Camera_Manager();
+
+        if (Player1 != null && Player2 != null)
+        {
+            Camera_Manager();
+        }
     }
 
     private void Update()

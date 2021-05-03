@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraManager : Singleton<CameraManager>
+public class CameraManager : MonoBehaviour
 {
+    public static CameraManager Instance;
+
     public Transform Target;
     public Transform[] TargetPorte;
 
@@ -15,8 +17,9 @@ public class CameraManager : Singleton<CameraManager>
 
     private void Awake()                                           //AWAKE
     {
-        if (Instance != this)
+        if (Instance != null)
             Destroy(this);
+        Instance = this;
         audioS = GetComponent<AudioSource>();
     }
 
@@ -43,10 +46,6 @@ public class CameraManager : Singleton<CameraManager>
                 ResetTargets();
             }
         }
-
-
-
-
         else if (Target != null)
         {
             Vector3 smooth = new Vector3(Target.position.x, 1, Target.position.z) - transform.position;

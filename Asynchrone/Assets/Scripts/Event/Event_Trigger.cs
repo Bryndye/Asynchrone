@@ -8,9 +8,27 @@ public class Event_Trigger : MonoBehaviour
 {
     private BoxCollider bc;
 
-    ManagerPlayers mp;
-    CanvasManager cm;
-    CameraManager camM;
+    ManagerPlayers mp
+    {
+        get
+        {
+            return ManagerPlayers.Instance;
+        }
+    }
+    CanvasManager cm
+    {
+        get
+        {
+            return CanvasManager.Instance;
+        }
+    }
+    CameraManager camM
+    {
+        get
+        {
+            return CameraManager.Instance;
+        }
+    }
     [SerializeField] string nameEvent;
     private bool done = false;
 
@@ -40,9 +58,6 @@ public class Event_Trigger : MonoBehaviour
 
     private void Awake()
     {
-        cm = CanvasManager.Instance;
-        camM = CameraManager.Instance;
-        mp = ManagerPlayers.Instance;
         for (int i = 0; i < iaToActivate.Length; i++)
         {
             iaToActivate[i].SetActive(false);
@@ -124,7 +139,7 @@ public class Event_Trigger : MonoBehaviour
 
     private void EventDialogue()
     {
-        if (cm.dialogueHere && dialogues.Length > 0)
+        if (cm.dialogueHere != null && dialogues.Length > 0)
         {
             cm.StartDiaEffect(dialogues, audioC);
         }

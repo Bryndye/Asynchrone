@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CanvasManager : Singleton<CanvasManager>
+public class CanvasManager : MonoBehaviour
 {
+    public static CanvasManager Instance;
+
     //[SerializeField] Button bt_continue;
     CameraManager cm;
     ManagerPlayers mp;
@@ -19,6 +21,7 @@ public class CanvasManager : Singleton<CanvasManager>
     private int index =0;
     [HideInInspector] public string[] sentences;
     [HideInInspector] string[] sentencesStock;
+    private AudioSource audioSource;
     [HideInInspector] public AudioClip[] audioc;
     [HideInInspector] AudioClip[] acStock;
     private bool isRuntime;
@@ -36,10 +39,15 @@ public class CanvasManager : Singleton<CanvasManager>
 
     void Awake()                                        //AWAKE
     {
-        if (Instance != this)
+        if (Instance != null)
             Destroy(this);
+        Instance = this;
+
         mp = ManagerPlayers.Instance;
         anim = GetComponent<Animator>();
+
+        audioSource = GetComponent<AudioSource>();
+
         anim.SetTrigger("Disappear");
     }
 
@@ -117,6 +125,10 @@ public class CanvasManager : Singleton<CanvasManager>
 
     private void NombreDiversion()
     {
+        if (mp == null)
+        {
+            return;
+        }
         if (mp.Rbt != null && bt_divRbt != null)
         {
             if (mp.Rbt.DivStock > 0)
