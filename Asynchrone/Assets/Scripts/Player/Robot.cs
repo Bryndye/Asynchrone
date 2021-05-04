@@ -139,8 +139,8 @@ public class Robot : Singleton<Robot>
         if(ShownDistance > 0)
         {
             RaycastPosition = viewMeshFilter.transform.position;
-            int stepCount = Mathf.RoundToInt(361 * MeshResolution);
-            float stepAngleSize = 361f / (float)stepCount;
+            int stepCount = Mathf.RoundToInt(360 * MeshResolution);
+            float stepAngleSize = 360f / (float)stepCount;
             List<Vector3> viewPoints = new List<Vector3>();
             ViewCastInfo oldViewCast = new ViewCastInfo();
 
@@ -167,7 +167,7 @@ public class Robot : Singleton<Robot>
             }
 
             int vertCount = viewPoints.Count + 1;
-            Vector3[] verticles = new Vector3[vertCount];
+            Vector3[] verticles = new Vector3[vertCount + 1];
             int[] triangles = new int[((vertCount - 2) * 3) + 3];
 
             verticles[0] = Vector3.zero;
@@ -182,6 +182,12 @@ public class Robot : Singleton<Robot>
                     triangles[i * 3 + 2] = i + 2;
                 }
             }
+
+            verticles[verticles.Length - 1] = transform.InverseTransformPoint(viewPoints[0]);
+
+            triangles[triangles.Length - 3] = 0;
+            triangles[triangles.Length - 2] = triangles[triangles.Length - 4];
+            triangles[triangles.Length - 1] = 1;
 
             viewMesh.Clear();
             viewMesh.vertices = verticles;

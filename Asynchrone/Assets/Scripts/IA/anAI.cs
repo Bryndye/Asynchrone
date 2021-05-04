@@ -505,7 +505,7 @@ public class anAI : MonoBehaviour
         viewPoints = new List<Vector3>();
         oldViewCast = new ViewCastInfo();
 
-        int stepCount2 = Mathf.RoundToInt(361 * MeshResolution);
+        int stepCount2 = Mathf.RoundToInt(360 * MeshResolution);
 
         for (int i = 0; i < stepCount2; i++)
         {
@@ -528,7 +528,7 @@ public class anAI : MonoBehaviour
         }
 
         vertCount = viewPoints.Count + 1;
-        verticles = new Vector3[vertCount];
+        verticles = new Vector3[vertCount + 1];
         triangles = new int[((vertCount - 2) * 3) + 3];
 
         verticles[0] = Vector3.zero;
@@ -543,6 +543,12 @@ public class anAI : MonoBehaviour
                 triangles[i * 3 + 2] = i + 2;
             }
         }
+
+        verticles[verticles.Length - 1] = transform.InverseTransformPoint(viewPoints[0]);
+
+        triangles[triangles.Length - 3] = 0;
+        triangles[triangles.Length - 2] = triangles[triangles.Length - 4];
+        triangles[triangles.Length - 1] = 1;
 
         viewMesh3.Clear();
         viewMesh3.vertices = verticles;
