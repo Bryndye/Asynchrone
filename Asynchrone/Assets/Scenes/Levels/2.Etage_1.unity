@@ -1758,6 +1758,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a5c4125491b1f1e4a8101389b02a8a09, type: 3}
   m_PrefabInstance: {fileID: 204137950}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &204595341 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+  m_PrefabInstance: {fileID: 1552250569}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &205251537
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5245,6 +5250,11 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &518997206 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+  m_PrefabInstance: {fileID: 656744770}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &538605792
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6108,6 +6118,7 @@ Transform:
   - {fileID: 904476945}
   - {fileID: 2056412538}
   - {fileID: 1652585412}
+  - {fileID: 1677614483}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6582,6 +6593,93 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1001 &656744770
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1677614483}
+    m_Modifications:
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: dialogues.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: dialogues.Array.data[0]
+      value: "Fais clique droit sur la borne \xE0 ta gauche pour recharger ta diversion."
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: dialogues.Array.data[1]
+      value: "Jumes : Et je fais quoi une fois que tu auras attir\xE9 son attention
+        ?"
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: dialogues.Array.data[2]
+      value: "Vatrek : Il faudra que tu le neutralises discr\xE8tement, on ne pourra
+        pas passer, sinon."
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: dialogues.Array.data[3]
+      value: 'Jumes : OK...'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2382837117831925816, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_Name
+      value: 'Evt audio '
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.86
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 7.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6494321005084589022, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_Size.z
+      value: 5.662271
+      objectReference: {fileID: 0}
+    - target: {fileID: 6494321005084589022, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_Center.z
+      value: -1.4941475
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
 --- !u!1001 &661486533
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10755,6 +10853,11 @@ Transform:
   m_Father: {fileID: 327304844}
   m_RootOrder: 32
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1080900449 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+  m_PrefabInstance: {fileID: 1457279250}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1094535032
 GameObject:
   m_ObjectHideFlags: 0
@@ -12622,6 +12725,108 @@ Transform:
   m_Father: {fileID: 1851426605}
   m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1347775004
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1677614483}
+    m_Modifications:
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: dialogues.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: dialogues.Array.data[0]
+      value: "Vatrek : Mh, on dirait qu\u2019on ne va pas pouvoir aller plus loin
+        sans se s\xE9parer. Je vais essayer de trouver un moyen de t\u2019ouvrir
+        cette porte. On se retrouve plus tard."
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: dialogues.Array.data[1]
+      value: "Jumes : OK mais fais vite s\u2019il te pla\xEEt! Je ne suis pas tr\xE8s
+        rassur\xE9, seul..."
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: dialogues.Array.data[2]
+      value: "Vatrek : Il faudra que tu le neutralises discr\xE8tement, on ne pourra
+        pas passer, sinon."
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: dialogues.Array.data[3]
+      value: 'Jumes : OK...'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2382837117831925816, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_Name
+      value: 'Evt audio '
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 14.79
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.86
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6494321005084589022, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_Size.x
+      value: 0.5672927
+      objectReference: {fileID: 0}
+    - target: {fileID: 6494321005084589022, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_Size.z
+      value: 3.7725415
+      objectReference: {fileID: 0}
+    - target: {fileID: 6494321005084589022, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_Center.x
+      value: -0.21635365
+      objectReference: {fileID: 0}
+    - target: {fileID: 6494321005084589022, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_Center.z
+      value: -1.4606805
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+--- !u!4 &1347775005 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+  m_PrefabInstance: {fileID: 1347775004}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1352589766
 GameObject:
   m_ObjectHideFlags: 0
@@ -14107,6 +14312,95 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1457156802}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &1457279250
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1677614483}
+    m_Modifications:
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: dialogues.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: dialogues.Array.data[0]
+      value: "Appuie sur Z pour pr\xE9parer ta diversion, et fais clic droit pour
+        placer un hologramme de diversion. Tu peux appuyer de nouveau sur Z pour
+        d\xE9truire l\u2019hologramme. "
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: dialogues.Array.data[1]
+      value: "Jumes : Et je fais quoi une fois que tu auras attir\xE9 son attention
+        ?"
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: dialogues.Array.data[2]
+      value: "Vatrek : Il faudra que tu le neutralises discr\xE8tement, on ne pourra
+        pas passer, sinon."
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: dialogues.Array.data[3]
+      value: 'Jumes : OK...'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2382837117831925816, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_Name
+      value: 'Evt audio '
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.86
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 7.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6494321005084589022, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_Size.z
+      value: 5.662271
+      objectReference: {fileID: 0}
+    - target: {fileID: 6494321005084589022, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_Center.z
+      value: -1.4941475
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
 --- !u!1 &1468169868
 GameObject:
   m_ObjectHideFlags: 0
@@ -15379,6 +15673,95 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a5c4125491b1f1e4a8101389b02a8a09, type: 3}
   m_PrefabInstance: {fileID: 1551235366}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1552250569
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1677614483}
+    m_Modifications:
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: dialogues.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: dialogues.Array.data[0]
+      value: "Vatrek : Regarde, ce robot monte la garde. On ne va pas pouvoir passer
+        sans attirer son attention. Attends-moi en bas, et surtout ne te fais pas
+        rep\xE9rer ! Je vais voir ce que je peux faire..."
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: dialogues.Array.data[1]
+      value: "Jumes : Et je fais quoi une fois que tu auras attir\xE9 son attention
+        ?"
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: dialogues.Array.data[2]
+      value: "Vatrek : Il faudra que tu le neutralises discr\xE8tement, on ne pourra
+        pas passer, sinon."
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: dialogues.Array.data[3]
+      value: 'Jumes : OK...'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2382837117831925816, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_Name
+      value: 'Evt audio '
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.702032
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.24092865
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.70318747
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6494321005084589022, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_Size.z
+      value: 12.331235
+      objectReference: {fileID: 0}
+    - target: {fileID: 6494321005084589022, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: m_Center.z
+      value: -0.6563287
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
 --- !u!1 &1560307263
 GameObject:
   m_ObjectHideFlags: 0
@@ -16790,6 +17173,40 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1851426605}
   m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1677614482
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1677614483}
+  m_Layer: 0
+  m_Name: ///Dialogues///
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1677614483
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1677614482}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -16.69573, y: 2.6641521, z: -2.1165252}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 204595341}
+  - {fileID: 518997206}
+  - {fileID: 1080900449}
+  - {fileID: 1347775005}
+  m_Father: {fileID: 612752909}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1677826378
 GameObject:
