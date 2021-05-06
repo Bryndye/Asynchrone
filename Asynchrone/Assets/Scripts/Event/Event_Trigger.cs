@@ -37,7 +37,6 @@ public class Event_Trigger : MonoBehaviour
         Audio,
         ActiveIA,
         Porte1side,
-        FinNiveau
     }
     public typeEvent eventToTrigger;
 
@@ -51,9 +50,6 @@ public class Event_Trigger : MonoBehaviour
     [Header("Porte")]
     public GameObject PorteMesh;
 
-    [Header("Fin de niveau")]
-    [SerializeField] private int indexOfNextlevel;
-    [SerializeField] private List<GameObject> players;
 
 
     private void Awake()
@@ -93,38 +89,9 @@ public class Event_Trigger : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (eventToTrigger == typeEvent.FinNiveau)
-        {
-            if (other.CompareTag("Player"))
-            {
-                if (!players.Contains(other.gameObject))
-                {
-                    players.Add(other.gameObject);
-                }
-            }
 
-            if (players.Count >= 2 || mp.Player2 == null && players.Count >= 1)
-            {
-                SceneManager.LoadScene(indexOfNextlevel);
-            }
-        }
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (eventToTrigger == typeEvent.FinNiveau)
-        {
-            if (other.CompareTag("Player"))
-            {
-                if (players.Contains(other.gameObject))
-                {
-                    players.Remove(other.gameObject);
-                }
-            }
-        }
-    }
+
 
 
 
@@ -163,7 +130,6 @@ public class Event_Trigger : MonoBehaviour
     bool audio;
     bool ia;
     bool porte;
-    bool end;
 
     private void OnDrawGizmos()
     {
@@ -210,15 +176,6 @@ public class Event_Trigger : MonoBehaviour
         else
         {
             porte = false;
-        }
-        if (eventToTrigger == typeEvent.FinNiveau)
-        {
-            gameObject.name = "Evt End " + nameEvent;
-            end = true;
-        }
-        else
-        {
-            end = false;
         }
     }
 
