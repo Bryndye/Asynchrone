@@ -53,6 +53,8 @@ public class LoadLevel : MonoBehaviour
             mp.pc2.InCinematic = true;
             done = true;
             canvasLoading.SetActive(true);
+            Animator anim = GetComponent<Animator>();
+            anim.SetTrigger("fondu");
         }
     }
 
@@ -74,9 +76,6 @@ public class LoadLevel : MonoBehaviour
     public void ActiveLoadScreen()
     {
         loadingScreen.SetActive(true);
-        Animator anim = GetComponent<Animator>();
-        anim.SetTrigger("fondu");
-
         StartCoroutine(LoadScene());
     }
 
