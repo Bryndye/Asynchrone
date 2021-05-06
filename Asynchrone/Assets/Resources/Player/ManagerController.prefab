@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9188975390714213540}
   - component: {fileID: 9188975390714213539}
   - component: {fileID: 1313664703}
+  - component: {fileID: 4341999190879090001}
   m_Layer: 0
   m_Name: ManagerController
   m_TagString: Untagged
@@ -66,5 +67,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c3d8bb8dc57da4e8b2425ebd8ed998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mySpawnSituation: 0
   SpawnPointR: {x: 0, y: 0, z: 0}
   SpawnPointH: {x: 0, y: 0, z: 0}
+  myAIs: []
+  myAIs_Checkpoint: []
+--- !u!114 &4341999190879090001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9188975390714213538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54789fd4aa0588448885d87318f7f245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ActualSpeakingIA: {fileID: 0}

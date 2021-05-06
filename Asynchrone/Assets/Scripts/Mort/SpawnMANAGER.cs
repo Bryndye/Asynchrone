@@ -109,7 +109,10 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
         for (int i = 0; i < myAIs_Checkpoint.Count; i++)
         {
             if (!myAIs_Checkpoint[i].gameObject.activeSelf)
+            {
                 myAIs_Checkpoint[i].gameObject.SetActive(true);
+                myAIs_Checkpoint[i].AISpawn();
+            }
             myAIs_Checkpoint[i].AIReset();
         }
         myAIs = myAIs_Checkpoint;

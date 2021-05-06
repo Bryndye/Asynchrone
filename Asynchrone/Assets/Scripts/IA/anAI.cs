@@ -13,9 +13,11 @@ public class anAI : MonoBehaviour
 {
     [Header("Externe")]
     SpawnMANAGER SM;
+    IAManager IAM;
 
     [Header("Composants")]
     NavMeshAgent myNavMeshAgent;
+    [HideInInspector] public AudioSource myVoice;
     public GameObject SkinRobot;
     public GameObject SkinDrone;
 
@@ -102,10 +104,13 @@ public class anAI : MonoBehaviour
         viewMeshFilter2 = transform.GetChild(1).GetComponent<MeshFilter>();
         viewMeshFilter3 = transform.GetChild(2).GetComponent<MeshFilter>();
         myNavMeshAgent = GetComponent<NavMeshAgent>();
+        myVoice = GetComponentInChildren<AudioSource>();
         SM = SpawnMANAGER.Instance;
-
+        IAM = IAManager.Instance;
         if (!SM.myAIs.Contains(this))
             SM.myAIs.Add(this);
+
+        AISpawn();
     }
 
     private void Start()
@@ -219,6 +224,8 @@ public class anAI : MonoBehaviour
                             NextPatrolStep();
                         else if (Comportement == myBehaviour.Guard)
                             GuardReturnToBase();
+
+                        Speak(VoiceFor.BackToNormal);
                     }
                     else
                     {
@@ -877,7 +884,10 @@ public class anAI : MonoBehaviour
     void InInterrogation()
     {
         if (TempsInteraction == 0)
+        {
             PositionChecked = false;
+            Speak(VoiceFor.Seen);
+        }
         TempsInterrogation += Time.deltaTime;
         if(TempsInterrogation >= LatenceInterrogation)
         {
@@ -896,6 +906,7 @@ public class anAI : MonoBehaviour
         myNavMeshAgent.isStopped = false;
         myNavMeshAgent.speed = PursuitSpeed;
         myNavMeshAgent.destination = Vus[0].position;
+        Speak(VoiceFor.StartPursuit);
     }
 
     void Pursuit()
@@ -932,6 +943,7 @@ public class anAI : MonoBehaviour
         myNavMeshAgent.isStopped = true;
         myNavMeshAgent.speed = NormalSpeed;
         PursuitLastPosition = transform.position + transform.forward;
+        Speak(VoiceFor.EndPursuit);
     }
 
     void Kill()
@@ -941,6 +953,8 @@ public class anAI : MonoBehaviour
     }
 
     #endregion
+
+    #region Reset and Respawn
 
     void ResetVisionAndInterrogation()
     {
@@ -958,8 +972,6 @@ public class anAI : MonoBehaviour
         TempsInterrogation = 0;
         TempsRegard = 0;
     }
-
-    #region Reset and Respawn
 
     public void AIReset()
     {
@@ -988,7 +1000,14 @@ public class anAI : MonoBehaviour
         ResetVisionAndInterrogation();
     }
 
+    public void AISpawn()
+    {
+        IAM.LivingAI.Add(this);
+    }
+
     #endregion
+
+    #region Death
 
     public bool Killable()
     {
@@ -1000,9 +1019,62 @@ public class anAI : MonoBehaviour
 
     public void Death()
     {
+        IAM.RemoveIA(this);
         myUI.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }
+
+    #endregion
+
+    #region Voice
+
+    void Speak(VoiceFor myVoiceFor)
+    {
+        if (!IAM.isSomeoneSpeaking())
+        {
+            aVoicePack myVoiceClasse = null;
+
+            if (myClasse == Classe.Basic)
+                myVoiceClasse = IAM.RobotVoice;
+            else if (myClasse == Classe.Basic)
+                myVoiceClasse = IAM.DroneVoice;
+
+            if (myVoiceClasse != null)
+            {
+                AudioClip ToTell = null;
+                switch (myVoiceFor)
+                {
+                    case VoiceFor.Seen:
+                        ToTell = GetRandomClip(myVoiceClasse.Seen);
+                        break;
+                    case VoiceFor.StartPursuit:
+                        ToTell = GetRandomClip(myVoiceClasse.StartPursuit);
+                        break;
+                    case VoiceFor.EndPursuit:
+                        ToTell = GetRandomClip(myVoiceClasse.EndPursuit);
+                        break;
+                    case VoiceFor.BackToNormal:
+                        ToTell = GetRandomClip(myVoiceClasse.BackToNormal);
+                        break;
+                }
+
+                if (ToTell)
+                {
+                    myVoice.clip = ToTell;
+                    IAM.ActualSpeakingIA = this;
+                    myVoice.Play();
+                }
+            }
+        }
+    }
+
+    AudioClip GetRandomClip(List<AudioClip> ClipList)
+    {
+        int rnd = Random.Range(0, ClipList.Count);
+        return ClipList[rnd];
+    }
+
+    #endregion
 
     private void OnDrawGizmosSelected()
     {
