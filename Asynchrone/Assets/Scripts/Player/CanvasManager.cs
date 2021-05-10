@@ -78,20 +78,20 @@ public class CanvasManager : Singleton<CanvasManager>
                 mp.Camera_Manager();
                 break;
             case 1:
-                if (!mp.onPlayer1 && !mp.Rbt.robot_div && mp.Rbt.DivStock > 0)
+                if (!mp.onPlayer1 && !mp.RobotPlayer.robot_div && mp.RobotPlayer.DivStock > 0)
                 {
-                    mp.Rbt.StartDiv();
+                    mp.RobotPlayer.StartDiv();
                 }
                 else
                 {
-                    Destroy(mp.Rbt.robot_div);
+                    Destroy(mp.RobotPlayer.robot_div);
                 }
                 break;
 
             case 3:
                 if (mp.onPlayer1)
                 {
-                    mp.Hm.CheckMask();
+                    mp.HumanPlayer.CheckMask();
                 }
                 break;
 
@@ -131,9 +131,9 @@ public class CanvasManager : Singleton<CanvasManager>
         {
             return;
         }
-        if (mp.Rbt != null && bt_divRbt != null)
+        if (mp.RobotPlayer != null && bt_divRbt != null)
         {
-            if (mp.Rbt.DivStock > 0)
+            if (mp.RobotPlayer.DivStock > 0)
             {
                 bt_divRbt.interactable = true;
             }

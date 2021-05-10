@@ -42,7 +42,7 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
     public void GetSpawn(Vector3 posH, Vector3 posR, bool die)
     {
         //Debug.Log("get the spawns");
-        if(mp.Rbt) SpawnPointR = posR;
+        if(mp.RobotPlayer) SpawnPointR = posR;
         SpawnPointH = posH;
         if (die)
         {
@@ -53,8 +53,8 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
     public void Respawn()
     {
         //Debug.Log("RESPAWN");
-        mp.pc1.InCinematic = true;
-        if (mp.Rbt) mp.pc2.InCinematic = true;
+        mp.PlayerCtrlerHm.InCinematic = true;
+        if (mp.RobotPlayer) mp.PlayerCntrlerRbt.InCinematic = true;
         cm.anim.SetTrigger("dead");
 
         if (SpawnPointR != null && !done)
@@ -68,12 +68,12 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
     {
         if (SpawnPointH != null)
         {
-            mp.pc1.nav.Warp(SpawnPointH);
-            mp.pc1.anim.SetBool("Walking", false);
+            mp.PlayerCtrlerHm.nav.Warp(SpawnPointH);
+            mp.PlayerCtrlerHm.anim.SetBool("Walking", false);
         }
-        if (SpawnPointR != null && mp.Rbt)
+        if (SpawnPointR != null && mp.RobotPlayer)
         {
-            mp.pc2.nav.Warp(SpawnPointR);
+            mp.PlayerCntrlerRbt.nav.Warp(SpawnPointR);
             //mp.pc2.anim.SetBool("Walking", false);
         }
         AiRespawn();
@@ -84,8 +84,8 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
     {
         //Debug.Log("is finished");
 
-        mp.pc1.InCinematic = false;
-        if (mp.Rbt) mp.pc2.InCinematic = false;
+        mp.PlayerCtrlerHm.InCinematic = false;
+        if (mp.RobotPlayer) mp.PlayerCntrlerRbt.InCinematic = false;
         done = false;
 
         mySpawnSituation = SpawnSituation.Playing;

@@ -9,16 +9,16 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
 
     [Header("Human")]
     public Transform Player1;
-    [HideInInspector] public Human Hm;
-    [HideInInspector] public PlayerController pc1;
+    [HideInInspector] public Human HumanPlayer;
+    [HideInInspector] public PlayerController PlayerCtrlerHm;
 
     [Header("Robot")]
     public Transform Player2;
-    [HideInInspector] public Robot Rbt;
-    [HideInInspector] public PlayerController pc2;
+    [HideInInspector] public Robot RobotPlayer;
+    [HideInInspector] public PlayerController PlayerCntrlerRbt;
 
-    CameraManager cSmooth;
-    CanvasManager cm;
+    CameraManager cameraManager;
+    CanvasManager canvasManager;
     public bool onPlayer1;
 
 
@@ -36,23 +36,29 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
         
         if (CameraManager.Instance != null)
         {
-            cSmooth = CameraManager.Instance;
+            cameraManager = CameraManager.Instance;
         }
         if (CanvasManager.Instance != null)
         {
-            cm = CanvasManager.Instance;
+            canvasManager = CanvasManager.Instance;
         }
 
 
         if (Player1 != null)
-            pc1 = Player1.GetComponent<PlayerController>();
+            PlayerCtrlerHm = Player1.GetComponent<PlayerController>();
 
         if (Player2 != null)
-            pc2 = Player2.GetComponent<PlayerController>();
+            PlayerCntrlerRbt = Player2.GetComponent<PlayerController>();
 
         if (Player1 != null && Player2 != null)
         {
             Camera_Manager();
+        }
+        else
+        {
+            cameraManager.Target = PlayerCtrlerHm.transform;
+            PlayerCtrlerHm.CanPlay = true;
+            onPlayer1 = true;
         }
     }
 
@@ -73,41 +79,41 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
 
             if (onPlayer1)
             {
-                if (cm.QuelPlayer != null)
-                    cm.QuelPlayer.text = Player1.name;
+                if (canvasManager.QuelPlayer != null)
+                    canvasManager.QuelPlayer.text = Player1.name;
 
-                cSmooth.Target = Player1;
+                cameraManager.Target = Player1;
             }
             else
             {
-                if (!cm.QuelPlayer)
-                    cm.QuelPlayer.text = Player2.name;
+                if (!canvasManager.QuelPlayer)
+                    canvasManager.QuelPlayer.text = Player2.name;
 
-                cSmooth.Target = Player2;
+                cameraManager.Target = Player2;
             }
 
-            pc1.CanPlay = onPlayer1;
-            pc2.CanPlay = !onPlayer1;
+            PlayerCtrlerHm.CanPlay = onPlayer1;
+            PlayerCntrlerRbt.CanPlay = !onPlayer1;
 
-            if (cm.UIHuman != null && cm.UIRobot != null)
+            if (canvasManager.UIHuman != null && canvasManager.UIRobot != null)
             {
-                cm.UIHuman.SetActive(onPlayer1);
-                cm.UIRobot.SetActive(!onPlayer1);
+                canvasManager.UIHuman.SetActive(onPlayer1);
+                canvasManager.UIRobot.SetActive(!onPlayer1);
             }
         }
         else
         {
             onPlayer1 = true;
-            if (cm.QuelPlayer != null)
-                cm.QuelPlayer.text = Player1.name;
+            if (canvasManager.QuelPlayer != null)
+                canvasManager.QuelPlayer.text = Player1.name;
 
-            cSmooth.Target = Player1;
-            pc1.CanPlay = onPlayer1;
+            cameraManager.Target = Player1;
+            PlayerCtrlerHm.CanPlay = onPlayer1;
 
-            if (cm.UIHuman != null && cm.UIRobot != null)
+            if (canvasManager.UIHuman != null && canvasManager.UIRobot != null)
             {
-                cm.UIHuman.SetActive(true);
-                cm.UIRobot.SetActive(false);
+                canvasManager.UIHuman.SetActive(true);
+                canvasManager.UIRobot.SetActive(false);
             }
         }
     }

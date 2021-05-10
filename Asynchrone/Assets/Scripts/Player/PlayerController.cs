@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public NavMeshAgent nav;
     private ManagerPlayers mP;
     private SpawnMANAGER sm;
-    [HideInInspector] public bool CanPlay;
+    [HideInInspector] public bool CanPlay = true;
 
     [Space]
     [SerializeField] LayerMask ingoreDiv;
@@ -96,11 +96,11 @@ public class PlayerController : MonoBehaviour
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (!mP.onPlayer1 && mP.Rbt.canDiv && mP.Rbt.DivStock > 0)
+        if (!mP.onPlayer1 && mP.RobotPlayer.canDiv && mP.RobotPlayer.DivStock > 0)
         {
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ingoreDiv))
             {
-                mP.Rbt.CreateDiversion(hit);
+                mP.RobotPlayer.CreateDiversion(hit);
                 canMove = false;
                 Invoke(nameof(CanMove),0.6f);
             }
@@ -289,7 +289,7 @@ public class PlayerController : MonoBehaviour
     {
         if (mP.onPlayer1)
         {
-            if (mP.Hm.isAccroupi)
+            if (mP.HumanPlayer.isAccroupi)
             {
                 SetAnim("Crouched", true, false);
             }

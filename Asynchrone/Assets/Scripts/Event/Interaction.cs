@@ -59,7 +59,7 @@ public class Interaction : MonoBehaviour
     public void CallEvent()
     {
         //Set which player has the right to use it
-        _playerControlRef = _whichPlayer == whichPlayer.Human ? mp.pc1 : mp.pc2; 
+        _playerControlRef = _whichPlayer == whichPlayer.Human ? mp.PlayerCtrlerHm : mp.PlayerCntrlerRbt; 
 
 
         if (!activated && _playerControlRef == _playerControlGet)
@@ -87,10 +87,10 @@ public class Interaction : MonoBehaviour
     {
         activated = true;
 
-        if (mp.Rbt.DivStock <= 0 && !mp.onPlayer1)
+        if (mp.RobotPlayer.DivStock <= 0 && !mp.onPlayer1)
         {
             //trigger Anim successfull
-            mp.Rbt.DivStock = 1;
+            mp.RobotPlayer.DivStock = 1;
         }
         else
         {
@@ -114,7 +114,7 @@ public class Interaction : MonoBehaviour
     public void CallPince()
     {
         //Set which player has the right to use it
-        _playerControlRef = _whichPlayer == whichPlayer.Human ? mp.pc1 : mp.pc2;
+        _playerControlRef = _whichPlayer == whichPlayer.Human ? mp.PlayerCtrlerHm : mp.PlayerCntrlerRbt;
 
         if (ActivePince && !activated && _playerControlRef == _playerControlGet)
         {

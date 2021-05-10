@@ -31,7 +31,7 @@ public class Robot : Singleton<Robot>
     {
         nav = GetComponent<NavMeshAgent>();
         mP = ManagerPlayers.Instance;
-        mP.Rbt = this;
+        mP.RobotPlayer = this;
         mP.Player2 = transform;
 
         viewMeshFilter = transform.GetChild(1).GetComponent<MeshFilter>();
@@ -43,7 +43,7 @@ public class Robot : Singleton<Robot>
 
     void Update()
     {
-        if (!mP.pc2.InCinematic)
+        if (!mP.PlayerCntrlerRbt.InCinematic)
         {         
 
             if (!mP.onPlayer1)

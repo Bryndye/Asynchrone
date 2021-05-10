@@ -28,7 +28,7 @@ public class Human : Singleton<Human>
             Destroy(this);
 
         mP = ManagerPlayers.Instance;
-        mP.Hm = this;
+        mP.HumanPlayer = this;
         mP.Player1 = transform;
 
         nav = GetComponent<NavMeshAgent>();
@@ -43,7 +43,7 @@ public class Human : Singleton<Human>
 
     private void Update()                           //UPDATE
     {
-        if (!mP.pc1.InCinematic)
+        if (!mP.PlayerCtrlerHm.InCinematic)
         {
             if (mP.onPlayer1)
             {
