@@ -216,16 +216,18 @@ public class PlayerController : MonoBehaviour
 
                 if (ia != null && mP.onPlayer1 &&ia.Killable())
                 {
-                    SetAnim("Attack", false, true);
                     ia.Death();
+                    SetDesination(raycastNull(), false);
+                    SetAnim("Attack", false, true);
                     targetAI = null;
                 }
 
                 trap_interaction ti = targetInteraction.GetComponent<trap_interaction>();
                 if (ti != null && !mP.onPlayer1)
                 {
-                    SetAnim("Interaction", false, true);
                     ti.Called();
+                    SetDesination(raycastNull(), false);
+                    SetAnim("Interaction", false, true);
                 }
                 targetInteraction = null;
             }
@@ -237,6 +239,7 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit = new RaycastHit();
         return hit;
     }
+    
 
     #endregion
 
