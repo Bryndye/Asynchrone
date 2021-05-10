@@ -144,7 +144,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private void SetDesination(RaycastHit raycastHit, bool inter)
+    private void SetDesination(RaycastHit raycastHit, bool inter = false)
     {
         //Debug.Log("Interaction " + inter);
         if (raycastHit.collider != null && inter)
@@ -161,7 +161,7 @@ public class PlayerController : MonoBehaviour
             }
 
             targetInteraction = raycastHit.collider.transform;
-            Debug.Log("Destination GameObject: "+ raycastHit.collider.gameObject.name);
+            //Debug.Log("Destination GameObject: "+ raycastHit.collider.gameObject.name);
         }
         else if(raycastHit.point != Vector3.zero)
         {
@@ -191,6 +191,8 @@ public class PlayerController : MonoBehaviour
 
                 if (iem != null)
                 {
+                    SetAnim("Interaction", false, true);
+                    SetDesination(raycastNull());
 
                     if (!mP.onPlayer1 && iem.Distributeur)
                     {
@@ -206,8 +208,6 @@ public class PlayerController : MonoBehaviour
                         iem.SetPlayerController(this);
                         iem.CallEvent();
                     }
-
-                    SetDesination(raycastNull(), false);
                 }
 
                 anAI ia = null;
@@ -216,6 +216,7 @@ public class PlayerController : MonoBehaviour
 
                 if (ia != null && mP.onPlayer1 &&ia.Killable())
                 {
+                    SetDesination(raycastNull());
                     SetAnim("Attack", false, true);
                     ia.Death();
                     targetAI = null;
@@ -224,7 +225,6 @@ public class PlayerController : MonoBehaviour
                 trap_interaction ti = targetInteraction.GetComponent<trap_interaction>();
                 if (ti != null && !mP.onPlayer1)
                 {
-                    SetAnim("Interaction", false, true);
                     ti.Called();
                 }
                 targetInteraction = null;
@@ -237,6 +237,7 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit = new RaycastHit();
         return hit;
     }
+    
 
     #endregion
 
