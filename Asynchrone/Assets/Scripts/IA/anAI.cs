@@ -14,6 +14,7 @@ public class anAI : MonoBehaviour
     [Header("Externe")]
     SpawnMANAGER SM;
     IAManager IAM;
+    SoundManager SoundM;
 
     [Header("Composants")]
     NavMeshAgent myNavMeshAgent;
@@ -103,10 +104,14 @@ public class anAI : MonoBehaviour
         viewMeshFilter = transform.GetChild(0).GetComponent<MeshFilter>();
         viewMeshFilter2 = transform.GetChild(1).GetComponent<MeshFilter>();
         viewMeshFilter3 = transform.GetChild(2).GetComponent<MeshFilter>();
+
         myNavMeshAgent = GetComponent<NavMeshAgent>();
         myVoice = GetComponentInChildren<AudioSource>();
+
         SM = SpawnMANAGER.Instance;
         IAM = IAManager.Instance;
+        SoundM = SoundManager.Instance;
+
         if (!SM.myAIs.Contains(this))
             SM.myAIs.Add(this);
 
@@ -219,6 +224,7 @@ public class anAI : MonoBehaviour
                     if (TempsInterrogation <= 0)
                     {
                         TempsInterrogation = Mathf.Clamp(TempsInterrogation, 0f, LatenceInterrogation);
+                        TempsRegard = 0;
 
                         if (Comportement == myBehaviour.Patrol)
                             NextPatrolStep();
@@ -268,9 +274,9 @@ public class anAI : MonoBehaviour
             SkinDrone.SetActive(true);
             SkinRobot.SetActive(false);
 
-            transform.GetChild(0).position -= new Vector3(0, 3, 0);
-            transform.GetChild(1).position -= new Vector3(0, 3, 0);
-            transform.GetChild(2).position -= new Vector3(0, 3, 0);
+            transform.GetChild(0).position -= new Vector3(0, 2.07f, 0);
+            transform.GetChild(1).position -= new Vector3(0, 2.07f, 0);
+            transform.GetChild(2).position -= new Vector3(0, 2.07f, 0);
 
             SetObjectDirty(this);
         }
@@ -289,9 +295,9 @@ public class anAI : MonoBehaviour
                 EtapesPatrouille[i] = new Vector3(EtapesPatrouilleSecondaire[i].x, 1.1f, EtapesPatrouilleSecondaire[i].z);
             }
 
-            transform.GetChild(0).position += new Vector3(0, 3, 0);
-            transform.GetChild(1).position += new Vector3(0, 3, 0);
-            transform.GetChild(2).position += new Vector3(0, 3, 0);
+            transform.GetChild(0).localPosition = new Vector3(0, -0.896f, 0);
+            transform.GetChild(1).localPosition = new Vector3(0, - 0.897f, 0);
+            transform.GetChild(2).localPosition = new Vector3(0, -0.895f, 0);
 
             SkinDrone.SetActive(false);
             SkinRobot.SetActive(true);
@@ -883,10 +889,11 @@ public class anAI : MonoBehaviour
 
     void InInterrogation()
     {
-        if (TempsInteraction == 0)
+        if (TempsInterrogation == 0)
         {
             PositionChecked = false;
             Speak(VoiceFor.Seen);
+            SoundM.GetASound("Seen", transform, true);
         }
         TempsInterrogation += Time.deltaTime;
         if(TempsInterrogation >= LatenceInterrogation)
