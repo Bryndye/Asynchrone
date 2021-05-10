@@ -122,7 +122,7 @@ public class PlayerController : MonoBehaviour
                 if (hit.collider.tag == "Interaction")
                 {
                     SetDesination(hit, true);
-                    Debug.Log("New Interaction Path");
+                    //Debug.Log("New Interaction Path");
                 }
             }
         }
@@ -216,6 +216,7 @@ public class PlayerController : MonoBehaviour
 
                 if (ia != null && mP.onPlayer1 &&ia.Killable())
                 {
+                    SetAnim("Attack", false, true);
                     ia.Death();
                     targetAI = null;
                 }
@@ -223,6 +224,7 @@ public class PlayerController : MonoBehaviour
                 trap_interaction ti = targetInteraction.GetComponent<trap_interaction>();
                 if (ti != null && !mP.onPlayer1)
                 {
+                    SetAnim("Interaction", false, true);
                     ti.Called();
                 }
                 targetInteraction = null;
