@@ -24,7 +24,6 @@ public class Interaction : MonoBehaviour
     [HideInInspector] public bool ActivePince;
 
     [SerializeField] public bool activated;
-    [SerializeField] private bool cinematic = true;
 
 
     public Transform[] Influence;
@@ -73,7 +72,7 @@ public class Interaction : MonoBehaviour
                 if (Influence[i] != null)
                 {
                     Influence[i].gameObject.SetActive(!Influence[i].gameObject.activeSelf);
-                    if (cm != null && cinematic)
+                    if (cm != null)
                         cm.GetTargetPorte(Influence);
                 }
             }
@@ -147,18 +146,6 @@ public class Interaction : MonoBehaviour
             {
                 _feedBackActivated.GetComponent<Light>().color = _whichPlayer == whichPlayer.Human ? Color.cyan : Color.red;
             }
-            /*
-            MeshRenderer _mesh = GetComponent<MeshRenderer>();
-            if (_mesh != null)
-            {
-                Color _color = _whichPlayer == whichPlayer.Human ? Color.cyan : Color.red;
-                //Debug.Log(_mesh.material.GetColor("_Color"));
-                MaterialPropertyBlock mpb = new MaterialPropertyBlock();
-                if (_mesh.material.HasProperty("_Color"))
-                {
-                    _mesh.material.SetColor("_Color", _color);
-                }
-            }*/
             SetColor = false;
         }
     }
