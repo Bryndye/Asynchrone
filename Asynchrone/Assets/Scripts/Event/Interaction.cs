@@ -11,6 +11,7 @@ public class Interaction : MonoBehaviour
 {
     private CameraManager cm;
     private ManagerPlayers mp;
+    SoundManager SoundM;
 
     public bool SetColor = false;
     [SerializeField] private whichPlayer _whichPlayer;
@@ -30,12 +31,14 @@ public class Interaction : MonoBehaviour
     public Transform[] Influence;
     [SerializeField] private GameObject _feedBackActivated;
 
-
+    [Header("Sound")]
+    public string SoundName;
 
 
     private void Awake() { 
         cm = CameraManager.Instance;
         mp = ManagerPlayers.Instance;
+        SoundM = SoundManager.Instance;
 
         if (_feedBackActivated != null)
             _feedBackActivated.SetActive(false);
@@ -67,6 +70,11 @@ public class Interaction : MonoBehaviour
         {
             Debug.Log("Event called");
             activated = true;
+
+            if(SoundName != "")
+            {
+                SoundM.GetASound(SoundName, transform);
+            }
 
             for (int i = 0; i < Influence.Length; i++)
             {
