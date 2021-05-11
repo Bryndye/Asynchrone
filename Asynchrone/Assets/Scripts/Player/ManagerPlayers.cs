@@ -150,11 +150,8 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
             {
                 if (hit.collider.TryGetComponent(out Interaction interaction))
                 {
-                    if (interaction._whichPlayer == whichPlayer.Human && onPlayerHuman)
-                    {
-                        SetCursor("Interact");
-                    }
-                    else if (interaction._whichPlayer == whichPlayer.Robot && !onPlayerHuman)
+                    PlayerController pc = onPlayerHuman ? PlayerControllerHm : PlayerCntrlerRbt;
+                    if (interaction.PlayerControlRef == pc)
                     {
                         SetCursor("Interact");
                     }

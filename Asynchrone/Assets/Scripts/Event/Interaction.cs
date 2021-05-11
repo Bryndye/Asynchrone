@@ -14,21 +14,25 @@ public class Interaction : MonoBehaviour
     SoundManager SoundM;
 
     public bool SetColor = false;
-    public whichPlayer _whichPlayer;
-    private PlayerController _playerControlRef;
-    private PlayerController _playerControlGet;
+    public whichPlayer whichPlayer;
+    [SerializeField] 
+    public bool activated;
+    [SerializeField] 
+    private GameObject _feedBackActivated;
+
+    //[HideInInspector]
+    public PlayerController PlayerControlRef;
+    private PlayerController playerControlGet;
 
     [Space]
+    [Header("Pince")]
     public bool Pince;
-    public bool Distributeur;
-    [SerializeField] Transform _pointArrive;
+    [SerializeField] Transform pointArrive;
     [HideInInspector] public bool ActivePince;
 
-    [SerializeField] public bool activated;
-
+    public bool Distributeur;
 
     public Transform[] Portes;
-    [SerializeField] private GameObject _feedBackActivated;
 
     [Header("Sound")]
     public string SoundName;
@@ -43,7 +47,13 @@ public class Interaction : MonoBehaviour
             _feedBackActivated.SetActive(false);
     }
 
-    public void SetPlayerController(PlayerController pcCalled) => _playerControlGet = pcCalled;
+    private void Start()
+    {
+        //Set which player has the right to use it
+        PlayerControlRef = whichPlayer == whichPlayer.Human ? managerPlayers.PlayerControllerHm : managerPlayers.PlayerCntrlerRbt;
+    }
+
+    public void SetPlayerController(PlayerController pcCalled) => playerControlGet = pcCalled;
 
 
     private void Update()
@@ -55,11 +65,7 @@ public class Interaction : MonoBehaviour
 
     public void CallActivePorte()
     {
-        //Set which player has the right to use it
-        _playerControlRef = _whichPlayer == whichPlayer.Human ? managerPlayers.PlayerControllerHm : managerPlayers.PlayerCntrlerRbt; 
-
-
-        if (!activated && _playerControlRef == _playerControlGet)
+        if (!activated && PlayerControlRef == playerControlGet)
         {
             //Debug.Log("Event called");
             activated = true;
@@ -115,14 +121,11 @@ public class Interaction : MonoBehaviour
 
     public void CallPince()
     {
-        //Set which player has the right to use it
-        _playerControlRef = _whichPlayer == whichPlayer.Human ? managerPlayers.PlayerControllerHm : managerPlayers.PlayerCntrlerRbt;
-
-        if (ActivePince && !activated && _playerControlRef == _playerControlGet)
+        if (ActivePince && !activated && PlayerControlRef == playerControlGet)
         {
-            Portes[0].position = Vector3.Lerp(Portes[0].transform.position, _pointArrive.position, 0.01f);
+            Portes[0].position = Vector3.Lerp(Portes[0].transform.position, pointArrive.position, 0.01f);
 
-            if (Portes[0].position.y + 0.01f > _pointArrive.position.y)
+            if (Portes[0].position.y + 0.01f > pointArrive.position.y)
             {
                 activated = true;
             }
@@ -137,7 +140,7 @@ public class Interaction : MonoBehaviour
         {
             if (_feedBackActivated != null)
             {
-                _feedBackActivated.GetComponent<Light>().color = _whichPlayer == whichPlayer.Human ? Color.cyan : Color.red;
+                _feedBackActivated.GetComponent<Light>().color = whichPlayer == whichPlayer.Human ? Color.cyan : Color.red;
             }
             SetColor = false;
         }

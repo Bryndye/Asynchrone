@@ -160,10 +160,9 @@ public class PlayerController : MonoBehaviour
 
                 if (targetClickMouse.TryGetComponent(out Interaction interaction))
                 {
-                    bool isHuman = interaction._whichPlayer == whichPlayer.Human;
-
-                    if (interaction.activated)
+                    if (interaction.activated || interaction.PlayerControlRef != this)
                     {
+                        SetDesination(raycastNull());
                         targetClickMouse = null;
                         return;
                     }
@@ -203,7 +202,7 @@ public class PlayerController : MonoBehaviour
 
                 else if (targetClickMouse.TryGetComponent(out trap_interaction trapInter))
                 {
-                    if (!managerPlayer.onPlayerHuman)
+                    if (managerPlayer.PlayerCntrlerRbt == this)
                     {
                         trapInter.Called();
                     }
