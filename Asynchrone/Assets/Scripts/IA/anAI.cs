@@ -15,6 +15,7 @@ public class anAI : MonoBehaviour
     SpawnMANAGER SM;
     IAManager IAM;
     SoundManager SoundM;
+    MusicManager MM;
 
     [Header("Composants")]
     NavMeshAgent myNavMeshAgent;
@@ -34,7 +35,7 @@ public class anAI : MonoBehaviour
     [Header("Champ de vision"), HideInInspector]
     public List<Transform> Vus;
     [HideInInspector]
-    public  float TempsInterrogation, TempsRegard; 
+    public float TempsInterrogation, TempsRegard;
     [Tooltip("Temps d'attente avant de commencer à poursuivre alors que l'IA a un joueur en vue")]
     public float LatenceInterrogation;
 
@@ -43,7 +44,7 @@ public class anAI : MonoBehaviour
     [Space, Tooltip("Distance du champs de vision")]
     public float ViewRadius;
     public float HearsRadius;
-    [Range(0,360), Tooltip("Angle du champs de vision en degrés")]
+    [Range(0, 360), Tooltip("Angle du champs de vision en degrés")]
     public float ViewAngle;
     [Space, Tooltip("Englobe les layers considérées comme des cibles à voir et poursuivre")]
     public LayerMask CiblesMask;
@@ -111,6 +112,7 @@ public class anAI : MonoBehaviour
         SM = SpawnMANAGER.Instance;
         IAM = IAManager.Instance;
         SoundM = SoundManager.Instance;
+        MM = MusicManager.Instance;
 
         if (!SM.myAIs.Contains(this))
             SM.myAIs.Add(this);
@@ -202,9 +204,9 @@ public class anAI : MonoBehaviour
                         ForceLook();
                     }
                     else
-                    { 
+                    {
                         PositionChecked = true;
-                    }     
+                    }
                 }
                 else
                 {
@@ -216,7 +218,7 @@ public class anAI : MonoBehaviour
                     if (TempsRegard >= 3)
                     {
                         TempsRegard = 0;
-                        if(!EnnemiTué)
+                        if (!EnnemiTué)
                             PursuitLastPosition = transform.position + GetRandomPositionAround();
                     }
 
@@ -231,6 +233,7 @@ public class anAI : MonoBehaviour
                         else if (Comportement == myBehaviour.Guard)
                             GuardReturnToBase();
 
+                        MM.PressureKeepersCount -= 1;
                         Speak(VoiceFor.BackToNormal);
                     }
                     else
@@ -296,7 +299,7 @@ public class anAI : MonoBehaviour
             }
 
             transform.GetChild(0).localPosition = new Vector3(0, -0.896f, 0);
-            transform.GetChild(1).localPosition = new Vector3(0, - 0.897f, 0);
+            transform.GetChild(1).localPosition = new Vector3(0, -0.897f, 0);
             transform.GetChild(2).localPosition = new Vector3(0, -0.895f, 0);
 
             SkinDrone.SetActive(false);
@@ -311,7 +314,7 @@ public class anAI : MonoBehaviour
     void FindVisibleTargets()
     {
         RaycastPosition = viewMeshFilter.transform.position;
-        if(myClasse == Classe.Basic)
+        if (myClasse == Classe.Basic)
         {
             Collider[] targetInViewRadius = Physics.OverlapSphere(RaycastPosition, ViewRadius, CiblesMask);
 
@@ -342,7 +345,7 @@ public class anAI : MonoBehaviour
                 }
             }
         }
-        else if(myClasse == Classe.Drone)
+        else if (myClasse == Classe.Drone)
         {
             Collider[] targetInViewRadius = Physics.OverlapSphere(RaycastPosition, ViewRadius, CiblesMask);
 
@@ -398,7 +401,7 @@ public class anAI : MonoBehaviour
         Vector3 dir = DirFromAngle(globalAngle, true);
         RaycastHit hit;
 
-        if(Physics.Raycast(RaycastPosition, dir, out hit, newViewRadius, AffectedLayer))
+        if (Physics.Raycast(RaycastPosition, dir, out hit, newViewRadius, AffectedLayer))
         {
             Vector3 HitPointToReturn = new Vector3(hit.point.x, transform.position.y, hit.point.z);
             return new ViewCastInfo(true, HitPointToReturn, hit.distance, globalAngle);
@@ -424,13 +427,13 @@ public class anAI : MonoBehaviour
         {
             float angle = transform.eulerAngles.y - ViewAngle / 2 + stepAngleSize * i;
             ViewCastInfo newViewCast = viewCast(angle, myMask);
-            if(i > 0)
+            if (i > 0)
             {
                 bool edgeDstThresholdExceeded = Mathf.Abs(oldViewCast.dst - newViewCast.dst) > edgeDstThrehsold;
-                if(oldViewCast.hit != newViewCast.hit || (oldViewCast.hit && newViewCast.hit && edgeDstThresholdExceeded))
+                if (oldViewCast.hit != newViewCast.hit || (oldViewCast.hit && newViewCast.hit && edgeDstThresholdExceeded))
                 {
                     EdgeInfo edge = FindEdge(oldViewCast, newViewCast, myMask);
-                    if(edge.PointA != Vector3.zero)
+                    if (edge.PointA != Vector3.zero)
                         viewPoints.Add(edge.PointA);
                     if (edge.PointB != Vector3.zero)
                         viewPoints.Add(edge.PointB);
@@ -465,7 +468,7 @@ public class anAI : MonoBehaviour
 
         // 2eme Mesh
 
-        if(myClasse != Classe.Drone)
+        if (myClasse != Classe.Drone)
         {
             viewPoints = new List<Vector3>();
             oldViewCast = new ViewCastInfo();
@@ -742,7 +745,7 @@ public class anAI : MonoBehaviour
 
     void NextPatrolStep()
     {
-        if(EtapesPatrouille.Count > 0)
+        if (EtapesPatrouille.Count > 0)
         {
             bool InteractionValid = VerifyInteraction();
             if (!InteractionValid || (InteractionValid && AlreadyInteracted))
@@ -776,14 +779,14 @@ public class anAI : MonoBehaviour
 
     void PatrolRoutine()
     {
-        if( mySituation == Situation.PatrolMove && myNavMeshAgent.remainingDistance < 0.1f)
+        if (mySituation == Situation.PatrolMove && myNavMeshAgent.remainingDistance < 0.1f)
         {
             mySituation = Situation.PatrolWait;
         }
-        else if(mySituation == Situation.PatrolWait)
+        else if (mySituation == Situation.PatrolWait)
         {
             Temps_InterEtapes += Time.deltaTime;
-            if(Temps_InterEtapes >= Latence_InterEtapes)
+            if (Temps_InterEtapes >= Latence_InterEtapes)
             {
                 Temps_InterEtapes = 0;
                 NextPatrolStep();
@@ -816,9 +819,9 @@ public class anAI : MonoBehaviour
 
         for (int i = 0; i < targetInViewRadius.Length; i++)
         {
-            if(targetInViewRadius[i].gameObject.tag == "InteractionTarget")
+            if (targetInViewRadius[i].gameObject.tag == "InteractionTarget")
             {
-                InteractionTarget = new Vector3(targetInViewRadius[i].transform.position.x, transform.position.y, targetInViewRadius[i].transform.position.z); 
+                InteractionTarget = new Vector3(targetInViewRadius[i].transform.position.x, transform.position.y, targetInViewRadius[i].transform.position.z);
                 HasInteraction = true;
                 break;
             }
@@ -894,9 +897,10 @@ public class anAI : MonoBehaviour
             PositionChecked = false;
             Speak(VoiceFor.Seen);
             SoundM.GetASound("Seen", transform, true);
+            MM.PressureKeepersCount += 1;
         }
         TempsInterrogation += Time.deltaTime;
-        if(TempsInterrogation >= LatenceInterrogation)
+        if (TempsInterrogation >= LatenceInterrogation)
         {
             TempsInterrogation = Mathf.Clamp(TempsInterrogation, 0f, LatenceInterrogation);
             StartPursuit();
@@ -918,9 +922,9 @@ public class anAI : MonoBehaviour
 
     void Pursuit()
     {
-        if(Vus.Count > 0)
+        if (Vus.Count > 0)
         {
-            myNavMeshAgent.SetDestination(Vus[0].position);           
+            myNavMeshAgent.SetDestination(Vus[0].position);
             Vector3 ScaledPosition = new Vector3(Vus[0].position.x, transform.position.y, Vus[0].position.z);
             PursuitLastPosition = ScaledPosition;
             if (Vus[0].gameObject.name == "Fake_Robot(Clone)" && Vector3.Distance(ScaledPosition, transform.position) < 1.5f)
@@ -934,7 +938,7 @@ public class anAI : MonoBehaviour
                 Kill();
             }
         }
-        else if(Vector3.Distance(PursuitLastPosition, transform.position) > 1)
+        else if (Vector3.Distance(PursuitLastPosition, transform.position) > 1)
         {
             myNavMeshAgent.SetDestination(PursuitLastPosition);
         }
@@ -955,6 +959,7 @@ public class anAI : MonoBehaviour
 
     void Kill()
     {
+        MM.PressureKeepersCount = 0;
         Vus[0].GetComponent<PlayerController>().Death();
         SM.mySpawnSituation = SpawnSituation.DeathProcess;
     }
@@ -1026,6 +1031,9 @@ public class anAI : MonoBehaviour
 
     public void Death()
     {
+        if (mySituation == Situation.Interrogation || mySituation == Situation.Pursuit)
+            MM.PressureKeepersCount -= 1;
+
         IAM.RemoveIA(this);
         myUI.gameObject.SetActive(false);
         gameObject.SetActive(false);
@@ -1085,7 +1093,7 @@ public class anAI : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        if(Comportement == myBehaviour.Patrol)
+        if (Comportement == myBehaviour.Patrol)
         {
             Gizmos.color = Color.yellow;
 
@@ -1172,7 +1180,7 @@ public class anAI : MonoBehaviour
             }
         }
 
-        if(Comportement == myBehaviour.Guard)
+        if (Comportement == myBehaviour.Guard)
         {
             Gizmos.color = Color.blue;
 
