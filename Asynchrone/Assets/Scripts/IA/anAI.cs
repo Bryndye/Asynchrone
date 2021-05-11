@@ -640,6 +640,7 @@ public class anAI : MonoBehaviour
     void LookTo()
     {
         Transform target = Vus[0];
+        Vector3 targetPos = new Vector3(target.position.x, transform.position.y, target.position.z);
         Quaternion targetRotation = Quaternion.LookRotation(target.position - transform.position);
         PursuitLastPosition = target.position;
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
@@ -859,6 +860,8 @@ public class anAI : MonoBehaviour
             MyCostumPosition = PursuitLastPosition;
         else if (mySituation != Situation.Interrogation)
             MyCostumPosition = EtapesRotation[StepRotationIndex];
+
+        MyCostumPosition = new Vector3(MyCostumPosition.x, transform.position.y, MyCostumPosition.z);
         Quaternion targetRotation = Quaternion.LookRotation(MyCostumPosition - transform.position);
 
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
