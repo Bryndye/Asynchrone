@@ -7,16 +7,22 @@ using UnityEngine.AI;
 public class PlayerController : MonoBehaviour
 {
     #region var
-    [HideInInspector] public Animator AnimPlayer;
-    [HideInInspector] public NavMeshAgent NavPlayer;
+    [HideInInspector] 
+    public Animator AnimPlayer;
+    [HideInInspector] 
+    public NavMeshAgent NavPlayer;
     private ManagerPlayers managerPlayer;
     private SpawnMANAGER spawnManager;
-    [HideInInspector] public bool CanPlay = true;
+    [HideInInspector] 
+    public bool CanPlay = true;
 
     [Space]
-    [SerializeField] LayerMask ingoreDiv;
-    [SerializeField] LayerMask ingorePlayers;
-    [HideInInspector] Transform targetClickMouse;
+    [SerializeField] 
+    LayerMask ingoreDiv;
+    [SerializeField] 
+    LayerMask ingorePlayers;
+    [SerializeField] 
+    Transform targetClickMouse;
 
     [Space]
     public bool InCinematic;
@@ -105,19 +111,16 @@ public class PlayerController : MonoBehaviour
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ingorePlayers))
             {
                 // play particle system
-                Instantiate(FeedbackClick, hit.point, transform.rotation); 
-
-                if (NavPlayer.CalculatePath(hit.point, NavPlayer.path))
-                {
-                    //Debug.Log("New Path");
-                    SetDesination(hit, false);
-                }
+                Instantiate(FeedbackClick, hit.point, transform.rotation);
 
                 //check s'il y a une interaction pour ensuite appeler la fonction de celle-ci
                 if (hit.collider.tag == "Interaction")
                 {
                     SetDesination(hit, true);
-                    //Debug.Log("New Interaction Path");
+                }
+                else if (NavPlayer.CalculatePath(hit.point, NavPlayer.path))
+                {
+                    SetDesination(hit, false);
                 }
             }
         }
@@ -137,15 +140,19 @@ public class PlayerController : MonoBehaviour
         if (raycastHit.collider != null && inter)
         {
             targetClickMouse = raycastHit.collider.transform;
-            NavPlayer.SetDestination(targetClickMouse.position);
+            Debug.Log(targetClickMouse);
         }
         else if(raycastHit.point != Vector3.zero)
         {
+            targetClickMouse = null;
             NavPlayer.SetDestination(raycastHit.point);
+            Debug.Log("solut 2");
         }
         else
         {
+            targetClickMouse = null;
             NavPlayer.SetDestination(transform.position);
+            Debug.Log("solut 3");
         }
     }
 
@@ -155,6 +162,8 @@ public class PlayerController : MonoBehaviour
     {
         if (targetClickMouse != null)
         {
+            NavPlayer.SetDestination(targetClickMouse.position);
+
             if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(targetClickMouse.position.x, targetClickMouse.position.z)) < 1.8f)
             {
 
@@ -251,7 +260,6 @@ public class PlayerController : MonoBehaviour
             else
             {
                 SetAnim("Walking", false, false);
-                SetDesination(raycastNull(), false);
             }
             //Debug.Log(Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(finalDestination.x, finalDestination.z)) + " " + transform.name);
         }
