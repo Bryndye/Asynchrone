@@ -31,13 +31,13 @@ public class Trap_script : MonoBehaviour
         if (trapIndex == trap1)
         {
             //Debug.Log(trap1.name + " called!");           
-            mp.PlayerCntrlerRbt.nav.Warp(trap2.transform.GetChild(0).position);
+            mp.PlayerCntrlerRbt.NavPlayer.Warp(trap2.transform.GetChild(0).position);
 
         }
         if (trapIndex == trap2)
         {
             //Debug.Log(trap2.name + " called!");
-            mp.PlayerCntrlerRbt.nav.Warp(trap1.transform.GetChild(0).position);
+            mp.PlayerCntrlerRbt.NavPlayer.Warp(trap1.transform.GetChild(0).position);
         }
     }
 

@@ -7,22 +7,21 @@ using UnityEngine.AI;
 public class PlayerController : MonoBehaviour
 {
     #region var
-    [HideInInspector] public Animator anim;
-    [HideInInspector] public NavMeshAgent nav;
-    private ManagerPlayers mP;
-    private SpawnMANAGER sm;
+    [HideInInspector] public Animator AnimPlayer;
+    [HideInInspector] public NavMeshAgent NavPlayer;
+    private ManagerPlayers managerPlayer;
+    private SpawnMANAGER spawnManager;
     [HideInInspector] public bool CanPlay = true;
 
     [Space]
     [SerializeField] LayerMask ingoreDiv;
     [SerializeField] LayerMask ingorePlayers;
-    [HideInInspector] Transform targetInteraction;
-    private GameObject targetAI = null;
+    [HideInInspector] Transform targetClickMouse;
+    //private GameObject targetAI = null;
 
     [Space]
     public bool InCinematic;
-    public GameObject feedbackClick;
-    public GameObject fd_faisceau;
+    public GameObject FeedbackClick;
     #endregion
 
 
@@ -32,11 +31,11 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()                                //AWAKE
     {
-        mP = ManagerPlayers.Instance;
-        sm = SpawnMANAGER.Instance;
-        nav = GetComponent<NavMeshAgent>();
+        managerPlayer = ManagerPlayers.Instance;
+        spawnManager = SpawnMANAGER.Instance;
+        NavPlayer = GetComponent<NavMeshAgent>();
 
-        anim = GetComponentInChildren<Animator>();
+        AnimPlayer = GetComponentInChildren<Animator>();
     }
 
     void Update()                                       //UPDATE
@@ -75,7 +74,7 @@ public class PlayerController : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ingorePlayers))
             {
-                if (nav.CalculatePath(hit.point, nav.path))
+                if (NavPlayer.CalculatePath(hit.point, NavPlayer.path))
                 {
                     if (CanReachPosition(hit.point))
                     {
@@ -96,11 +95,11 @@ public class PlayerController : MonoBehaviour
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (!mP.onPlayer1 && mP.RobotPlayer.canDiv && mP.RobotPlayer.DivStock > 0)
+        if (!managerPlayer.onPlayer1 && managerPlayer.RobotPlayer.canDiv && managerPlayer.RobotPlayer.DivStock > 0)
         {
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ingoreDiv))
             {
-                mP.RobotPlayer.CreateDiversion(hit);
+                managerPlayer.RobotPlayer.CreateDiversion(hit);
                 canMove = false;
                 Invoke(nameof(CanMove),0.6f);
             }
@@ -110,9 +109,9 @@ public class PlayerController : MonoBehaviour
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ingorePlayers))
             {
                 // play particle system
-                Instantiate(feedbackClick, hit.point, transform.rotation); 
+                Instantiate(FeedbackClick, hit.point, transform.rotation); 
 
-                if (nav.CalculatePath(hit.point, nav.path))
+                if (NavPlayer.CalculatePath(hit.point, NavPlayer.path))
                 {
                     //Debug.Log("New Path");
                     SetDesination(hit, false);
@@ -139,38 +138,35 @@ public class PlayerController : MonoBehaviour
     public bool CanReachPosition(Vector3 position)
     {
         NavMeshPath path = new NavMeshPath();
-        nav.CalculatePath(position, path);
+        NavPlayer.CalculatePath(position, path);
         return path.status == NavMeshPathStatus.PathComplete;
     }
 
 
     private void SetDesination(RaycastHit raycastHit, bool inter = false)
     {
-        //Debug.Log("Interaction " + inter);
         if (raycastHit.collider != null && inter)
         {
-            anAI ia = raycastHit.collider.GetComponent<anAI>();
-
-            if (ia != null)
+            /*
+            if (raycastHit.collider.GetComponent<anAI>() != null)
             {
-                targetAI = raycastHit.collider.gameObject;
+                targetClickMouse = raycastHit.collider.transform;
             }
             else
             {
                 nav.SetDestination(raycastHit.collider.transform.position);
-            }
+            }*/
 
-            targetInteraction = raycastHit.collider.transform;
-            //Debug.Log("Destination GameObject: "+ raycastHit.collider.gameObject.name);
+            targetClickMouse = raycastHit.collider.transform;
+            NavPlayer.SetDestination(targetClickMouse.position);
         }
         else if(raycastHit.point != Vector3.zero)
         {
-            nav.SetDestination(raycastHit.point);
-            //Debug.Log("Path to the point");
+            NavPlayer.SetDestination(raycastHit.point);
         }
         else
         {
-            nav.SetDestination(transform.position);
+            NavPlayer.SetDestination(transform.position);
         }
     }
 
@@ -178,56 +174,54 @@ public class PlayerController : MonoBehaviour
 
     private void CheckDisInteraction()
     {
+        /*
         if (targetAI != null)
         {
             nav.destination = targetAI.transform.position;
-        }
+        }*/
 
-        if (targetInteraction != null)
+        if (targetClickMouse != null)
         {
-            if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(targetInteraction.position.x, targetInteraction.position.z)) < 1.8f)
+            if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(targetClickMouse.position.x, targetClickMouse.position.z)) < 1.8f)
             {
-                Interaction iem = targetInteraction.GetComponent<Interaction>();
-
-                if (iem != null)
+                if (targetClickMouse.TryGetComponent(out Interaction interaction))
                 {
                     SetAnim("Interaction", false, true);
                     SetDesination(raycastNull());
 
-                    if (!mP.onPlayer1 && iem.Distributeur)
+                    if (!managerPlayer.onPlayer1 && interaction.Distributeur)
                     {
-                        iem.CallDistri();
+                        interaction.CallDistri();
                     }
-                    else if (iem.Pince)
+                    else if (interaction.Pince)
                     {
-                        iem.SetPlayerController(this);
-                        iem.ActivePince = true;
+                        interaction.SetPlayerController(this);
+                        interaction.ActivePince = true;
                     }
                     else
                     {
-                        iem.SetPlayerController(this);
-                        iem.CallEvent();
+                        interaction.SetPlayerController(this);
+                        interaction.CallEvent();
                     }
                 }
-
-                anAI ia = null;
-                if (targetAI != null)
-                    ia = targetAI.GetComponent<anAI>();
-
-                if (ia != null && mP.onPlayer1 &&ia.Killable())
+                else if (targetClickMouse.TryGetComponent(out anAI ai))
                 {
-                    SetDesination(raycastNull());
-                    SetAnim("Attack", false, true);
-                    ia.Death();
-                    targetAI = null;
+                    if (managerPlayer.onPlayer1 && ai.Killable())
+                    {
+                        SetDesination(raycastNull());
+                        SetAnim("Attack", false, true);
+                        ai.Death();
+                        //targetAI = null;
+                    }
                 }
-
-                trap_interaction ti = targetInteraction.GetComponent<trap_interaction>();
-                if (ti != null && !mP.onPlayer1)
+                else if (targetClickMouse.TryGetComponent(out trap_interaction trapInter))
                 {
-                    ti.Called();
+                    if (!managerPlayer.onPlayer1)
+                    {
+                        trapInter.Called();
+                    }
                 }
-                targetInteraction = null;
+                targetClickMouse = null;
             }
         }
     }
@@ -244,33 +238,31 @@ public class PlayerController : MonoBehaviour
 
 
 
-
-
     #region AnimManager
     private void SetAnim(string var, bool active, bool trigger)
     {
-        if (anim)
+        if (AnimPlayer)
         {
             if (trigger)
             {
-                anim.SetTrigger(var);
+                AnimPlayer.SetTrigger(var);
             }
             else
             {
-                anim.SetBool(var, active);
+                AnimPlayer.SetBool(var, active);
             }
         }
     }
     private void WalkAnim()
     {
-        if (nav.pathStatus == NavMeshPathStatus.PathInvalid)
+        if (NavPlayer.pathStatus == NavMeshPathStatus.PathInvalid)
         {
             Debug.Log("path completed");
         }
 
-        if (nav.destination != null)
+        if (NavPlayer.destination != null)
         {
-            if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(nav.destination.x, nav.destination.z)) > 0.1f)
+            if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(NavPlayer.destination.x, NavPlayer.destination.z)) > 0.1f)
             {
                 SetAnim("Walking", true, false);
                 //Debug.Log("je marche " + transform.name);
@@ -287,9 +279,9 @@ public class PlayerController : MonoBehaviour
 
     private void CrouchedAnim()
     {
-        if (mP.onPlayer1)
+        if (managerPlayer.onPlayer1)
         {
-            if (mP.HumanPlayer.isAccroupi)
+            if (managerPlayer.HumanPlayer.isAccroupi)
             {
                 SetAnim("Crouched", true, false);
             }
@@ -308,11 +300,11 @@ public class PlayerController : MonoBehaviour
 
 
 
-
     public void Death()
     {
-        targetAI = null;
-        sm.Respawn();
+        targetClickMouse = null;
+        spawnManager.mySpawnSituation = SpawnSituation.DeathProcess;
+        spawnManager.Respawn();
     }
 }
 

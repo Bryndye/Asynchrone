@@ -136,6 +136,7 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
             Cursor.SetCursor(null, hotSpot, cursorMode);
         }
     }
+
     public void CursorStyle()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -144,23 +145,30 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerCursor))
         {
-            if (hit.collider.GetComponent<anAI>() != null && hit.collider.GetComponent<anAI>().Killable() && onPlayer1)
+            if (hit.collider.TryGetComponent(out anAI ai) && ai.Killable() && onPlayer1)
             {
                 SetCursor("Attack");
             }
             else if (hit.collider.CompareTag("Interaction"))
             {
-                if (hit.collider.GetComponent<trap_interaction>() != null && !onPlayer1)
+                if (hit.collider.TryGetComponent(out Interaction interaction))
+                {
+                    if (interaction._whichPlayer == whichPlayer.Human && onPlayer1)
+                    {
+                        SetCursor("Interact");
+                    }
+                    else if (interaction._whichPlayer == whichPlayer.Robot && !onPlayer1)
+                    {
+                        SetCursor("Interact");
+                    }
+                }
+                else if (hit.collider.GetComponent<trap_interaction>() != null && !onPlayer1)
                 {
                     SetCursor("Interact");
                 }
                 else
                 {
                     SetCursor(null);
-                }
-                if (hit.collider.GetComponent<trap_interaction>() == null)
-                {
-                    SetCursor("Interact");
                 }
             }
         }

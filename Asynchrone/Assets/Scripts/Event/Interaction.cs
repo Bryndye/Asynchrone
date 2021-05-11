@@ -14,7 +14,7 @@ public class Interaction : MonoBehaviour
     SoundManager SoundM;
 
     public bool SetColor = false;
-    [SerializeField] private whichPlayer _whichPlayer;
+    public whichPlayer _whichPlayer;
     private PlayerController _playerControlRef;
     private PlayerController _playerControlGet;
 

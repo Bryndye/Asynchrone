@@ -68,12 +68,12 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
     {
         if (SpawnPointH != null)
         {
-            mp.PlayerCtrlerHm.nav.Warp(SpawnPointH);
-            mp.PlayerCtrlerHm.anim.SetBool("Walking", false);
+            mp.PlayerCtrlerHm.NavPlayer.Warp(SpawnPointH);
+            mp.PlayerCtrlerHm.AnimPlayer.SetBool("Walking", false);
         }
         if (SpawnPointR != null && mp.RobotPlayer)
         {
-            mp.PlayerCntrlerRbt.nav.Warp(SpawnPointR);
+            mp.PlayerCntrlerRbt.NavPlayer.Warp(SpawnPointR);
             //mp.pc2.anim.SetBool("Walking", false);
         }
         AiRespawn();
