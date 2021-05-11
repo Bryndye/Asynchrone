@@ -47,9 +47,9 @@ public class LoadLevel : MonoBehaviour
             }
         }
 
-        if (players.Count >= 2 || mp.Player2 == null && players.Count >= 1)
+        if (players.Count >= 2 || mp.PlayerRobot == null && players.Count >= 1)
         {
-            mp.PlayerCtrlerHm.InCinematic = true;
+            mp.PlayerControllerHm.InCinematic = true;
             mp.PlayerCntrlerRbt.InCinematic = true;
             done = true;
             canvasLoading.SetActive(true);

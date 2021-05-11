@@ -9,8 +9,8 @@ public enum whichPlayer
 }
 public class Interaction : MonoBehaviour
 {
-    private CameraManager cm;
-    private ManagerPlayers mp;
+    private CameraManager cameraManager;
+    private ManagerPlayers managerPlayers;
     SoundManager SoundM;
 
     public bool SetColor = false;
@@ -27,7 +27,7 @@ public class Interaction : MonoBehaviour
     [SerializeField] public bool activated;
 
 
-    public Transform[] Influence;
+    public Transform[] Portes;
     [SerializeField] private GameObject _feedBackActivated;
 
     [Header("Sound")]
@@ -35,13 +35,15 @@ public class Interaction : MonoBehaviour
 
 
     private void Awake() { 
-        cm = CameraManager.Instance;
-        mp = ManagerPlayers.Instance;
+        cameraManager = CameraManager.Instance;
+        managerPlayers = ManagerPlayers.Instance;
         SoundM = SoundManager.Instance;
 
         if (_feedBackActivated != null)
             _feedBackActivated.SetActive(false);
     }
+
+    public void SetPlayerController(PlayerController pcCalled) => _playerControlGet = pcCalled;
 
 
     private void Update()
@@ -51,23 +53,15 @@ public class Interaction : MonoBehaviour
 
 
 
-
-
-
-
-
-
-
-
-    public void CallEvent()
+    public void CallActivePorte()
     {
         //Set which player has the right to use it
-        _playerControlRef = _whichPlayer == whichPlayer.Human ? mp.PlayerCtrlerHm : mp.PlayerCntrlerRbt; 
+        _playerControlRef = _whichPlayer == whichPlayer.Human ? managerPlayers.PlayerControllerHm : managerPlayers.PlayerCntrlerRbt; 
 
 
         if (!activated && _playerControlRef == _playerControlGet)
         {
-            Debug.Log("Event called");
+            //Debug.Log("Event called");
             activated = true;
 
             if(SoundName != "")
@@ -75,13 +69,13 @@ public class Interaction : MonoBehaviour
                 SoundM.GetASound(SoundName, transform);
             }
 
-            for (int i = 0; i < Influence.Length; i++)
+            for (int i = 0; i < Portes.Length; i++)
             {
-                if (Influence[i] != null)
+                if (Portes[i] != null)
                 {
-                    Influence[i].gameObject.SetActive(!Influence[i].gameObject.activeSelf);
-                    if (cm != null)
-                        cm.GetTargetPorte(Influence);
+                    Portes[i].gameObject.SetActive(!Portes[i].gameObject.activeSelf);
+                    if (cameraManager != null)
+                        cameraManager.GetTargetPorte(Portes);
                 }
             }
 
@@ -95,25 +89,25 @@ public class Interaction : MonoBehaviour
     {
         activated = true;
 
-        if (mp.RobotPlayer.DivStock <= 0 && !mp.onPlayer1)
+        if (managerPlayers.RobotPlayer.DivStock <= 0 && !managerPlayers.onPlayerHuman)
         {
             //trigger Anim successfull
-            mp.RobotPlayer.DivStock = 1;
+            managerPlayers.RobotPlayer.DivStock = 1;
         }
         else
         {
-            CanvasManager cm = CanvasManager.Instance;
+            CanvasManager canvasManager = CanvasManager.Instance;
             string[] dia = new string[1];
 
-            if (mp.onPlayer1)
+            if (managerPlayers.onPlayerHuman)
             {
                 dia[0] = "Je ne peux pas l'utiliser. Vatrek devrait réussir.";
-                cm.StartDiaEffect(dia);
+                canvasManager.StartDiaEffect(dia);
             }
             else
             {
                 dia[0] = "Je suis déjà rechargé à bloc!";
-                cm.StartDiaEffect(dia);
+                canvasManager.StartDiaEffect(dia);
             }
         }
     }
@@ -122,27 +116,18 @@ public class Interaction : MonoBehaviour
     public void CallPince()
     {
         //Set which player has the right to use it
-        _playerControlRef = _whichPlayer == whichPlayer.Human ? mp.PlayerCtrlerHm : mp.PlayerCntrlerRbt;
+        _playerControlRef = _whichPlayer == whichPlayer.Human ? managerPlayers.PlayerControllerHm : managerPlayers.PlayerCntrlerRbt;
 
         if (ActivePince && !activated && _playerControlRef == _playerControlGet)
         {
-            Influence[0].position = Vector3.Lerp(Influence[0].transform.position, _pointArrive.position, 0.01f);
+            Portes[0].position = Vector3.Lerp(Portes[0].transform.position, _pointArrive.position, 0.01f);
 
-            if (Influence[0].position.y + 0.01f > _pointArrive.position.y)
+            if (Portes[0].position.y + 0.01f > _pointArrive.position.y)
             {
                 activated = true;
             }
         }
     }
-
-
-
-
-
-
-
-
-    public void SetPlayerController(PlayerController pcCalled) => _playerControlGet = pcCalled;
 
 
 

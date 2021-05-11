@@ -17,7 +17,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask ingoreDiv;
     [SerializeField] LayerMask ingorePlayers;
     [HideInInspector] Transform targetClickMouse;
-    //private GameObject targetAI = null;
 
     [Space]
     public bool InCinematic;
@@ -76,10 +75,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (NavPlayer.CalculatePath(hit.point, NavPlayer.path))
                 {
-                    if (CanReachPosition(hit.point))
-                    {
-                        SetDesination(hit, false);
-                    }
+                    SetDesination(hit, false);
                 }
             }
         }
@@ -95,7 +91,7 @@ public class PlayerController : MonoBehaviour
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (!managerPlayer.onPlayer1 && managerPlayer.RobotPlayer.canDiv && managerPlayer.RobotPlayer.DivStock > 0)
+        if (!managerPlayer.onPlayerHuman && managerPlayer.RobotPlayer.canDiv && managerPlayer.RobotPlayer.DivStock > 0)
         {
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ingoreDiv))
             {
@@ -135,28 +131,11 @@ public class PlayerController : MonoBehaviour
 
 
     #region Position/Destination
-    public bool CanReachPosition(Vector3 position)
-    {
-        NavMeshPath path = new NavMeshPath();
-        NavPlayer.CalculatePath(position, path);
-        return path.status == NavMeshPathStatus.PathComplete;
-    }
-
 
     private void SetDesination(RaycastHit raycastHit, bool inter = false)
     {
         if (raycastHit.collider != null && inter)
         {
-            /*
-            if (raycastHit.collider.GetComponent<anAI>() != null)
-            {
-                targetClickMouse = raycastHit.collider.transform;
-            }
-            else
-            {
-                nav.SetDestination(raycastHit.collider.transform.position);
-            }*/
-
             targetClickMouse = raycastHit.collider.transform;
             NavPlayer.SetDestination(targetClickMouse.position);
         }
@@ -174,53 +153,62 @@ public class PlayerController : MonoBehaviour
 
     private void CheckDisInteraction()
     {
-        /*
-        if (targetAI != null)
-        {
-            nav.destination = targetAI.transform.position;
-        }*/
-
         if (targetClickMouse != null)
         {
             if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(targetClickMouse.position.x, targetClickMouse.position.z)) < 1.8f)
             {
+
                 if (targetClickMouse.TryGetComponent(out Interaction interaction))
                 {
-                    SetAnim("Interaction", false, true);
-                    SetDesination(raycastNull());
+                    bool isHuman = interaction._whichPlayer == whichPlayer.Human;
 
-                    if (!managerPlayer.onPlayer1 && interaction.Distributeur)
+                    if (interaction.activated)
+                    {
+                        targetClickMouse = null;
+                        return;
+                    }
+
+                    if (!managerPlayer.onPlayerHuman && interaction.Distributeur)
                     {
                         interaction.CallDistri();
+                        SetAnim("Interaction", false, true);
                     }
                     else if (interaction.Pince)
                     {
                         interaction.SetPlayerController(this);
                         interaction.ActivePince = true;
+                        SetAnim("Interaction", false, true);
                     }
                     else
                     {
                         interaction.SetPlayerController(this);
-                        interaction.CallEvent();
+                        interaction.CallActivePorte();
+                        SetAnim("Interaction", false, true);
                     }
+                    CanPlay = false;
+                    SetDesination(raycastNull());
                 }
+
                 else if (targetClickMouse.TryGetComponent(out anAI ai))
                 {
-                    if (managerPlayer.onPlayer1 && ai.Killable())
+                    if (managerPlayer.onPlayerHuman && ai.Killable())
                     {
                         SetDesination(raycastNull());
                         SetAnim("Attack", false, true);
                         ai.Death();
-                        //targetAI = null;
                     }
+                    CanPlay = false;
+                    SetDesination(raycastNull());
                 }
+
                 else if (targetClickMouse.TryGetComponent(out trap_interaction trapInter))
                 {
-                    if (!managerPlayer.onPlayer1)
+                    if (!managerPlayer.onPlayerHuman)
                     {
                         trapInter.Called();
                     }
                 }
+                Invoke(nameof(StopPlayerWhenAction), cooldownInteraction);
                 targetClickMouse = null;
             }
         }
@@ -255,23 +243,16 @@ public class PlayerController : MonoBehaviour
     }
     private void WalkAnim()
     {
-        if (NavPlayer.pathStatus == NavMeshPathStatus.PathInvalid)
-        {
-            Debug.Log("path completed");
-        }
-
         if (NavPlayer.destination != null)
         {
             if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(NavPlayer.destination.x, NavPlayer.destination.z)) > 0.1f)
             {
                 SetAnim("Walking", true, false);
-                //Debug.Log("je marche " + transform.name);
             }
             else
             {
                 SetAnim("Walking", false, false);
                 SetDesination(raycastNull(), false);
-                //Debug.Log("idle " + transform.name);
             }
             //Debug.Log(Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(finalDestination.x, finalDestination.z)) + " " + transform.name);
         }
@@ -279,22 +260,24 @@ public class PlayerController : MonoBehaviour
 
     private void CrouchedAnim()
     {
-        if (managerPlayer.onPlayer1)
+        if (managerPlayer.onPlayerHuman)
         {
-            if (managerPlayer.HumanPlayer.isAccroupi)
-            {
-                SetAnim("Crouched", true, false);
-            }
-            else
-            {
-                SetAnim("Crouched", false, false);
-            }
+            SetAnim("Crouched", managerPlayer.HumanPlayer.isAccroupi, false);
         }
     }
     public void DivAnim()
     {
         SetAnim("Div", true, true);
     }
+
+    [Space]
+    [SerializeField]
+    private float cooldownInteraction = 1f;
+    private void StopPlayerWhenAction()
+    {
+        CanPlay = true;
+    }
+
     #endregion
 
 

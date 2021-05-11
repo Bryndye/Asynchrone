@@ -78,7 +78,7 @@ public class CanvasManager : Singleton<CanvasManager>
                 mp.Camera_Manager();
                 break;
             case 1:
-                if (!mp.onPlayer1 && !mp.RobotPlayer.robot_div && mp.RobotPlayer.DivStock > 0)
+                if (!mp.onPlayerHuman && !mp.RobotPlayer.robot_div && mp.RobotPlayer.DivStock > 0)
                 {
                     mp.RobotPlayer.StartDiv();
                 }
@@ -89,7 +89,7 @@ public class CanvasManager : Singleton<CanvasManager>
                 break;
 
             case 3:
-                if (mp.onPlayer1)
+                if (mp.onPlayerHuman)
                 {
                     mp.HumanPlayer.CheckMask();
                 }

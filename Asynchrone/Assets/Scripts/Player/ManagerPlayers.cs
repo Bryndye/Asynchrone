@@ -1,25 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class ManagerPlayers : Singleton<ManagerPlayers>
 {
     //public static ManagerPlayers Instance;
 
     [Header("Human")]
-    public Transform Player1;
+    public Transform PlayerHuman;
     [HideInInspector] public Human HumanPlayer;
-    [HideInInspector] public PlayerController PlayerCtrlerHm;
+    [HideInInspector] public PlayerController PlayerControllerHm;
 
     [Header("Robot")]
-    public Transform Player2;
+    public Transform PlayerRobot;
     [HideInInspector] public Robot RobotPlayer;
     [HideInInspector] public PlayerController PlayerCntrlerRbt;
 
     CameraManager cameraManager;
     CanvasManager canvasManager;
-    public bool onPlayer1;
+    public bool onPlayerHuman;
 
 
 
@@ -44,21 +41,21 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
         }
 
 
-        if (Player1 != null)
-            PlayerCtrlerHm = Player1.GetComponent<PlayerController>();
+        if (PlayerHuman != null)
+            PlayerControllerHm = PlayerHuman.GetComponent<PlayerController>();
 
-        if (Player2 != null)
-            PlayerCntrlerRbt = Player2.GetComponent<PlayerController>();
+        if (PlayerRobot != null)
+            PlayerCntrlerRbt = PlayerRobot.GetComponent<PlayerController>();
 
-        if (Player1 != null && Player2 != null)
+        if (PlayerHuman != null && PlayerRobot != null)
         {
             Camera_Manager();
         }
         else
         {
-            cameraManager.Target = PlayerCtrlerHm.transform;
-            PlayerCtrlerHm.CanPlay = true;
-            onPlayer1 = true;
+            cameraManager.Target = PlayerControllerHm.transform;
+            PlayerControllerHm.CanPlay = true;
+            onPlayerHuman = true;
         }
     }
 
@@ -73,42 +70,42 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
 
     public void Camera_Manager()
     {
-        if (Player2 != null)
+        if (PlayerRobot != null)
         {
-            onPlayer1 = !onPlayer1;
+            onPlayerHuman = !onPlayerHuman;
 
-            if (onPlayer1)
+            if (onPlayerHuman)
             {
                 if (canvasManager.QuelPlayer != null)
-                    canvasManager.QuelPlayer.text = Player1.name;
+                    canvasManager.QuelPlayer.text = PlayerHuman.name;
 
-                cameraManager.Target = Player1;
+                cameraManager.Target = PlayerHuman;
             }
             else
             {
                 if (!canvasManager.QuelPlayer)
-                    canvasManager.QuelPlayer.text = Player2.name;
+                    canvasManager.QuelPlayer.text = PlayerRobot.name;
 
-                cameraManager.Target = Player2;
+                cameraManager.Target = PlayerRobot;
             }
 
-            PlayerCtrlerHm.CanPlay = onPlayer1;
-            PlayerCntrlerRbt.CanPlay = !onPlayer1;
+            PlayerControllerHm.CanPlay = onPlayerHuman;
+            PlayerCntrlerRbt.CanPlay = !onPlayerHuman;
 
             if (canvasManager.UIHuman != null && canvasManager.UIRobot != null)
             {
-                canvasManager.UIHuman.SetActive(onPlayer1);
-                canvasManager.UIRobot.SetActive(!onPlayer1);
+                canvasManager.UIHuman.SetActive(onPlayerHuman);
+                canvasManager.UIRobot.SetActive(!onPlayerHuman);
             }
         }
         else
         {
-            onPlayer1 = true;
+            onPlayerHuman = true;
             if (canvasManager.QuelPlayer != null)
-                canvasManager.QuelPlayer.text = Player1.name;
+                canvasManager.QuelPlayer.text = PlayerHuman.name;
 
-            cameraManager.Target = Player1;
-            PlayerCtrlerHm.CanPlay = onPlayer1;
+            cameraManager.Target = PlayerHuman;
+            PlayerControllerHm.CanPlay = onPlayerHuman;
 
             if (canvasManager.UIHuman != null && canvasManager.UIRobot != null)
             {
@@ -145,7 +142,7 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerCursor))
         {
-            if (hit.collider.TryGetComponent(out anAI ai) && ai.Killable() && onPlayer1)
+            if (hit.collider.TryGetComponent(out anAI ai) && ai.Killable() && onPlayerHuman)
             {
                 SetCursor("Attack");
             }
@@ -153,16 +150,16 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
             {
                 if (hit.collider.TryGetComponent(out Interaction interaction))
                 {
-                    if (interaction._whichPlayer == whichPlayer.Human && onPlayer1)
+                    if (interaction._whichPlayer == whichPlayer.Human && onPlayerHuman)
                     {
                         SetCursor("Interact");
                     }
-                    else if (interaction._whichPlayer == whichPlayer.Robot && !onPlayer1)
+                    else if (interaction._whichPlayer == whichPlayer.Robot && !onPlayerHuman)
                     {
                         SetCursor("Interact");
                     }
                 }
-                else if (hit.collider.GetComponent<trap_interaction>() != null && !onPlayer1)
+                else if (hit.collider.GetComponent<trap_interaction>() != null && !onPlayerHuman)
                 {
                     SetCursor("Interact");
                 }

@@ -32,7 +32,7 @@ public class Robot : Singleton<Robot>
         nav = GetComponent<NavMeshAgent>();
         mP = ManagerPlayers.Instance;
         mP.RobotPlayer = this;
-        mP.Player2 = transform;
+        mP.PlayerRobot = transform;
 
         viewMeshFilter = transform.GetChild(1).GetComponent<MeshFilter>();
 
@@ -46,7 +46,7 @@ public class Robot : Singleton<Robot>
         if (!mP.PlayerCntrlerRbt.InCinematic)
         {         
 
-            if (!mP.onPlayer1)
+            if (!mP.onPlayerHuman)
             {
 
                 if (Input.GetKeyDown(KeyCode.Z) && robot_div == null && DivStock > 0)
@@ -116,7 +116,7 @@ public class Robot : Singleton<Robot>
 
     void UpdateDiversionRangeShown()
     {
-        if (mP.onPlayer1)
+        if (mP.onPlayerHuman)
         {
             canDiv = false;
         }

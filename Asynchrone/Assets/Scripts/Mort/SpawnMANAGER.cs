@@ -53,7 +53,7 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
     public void Respawn()
     {
         //Debug.Log("RESPAWN");
-        mp.PlayerCtrlerHm.InCinematic = true;
+        mp.PlayerControllerHm.InCinematic = true;
         if (mp.RobotPlayer) mp.PlayerCntrlerRbt.InCinematic = true;
         cm.anim.SetTrigger("dead");
 
@@ -68,8 +68,8 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
     {
         if (SpawnPointH != null)
         {
-            mp.PlayerCtrlerHm.NavPlayer.Warp(SpawnPointH);
-            mp.PlayerCtrlerHm.AnimPlayer.SetBool("Walking", false);
+            mp.PlayerControllerHm.NavPlayer.Warp(SpawnPointH);
+            mp.PlayerControllerHm.AnimPlayer.SetBool("Walking", false);
         }
         if (SpawnPointR != null && mp.RobotPlayer)
         {
@@ -84,7 +84,7 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
     {
         //Debug.Log("is finished");
 
-        mp.PlayerCtrlerHm.InCinematic = false;
+        mp.PlayerControllerHm.InCinematic = false;
         if (mp.RobotPlayer) mp.PlayerCntrlerRbt.InCinematic = false;
         done = false;
 

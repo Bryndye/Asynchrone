@@ -19,13 +19,13 @@ public class CheckPoint : MonoBehaviour
     {
         if (other.CompareTag("Player") && !done)
         {
-            if (mp.Player2 != null)
+            if (mp.PlayerRobot != null)
             {
-                sm.GetSpawn(mp.Player1.position, mp.Player2.position, false);
+                sm.GetSpawn(mp.PlayerHuman.position, mp.PlayerRobot.position, false);
             }
             else
             {
-                sm.GetSpawn(mp.Player1.position, Vector3.zero, false);
+                sm.GetSpawn(mp.PlayerHuman.position, Vector3.zero, false);
             }
             sm.AiCheck();
             cm.ActiveCheckpointText();
