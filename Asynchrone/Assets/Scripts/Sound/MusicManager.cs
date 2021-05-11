@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum IsPressureAllowed { NoPressureAllowed, PressureAllowed };
-public enum MusicComposition { TutoMusic, Layer1, Layer2, Layer3 };
+public enum MusicComposition { TutoMusic, Layer1, Layer2, Layer3, Epilogue };
 
 public class MusicManager : Singleton<MusicManager>
 {
@@ -18,6 +18,7 @@ public class MusicManager : Singleton<MusicManager>
     AudioSource Layer2;
     AudioSource Layer3;
     AudioSource Layer4;
+    AudioSource Epilogue;
 
     float PressureVolume = 0;
     float SpeedChange = 0.6f;
@@ -33,6 +34,7 @@ public class MusicManager : Singleton<MusicManager>
         Layer2 = transform.GetChild(2).GetComponent<AudioSource>();
         Layer3 = transform.GetChild(3).GetComponent<AudioSource>();
         Layer4 = transform.GetChild(4).GetComponent<AudioSource>();
+        Epilogue = transform.GetChild(5).GetComponent<AudioSource>();
 
         Layer4.volume = 0;
 
@@ -55,6 +57,9 @@ public class MusicManager : Singleton<MusicManager>
                 Layer2.Play();
                 Layer3.Play();
                 Layer4.Play();
+                break;
+            case MusicComposition.Epilogue:
+                Epilogue.Play();
                 break;
             default:
                 break;
