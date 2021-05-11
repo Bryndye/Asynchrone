@@ -1,25 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class ManagerPlayers : Singleton<ManagerPlayers>
 {
     //public static ManagerPlayers Instance;
 
     [Header("Human")]
-    public Transform Player1;
-    [HideInInspector] public Human Hm;
-    [HideInInspector] public PlayerController pc1;
+    public Transform PlayerHuman;
+    [HideInInspector] public Human HumanPlayer;
+    [HideInInspector] public PlayerController PlayerControllerHm;
 
     [Header("Robot")]
-    public Transform Player2;
-    [HideInInspector] public Robot Rbt;
-    [HideInInspector] public PlayerController pc2;
+    public Transform PlayerRobot;
+    [HideInInspector] public Robot RobotPlayer;
+    [HideInInspector] public PlayerController PlayerCntrlerRbt;
 
-    CameraManager cSmooth;
-    CanvasManager cm;
-    public bool onPlayer1;
+    CameraManager cameraManager;
+    CanvasManager canvasManager;
+    public bool onPlayerHuman;
 
 
 
@@ -36,23 +33,29 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
         
         if (CameraManager.Instance != null)
         {
-            cSmooth = CameraManager.Instance;
+            cameraManager = CameraManager.Instance;
         }
         if (CanvasManager.Instance != null)
         {
-            cm = CanvasManager.Instance;
+            canvasManager = CanvasManager.Instance;
         }
 
 
-        if (Player1 != null)
-            pc1 = Player1.GetComponent<PlayerController>();
+        if (PlayerHuman != null)
+            PlayerControllerHm = PlayerHuman.GetComponent<PlayerController>();
 
-        if (Player2 != null)
-            pc2 = Player2.GetComponent<PlayerController>();
+        if (PlayerRobot != null)
+            PlayerCntrlerRbt = PlayerRobot.GetComponent<PlayerController>();
 
-        if (Player1 != null && Player2 != null)
+        if (PlayerHuman != null && PlayerRobot != null)
         {
             Camera_Manager();
+        }
+        else
+        {
+            cameraManager.Target = PlayerControllerHm.transform;
+            PlayerControllerHm.CanPlay = true;
+            onPlayerHuman = true;
         }
     }
 
@@ -67,47 +70,47 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
 
     public void Camera_Manager()
     {
-        if (Player2 != null)
+        if (PlayerRobot != null)
         {
-            onPlayer1 = !onPlayer1;
+            onPlayerHuman = !onPlayerHuman;
 
-            if (onPlayer1)
+            if (onPlayerHuman)
             {
-                if (cm.QuelPlayer != null)
-                    cm.QuelPlayer.text = Player1.name;
+                if (canvasManager.QuelPlayer != null)
+                    canvasManager.QuelPlayer.text = PlayerHuman.name;
 
-                cSmooth.Target = Player1;
+                cameraManager.Target = PlayerHuman;
             }
             else
             {
-                if (!cm.QuelPlayer)
-                    cm.QuelPlayer.text = Player2.name;
+                if (!canvasManager.QuelPlayer)
+                    canvasManager.QuelPlayer.text = PlayerRobot.name;
 
-                cSmooth.Target = Player2;
+                cameraManager.Target = PlayerRobot;
             }
 
-            pc1.CanPlay = onPlayer1;
-            pc2.CanPlay = !onPlayer1;
+            PlayerControllerHm.CanPlay = onPlayerHuman;
+            PlayerCntrlerRbt.CanPlay = !onPlayerHuman;
 
-            if (cm.UIHuman != null && cm.UIRobot != null)
+            if (canvasManager.UIHuman != null && canvasManager.UIRobot != null)
             {
-                cm.UIHuman.SetActive(onPlayer1);
-                cm.UIRobot.SetActive(!onPlayer1);
+                canvasManager.UIHuman.SetActive(onPlayerHuman);
+                canvasManager.UIRobot.SetActive(!onPlayerHuman);
             }
         }
         else
         {
-            onPlayer1 = true;
-            if (cm.QuelPlayer != null)
-                cm.QuelPlayer.text = Player1.name;
+            onPlayerHuman = true;
+            if (canvasManager.QuelPlayer != null)
+                canvasManager.QuelPlayer.text = PlayerHuman.name;
 
-            cSmooth.Target = Player1;
-            pc1.CanPlay = onPlayer1;
+            cameraManager.Target = PlayerHuman;
+            PlayerControllerHm.CanPlay = onPlayerHuman;
 
-            if (cm.UIHuman != null && cm.UIRobot != null)
+            if (canvasManager.UIHuman != null && canvasManager.UIRobot != null)
             {
-                cm.UIHuman.SetActive(true);
-                cm.UIRobot.SetActive(false);
+                canvasManager.UIHuman.SetActive(true);
+                canvasManager.UIRobot.SetActive(false);
             }
         }
     }
@@ -130,6 +133,7 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
             Cursor.SetCursor(null, hotSpot, cursorMode);
         }
     }
+
     public void CursorStyle()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -138,23 +142,27 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerCursor))
         {
-            if (hit.collider.GetComponent<anAI>() != null && hit.collider.GetComponent<anAI>().Killable() && onPlayer1)
+            if (hit.collider.TryGetComponent(out anAI ai) && ai.Killable() && onPlayerHuman)
             {
                 SetCursor("Attack");
             }
             else if (hit.collider.CompareTag("Interaction"))
             {
-                if (hit.collider.GetComponent<trap_interaction>() != null && !onPlayer1)
+                if (hit.collider.TryGetComponent(out Interaction interaction))
+                {
+                    PlayerController pc = onPlayerHuman ? PlayerControllerHm : PlayerCntrlerRbt;
+                    if (interaction.PlayerControlRef == pc)
+                    {
+                        SetCursor("Interact");
+                    }
+                }
+                else if (hit.collider.GetComponent<trap_interaction>() != null && !onPlayerHuman)
                 {
                     SetCursor("Interact");
                 }
                 else
                 {
                     SetCursor(null);
-                }
-                if (hit.collider.GetComponent<trap_interaction>() == null)
-                {
-                    SetCursor("Interact");
                 }
             }
         }

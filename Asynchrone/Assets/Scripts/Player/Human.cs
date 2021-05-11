@@ -28,8 +28,8 @@ public class Human : Singleton<Human>
             Destroy(this);
 
         mP = ManagerPlayers.Instance;
-        mP.Hm = this;
-        mP.Player1 = transform;
+        mP.HumanPlayer = this;
+        mP.PlayerHuman = transform;
 
         nav = GetComponent<NavMeshAgent>();
         speed = nav.speed;
@@ -43,9 +43,9 @@ public class Human : Singleton<Human>
 
     private void Update()                           //UPDATE
     {
-        if (!mP.pc1.InCinematic)
+        if (!mP.PlayerControllerHm.InCinematic)
         {
-            if (mP.onPlayer1)
+            if (mP.onPlayerHuman)
             {
                 InputManager();
             }

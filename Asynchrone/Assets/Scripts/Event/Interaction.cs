@@ -9,40 +9,51 @@ public enum whichPlayer
 }
 public class Interaction : MonoBehaviour
 {
-    private CameraManager cm;
-    private ManagerPlayers mp;
+    private CameraManager cameraManager;
+    private ManagerPlayers managerPlayers;
     SoundManager SoundM;
 
     public bool SetColor = false;
-    [SerializeField] private whichPlayer _whichPlayer;
-    private PlayerController _playerControlRef;
-    private PlayerController _playerControlGet;
+    public whichPlayer whichPlayer;
+    [SerializeField] 
+    public bool activated;
+    [SerializeField] 
+    private GameObject _feedBackActivated;
+
+    //[HideInInspector]
+    public PlayerController PlayerControlRef;
+    private PlayerController playerControlGet;
 
     [Space]
+    [Header("Pince")]
     public bool Pince;
-    public bool Distributeur;
-    [SerializeField] Transform _pointArrive;
+    [SerializeField] Transform pointArrive;
     [HideInInspector] public bool ActivePince;
 
-    [SerializeField] public bool activated;
-    [SerializeField] private bool cinematic = true;
+    public bool Distributeur;
 
-
-    public Transform[] Influence;
-    [SerializeField] private GameObject _feedBackActivated;
+    public Transform[] Portes;
 
     [Header("Sound")]
     public string SoundName;
 
 
     private void Awake() { 
-        cm = CameraManager.Instance;
-        mp = ManagerPlayers.Instance;
+        cameraManager = CameraManager.Instance;
+        managerPlayers = ManagerPlayers.Instance;
         SoundM = SoundManager.Instance;
 
         if (_feedBackActivated != null)
             _feedBackActivated.SetActive(false);
     }
+
+    private void Start()
+    {
+        //Set which player has the right to use it
+        PlayerControlRef = whichPlayer == whichPlayer.Human ? managerPlayers.PlayerControllerHm : managerPlayers.PlayerCntrlerRbt;
+    }
+
+    public void SetPlayerController(PlayerController pcCalled) => playerControlGet = pcCalled;
 
 
     private void Update()
@@ -52,23 +63,11 @@ public class Interaction : MonoBehaviour
 
 
 
-
-
-
-
-
-
-
-
-    public void CallEvent()
+    public void CallActivePorte()
     {
-        //Set which player has the right to use it
-        _playerControlRef = _whichPlayer == whichPlayer.Human ? mp.pc1 : mp.pc2; 
-
-
-        if (!activated && _playerControlRef == _playerControlGet)
+        if (!activated && PlayerControlRef == playerControlGet)
         {
-            Debug.Log("Event called");
+            //Debug.Log("Event called");
             activated = true;
 
             if(SoundName != "")
@@ -76,13 +75,13 @@ public class Interaction : MonoBehaviour
                 SoundM.GetASound(SoundName, transform);
             }
 
-            for (int i = 0; i < Influence.Length; i++)
+            for (int i = 0; i < Portes.Length; i++)
             {
-                if (Influence[i] != null)
+                if (Portes[i] != null)
                 {
-                    Influence[i].gameObject.SetActive(!Influence[i].gameObject.activeSelf);
-                    if (cm != null && cinematic)
-                        cm.GetTargetPorte(Influence);
+                    Portes[i].gameObject.SetActive(!Portes[i].gameObject.activeSelf);
+                    if (cameraManager != null)
+                        cameraManager.GetTargetPorte(Portes);
                 }
             }
 
@@ -96,25 +95,25 @@ public class Interaction : MonoBehaviour
     {
         activated = true;
 
-        if (mp.Rbt.DivStock <= 0 && !mp.onPlayer1)
+        if (managerPlayers.RobotPlayer.DivStock <= 0 && !managerPlayers.onPlayerHuman)
         {
             //trigger Anim successfull
-            mp.Rbt.DivStock = 1;
+            managerPlayers.RobotPlayer.DivStock = 1;
         }
         else
         {
-            CanvasManager cm = CanvasManager.Instance;
+            CanvasManager canvasManager = CanvasManager.Instance;
             string[] dia = new string[1];
 
-            if (mp.onPlayer1)
+            if (managerPlayers.onPlayerHuman)
             {
                 dia[0] = "Je ne peux pas l'utiliser. Vatrek devrait réussir.";
-                cm.StartDiaEffect(dia);
+                canvasManager.StartDiaEffect(dia);
             }
             else
             {
                 dia[0] = "Je suis déjà rechargé à bloc!";
-                cm.StartDiaEffect(dia);
+                canvasManager.StartDiaEffect(dia);
             }
         }
     }
@@ -122,28 +121,16 @@ public class Interaction : MonoBehaviour
 
     public void CallPince()
     {
-        //Set which player has the right to use it
-        _playerControlRef = _whichPlayer == whichPlayer.Human ? mp.pc1 : mp.pc2;
-
-        if (ActivePince && !activated && _playerControlRef == _playerControlGet)
+        if (ActivePince && !activated && PlayerControlRef == playerControlGet)
         {
-            Influence[0].position = Vector3.Lerp(Influence[0].transform.position, _pointArrive.position, 0.01f);
+            Portes[0].position = Vector3.Lerp(Portes[0].transform.position, pointArrive.position, 0.01f);
 
-            if (Influence[0].position.y + 0.01f > _pointArrive.position.y)
+            if (Portes[0].position.y + 0.01f > pointArrive.position.y)
             {
                 activated = true;
             }
         }
     }
-
-
-
-
-
-
-
-
-    public void SetPlayerController(PlayerController pcCalled) => _playerControlGet = pcCalled;
 
 
 
@@ -153,20 +140,8 @@ public class Interaction : MonoBehaviour
         {
             if (_feedBackActivated != null)
             {
-                _feedBackActivated.GetComponent<Light>().color = _whichPlayer == whichPlayer.Human ? Color.cyan : Color.red;
+                _feedBackActivated.GetComponent<Light>().color = whichPlayer == whichPlayer.Human ? Color.cyan : Color.red;
             }
-            /*
-            MeshRenderer _mesh = GetComponent<MeshRenderer>();
-            if (_mesh != null)
-            {
-                Color _color = _whichPlayer == whichPlayer.Human ? Color.cyan : Color.red;
-                //Debug.Log(_mesh.material.GetColor("_Color"));
-                MaterialPropertyBlock mpb = new MaterialPropertyBlock();
-                if (_mesh.material.HasProperty("_Color"))
-                {
-                    _mesh.material.SetColor("_Color", _color);
-                }
-            }*/
             SetColor = false;
         }
     }

@@ -41,13 +41,13 @@ public class CinematicManager : MonoBehaviour
 
     private void checkInCinematic(bool ok)
     {
-        if (mP.pc1)
+        if (mP.PlayerControllerHm)
         {
-            mP.pc1.InCinematic = ok;
+            mP.PlayerControllerHm.InCinematic = ok;
         }
-        if (mP.pc2)
+        if (mP.PlayerCntrlerRbt)
         {
-            mP.pc2.InCinematic = ok;
+            mP.PlayerCntrlerRbt.InCinematic = ok;
         }
     }
 }

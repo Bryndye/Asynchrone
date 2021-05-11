@@ -12,6 +12,9 @@ public class CameraManager : Singleton<CameraManager>
     private int index;
     private float timer;
 
+    [Space]
+    [SerializeField]
+    private float speed = 40;
 
     private void Update() => SmoothFollow();                       //UPDATE
 
@@ -39,7 +42,7 @@ public class CameraManager : Singleton<CameraManager>
             //Debug.Log("timing...");
 
             Vector3 smooth = new Vector3(TargetPorte[index].position.x, 1, TargetPorte[index].position.z) - transform.position;
-            transform.position += smooth / 40;
+            transform.position += smooth / speed;
 
             if (timer >= 2)
             {
@@ -49,7 +52,7 @@ public class CameraManager : Singleton<CameraManager>
         else if (Target != null)
         {
             Vector3 smooth = new Vector3(Target.position.x, 1, Target.position.z) - transform.position;
-            transform.position += smooth / 40;
+            transform.position += smooth / speed;
         }
     }
 

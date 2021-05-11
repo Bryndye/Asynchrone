@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class Event_Trigger : MonoBehaviour
 {
+    [SerializeField]
+    private bool reactivable;
     private BoxCollider bc;
 
     ManagerPlayers mp
@@ -29,6 +31,8 @@ public class Event_Trigger : MonoBehaviour
             return CameraManager.Instance;
         }
     }
+
+    [Space]
     [SerializeField] string nameEvent;
     private bool done = false;
 
@@ -60,6 +64,14 @@ public class Event_Trigger : MonoBehaviour
         }
     }
 
+
+    private void Update()
+    {
+        if (reactivable && SpawnMANAGER.Instance.mySpawnSituation == SpawnSituation.DeathProcess)
+        {
+            done = false;
+        }
+    }
 
 
     private void OnTriggerEnter(Collider other)
