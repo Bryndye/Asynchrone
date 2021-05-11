@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour
     [Space]
     public bool InCinematic;
     public GameObject FeedbackClick;
+
+    float time;
     #endregion
 
 
@@ -65,7 +67,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-
+    //GetKeyDown pour les Interactions et le GetKey pour deplacement
     private void InputManager()
     {
         if (Input.GetKeyDown(KeyCode.Mouse1))
@@ -73,17 +75,24 @@ public class PlayerController : MonoBehaviour
             OnClickMouseR();
         }
         if (Input.GetKey(KeyCode.Mouse1) && canMove)
-        {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        {            
+            time += Time.deltaTime;
 
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ingorePlayers))
+            if (time > 0.4f)
             {
-                if (NavPlayer.CalculatePath(hit.point, NavPlayer.path))
+                time = 0;
+                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ingorePlayers))
                 {
-                    SetDesination(hit, false);
+                    if (NavPlayer.CalculatePath(hit.point, NavPlayer.path))
+                    {
+                        SetDesination(hit, false);
+                    }
                 }
             }
+
         }
     }
 
@@ -146,13 +155,11 @@ public class PlayerController : MonoBehaviour
         {
             targetClickMouse = null;
             NavPlayer.SetDestination(raycastHit.point);
-            Debug.Log("solut 2");
         }
         else
         {
             targetClickMouse = null;
             NavPlayer.SetDestination(transform.position);
-            Debug.Log("solut 3");
         }
     }
 
