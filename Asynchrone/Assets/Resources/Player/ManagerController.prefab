@@ -46,13 +46,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b198b5b00b4dbb744a6f525c7cc9a1f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player1: {fileID: 0}
-  Hm: {fileID: 0}
-  pc1: {fileID: 0}
-  Player2: {fileID: 0}
-  Rbt: {fileID: 0}
-  pc2: {fileID: 0}
-  onPlayer1: 0
+  PlayerHumanTransform: {fileID: 0}
+  HumanPlayer: {fileID: 0}
+  PlayerControllerHm: {fileID: 0}
+  PlayerRobotTransform: {fileID: 0}
+  RobotPlayer: {fileID: 0}
+  PlayerCntrlerRbt: {fileID: 0}
+  onPlayerHuman: 0
+  InputSwitchCamera: 97
+  InputDiversion: 304
+  InputCrouch: 306
+  InputMovement: 324
   layerCursor:
     serializedVersion: 2
     m_Bits: 8192

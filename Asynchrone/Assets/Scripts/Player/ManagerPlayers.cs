@@ -5,12 +5,12 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
     //public static ManagerPlayers Instance;
 
     [Header("Human")]
-    public Transform PlayerHuman;
+    public Transform PlayerHumanTransform;
     [HideInInspector] public Human HumanPlayer;
     [HideInInspector] public PlayerController PlayerControllerHm;
 
     [Header("Robot")]
-    public Transform PlayerRobot;
+    public Transform PlayerRobotTransform;
     [HideInInspector] public Robot RobotPlayer;
     [HideInInspector] public PlayerController PlayerCntrlerRbt;
 
@@ -18,6 +18,11 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
     CanvasManager canvasManager;
     public bool onPlayerHuman;
 
+    [Header("Inputs")]
+    public KeyCode InputSwitchCamera;
+    public KeyCode InputDiversion;
+    public KeyCode InputCrouch;
+    public KeyCode InputMovement;
 
 
     private void Awake()
@@ -41,13 +46,13 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
         }
 
 
-        if (PlayerHuman != null)
-            PlayerControllerHm = PlayerHuman.GetComponent<PlayerController>();
+        if (PlayerHumanTransform != null)
+            PlayerControllerHm = PlayerHumanTransform.GetComponent<PlayerController>();
 
-        if (PlayerRobot != null)
-            PlayerCntrlerRbt = PlayerRobot.GetComponent<PlayerController>();
+        if (PlayerRobotTransform != null)
+            PlayerCntrlerRbt = PlayerRobotTransform.GetComponent<PlayerController>();
 
-        if (PlayerHuman != null && PlayerRobot != null)
+        if (PlayerHumanTransform != null && PlayerRobotTransform != null)
         {
             Camera_Manager();
         }
@@ -61,7 +66,7 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(InputSwitchCamera))
         {
             Camera_Manager();
         }
@@ -70,23 +75,23 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
 
     public void Camera_Manager()
     {
-        if (PlayerRobot != null)
+        if (PlayerRobotTransform != null)
         {
             onPlayerHuman = !onPlayerHuman;
 
             if (onPlayerHuman)
             {
-                if (canvasManager.QuelPlayer != null)
-                    canvasManager.QuelPlayer.text = PlayerHuman.name;
+                //if (canvasManager.ProfilPlayer != null)
+                //    canvasManager.ProfilPlayer.sprite = null;
 
-                cameraManager.Target = PlayerHuman;
+                cameraManager.Target = PlayerHumanTransform;
             }
             else
             {
-                if (!canvasManager.QuelPlayer)
-                    canvasManager.QuelPlayer.text = PlayerRobot.name;
+                //if (!canvasManager.ProfilPlayer)
+                //    canvasManager.ProfilPlayer.sprite = null;
 
-                cameraManager.Target = PlayerRobot;
+                cameraManager.Target = PlayerRobotTransform;
             }
 
             PlayerControllerHm.CanPlay = onPlayerHuman;
@@ -101,10 +106,10 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
         else
         {
             onPlayerHuman = true;
-            if (canvasManager.QuelPlayer != null)
-                canvasManager.QuelPlayer.text = PlayerHuman.name;
+            //if (canvasManager.ProfilPlayer != null)
+            //    canvasManager.ProfilPlayer.sprite = null;
 
-            cameraManager.Target = PlayerHuman;
+            cameraManager.Target = PlayerHumanTransform;
             PlayerControllerHm.CanPlay = onPlayerHuman;
 
             if (canvasManager.UIHuman != null && canvasManager.UIRobot != null)
@@ -118,10 +123,11 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
 
 
     #region Cursor
-    [Space]
+    [Header("Cursor")]
+    [SerializeField] LayerMask layerCursor;
     CursorMode cursorMode = CursorMode.Auto;
     Vector2 hotSpot = Vector2.zero;
-    [SerializeField] LayerMask layerCursor;
+
     private void SetCursor(string nom)
     {
         if (Resources.Load<Texture2D>("UI/Cursor/" + nom))

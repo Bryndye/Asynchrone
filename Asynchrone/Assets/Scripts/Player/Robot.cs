@@ -6,33 +6,33 @@ using UnityEngine.AI;
 public class Robot : Singleton<Robot>
 {
     NavMeshAgent nav;
-    ManagerPlayers mP;
+    ManagerPlayers managerPlayers;
 
 
     [Header("Diversion")]
     [SerializeField] LayerMask ignoreWall;
     [SerializeField] float rangeDis;
-    [HideInInspector] public bool canDiv;
-    [HideInInspector] public GameObject robot_div;
+    [HideInInspector] public bool CanDiv;
+    [HideInInspector] public GameObject RobotDiv;
     MeshFilter viewMeshFilter;
     Mesh viewMesh;
-    public int DivStock = 0;
+    public bool HasDiversion = false;
 
     [Header("Valeurs Graphiques")]
     float ShownDistance;
     public float MeshResolution;
-    public int edgeResolveIterations;
-    public float edgeDstThrehsold;
-    Vector3 RaycastPosition;
+    public int EdgeResolveIterations;
+    public float EdgeDstThrehsold;
+    Vector3 raycastPosition;
     [Space]
     public LayerMask ObstacleMask;
 
     private void Awake()
     {
         nav = GetComponent<NavMeshAgent>();
-        mP = ManagerPlayers.Instance;
-        mP.RobotPlayer = this;
-        mP.PlayerRobot = transform;
+        managerPlayers = ManagerPlayers.Instance;
+        managerPlayers.RobotPlayer = this;
+        managerPlayers.PlayerRobotTransform = transform;
 
         viewMeshFilter = transform.GetChild(1).GetComponent<MeshFilter>();
 
@@ -43,20 +43,20 @@ public class Robot : Singleton<Robot>
 
     void Update()
     {
-        if (!mP.PlayerCntrlerRbt.InCinematic)
+        if (!managerPlayers.PlayerCntrlerRbt.InCinematic)
         {         
 
-            if (!mP.onPlayerHuman)
+            if (!managerPlayers.onPlayerHuman)
             {
 
-                if (Input.GetKeyDown(KeyCode.Z) && robot_div == null && DivStock > 0)
+                if (Input.GetKeyDown(managerPlayers.InputDiversion) && RobotDiv == null && HasDiversion)
                 {
                     StartDiv();
                 }
                 
-                if (Input.GetKeyDown(KeyCode.Z) && robot_div != null)
+                if (Input.GetKeyDown(managerPlayers.InputDiversion) && RobotDiv != null)
                 {
-                    Destroy(robot_div);
+                    Destroy(RobotDiv);
                 }
             }
         }
@@ -66,10 +66,8 @@ public class Robot : Singleton<Robot>
 
     #region Diversion
 
-    public void StartDiv() { canDiv = !canDiv;
-        //Debug.Log("OUPS");
-    }
-    //le sprite 1x, 1y pour faire 2.5u
+    public void StartDiv() => CanDiv = !CanDiv;
+
     public void CreateDiversion(RaycastHit hit)
     {
         if (hit.collider.gameObject.layer != 10)
@@ -79,21 +77,14 @@ public class Robot : Singleton<Robot>
 
             if (CheckWall(dir, point))
             {
-                robot_div = Instantiate(Resources.Load<GameObject>("Player/Fake_Robot"), point, Quaternion.identity);
+                RobotDiv = Instantiate(Resources.Load<GameObject>("Player/Fake_Robot"), point, Quaternion.identity);
                 StockDivManager();
-                canDiv = false;
+                CanDiv = false;
             }
         }
     }
 
-    private void StockDivManager()
-    {
-        DivStock--;
-        if (DivStock <= 0)
-        {
-            DivStock = 0;
-        }
-    }
+    private void StockDivManager() => HasDiversion = false;
 
     private bool CheckWall(Vector3 dir, Vector3 point)
     {
@@ -116,17 +107,17 @@ public class Robot : Singleton<Robot>
 
     void UpdateDiversionRangeShown()
     {
-        if (mP.onPlayerHuman)
+        if (managerPlayers.onPlayerHuman)
         {
-            canDiv = false;
+            CanDiv = false;
         }
 
-        if (canDiv && ShownDistance < rangeDis)
+        if (CanDiv && ShownDistance < rangeDis)
         {
             ShownDistance += Time.deltaTime * 50;
             ShownDistance = Mathf.Clamp(ShownDistance, 0, rangeDis);
         }
-        else if (!canDiv && ShownDistance > 0)
+        else if (!CanDiv && ShownDistance > 0)
         {
             ShownDistance -= Time.deltaTime * 50;
             ShownDistance = Mathf.Clamp(ShownDistance, 0, rangeDis);
@@ -138,7 +129,7 @@ public class Robot : Singleton<Robot>
     {
         if(ShownDistance > 0)
         {
-            RaycastPosition = viewMeshFilter.transform.position;
+            raycastPosition = viewMeshFilter.transform.position;
             int stepCount = Mathf.RoundToInt(360 * MeshResolution);
             float stepAngleSize = 360f / (float)stepCount;
             List<Vector3> viewPoints = new List<Vector3>();
@@ -152,7 +143,7 @@ public class Robot : Singleton<Robot>
                 ViewCastInfo newViewCast = viewCast(angle, ObstacleMask);
                 if (i > 0)
                 {
-                    bool edgeDstThresholdExceeded = Mathf.Abs(oldViewCast.dst - newViewCast.dst) > edgeDstThrehsold;
+                    bool edgeDstThresholdExceeded = Mathf.Abs(oldViewCast.dst - newViewCast.dst) > EdgeDstThrehsold;
                     if (oldViewCast.hit != newViewCast.hit || (oldViewCast.hit && newViewCast.hit && edgeDstThresholdExceeded))
                     {
                         EdgeInfo edge = FindEdge(oldViewCast, newViewCast, ObstacleMask);
@@ -209,7 +200,7 @@ public class Robot : Singleton<Robot>
         Vector3 dir = DirFromAngle(globalAngle, true);
         RaycastHit hit;
 
-        if (Physics.Raycast(RaycastPosition, dir, out hit, ShownDistance, AffectedLayer))
+        if (Physics.Raycast(raycastPosition, dir, out hit, ShownDistance, AffectedLayer))
         {
             Vector3 HitPointToReturn = new Vector3(hit.point.x, transform.position.y, hit.point.z);
             return new ViewCastInfo(true, HitPointToReturn, hit.distance, globalAngle);
@@ -227,12 +218,12 @@ public class Robot : Singleton<Robot>
         Vector3 minPoint = Vector3.zero;
         Vector3 maxPoint = Vector3.zero;
 
-        for (int i = 0; i < edgeResolveIterations; i++)
+        for (int i = 0; i < EdgeResolveIterations; i++)
         {
             float angle = (minAngle + maxAngle) / 2;
             ViewCastInfo newViewCast = viewCast(angle, AffectedLayer);
 
-            bool edgeDstThresholdExceeded = Mathf.Abs(minViewCast.dst - newViewCast.dst) > edgeDstThrehsold;
+            bool edgeDstThresholdExceeded = Mathf.Abs(minViewCast.dst - newViewCast.dst) > EdgeDstThrehsold;
             if (newViewCast.hit == minViewCast.hit && !edgeDstThresholdExceeded)
             {
                 minAngle = angle;
