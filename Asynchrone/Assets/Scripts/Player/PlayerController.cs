@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     public Animator AnimPlayer;
     [HideInInspector] 
     public NavMeshAgent NavPlayer;
-    private ManagerPlayers managerPlayer;
+    private ManagerPlayers managerPlayers;
     private SpawnMANAGER spawnManager;
     [HideInInspector] 
     public bool CanPlay = true;
@@ -31,15 +31,12 @@ public class PlayerController : MonoBehaviour
     float time;
     #endregion
 
-    [Space]
-    public KeyCode InputMovement;
-
 
 
 
     private void Awake()                                //AWAKE
     {
-        managerPlayer = ManagerPlayers.Instance;
+        managerPlayers = ManagerPlayers.Instance;
         spawnManager = SpawnMANAGER.Instance;
         NavPlayer = GetComponent<NavMeshAgent>();
 
@@ -71,11 +68,11 @@ public class PlayerController : MonoBehaviour
     //GetKeyDown pour les Interactions et le GetKey pour deplacement
     private void InputManager()
     {
-        if (Input.GetKeyDown(InputMovement))
+        if (Input.GetKeyDown(managerPlayers.InputMovement))
         {
             OnClickMouseR();
         }
-        if (Input.GetKey(InputMovement) && canMove)
+        if (Input.GetKey(managerPlayers.InputMovement) && canMove)
         {            
             time += Time.deltaTime;
 
@@ -107,11 +104,11 @@ public class PlayerController : MonoBehaviour
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (!managerPlayer.onPlayerHuman && managerPlayer.RobotPlayer.CanDiv && managerPlayer.RobotPlayer.HasDiversion)
+        if (!managerPlayers.onPlayerHuman && managerPlayers.RobotPlayer.CanDiv && managerPlayers.RobotPlayer.HasDiversion)
         {
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ingoreDiv))
             {
-                managerPlayer.RobotPlayer.CreateDiversion(hit);
+                managerPlayers.RobotPlayer.CreateDiversion(hit);
                 canMove = false;
                 Invoke(nameof(CanMove),0.6f);
             }
@@ -184,7 +181,7 @@ public class PlayerController : MonoBehaviour
                         return;
                     }
 
-                    if (!managerPlayer.onPlayerHuman && interaction.Distributeur)
+                    if (!managerPlayers.onPlayerHuman && interaction.Distributeur)
                     {
                         interaction.CallDistri();
                         SetAnim("Interaction", false, true);
@@ -207,7 +204,7 @@ public class PlayerController : MonoBehaviour
 
                 else if (targetClickMouse.TryGetComponent(out anAI ai))
                 {
-                    if (managerPlayer.onPlayerHuman && ai.Killable())
+                    if (managerPlayers.onPlayerHuman && ai.Killable())
                     {
                         SetDesination(raycastNull());
                         SetAnim("Attack", false, true);
@@ -219,7 +216,7 @@ public class PlayerController : MonoBehaviour
 
                 else if (targetClickMouse.TryGetComponent(out trap_interaction trapInter))
                 {
-                    if (managerPlayer.PlayerCntrlerRbt == this)
+                    if (managerPlayers.PlayerCntrlerRbt == this)
                     {
                         trapInter.Called();
                     }
@@ -275,9 +272,9 @@ public class PlayerController : MonoBehaviour
 
     private void CrouchedAnim()
     {
-        if (managerPlayer.onPlayerHuman)
+        if (managerPlayers.onPlayerHuman)
         {
-            SetAnim("Crouched", managerPlayer.HumanPlayer.isAccroupi, false);
+            SetAnim("Crouched", managerPlayers.HumanPlayer.isAccroupi, false);
         }
     }
     public void DivAnim()

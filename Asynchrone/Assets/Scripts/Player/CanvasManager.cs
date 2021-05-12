@@ -140,8 +140,8 @@ public class CanvasManager : Singleton<CanvasManager>
 
     private void SetInputText()
     {
-        textDiversion.text = managerPlayers.RobotPlayer.InputDiversion.ToString();
-        textCrouch.text = managerPlayers.HumanPlayer.InputCrouch.ToString();
+        textDiversion.text = managerPlayers.InputDiversion.ToString();
+        textCrouch.text = managerPlayers.InputCrouch.ToString();
         textSwitchCamera.text = managerPlayers.InputSwitchCamera.ToString();
     }
     #endregion

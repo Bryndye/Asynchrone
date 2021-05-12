@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class Robot : Singleton<Robot>
 {
     NavMeshAgent nav;
-    ManagerPlayers mP;
+    ManagerPlayers managerPlayers;
 
 
     [Header("Diversion")]
@@ -27,14 +27,12 @@ public class Robot : Singleton<Robot>
     [Space]
     public LayerMask ObstacleMask;
 
-    [Space]
-    public KeyCode InputDiversion;
     private void Awake()
     {
         nav = GetComponent<NavMeshAgent>();
-        mP = ManagerPlayers.Instance;
-        mP.RobotPlayer = this;
-        mP.PlayerRobotTransform = transform;
+        managerPlayers = ManagerPlayers.Instance;
+        managerPlayers.RobotPlayer = this;
+        managerPlayers.PlayerRobotTransform = transform;
 
         viewMeshFilter = transform.GetChild(1).GetComponent<MeshFilter>();
 
@@ -45,18 +43,18 @@ public class Robot : Singleton<Robot>
 
     void Update()
     {
-        if (!mP.PlayerCntrlerRbt.InCinematic)
+        if (!managerPlayers.PlayerCntrlerRbt.InCinematic)
         {         
 
-            if (!mP.onPlayerHuman)
+            if (!managerPlayers.onPlayerHuman)
             {
 
-                if (Input.GetKeyDown(InputDiversion) && RobotDiv == null && HasDiversion)
+                if (Input.GetKeyDown(managerPlayers.InputDiversion) && RobotDiv == null && HasDiversion)
                 {
                     StartDiv();
                 }
                 
-                if (Input.GetKeyDown(InputDiversion) && RobotDiv != null)
+                if (Input.GetKeyDown(managerPlayers.InputDiversion) && RobotDiv != null)
                 {
                     Destroy(RobotDiv);
                 }
@@ -109,7 +107,7 @@ public class Robot : Singleton<Robot>
 
     void UpdateDiversionRangeShown()
     {
-        if (mP.onPlayerHuman)
+        if (managerPlayers.onPlayerHuman)
         {
             CanDiv = false;
         }

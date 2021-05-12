@@ -18,8 +18,11 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
     CanvasManager canvasManager;
     public bool onPlayerHuman;
 
-
+    [Header("Inputs")]
     public KeyCode InputSwitchCamera;
+    public KeyCode InputDiversion;
+    public KeyCode InputCrouch;
+    public KeyCode InputMovement;
 
 
     private void Awake()
@@ -120,10 +123,11 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
 
 
     #region Cursor
-    [Space]
+    [Header("Cursor")]
+    [SerializeField] LayerMask layerCursor;
     CursorMode cursorMode = CursorMode.Auto;
     Vector2 hotSpot = Vector2.zero;
-    [SerializeField] LayerMask layerCursor;
+
     private void SetCursor(string nom)
     {
         if (Resources.Load<Texture2D>("UI/Cursor/" + nom))

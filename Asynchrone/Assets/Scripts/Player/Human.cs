@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Human : Singleton<Human>
 {
     #region var
-    ManagerPlayers mP;
+    ManagerPlayers managerPlayers;
     NavMeshAgent nav;
     CapsuleCollider cc;
 
@@ -17,7 +17,6 @@ public class Human : Singleton<Human>
     [Header("Accroupi")]
     [HideInInspector] public bool isAccroupi;
 
-    public KeyCode InputCrouch;
     #endregion
 
 
@@ -29,9 +28,9 @@ public class Human : Singleton<Human>
         if (Instance != this)
             Destroy(this);
 
-        mP = ManagerPlayers.Instance;
-        mP.HumanPlayer = this;
-        mP.PlayerHumanTransform = transform;
+        managerPlayers = ManagerPlayers.Instance;
+        managerPlayers.HumanPlayer = this;
+        managerPlayers.PlayerHumanTransform = transform;
 
         nav = GetComponent<NavMeshAgent>();
         speed = nav.speed;
@@ -45,11 +44,11 @@ public class Human : Singleton<Human>
 
     private void Update()                           //UPDATE
     {
-        if (!mP.PlayerControllerHm.InCinematic)
+        if (!managerPlayers.PlayerControllerHm.InCinematic)
         {
-            if (mP.onPlayerHuman)
+            if (managerPlayers.onPlayerHuman)
             {
-                if (Input.GetKeyDown(InputCrouch))
+                if (Input.GetKeyDown(managerPlayers.InputCrouch))
                 {
                     CheckMask();
                 }
