@@ -16,6 +16,8 @@ public class Human : Singleton<Human>
 
     [Header("Accroupi")]
     [HideInInspector] public bool isAccroupi;
+
+    public KeyCode InputCrouch;
     #endregion
 
 
@@ -29,7 +31,7 @@ public class Human : Singleton<Human>
 
         mP = ManagerPlayers.Instance;
         mP.HumanPlayer = this;
-        mP.PlayerHuman = transform;
+        mP.PlayerHumanTransform = transform;
 
         nav = GetComponent<NavMeshAgent>();
         speed = nav.speed;
@@ -47,28 +49,15 @@ public class Human : Singleton<Human>
         {
             if (mP.onPlayerHuman)
             {
-                InputManager();
+                if (Input.GetKeyDown(InputCrouch))
+                {
+                    CheckMask();
+                }
             }
         }
     }
 
 
-
-
-
-
-
-
-
-
-
-    private void InputManager()
-    {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            CheckMask();
-        }
-    }
 
 
 
@@ -81,7 +70,7 @@ public class Human : Singleton<Human>
         NavMeshHit hit = new NavMeshHit();
         nav.SamplePathPosition(NavMesh.AllAreas, 0.0f, out hit);
         int ll = LayerMask.GetMask("Human");
-        //Debug.Log("Agent is currently on " + hit.mask + "  " + ll);
+        
         if (hit.mask != ll)
         {
             Accroupi();
@@ -95,8 +84,7 @@ public class Human : Singleton<Human>
         int h, sp, si;
         float center;
         isAccroupi = !isAccroupi;
-        //acrroupiMesh.SetActive(isAccroupi);
-        //meshPrincipal.SetActive(!isAccroupi);
+
 
         if (isAccroupi)
         {

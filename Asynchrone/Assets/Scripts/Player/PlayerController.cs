@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     LayerMask ingoreDiv;
     [SerializeField] 
     LayerMask ingorePlayers;
-    [SerializeField] 
+    //[SerializeField] 
     Transform targetClickMouse;
 
     [Space]
@@ -31,7 +31,8 @@ public class PlayerController : MonoBehaviour
     float time;
     #endregion
 
-
+    [Space]
+    public KeyCode InputMovement;
 
 
 
@@ -70,11 +71,11 @@ public class PlayerController : MonoBehaviour
     //GetKeyDown pour les Interactions et le GetKey pour deplacement
     private void InputManager()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        if (Input.GetKeyDown(InputMovement))
         {
             OnClickMouseR();
         }
-        if (Input.GetKey(KeyCode.Mouse1) && canMove)
+        if (Input.GetKey(InputMovement) && canMove)
         {            
             time += Time.deltaTime;
 
@@ -101,12 +102,12 @@ public class PlayerController : MonoBehaviour
 
 
     #region Mouse/Interaction element decor
-    [SerializeField] private bool canMove = true;
+    private bool canMove = true;
     private void OnClickMouseR()
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (!managerPlayer.onPlayerHuman && managerPlayer.RobotPlayer.canDiv && managerPlayer.RobotPlayer.DivStock > 0)
+        if (!managerPlayer.onPlayerHuman && managerPlayer.RobotPlayer.CanDiv && managerPlayer.RobotPlayer.HasDiversion)
         {
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ingoreDiv))
             {

@@ -96,10 +96,10 @@ public class Interaction : MonoBehaviour
     {
         activated = true;
 
-        if (managerPlayers.RobotPlayer.DivStock <= 0 && !managerPlayers.onPlayerHuman)
+        if (!managerPlayers.RobotPlayer.HasDiversion && !managerPlayers.onPlayerHuman)
         {
             //trigger Anim successfull
-            managerPlayers.RobotPlayer.DivStock = 1;
+            managerPlayers.RobotPlayer.HasDiversion = true;
         }
         else
         {

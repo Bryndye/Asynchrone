@@ -308,8 +308,8 @@ MonoBehaviour:
     m_Bits: 7940
   InCinematic: 0
   FeedbackClick: {fileID: 1745249769378136, guid: d1698044ca4fff84e977528d3067773d, type: 3}
-  FeedbackFaisceau: {fileID: 0}
-  canMove: 1
+  InputMovement: 324
+  cooldownInteraction: 1
 --- !u!114 &4183304568682466910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,15 +326,16 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4
   rangeDis: 10
-  canDiv: 0
-  robot_div: {fileID: 0}
-  DivStock: 1
+  CanDiv: 0
+  RobotDiv: {fileID: 0}
+  HasDiversion: 0
   MeshResolution: 5
-  edgeResolveIterations: 4
-  edgeDstThrehsold: 5
+  EdgeResolveIterations: 0
+  EdgeDstThrehsold: 0
   ObstacleMask:
     serializedVersion: 2
     m_Bits: 1024
+  InputDiversion: 304
 --- !u!1 &8645552237677571728
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,7 +395,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 277f9edbed9429247b3bb12459ce89be, type: 2}
+  - {fileID: 2100000, guid: 42aeddb7c88b3354b81a20b222b10942, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

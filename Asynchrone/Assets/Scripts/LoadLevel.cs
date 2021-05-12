@@ -53,7 +53,7 @@ public class LoadLevel : MonoBehaviour
             }
         }
 
-        if (players.Count >= 2 || mp.PlayerRobot == null && players.Count >= 1)
+        if (players.Count >= 2 || mp.PlayerRobotTransform == null && players.Count >= 1)
         {
             mp.PlayerControllerHm.InCinematic = true;
             mp.PlayerCntrlerRbt.InCinematic = true;
