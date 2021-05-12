@@ -687,6 +687,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 56dad7d3040197f4481fb2efbc38e679, type: 3}
+--- !u!4 &563673371 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1101013228, guid: a38e5e05cc52b974caa8d0894108ddda, type: 3}
+  m_PrefabInstance: {fileID: 6508073627494521535}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &612109740 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6508073628525515280, guid: a38e5e05cc52b974caa8d0894108ddda, type: 3}
@@ -2439,7 +2444,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8734465463775948685, guid: d2da71f02cbd7cc499192101932b1c3a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8734465463775948686, guid: d2da71f02cbd7cc499192101932b1c3a, type: 3}
       propertyPath: m_Radius
@@ -3088,9 +3093,25 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6508073628525515279, guid: a38e5e05cc52b974caa8d0894108ddda, type: 3}
+      propertyPath: Portes.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6508073628525515279, guid: a38e5e05cc52b974caa8d0894108ddda, type: 3}
       propertyPath: Influence.Array.size
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6508073628525515279, guid: a38e5e05cc52b974caa8d0894108ddda, type: 3}
+      propertyPath: Portes.Array.data[0]
+      value: 
+      objectReference: {fileID: 563673371}
+    - target: {fileID: 6508073628525515279, guid: a38e5e05cc52b974caa8d0894108ddda, type: 3}
+      propertyPath: Portes.Array.data[1]
+      value: 
+      objectReference: {fileID: 1462835856}
+    - target: {fileID: 6508073628525515279, guid: a38e5e05cc52b974caa8d0894108ddda, type: 3}
+      propertyPath: Portes.Array.data[2]
+      value: 
+      objectReference: {fileID: 1127881720}
     - target: {fileID: 6508073628525515279, guid: a38e5e05cc52b974caa8d0894108ddda, type: 3}
       propertyPath: Influence.Array.data[1]
       value: 

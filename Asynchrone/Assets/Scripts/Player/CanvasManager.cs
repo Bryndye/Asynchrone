@@ -27,6 +27,9 @@ public class CanvasManager : Singleton<CanvasManager>
     [HideInInspector] AudioClip[] acStock;
     private bool isRuntime;
 
+    [SerializeField]
+    private GameObject zoneDialogue;
+
     [Header("Bts Spells")]
     public Text QuelPlayer;
     public GameObject UIHuman;
@@ -149,80 +152,124 @@ public class CanvasManager : Singleton<CanvasManager>
 
 
     #region Daliogue
-    IEnumerator Type()
+
+    
+     IEnumerator Type()
+     {
+         zoneDialogue.SetActive(true);
+         LaunchAudio();
+
+         foreach (char letter in sentences[index].ToCharArray())
+         {
+             dialogueHere.text += letter;
+             yield return new WaitForSeconds(latence);
+         }
+     }
+
+     private void LaunchAudio()
+     {
+         if (audioc != null && index < audioc.Length)
+         {
+             //cm.AS_dia.clip = audioc[index];
+             //cm.AS_dia.Play();
+             //print("audio launch");
+         }
+     }
+
+     public void StartDiaEffect(string[] _dialogues, AudioClip[] _audioClips = null)
+     {
+         if (!isRuntime)
+         {
+             sentences = _dialogues;
+             audioc = _audioClips;
+             isRuntime = true;
+             index = 0;
+             StartCoroutine(Type());
+         }
+         else
+         {
+             sentencesStock = _dialogues;
+             acStock = _audioClips;
+         }
+     }
+
+     public void NextDialogue()
+     {
+         if (index < sentences.Length - 1 && sentences != null)
+         {
+             index++;
+             dialogueHere.text = null;
+             StartCoroutine(Type());
+         }
+         else
+         {
+             sentences = null;
+             dialogueHere.text = null;
+             isRuntime = false;
+             zoneDialogue.SetActive(false);
+         }
+         if (acStock != null && acStock.Length > 0)
+         {
+             audioc = acStock;
+             acStock = null;
+         }
+         if (sentencesStock != null && sentencesStock.Length > 0 && sentences == null)
+         {
+             isRuntime = true;
+             index = 0;
+             sentences = sentencesStock;
+             sentencesStock = null;
+             dialogueHere.text = null;
+             StartCoroutine(Type());
+             //Debug.Log("next dialogues");
+         }
+         skip = false;
+     }
+
+     [Space]
+     [SerializeField] float latence = 0.1f;
+
+    #endregion
+
+
+
+
+    #region NewDialogue
+    [Header("Dialogues")]
+
+
+    private List<string> dialoguesString;
+    private List<AudioClip> dialoguesAudioClips;
+
+    public void GetSentences(string[] _dialogues, AudioClip[] _audioClips = null)
     {
-        LaunchAudio();
-        
-        foreach (char letter in sentences[index].ToCharArray())
+        for (int i = 0; i < _dialogues.Length; i++)
         {
-            dialogueHere.text += letter;
-            yield return new WaitForSeconds(latence);
+            dialoguesString.Add(_dialogues[i]);
+        }
+        for (int i = 0; i < _audioClips.Length; i++)
+        {
+            dialoguesAudioClips.Add(_audioClips[i]);
         }
     }
 
-    private void LaunchAudio()
+    private void NewLaunchAudio()
     {
-        if (audioc != null && index < audioc.Length)
-        {
-            //cm.AS_dia.clip = audioc[index];
-            //cm.AS_dia.Play();
-            //print("audio launch");
-        }
+        //Une fois qu'on chope les audios, on lance
+        //Quand l'AudioSource ne joue plus alors on supprime i = 0 des Lists
+        //on fait jouer new i = 0
+        //et on répète jusqu'à qu'il n'y a plus d'audios
     }
 
-    public void StartDiaEffect(string[] _dialogues, AudioClip[] _audioClips = null)
+    private void NewLaunchDialogue()
     {
-        if (!isRuntime)
-        {
-            sentences = _dialogues;
-            audioc = _audioClips;
-            isRuntime = true;
-            index = 0;
-            StartCoroutine(Type());
-        }
-        else
-        {
-            sentencesStock = _dialogues;
-            acStock = _audioClips;
-        }
+
     }
 
-    public void NextDialogue()
+    private void NewNextDialogue()
     {
-        if (index < sentences.Length - 1 && sentences != null)
-        {
-            index++;
-            dialogueHere.text = null;
-            StartCoroutine(Type());
-            //Debug.Log("Next");
-        }
-        else
-        {
-            sentences = null;
-            dialogueHere.text = null;
-            isRuntime = false;
-        }
-        if (acStock != null && acStock.Length > 0)
-        {
-            audioc = acStock;
-            acStock = null;
-        }
-        if (sentencesStock != null && sentencesStock.Length > 0 && sentences == null)
-        {
-            isRuntime = true;
-            index = 0;
-            sentences = sentencesStock;
-            sentencesStock = null;
-            dialogueHere.text = null;
-            StartCoroutine(Type());
-            //Debug.Log("next dialogues");
-        }
-        skip = false;
+
     }
-
-    [Space]
-    [SerializeField] float latence = 0.1f;
-
     #endregion
 
 }
