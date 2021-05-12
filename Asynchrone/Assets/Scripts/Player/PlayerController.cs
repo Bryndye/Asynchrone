@@ -149,7 +149,7 @@ public class PlayerController : MonoBehaviour
         if (raycastHit.collider != null && inter)
         {
             targetClickMouse = raycastHit.collider.transform;
-            Debug.Log(targetClickMouse);
+            //Debug.Log(targetClickMouse);
         }
         else if(raycastHit.point != Vector3.zero)
         {

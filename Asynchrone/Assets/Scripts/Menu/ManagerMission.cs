@@ -37,7 +37,13 @@ public class ManagerMission : MonoBehaviour
             t.text = "MISSION " + i + " : " + missions[i].Name;
         }
     }
-    public void LoadScene(int i) => SceneManager.LoadScene(i, LoadSceneMode.Single);
+    public void LoadScene(int i) 
+    {
+        PlayerPrefs.SetInt("indexLevel", i);
+        //PlayerPrefs.SetString("nameLevel", nameOfNextlevel);
+        SceneManager.LoadScene("5.LoadLevel"); 
+    }
+
 
     public void LoadDetails(int index)
     {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CanvasManager : Singleton<CanvasManager>
@@ -64,7 +65,7 @@ public class CanvasManager : Singleton<CanvasManager>
     }
 
 
-
+    public void ActiveLoadScreen() => SceneManager.LoadScene("5.LoadLevel");
 
 
 
@@ -223,6 +224,5 @@ public class CanvasManager : Singleton<CanvasManager>
     [SerializeField] float latence = 0.1f;
 
     #endregion
-
 
 }
