@@ -17,23 +17,24 @@ public class Interaction : MonoBehaviour
     public whichPlayer whichPlayer;
     [SerializeField] 
     public bool activated;
-    [SerializeField] 
-    private GameObject _feedBackActivated;
+    [Space]
 
-    //[HideInInspector]
+
+    [HideInInspector]
     public PlayerController PlayerControlRef;
     private PlayerController playerControlGet;
 
-    [Space]
     [Header("Pince")]
     public bool Pince;
     [SerializeField] Transform pointArrive;
     [HideInInspector] public bool ActivePince;
 
-    public bool Distributeur;
 
     public Transform[] Portes;
 
+    public bool Distributeur;
+    [SerializeField]
+    private GameObject _feedBackActivated;
     [Header("Sound")]
     public string SoundName;
 

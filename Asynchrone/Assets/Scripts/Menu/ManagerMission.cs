@@ -36,12 +36,14 @@ public class ManagerMission : MonoBehaviour
             Text t = bt.GetComponentInChildren<Text>();
             t.text = "MISSION " + i + " : " + missions[i].Name;
         }
+        PlayerPrefs.SetInt("indexLevel", 0);
+        PlayerPrefs.SetString("nameLevel", "");
     }
     public void LoadScene(int i) 
     {
         PlayerPrefs.SetInt("indexLevel", i);
         //PlayerPrefs.SetString("nameLevel", nameOfNextlevel);
-        SceneManager.LoadScene("5.LoadLevel"); 
+        SceneManager.LoadScene("5.LoadLevel");
     }
 
 
