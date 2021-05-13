@@ -43,7 +43,11 @@ public class CanvasManager : Singleton<CanvasManager>
     [SerializeField]
     private Text textDiversion, textCrouch, textSwitchCamera;
 
-
+    #region UIInteraction
+    [Header("Interaction UI")]
+    public Transform accrocheInteraction;
+    public Transform accrocheAIstate;
+    #endregion
 
 
     void Awake()                                        //AWAKE
@@ -144,13 +148,6 @@ public class CanvasManager : Singleton<CanvasManager>
         textCrouch.text = managerPlayers.InputCrouch.ToString();
         textSwitchCamera.text = managerPlayers.InputSwitchCamera.ToString();
     }
-    #endregion
-
-
-    #region UIInteraction
-    [Header("Interaction UI")]
-    public Transform accrocheInteraction;
-    public Transform accrocheAIstate;
     #endregion
 
 
