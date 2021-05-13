@@ -122,6 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6508073628525515280}
   - component: {fileID: 6508073628525515279}
+  - component: {fileID: 41542023709562858}
   - component: {fileID: 264883018}
   - component: {fileID: 4874263778179830711}
   - component: {fileID: 8716558454318549394}
@@ -163,16 +164,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SetColor: 0
-  _whichPlayer: 0
-  Pince: 0
-  Distributeur: 0
-  _pointArrive: {fileID: 0}
-  ActivePince: 0
+  whichPlayer: 0
   activated: 0
-  cinematic: 1
-  Influence:
-  - {fileID: 1101013228}
+  myUI: {fileID: 0}
+  myRenderer: {fileID: 8716558454318549394}
+  PlayerControlRef: {fileID: 0}
+  Pince: 0
+  pointArrive: {fileID: 0}
+  ActivePince: 0
+  Portes: []
+  Distributeur: 0
   _feedBackActivated: {fileID: 8985580692971342515}
+  SoundName: 
+--- !u!114 &41542023709562858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6508073628525515284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0.9740486, g: 1, b: 0, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!208 &264883018
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -196,7 +217,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6508073628525515284}
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &8716558454318549394
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -323,7 +344,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.88550174, b: 0, a: 1}
   m_Intensity: 2
   m_Range: 2
   m_SpotAngle: 30

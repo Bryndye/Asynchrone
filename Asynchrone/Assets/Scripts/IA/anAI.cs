@@ -142,7 +142,7 @@ public class anAI : MonoBehaviour
         if (Comportement == myBehaviour.Patrol)
             NextPatrolStep();
 
-        myUI = Instantiate(Resources.Load<GameObject>("UI/aFollowingState"));
+        myUI = Instantiate(Resources.Load<GameObject>("UI/Following/aFollowingState"));
         myUI.GetComponent<AIStateUI>().Declaration(this);
     }
 

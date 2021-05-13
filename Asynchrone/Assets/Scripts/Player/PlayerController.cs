@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     public NavMeshAgent NavPlayer;
     private ManagerPlayers managerPlayers;
     private SpawnMANAGER spawnManager;
-    [HideInInspector] 
+    //[HideInInspector] 
     public bool CanPlay = true;
 
     [Space]
@@ -287,7 +287,18 @@ public class PlayerController : MonoBehaviour
     private float cooldownInteraction = 1f;
     private void StopPlayerWhenAction()
     {
-        CanPlay = true;
+        if (managerPlayers.onPlayerHuman && managerPlayers.PlayerControllerHm == this)
+        {
+            CanPlay = true;
+        }
+        else if (!managerPlayers.onPlayerHuman && managerPlayers.PlayerCntrlerRbt == this)
+        {
+            CanPlay = true;
+        }
+        else
+        {
+            CanPlay = false;   
+        }
     }
 
     #endregion

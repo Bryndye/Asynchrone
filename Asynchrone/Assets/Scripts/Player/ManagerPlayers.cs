@@ -52,16 +52,7 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
         if (PlayerRobotTransform != null)
             PlayerCntrlerRbt = PlayerRobotTransform.GetComponent<PlayerController>();
 
-        if (PlayerHumanTransform != null && PlayerRobotTransform != null)
-        {
-            Camera_Manager();
-        }
-        else
-        {
-            cameraManager.Target = PlayerControllerHm.transform;
-            PlayerControllerHm.CanPlay = true;
-            onPlayerHuman = true;
-        }
+        Camera_Manager();
     }
 
     private void Update()
@@ -79,20 +70,7 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
         {
             onPlayerHuman = !onPlayerHuman;
 
-            if (onPlayerHuman)
-            {
-                //if (canvasManager.ProfilPlayer != null)
-                //    canvasManager.ProfilPlayer.sprite = null;
-
-                cameraManager.Target = PlayerHumanTransform;
-            }
-            else
-            {
-                //if (!canvasManager.ProfilPlayer)
-                //    canvasManager.ProfilPlayer.sprite = null;
-
-                cameraManager.Target = PlayerRobotTransform;
-            }
+            cameraManager.Target = onPlayerHuman ? PlayerHumanTransform : PlayerRobotTransform;
 
             PlayerControllerHm.CanPlay = onPlayerHuman;
             PlayerCntrlerRbt.CanPlay = !onPlayerHuman;
@@ -106,8 +84,6 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
         else
         {
             onPlayerHuman = true;
-            //if (canvasManager.ProfilPlayer != null)
-            //    canvasManager.ProfilPlayer.sprite = null;
 
             cameraManager.Target = PlayerHumanTransform;
             PlayerControllerHm.CanPlay = onPlayerHuman;
@@ -116,6 +92,7 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
             {
                 canvasManager.UIHuman.SetActive(true);
                 canvasManager.UIRobot.SetActive(false);
+                Debug.Log("bye");
             }
         }
     }

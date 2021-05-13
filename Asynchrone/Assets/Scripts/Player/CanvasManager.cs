@@ -43,7 +43,11 @@ public class CanvasManager : Singleton<CanvasManager>
     [SerializeField]
     private Text textDiversion, textCrouch, textSwitchCamera;
 
-
+    #region UIInteraction
+    [Header("Interaction UI")]
+    public Transform accrocheInteraction;
+    public Transform accrocheAIstate;
+    #endregion
 
 
     void Awake()                                        //AWAKE
@@ -148,11 +152,10 @@ public class CanvasManager : Singleton<CanvasManager>
 
 
 
-
     #region Daliogue
 
-    
-     IEnumerator Type()
+
+    IEnumerator Type()
      {
          zoneDialogue.SetActive(true);
          LaunchAudio();
