@@ -400,6 +400,7 @@ public class anAI : MonoBehaviour
         if (!UseViewRadius) newViewRadius = HearsRadius;
         Vector3 dir = DirFromAngle(globalAngle, true);
         RaycastHit hit;
+        Debug.DrawRay(RaycastPosition, dir * newViewRadius, Color.red);
 
         if (Physics.Raycast(RaycastPosition, dir, out hit, newViewRadius, AffectedLayer))
         {

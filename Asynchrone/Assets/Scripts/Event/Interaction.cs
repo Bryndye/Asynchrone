@@ -39,8 +39,9 @@ public class Interaction : MonoBehaviour
     public bool Distributeur;
     [SerializeField]
     private GameObject _feedBackActivated;
-    [Header("Sound")]
-    public string SoundName;
+    [Header("Sounds")]
+    public string InteractiveSoundName;
+    public string InteractionSoundName;
 
 
     private void Awake() { 
@@ -96,9 +97,9 @@ public class Interaction : MonoBehaviour
             //Debug.Log("Event called");
             activated = true;
 
-            if(SoundName != "")
+            if(InteractiveSoundName != "")
             {
-                SoundM.GetASound(SoundName, transform);
+                SoundM.GetASound(InteractiveSoundName, transform);
             }
 
             for (int i = 0; i < Portes.Length; i++)
@@ -108,6 +109,11 @@ public class Interaction : MonoBehaviour
                     Portes[i].gameObject.SetActive(!Portes[i].gameObject.activeSelf);
                     if (cameraManager != null)
                         cameraManager.GetTargetPorte(Portes);
+
+                    if (InteractionSoundName != "")
+                    {
+                        SoundM.GetASound(InteractionSoundName, Portes[i].transform);
+                    }
                 }
             }
 
@@ -126,6 +132,7 @@ public class Interaction : MonoBehaviour
             //trigger Anim successfull
             managerPlayers.RobotPlayer.HasDiversion = true;
             Debug.Log("Distri ++");
+            SoundM.GetASound("DiversionGet", transform);
         }
         else
         {
@@ -142,6 +149,8 @@ public class Interaction : MonoBehaviour
                 dia[0] = "Je suis déjà rechargé à bloc!";
                 canvasManager.StartDiaEffect(dia);
             }
+
+            SoundM.GetASound("DiversionFull", transform, true);
         }
     }
 

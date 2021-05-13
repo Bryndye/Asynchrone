@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SoundManager : Singleton<SoundManager>
 {
-    public List<GameObject> SFX_Pool;
+    [HideInInspector]public List<GameObject> SFX_Pool;
     int PoolIndex = 0;
 
     private void Awake()
@@ -20,6 +21,9 @@ public class SoundManager : Singleton<SoundManager>
             GameObject newAudio = Instantiate(Resources.Load<GameObject>("Audio/aSFX"), transform.position, transform.rotation, transform);
             SFX_Pool.Add(newAudio);
         }
+
+        if (SceneManager.GetActiveScene().buildIndex > 1)
+            GetASound("Ascenseur_Ouverture", null, true);
     }
 
     public void GetASound(string mySoundName, Transform myNewParent, bool isUI = false)

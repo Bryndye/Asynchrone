@@ -26,6 +26,13 @@ public class LoadLevel : MonoBehaviour
             return CameraManager.Instance;
         }
     }
+    SoundManager SM
+    {
+        get
+        {
+            return SoundManager.Instance;
+        }
+    }
 
     [SerializeField] private int indexOfNextlevel;
     [SerializeField] private string nameOfNextlevel;
@@ -59,6 +66,7 @@ public class LoadLevel : MonoBehaviour
             mp.PlayerCntrlerRbt.InCinematic = true;
             done = true;
             cm.anim.SetTrigger("Transition");
+            SM.GetASound("Ascenseur_Fermeture", transform);
         }
     }
 

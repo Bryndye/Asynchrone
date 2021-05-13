@@ -6,6 +6,7 @@ public class Trap_script : MonoBehaviour
 {
     private ManagerPlayers mp;
     private LineRenderer lr;
+    SoundManager SM;
 
     [SerializeField] private GameObject trap1;
     [SerializeField] private GameObject trap2;
@@ -17,6 +18,7 @@ public class Trap_script : MonoBehaviour
     private void Awake()
     {
         mp = ManagerPlayers.Instance;
+        SM = SoundManager.Instance;
 
         lr = GetComponent<LineRenderer>();
         lr.enabled = false;
@@ -39,6 +41,9 @@ public class Trap_script : MonoBehaviour
             //Debug.Log(trap2.name + " called!");
             mp.PlayerCntrlerRbt.NavPlayer.Warp(trap1.transform.GetChild(0).position);
         }
+
+        if (trapIndex)
+            SM.GetASound("Hatch", trapIndex.transform);
     }
 
 

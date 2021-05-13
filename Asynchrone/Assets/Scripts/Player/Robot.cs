@@ -7,7 +7,7 @@ public class Robot : Singleton<Robot>
 {
     NavMeshAgent nav;
     ManagerPlayers managerPlayers;
-
+    SoundManager SM;
 
     [Header("Diversion")]
     [SerializeField] LayerMask ignoreWall;
@@ -31,6 +31,7 @@ public class Robot : Singleton<Robot>
     {
         nav = GetComponent<NavMeshAgent>();
         managerPlayers = ManagerPlayers.Instance;
+        SM = SoundManager.Instance;
         managerPlayers.RobotPlayer = this;
         managerPlayers.PlayerRobotTransform = transform;
 
@@ -78,6 +79,7 @@ public class Robot : Singleton<Robot>
             if (CheckWall(dir, point))
             {
                 RobotDiv = Instantiate(Resources.Load<GameObject>("Player/Fake_Robot"), point, Quaternion.identity);
+                SM.GetASound("DiversionSet", RobotDiv.transform);
                 StockDivManager();
                 CanDiv = false;
             }
