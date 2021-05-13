@@ -119,12 +119,13 @@ public class Interaction : MonoBehaviour
 
     public void CallDistri() 
     {
-        activated = true;
+        //activated = true;
 
         if (!managerPlayers.RobotPlayer.HasDiversion && !managerPlayers.onPlayerHuman)
         {
             //trigger Anim successfull
             managerPlayers.RobotPlayer.HasDiversion = true;
+            Debug.Log("Distri ++");
         }
         else
         {

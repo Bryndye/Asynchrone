@@ -126,6 +126,7 @@ GameObject:
   - component: {fileID: 277344023236080260}
   - component: {fileID: 5652556711283361426}
   - component: {fileID: 7577279752577882183}
+  - component: {fileID: 154764474146523057}
   m_Layer: 13
   m_Name: Interaction bt (2)
   m_TagString: Interaction
@@ -177,7 +178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SetColor: 0
-  whichPlayer: 0
+  whichPlayer: 1
   activated: 0
   myUI: {fileID: 0}
   myRenderer: {fileID: 5652556711283361426}
@@ -251,6 +252,24 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1.1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &154764474146523057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1338144312977359928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 3
+  outlineColor: {r: 0.24705884, g: 0.7254902, b: 0.9686275, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &1338144313764349123
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,7 +360,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.88550174, b: 0, a: 1}
   m_Intensity: 2
   m_Range: 2
   m_SpotAngle: 30
@@ -405,6 +424,7 @@ GameObject:
   - component: {fileID: 3805037631596117295}
   - component: {fileID: 9126160547683205711}
   - component: {fileID: 922677950901785736}
+  - component: {fileID: 4553741297962042390}
   m_Layer: 13
   m_Name: Interaction bt (1)
   m_TagString: Interaction
@@ -530,6 +550,24 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1.1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4553741297962042390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6828916949274133116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 3
+  outlineColor: {r: 1, g: 0.88550174, b: 0, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &8679022184346968940
 GameObject:
   m_ObjectHideFlags: 0
