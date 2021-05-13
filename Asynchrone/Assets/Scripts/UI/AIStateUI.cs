@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class AIStateUI : MonoBehaviour
 {
-    CanvasHolder CH;
+    CanvasManager canvasManager;
 
     [Header("Composants")]
     public Image FondInterrogation;
@@ -16,8 +16,8 @@ public class AIStateUI : MonoBehaviour
 
     public void Declaration(anAI ToFollow)
     {
-        CH = CanvasHolder.Instance;
-        transform.parent = CH.transform.GetChild(3);
+        canvasManager = CanvasManager.Instance;
+        transform.parent = canvasManager.accrocheAIstate;
 
         FondInterrogation.gameObject.SetActive(false);
         InterrogationAmount.fillAmount = 0;

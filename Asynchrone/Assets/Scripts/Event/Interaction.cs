@@ -17,6 +17,10 @@ public class Interaction : MonoBehaviour
     public whichPlayer whichPlayer;
     [SerializeField] 
     public bool activated;
+    [SerializeField]
+    private GameObject myUI;
+    [SerializeField]
+    private Renderer myRenderer;
     [Space]
 
 
@@ -46,6 +50,27 @@ public class Interaction : MonoBehaviour
 
         if (_feedBackActivated != null)
             _feedBackActivated.SetActive(false);
+
+        SetUI();
+    }
+
+    private void SetUI()
+    {
+        myRenderer = GetComponent<Renderer>();
+        if (myRenderer == null)
+        {
+            myRenderer = GetComponentInChildren<Renderer>();
+        }
+
+        if (whichPlayer == whichPlayer.Human)
+        {
+            myUI = Instantiate(Resources.Load<GameObject>("UI/Following/Interaction Humain"));
+        }
+        else
+        {
+            myUI = Instantiate(Resources.Load<GameObject>("UI/Following/Interaction Robot"));
+        }
+        myUI.GetComponent<InteractionUI>().Declaration(myRenderer);
     }
 
     private void Start()

@@ -163,16 +163,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SetColor: 0
-  _whichPlayer: 0
-  Pince: 0
-  Distributeur: 0
-  _pointArrive: {fileID: 0}
-  ActivePince: 0
+  whichPlayer: 0
   activated: 0
-  cinematic: 1
-  Influence:
-  - {fileID: 1101013228}
+  myUI: {fileID: 0}
+  myRenderer: {fileID: 8716558454318549394}
+  PlayerControlRef: {fileID: 0}
+  Pince: 0
+  pointArrive: {fileID: 0}
+  ActivePince: 0
+  Portes: []
+  Distributeur: 0
   _feedBackActivated: {fileID: 8985580692971342515}
+  SoundName: 
 --- !u!208 &264883018
 NavMeshObstacle:
   m_ObjectHideFlags: 0

@@ -158,15 +158,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SetColor: 0
-  _whichPlayer: 1
-  Pince: 0
-  Distributeur: 1
-  _pointArrive: {fileID: 0}
-  ActivePince: 0
+  whichPlayer: 0
   activated: 0
-  cinematic: 0
-  Influence: []
+  myUI: {fileID: 0}
+  myRenderer: {fileID: 4149909757929252764}
+  PlayerControlRef: {fileID: 0}
+  Pince: 0
+  pointArrive: {fileID: 0}
+  ActivePince: 0
+  Portes: []
+  Distributeur: 1
   _feedBackActivated: {fileID: 0}
+  SoundName: 
 --- !u!1001 &7539791113151507
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -243,5 +246,10 @@ PrefabInstance:
 --- !u!4 &545058816518489080 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 12015f3ebae61c7429606a652b740fd0, type: 3}
+  m_PrefabInstance: {fileID: 7539791113151507}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &4149909757929252764 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4147174887413646223, guid: 12015f3ebae61c7429606a652b740fd0, type: 3}
   m_PrefabInstance: {fileID: 7539791113151507}
   m_PrefabAsset: {fileID: 0}

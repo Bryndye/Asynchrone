@@ -147,12 +147,18 @@ public class CanvasManager : Singleton<CanvasManager>
     #endregion
 
 
+    #region UIInteraction
+    [Header("Interaction UI")]
+    public Transform accrocheInteraction;
+    public Transform accrocheAIstate;
+    #endregion
+
 
 
     #region Daliogue
 
-    
-     IEnumerator Type()
+
+    IEnumerator Type()
      {
          zoneDialogue.SetActive(true);
          LaunchAudio();

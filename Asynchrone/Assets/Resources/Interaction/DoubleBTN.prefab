@@ -177,15 +177,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SetColor: 0
-  _whichPlayer: 0
-  Pince: 0
-  Distributeur: 0
-  _pointArrive: {fileID: 0}
-  ActivePince: 0
+  whichPlayer: 0
   activated: 0
-  cinematic: 1
-  Influence: []
+  myUI: {fileID: 0}
+  myRenderer: {fileID: 5652556711283361426}
+  PlayerControlRef: {fileID: 0}
+  Pince: 0
+  pointArrive: {fileID: 0}
+  ActivePince: 0
+  Portes: []
+  Distributeur: 0
   _feedBackActivated: {fileID: 8679022184346968940}
+  SoundName: 
 --- !u!33 &277344023236080260
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -453,15 +456,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SetColor: 0
-  _whichPlayer: 1
-  Pince: 0
-  Distributeur: 0
-  _pointArrive: {fileID: 0}
-  ActivePince: 0
+  whichPlayer: 0
   activated: 0
-  cinematic: 1
-  Influence: []
+  myUI: {fileID: 0}
+  myRenderer: {fileID: 9126160547683205711}
+  PlayerControlRef: {fileID: 0}
+  Pince: 0
+  pointArrive: {fileID: 0}
+  ActivePince: 0
+  Portes: []
+  Distributeur: 0
   _feedBackActivated: {fileID: 1440257186523510474}
+  SoundName: 
 --- !u!33 &3805037631596117295
 MeshFilter:
   m_ObjectHideFlags: 0
