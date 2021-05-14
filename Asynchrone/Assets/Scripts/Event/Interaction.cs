@@ -176,7 +176,11 @@ public class Interaction : MonoBehaviour
         {
             if (_feedBackActivated != null)
             {
-                _feedBackActivated.GetComponent<Light>().color = whichPlayer == whichPlayer.Human ? Color.cyan : Color.red;
+                _feedBackActivated.GetComponent<Light>().color = whichPlayer == whichPlayer.Human ? Color.yellow : Color.cyan;
+            }
+            if (TryGetComponent(out Outline outline))
+            {
+                outline.OutlineColor = whichPlayer == whichPlayer.Human ? Color.yellow : Color.cyan;
             }
             SetColor = false;
         }
