@@ -63,7 +63,9 @@ public class CanvasManager : Singleton<CanvasManager>
         anim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
 
-        anim.SetTrigger("Disappear");
+        if (anim != null)
+            anim.SetTrigger("Disappear");
+
     }
 
 
@@ -78,10 +80,36 @@ public class CanvasManager : Singleton<CanvasManager>
         SetInputText();
     }
 
+    #region LoadLevel
+    public void ActiveLoadScreen() => StartCoroutine(LoadScene());
 
-    public void ActiveLoadScreen() => SceneManager.LoadScene("5.LoadLevel");
+    IEnumerator LoadScene()
+    {
+        yield return null;
 
+        //Begin to load the Scene you specify
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync("5.LoadLevel");
 
+        //Don't let the Scene activate until you allow it to
+        asyncOperation.allowSceneActivation = false;
+
+        //When the load is still in progress, output the Text and progress bar
+        while (!asyncOperation.isDone)
+        {
+            //Output the current progress
+            //Debug.Log("Pro :" + asyncOperation.progress);
+
+            // Check if the load has finished
+            if (asyncOperation.progress >= 0.9f)
+            {
+                //Wait to you press the space key to activate the Scene
+                asyncOperation.allowSceneActivation = true;
+            }
+
+            yield return null;
+        }
+    }
+    #endregion
 
     #region ButtonSpell
     public void SwitchCamera() => managerPlayers.Camera_Manager();
@@ -144,6 +172,10 @@ public class CanvasManager : Singleton<CanvasManager>
 
     private void SetInputText()
     {
+        if (textDiversion == null)
+        {
+            return;
+        }
         textDiversion.text = managerPlayers.InputDiversion.ToString();
         textCrouch.text = managerPlayers.InputCrouch.ToString();
         textSwitchCamera.text = managerPlayers.InputSwitchCamera.ToString();
