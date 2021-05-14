@@ -76,7 +76,6 @@ public class Interaction : MonoBehaviour
 
     private void Start()
     {
-        //Set which player has the right to use it
         PlayerControlRef = whichPlayer == whichPlayer.Human ? managerPlayers.PlayerControllerHm : managerPlayers.PlayerCntrlerRbt;
     }
 
