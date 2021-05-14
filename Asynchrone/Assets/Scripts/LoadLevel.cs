@@ -33,6 +33,13 @@ public class LoadLevel : MonoBehaviour
             return SoundManager.Instance;
         }
     }
+    MusicManager MM
+    {
+        get
+        {
+            return MusicManager.Instance;
+        }
+    }
 
     [SerializeField] private int indexOfNextlevel;
     [SerializeField] private string nameOfNextlevel;
@@ -68,6 +75,7 @@ public class LoadLevel : MonoBehaviour
                 done = true;
                 cm.anim.SetTrigger("Transition");
                 SM.GetASound("Ascenseur_Fermeture", transform);
+                MM.CloseMusic();
             }
         }
         else if (players.Count >= 1)
