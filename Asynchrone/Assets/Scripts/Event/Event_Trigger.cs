@@ -150,12 +150,12 @@ public class Event_Trigger : MonoBehaviour
         if (eventToTrigger == typeEvent.Porte1side)
         {
             Gizmos.color = Color.yellow;
-            Gizmos.DrawCube(transform.localPosition + new Vector3(0, 1, -1), new Vector3(2, 2, 1));
+            Gizmos.DrawCube(transform.position + new Vector3(0, 1, -1), new Vector3(2, 2, 1));
         }
         else
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawCube(transform.localPosition, new Vector3(1,1,1)) ;
+            Gizmos.DrawCube(transform.position, new Vector3(1,1,1)) ;
         }
     }
 

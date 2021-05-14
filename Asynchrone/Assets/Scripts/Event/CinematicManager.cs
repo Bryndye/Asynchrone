@@ -9,24 +9,35 @@ public class CinematicManager : MonoBehaviour
     [SerializeField] Animator anim;
     CanvasManager cm;
 
-    private void Awake() { 
+    Camera cameraMain;
+
+    private void Awake() 
+    { 
         anim.enabled = false;
         mP = ManagerPlayers.Instance;
         cm = CanvasManager.Instance;
+
+        cameraMain = Camera.main;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            if (cm)
-            {
-                cm.BandeAppear();
-            }
+            //if (cm)
+            //{
+            //    cm.BandeAppear();
+            //}
+            //anim.enabled = true;
+
             checkInCinematic(true);
-            anim.enabled = true;
             Invoke(nameof(EndCinematic), time);
         }
+    }
+
+    private void Update()
+    {
+        
     }
 
     private void EndCinematic()
@@ -39,15 +50,15 @@ public class CinematicManager : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void checkInCinematic(bool ok)
+    private void checkInCinematic(bool inCinematic)
     {
         if (mP.PlayerControllerHm)
         {
-            mP.PlayerControllerHm.InCinematic = ok;
+            mP.PlayerControllerHm.InCinematic = inCinematic;
         }
         if (mP.PlayerCntrlerRbt)
         {
-            mP.PlayerCntrlerRbt.InCinematic = ok;
+            mP.PlayerCntrlerRbt.InCinematic = inCinematic;
         }
     }
 }
