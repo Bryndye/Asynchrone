@@ -52,7 +52,7 @@ public class Interaction : MonoBehaviour
         if (_feedBackActivated != null)
             _feedBackActivated.SetActive(false);
 
-        SetUI();
+
     }
 
     private void SetUI()
@@ -77,6 +77,8 @@ public class Interaction : MonoBehaviour
     private void Start()
     {
         PlayerControlRef = whichPlayer == whichPlayer.Human ? managerPlayers.PlayerControllerHm : managerPlayers.PlayerCntrlerRbt;
+        SetUI();
+        SetColorOutline();
     }
 
     public void SetPlayerController(PlayerController pcCalled) => playerControlGet = pcCalled;
@@ -169,6 +171,11 @@ public class Interaction : MonoBehaviour
 
 
     private void OnDrawGizmosSelected()
+    {
+        SetColorOutline();
+    }
+
+    private void SetColorOutline()
     {
         if (_feedBackActivated != null)
         {
