@@ -10,35 +10,30 @@ public class CinematicManager : MonoBehaviour
     CanvasManager cm;
 
     Camera cameraMain;
+    Camera cameraCinematic;
 
     private void Awake() 
     { 
-        anim.enabled = false;
         mP = ManagerPlayers.Instance;
         cm = CanvasManager.Instance;
 
-        cameraMain = Camera.main;
-    }
+        //cameraMain = Camera.main;
+        //cameraCinematic = transform.GetChild(0).GetComponent<Camera>();
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
+        if (cm)
         {
-            //if (cm)
-            //{
-            //    cm.BandeAppear();
-            //}
-            //anim.enabled = true;
-
-            checkInCinematic(true);
-            Invoke(nameof(EndCinematic), time);
+            cm.BandeAppear();
         }
+
+        checkInCinematic(true);
+        Invoke(nameof(EndCinematic), time);
     }
 
-    private void Update()
-    {
-        
-    }
+    //private void Update()
+    //{
+    //    cameraCinematic.transform.position = Vector3.Lerp(cameraCinematic.transform.position, cameraMain.transform.position, time * 100);
+    //    cameraCinematic.transform.eulerAngles = Vector3.Lerp(cameraCinematic.transform.eulerAngles, cameraMain.transform.eulerAngles, time * 100);
+    //}
 
     private void EndCinematic()
     {
