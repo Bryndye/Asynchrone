@@ -13273,7 +13273,7 @@ Light:
   m_BounceIntensity: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 1.5835e-41, z: 0, w: 0.0000000024592737}
+  m_BoundingSphereOverride: {x: 7.08e-43, y: 7.67e-43, z: 0, w: -5.630657}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -14783,6 +14783,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1550823613}
     m_Modifications:
+    - target: {fileID: 154764474146523057, guid: 91b0275887ce9e44cbc027b8b859adeb, type: 3}
+      propertyPath: outlineColor.b
+      value: 0.015686275
+      objectReference: {fileID: 0}
+    - target: {fileID: 154764474146523057, guid: 91b0275887ce9e44cbc027b8b859adeb, type: 3}
+      propertyPath: outlineColor.g
+      value: 0.92156863
+      objectReference: {fileID: 0}
+    - target: {fileID: 154764474146523057, guid: 91b0275887ce9e44cbc027b8b859adeb, type: 3}
+      propertyPath: outlineColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 277344023236080260, guid: 91b0275887ce9e44cbc027b8b859adeb, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -14965,19 +14977,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7409628508423567976, guid: 91b0275887ce9e44cbc027b8b859adeb, type: 3}
       propertyPath: m_BoundingSphereOverride.w
-      value: 1e-45
+      value: 1.04e-43
       objectReference: {fileID: 0}
     - target: {fileID: 7409628508423567976, guid: 91b0275887ce9e44cbc027b8b859adeb, type: 3}
       propertyPath: m_BoundingSphereOverride.x
-      value: 3e-45
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7409628508423567976, guid: 91b0275887ce9e44cbc027b8b859adeb, type: 3}
       propertyPath: m_BoundingSphereOverride.y
-      value: 0
+      value: 1.5e-44
       objectReference: {fileID: 0}
     - target: {fileID: 7409628508423567976, guid: 91b0275887ce9e44cbc027b8b859adeb, type: 3}
       propertyPath: m_BoundingSphereOverride.z
-      value: 0
+      value: 1.4344e-41
       objectReference: {fileID: 0}
     - target: {fileID: 9126160547683205711, guid: 91b0275887ce9e44cbc027b8b859adeb, type: 3}
       propertyPath: m_Materials.Array.data[0]
