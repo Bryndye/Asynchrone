@@ -40,8 +40,8 @@ public class Interaction : MonoBehaviour
     [SerializeField]
     private GameObject _feedBackActivated;
     [Header("Sounds")]
-    public string InteractiveSoundName;
-    public string InteractionSoundName;
+    string InteractiveSoundName;
+    string InteractionSoundName;
 
 
     private void Awake() { 
@@ -76,7 +76,6 @@ public class Interaction : MonoBehaviour
 
     private void Start()
     {
-        //Set which player has the right to use it
         PlayerControlRef = whichPlayer == whichPlayer.Human ? managerPlayers.PlayerControllerHm : managerPlayers.PlayerCntrlerRbt;
     }
 
@@ -94,13 +93,12 @@ public class Interaction : MonoBehaviour
     {
         if (!activated && PlayerControlRef == playerControlGet)
         {
-            //Debug.Log("Event called");
             activated = true;
 
-            if(InteractiveSoundName != "")
-            {
-                SoundM.GetASound(InteractiveSoundName, transform);
-            }
+            if(whichPlayer == whichPlayer.Human)
+                SoundM.GetASound("Button_Clic", transform);
+            else if (whichPlayer == whichPlayer.Robot)
+                SoundM.GetASound("Hack", transform);
 
             for (int i = 0; i < Portes.Length; i++)
             {
@@ -112,7 +110,7 @@ public class Interaction : MonoBehaviour
 
                     if (InteractionSoundName != "")
                     {
-                        SoundM.GetASound(InteractionSoundName, Portes[i].transform);
+                        SoundM.GetASound("Porte", Portes[i].transform);
                     }
                 }
             }
