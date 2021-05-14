@@ -18,7 +18,7 @@ public class CinematicManager : MonoBehaviour
         cm = CanvasManager.Instance;
 
         //cameraMain = Camera.main;
-        //cameraCinematic = transform.GetChild(0).GetComponent<Camera>();
+        cameraCinematic = transform.GetChild(0).GetComponent<Camera>();
 
         if (cm)
         {
@@ -42,7 +42,8 @@ public class CinematicManager : MonoBehaviour
             cm.BandeDisAppear();
         }
         checkInCinematic(false);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        //Destroy(gameObject);
     }
 
     private void checkInCinematic(bool inCinematic)
