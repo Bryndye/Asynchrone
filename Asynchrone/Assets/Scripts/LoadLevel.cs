@@ -59,14 +59,22 @@ public class LoadLevel : MonoBehaviour
                 players.Add(other.gameObject);
             }
         }
-
-        if (players.Count >= 2 || mp.PlayerRobotTransform == null && players.Count >= 1)
+        if (mp != null)
         {
-            mp.PlayerControllerHm.InCinematic = true;
-            mp.PlayerCntrlerRbt.InCinematic = true;
+            if (players.Count >= 2 || mp.PlayerRobotTransform == null && players.Count >= 1)
+            {
+                mp.PlayerControllerHm.InCinematic = true;
+                mp.PlayerCntrlerRbt.InCinematic = true;
+                done = true;
+                cm.anim.SetTrigger("Transition");
+                SM.GetASound("Ascenseur_Fermeture", transform);
+            }
+        }
+        else if (players.Count >= 1)
+        {
             done = true;
-            cm.anim.SetTrigger("Transition");
-            SM.GetASound("Ascenseur_Fermeture", transform);
+            cm.ActiveLoadScreen();
+            //SM.GetASound("Ascenseur_Fermeture", transform);
         }
     }
 
