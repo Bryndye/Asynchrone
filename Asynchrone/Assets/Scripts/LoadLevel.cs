@@ -71,7 +71,8 @@ public class LoadLevel : MonoBehaviour
             if (players.Count >= 2 || mp.PlayerRobotTransform == null && players.Count >= 1)
             {
                 mp.PlayerControllerHm.InCinematic = true;
-                mp.PlayerCntrlerRbt.InCinematic = true;
+                if(mp.PlayerRobotTransform != null)
+                    mp.PlayerCntrlerRbt.InCinematic = true;
                 done = true;
                 cm.anim.SetTrigger("Transition");
                 SM.GetASound("Ascenseur_Fermeture", transform);
