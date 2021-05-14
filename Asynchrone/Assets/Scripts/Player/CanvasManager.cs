@@ -10,8 +10,9 @@ public class CanvasManager : Singleton<CanvasManager>
     ManagerPlayers managerPlayers;
     PlayerController playerController;
 
-    [HideInInspector] 
+    [HideInInspector]
     public Animator anim;
+
     [SerializeField] 
     private GameObject checkpoint_t;
 
@@ -59,13 +60,8 @@ public class CanvasManager : Singleton<CanvasManager>
         {
             managerPlayers = ManagerPlayers.Instance;
         }
-
         anim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
-
-        if (anim != null)
-            anim.SetTrigger("Disappear");
-
     }
 
 

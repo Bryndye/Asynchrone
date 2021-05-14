@@ -92,7 +92,6 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
             {
                 canvasManager.UIHuman.SetActive(true);
                 canvasManager.UIRobot.SetActive(false);
-                Debug.Log("bye");
             }
         }
     }

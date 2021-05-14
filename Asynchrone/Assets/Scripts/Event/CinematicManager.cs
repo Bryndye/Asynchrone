@@ -19,7 +19,10 @@ public class CinematicManager : MonoBehaviour
 
         //cameraMain = Camera.main;
         cameraCinematic = transform.GetChild(0).GetComponent<Camera>();
+    }
 
+    private void Start()
+    {
         if (cm)
         {
             cm.BandeAppear();
