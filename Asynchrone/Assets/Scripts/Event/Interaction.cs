@@ -168,19 +168,15 @@ public class Interaction : MonoBehaviour
 
 
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
-        if (SetColor)
+        if (_feedBackActivated != null)
         {
-            if (_feedBackActivated != null)
-            {
-                _feedBackActivated.GetComponent<Light>().color = whichPlayer == whichPlayer.Human ? Color.yellow : Color.cyan;
-            }
-            if (TryGetComponent(out Outline outline))
-            {
-                outline.OutlineColor = whichPlayer == whichPlayer.Human ? Color.yellow : Color.cyan;
-            }
-            SetColor = false;
+            _feedBackActivated.GetComponent<Light>().color = whichPlayer == whichPlayer.Human ? Color.yellow : Color.cyan;
+        }
+        if (TryGetComponent(out Outline outline))
+        {
+            outline.OutlineColor = whichPlayer == whichPlayer.Human ? Color.yellow : Color.cyan;
         }
     }
 }
