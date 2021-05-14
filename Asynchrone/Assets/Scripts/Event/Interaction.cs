@@ -110,7 +110,7 @@ public class Interaction : MonoBehaviour
 
                     if (InteractionSoundName != "")
                     {
-                        SoundM.GetASound("Porte", Portes[i].transform);
+                        SoundM.GetASound("Porte", transform);
                     }
                 }
             }
