@@ -20,6 +20,7 @@ public class anAI : MonoBehaviour
     [Header("Composants")]
     NavMeshAgent myNavMeshAgent;
     [HideInInspector] public AudioSource myVoice;
+    [HideInInspector] public AudioSource myMoveSound;
     public GameObject SkinRobot;
     public GameObject SkinDrone;
 
@@ -107,8 +108,13 @@ public class anAI : MonoBehaviour
         viewMeshFilter3 = transform.GetChild(2).GetComponent<MeshFilter>();
 
         myNavMeshAgent = GetComponent<NavMeshAgent>();
-        myVoice = GetComponentInChildren<AudioSource>();
-
+        myVoice = transform.GetChild(5).GetComponent<AudioSource>();
+        myMoveSound = transform.GetChild(6).GetComponent<AudioSource>();
+        if(myClasse == Classe.Basic)
+            myMoveSound.clip = Resources.Load<AudioClip>("Audio/SFXClips/Propulsor");
+        else
+            myMoveSound.clip = Resources.Load<AudioClip>("Audio/SFXClips/Drone");
+        myMoveSound.Play();
         SM = SpawnMANAGER.Instance;
         IAM = IAManager.Instance;
         SoundM = SoundManager.Instance;
@@ -966,6 +972,10 @@ public class anAI : MonoBehaviour
         MM.PressureKeepersCount = 0;
         Vus[0].GetComponent<PlayerController>().Death();
         SM.mySpawnSituation = SpawnSituation.DeathProcess;
+        if(myClasse == Classe.Basic)
+            SoundM.GetASound("RoboticPunch", transform);
+        else
+            SoundM.GetASound("Taser", transform);
     }
 
     #endregion

@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public NavMeshAgent NavPlayer;
     private ManagerPlayers managerPlayers;
     private SpawnMANAGER spawnManager;
+    SoundManager SM;
     //[HideInInspector] 
     public bool CanPlay = true;
 
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour
     {
         managerPlayers = ManagerPlayers.Instance;
         spawnManager = SpawnMANAGER.Instance;
+        SM = SoundManager.Instance;
         NavPlayer = GetComponent<NavMeshAgent>();
 
         AnimPlayer = GetComponentInChildren<Animator>();
@@ -208,6 +210,7 @@ public class PlayerController : MonoBehaviour
                     {
                         SetDesination(raycastNull());
                         SetAnim("Attack", false, true);
+                        SM.GetASound("Taser", transform);
                         ai.Death();
                     }
                     CanPlay = false;

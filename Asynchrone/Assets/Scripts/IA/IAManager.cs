@@ -17,8 +17,8 @@ public class IAManager : Singleton<IAManager>
         if (Instance != this)
             Destroy(this);
 
-        RobotVoice = Resources.Load<aVoicePack>("AI/VoicePacks/Robot");
-        DroneVoice = Resources.Load<aVoicePack>("AI/VoicePacks/Drone");
+        //RobotVoice = Resources.Load<aVoicePack>("AI/VoicePacks/Robot");
+        //DroneVoice = Resources.Load<aVoicePack>("AI/VoicePacks/Drone");
     }
 
     public void RemoveIA(anAI myAI)
