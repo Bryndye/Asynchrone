@@ -13,6 +13,9 @@ public class MusicManager : Singleton<MusicManager>
     SmoothStatus mySmoothStatus = SmoothStatus.Open;
     [HideInInspector]public int PressureKeepersCount;
 
+    [Header("Global"), Range(0f, 1f)]
+    public float VolumeMax;
+
     [Header("AudioSources")]
     AudioSource TutoMusic;
     AudioSource Layer1;
@@ -82,16 +85,16 @@ public class MusicManager : Singleton<MusicManager>
     {
         if (myPressureSettings == IsPressureAllowed.PressureAllowed)
         {
-            if (PressureKeepersCount > 0 && PressureVolume != 1)
+            if (PressureKeepersCount > 0 && PressureVolume != VolumeMax)
             {
                 PressureVolume = 1;
-                PressureVolume = Mathf.Clamp(PressureVolume, 0f, 1f);
+                PressureVolume = Mathf.Clamp(PressureVolume, 0f, VolumeMax);
                 Layer4.volume = PressureVolume;
             }
             else if (PressureKeepersCount == 0 && PressureVolume != 0)
             {
                 PressureVolume -= SpeedChange * Time.deltaTime;
-                PressureVolume = Mathf.Clamp(PressureVolume, 0f, 1f);
+                PressureVolume = Mathf.Clamp(PressureVolume, 0f, VolumeMax);
                 Layer4.volume = PressureVolume;
             }
         }
@@ -101,8 +104,8 @@ public class MusicManager : Singleton<MusicManager>
             for(int i = 0; i < ConstantPlaying.Count; i++)
             {
                 ConstantPlaying[i].volume += Time.deltaTime / 4;
-                ConstantPlaying[i].volume = Mathf.Clamp(ConstantPlaying[i].volume, 0f, 1f);
-                if (ConstantPlaying[i].volume == 1)
+                ConstantPlaying[i].volume = Mathf.Clamp(ConstantPlaying[i].volume, 0f, VolumeMax);
+                if (ConstantPlaying[i].volume == VolumeMax)
                 {
                     mySmoothStatus = SmoothStatus.Constant;
                 }
@@ -113,7 +116,7 @@ public class MusicManager : Singleton<MusicManager>
             for (int i = 0; i < ConstantPlaying.Count; i++)
             {
                 ConstantPlaying[i].volume -= Time.deltaTime;
-                ConstantPlaying[i].volume = Mathf.Clamp(ConstantPlaying[i].volume, 0f, 1f);
+                ConstantPlaying[i].volume = Mathf.Clamp(ConstantPlaying[i].volume, 0f, VolumeMax);
                 if (ConstantPlaying[i].volume == 0)
                 {
                     mySmoothStatus = SmoothStatus.Constant;
