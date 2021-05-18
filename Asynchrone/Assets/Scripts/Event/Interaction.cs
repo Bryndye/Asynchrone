@@ -13,7 +13,6 @@ public class Interaction : MonoBehaviour
     private ManagerPlayers managerPlayers;
     SoundManager SoundM;
 
-    public bool SetColor = false;
     public whichPlayer whichPlayer;
     [SerializeField] 
     public bool activated;
@@ -40,7 +39,6 @@ public class Interaction : MonoBehaviour
     [SerializeField]
     private GameObject _feedBackActivated;
     [Header("Sounds")]
-    string InteractiveSoundName;
     string InteractionSoundName;
 
 
@@ -87,6 +85,10 @@ public class Interaction : MonoBehaviour
     private void Update()
     {
         CallPince();
+        if (activated)
+        {
+            Destroy(this);
+        }
     }
 
 
@@ -125,13 +127,10 @@ public class Interaction : MonoBehaviour
 
     public void CallDistri() 
     {
-        //activated = true;
-
         if (!managerPlayers.RobotPlayer.HasDiversion && !managerPlayers.onPlayerHuman)
         {
             //trigger Anim successfull
             managerPlayers.RobotPlayer.HasDiversion = true;
-            Debug.Log("Distri ++");
             SoundM.GetASound("DiversionGet", transform);
         }
         else

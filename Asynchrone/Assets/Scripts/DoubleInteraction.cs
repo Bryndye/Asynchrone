@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractionEDoubleBTN : MonoBehaviour
+public class DoubleInteraction : MonoBehaviour
 {
     private CameraManager cm;
     private Interaction[] interactions;
@@ -15,7 +15,7 @@ public class InteractionEDoubleBTN : MonoBehaviour
     bool ok;
     bool activated;
 
-    public Transform[] Influence;
+    public Transform[] Portes;
 
 
     private void Update()
@@ -32,16 +32,15 @@ public class InteractionEDoubleBTN : MonoBehaviour
     {
         if (!activated)
         {
-            //Debug.Log("Event called");
             activated = true;
 
-            for (int i = 0; i < Influence.Length; i++)
+            for (int i = 0; i < Portes.Length; i++)
             {
-                if (Influence[i] != null)
+                if (Portes[i] != null)
                 {
-                    Influence[i].gameObject.SetActive(!Influence[i].gameObject.activeSelf);
+                    Portes[i].gameObject.SetActive(!Portes[i].gameObject.activeSelf);
                     if (cm != null)
-                        cm.GetTargetPorte(Influence);
+                        cm.GetTargetPorte(Portes);
                 }
             }
         }
