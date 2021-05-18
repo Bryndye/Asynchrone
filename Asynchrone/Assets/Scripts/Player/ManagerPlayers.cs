@@ -133,7 +133,7 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
                 if (hit.collider.TryGetComponent(out Interaction interaction))
                 {
                     PlayerController pc = onPlayerHuman ? PlayerControllerHm : PlayerCntrlerRbt;
-                    if (interaction.PlayerControlRef == pc)
+                    if (interaction.PlayerControlRef == pc && !interaction.activated)
                     {
                         SetCursor("Interact");
                     }
