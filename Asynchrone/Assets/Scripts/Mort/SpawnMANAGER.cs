@@ -15,8 +15,8 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
     public SpawnSituation mySpawnSituation;
 
     [Header("Spawn Positions")]
-    public Vector3 SpawnPointR;
-    public Vector3 SpawnPointH;
+    public Transform SpawnPointR;
+    public Transform SpawnPointH;
     bool done;
 
     [Header("Playing AIs")]
@@ -39,20 +39,15 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
         AiCheck();
     }
     //private void 
-    public void GetSpawn(Vector3 posH, Vector3 posR, bool die)
+    public void GetSpawn(Transform spawnHum, Transform spawnRbt)
     {
-        //Debug.Log("get the spawns");
-        if(mp.RobotPlayer) SpawnPointR = posR;
-        SpawnPointH = posH;
-        if (die)
-        {
-            Respawn();
-        }
+        SpawnPointH = spawnHum;
+        if (mp.RobotPlayer)
+            SpawnPointR = spawnRbt;
     }
 
     public void Respawn()
     {
-        //Debug.Log("RESPAWN");
         mp.PlayerControllerHm.InCinematic = true;
         if (mp.RobotPlayer) mp.PlayerCntrlerRbt.InCinematic = true;
         cm.anim.SetTrigger("dead");
@@ -68,12 +63,14 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
     {
         if (SpawnPointH != null)
         {
-            mp.PlayerControllerHm.NavPlayer.Warp(SpawnPointH);
+            mp.PlayerControllerHm.NavPlayer.Warp(SpawnPointH.position);
+            mp.PlayerHumanTransform.rotation = SpawnPointH.rotation;
             mp.PlayerControllerHm.AnimPlayer.SetBool("Walking", false);
         }
         if (SpawnPointR != null && mp.RobotPlayer)
         {
-            mp.PlayerCntrlerRbt.NavPlayer.Warp(SpawnPointR);
+            mp.PlayerCntrlerRbt.NavPlayer.Warp(SpawnPointR.position);
+            mp.PlayerRobotTransform.rotation = SpawnPointH.rotation;
             //mp.pc2.anim.SetBool("Walking", false);
         }
         AiRespawn();
@@ -82,8 +79,6 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
 
     private void SetPlayer()
     {
-        //Debug.Log("is finished");
-
         mp.PlayerControllerHm.InCinematic = false;
         if (mp.RobotPlayer) mp.PlayerCntrlerRbt.InCinematic = false;
         done = false;

@@ -9,6 +9,9 @@ public class CheckPoint : MonoBehaviour
     CanvasManager cm;
     private bool done;
 
+    [SerializeField]
+    private Transform spawnHm, spawnRbt;
+
     private void Awake()
     {
         sm = SpawnMANAGER.Instance;
@@ -21,11 +24,11 @@ public class CheckPoint : MonoBehaviour
         {
             if (mp.PlayerRobotTransform != null)
             {
-                sm.GetSpawn(mp.PlayerHumanTransform.position, mp.PlayerRobotTransform.position, false);
+                sm.GetSpawn(spawnHm, spawnRbt);
             }
             else
             {
-                sm.GetSpawn(mp.PlayerHumanTransform.position, Vector3.zero, false);
+                sm.GetSpawn(spawnHm, spawnRbt);
             }
             sm.AiCheck();
             cm.ActiveCheckpointText();

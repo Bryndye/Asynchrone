@@ -88,7 +88,7 @@ Light:
   m_BounceIntensity: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 2.3e-43, w: 5.9e-44}
+  m_BoundingSphereOverride: {x: 0, y: 1.403e-41, z: 0, w: -0.0000000039872248}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whichPlayer: 1
   activated: 0
-  myUI: {fileID: 2271633976501123161, guid: e6191c13c44aa3a42a03983a55300187, type: 3}
+  myUI: {fileID: 2271633976501123161, guid: fde081fda6247e046b2fc2074cc39184, type: 3}
   myRenderer: {fileID: 7467657354860198379}
   PlayerControlRef: {fileID: 0}
   Pince: 0
@@ -179,6 +179,24 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3514831594640772914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8980897548028467262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 3
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1001 &8098571011729188207
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -248,6 +266,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26cc6e019eb2bbf459ccc2a98fd794cf, type: 3}
+--- !u!1 &8980897548028467262 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 26cc6e019eb2bbf459ccc2a98fd794cf, type: 3}
+  m_PrefabInstance: {fileID: 8098571011729188207}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8640540783584838276 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 26cc6e019eb2bbf459ccc2a98fd794cf, type: 3}
