@@ -82,7 +82,6 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
             mp.PlayerRobotTransform.rotation = SpawnPointH.rotation;
             //mp.pc2.anim.SetBool("Walking", false);
         }
-        //Invoke(nameof(SetPlayer), 1f);
     }
 
     private void SetPlayer()
@@ -96,7 +95,6 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
         inCinematic = false;
 
         mySpawnSituation = SpawnSituation.Playing;
-        //cm.anim.SetBool("respawn", false);
     }
 
 

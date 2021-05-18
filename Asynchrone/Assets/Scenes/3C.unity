@@ -434,7 +434,8 @@ PrefabInstance:
       propertyPath: whichPlayer
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6315238859079664122, guid: 405d8011c734fb44c8eae2bf40c201c5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 405d8011c734fb44c8eae2bf40c201c5, type: 3}
 --- !u!1 &340554936
 GameObject:
@@ -2364,6 +2365,24 @@ Transform:
   m_Father: {fileID: 1946353371}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2099950639 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6315238859079664125, guid: 405d8011c734fb44c8eae2bf40c201c5, type: 3}
+  m_PrefabInstance: {fileID: 287387587}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &2099950642
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099950639}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1176866598871167662
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2581,6 +2600,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player _ Robot
       objectReference: {fileID: 0}
+    - target: {fileID: 4183304568682466885, guid: dbfc877e1193c0c4cb3eaf2f26b19659, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbfc877e1193c0c4cb3eaf2f26b19659, type: 3}
 --- !u!1001 &5004898451291226865
@@ -2592,7 +2615,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4998373817487662597, guid: 94837b14c2f273a4a9a8f8b127dd5f75, type: 3}
       propertyPath: m_BoundingSphereOverride.w
-      value: -0.0000000035797711
+      value: -8.112693e-10
       objectReference: {fileID: 0}
     - target: {fileID: 4998373817487662597, guid: 94837b14c2f273a4a9a8f8b127dd5f75, type: 3}
       propertyPath: m_BoundingSphereOverride.x
@@ -2600,7 +2623,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4998373817487662597, guid: 94837b14c2f273a4a9a8f8b127dd5f75, type: 3}
       propertyPath: m_BoundingSphereOverride.y
-      value: 1.255e-41
+      value: 3.6294e-41
       objectReference: {fileID: 0}
     - target: {fileID: 5004898450192599642, guid: 94837b14c2f273a4a9a8f8b127dd5f75, type: 3}
       propertyPath: m_Name
@@ -2709,7 +2732,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1314924178242876728, guid: 0aace02819b51844bb06fe7dae7a5eca, type: 3}
       propertyPath: m_BoundingSphereOverride.w
-      value: -128259.44
+      value: -0.000000003207747
       objectReference: {fileID: 0}
     - target: {fileID: 1314924178242876728, guid: 0aace02819b51844bb06fe7dae7a5eca, type: 3}
       propertyPath: m_BoundingSphereOverride.x
@@ -2717,7 +2740,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1314924178242876728, guid: 0aace02819b51844bb06fe7dae7a5eca, type: 3}
       propertyPath: m_BoundingSphereOverride.y
-      value: 1.551e-42
+      value: 7.1e-44
       objectReference: {fileID: 0}
     - target: {fileID: 1314924178242876728, guid: 0aace02819b51844bb06fe7dae7a5eca, type: 3}
       propertyPath: m_BoundingSphereOverride.z

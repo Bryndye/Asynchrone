@@ -36,17 +36,19 @@ public class CanvasManager : Singleton<CanvasManager>
     [SerializeField]
     private GameObject zoneDialogue;
 
+
     #region UI Spell
     [Header("Bts Spells")]
     public Image ProfilPlayer;
     public GameObject UIHuman;
     public GameObject UIRobot;
-    [SerializeField] 
-    private Button btDiversion;
+    [SerializeField]
+    private Button btDiversion, btSwichCam, btCrouch;
 
     [SerializeField]
     private Text textDiversion, textCrouch, textSwitchCamera;
     #endregion
+
 
     #region UIInteraction
     [Header("Interaction UI")]
@@ -68,6 +70,10 @@ public class CanvasManager : Singleton<CanvasManager>
         audioSource = GetComponent<AudioSource>();
     }
 
+    private void Start()
+    {
+        btSwichCam.enabled = managerPlayers.PlayerCntrlerRbt;
+    }
 
     void Update()                                       //UPDATE
     {

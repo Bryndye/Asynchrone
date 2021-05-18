@@ -6,6 +6,7 @@ public class InteractionUI : MonoBehaviour
 {
     CanvasManager canvasManager;
 
+
     public void Declaration(Renderer renderer)
     {
         canvasManager = CanvasManager.Instance;

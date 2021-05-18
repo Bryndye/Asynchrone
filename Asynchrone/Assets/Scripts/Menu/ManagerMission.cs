@@ -34,7 +34,7 @@ public class ManagerMission : MonoBehaviour
             b.onClick.AddListener(delegate { LoadScene(index); });
             
             Text t = bt.GetComponentInChildren<Text>();
-            t.text = "MISSION " + i + " : " + missions[i].Name;
+            t.text = "MISSION " + (i+1) + " : " + missions[i].Name;
         }
         PlayerPrefs.SetInt("indexLevel", 0);
         PlayerPrefs.SetString("nameLevel", "");

@@ -82,14 +82,14 @@ public class Interaction : MonoBehaviour
     public void SetPlayerController(PlayerController pcCalled) => playerControlGet = pcCalled;
 
 
-    private void InteractionDone()
+    private void InteractionDone(bool active)
     {
-        Destroy(myUI);
+        myUI.SetActive(active);
         if (GetComponentInChildren<Outline>() != null)
         {
-            Destroy(GetComponentInChildren<Outline>());
+            GetComponentInChildren<Outline>().enabled = active;
         }
-        Destroy(this);
+        enabled = active;
     }
 
     private void Update()
@@ -97,7 +97,7 @@ public class Interaction : MonoBehaviour
         CallPince();
         if (activated)
         {
-            InteractionDone();
+            InteractionDone(false);
         }
     }
 
