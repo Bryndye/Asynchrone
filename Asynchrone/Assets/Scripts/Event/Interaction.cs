@@ -13,7 +13,6 @@ public class Interaction : MonoBehaviour
     private ManagerPlayers managerPlayers;
     SoundManager SoundM;
 
-    public bool SetColor = false;
     public whichPlayer whichPlayer;
     [SerializeField] 
     public bool activated;
@@ -40,7 +39,6 @@ public class Interaction : MonoBehaviour
     [SerializeField]
     private GameObject _feedBackActivated;
     [Header("Sounds")]
-    string InteractiveSoundName;
     string InteractionSoundName;
 
 
@@ -87,6 +85,10 @@ public class Interaction : MonoBehaviour
     private void Update()
     {
         CallPince();
+        if (activated)
+        {
+            Destroy(this);
+        }
     }
 
 

@@ -164,14 +164,16 @@ public class PlayerController : MonoBehaviour
     }
 
 
-
+    [Space]
+    [SerializeField]
+    private float minDistanceInteraction = 1f;
     private void CheckDisInteraction()
     {
         if (targetClickMouse != null)
         {
             NavPlayer.SetDestination(targetClickMouse.position);
 
-            if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(targetClickMouse.position.x, targetClickMouse.position.z)) < 1.8f)
+            if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(targetClickMouse.position.x, targetClickMouse.position.z)) < minDistanceInteraction)
             {
 
                 if (targetClickMouse.TryGetComponent(out Interaction interaction))
@@ -285,7 +287,6 @@ public class PlayerController : MonoBehaviour
         SetAnim("Div", true, true);
     }
 
-    [Space]
     [SerializeField]
     private float cooldownInteraction = 1f;
     private void StopPlayerWhenAction()
