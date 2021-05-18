@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -82,12 +82,22 @@ public class Interaction : MonoBehaviour
     public void SetPlayerController(PlayerController pcCalled) => playerControlGet = pcCalled;
 
 
+    private void InteractionDone()
+    {
+        Destroy(myUI);
+        if (GetComponentInChildren<Outline>() != null)
+        {
+            Destroy(GetComponentInChildren<Outline>());
+        }
+        Destroy(this);
+    }
+
     private void Update()
     {
         CallPince();
         if (activated)
         {
-            Destroy(this);
+            InteractionDone();
         }
     }
 
@@ -159,8 +169,7 @@ public class Interaction : MonoBehaviour
         if (ActivePince && !activated && PlayerControlRef == playerControlGet)
         {
             Portes[0].position = Vector3.Lerp(Portes[0].transform.position, pointArrive.position, 0.01f);
-
-            if (Portes[0].position.y + 0.01f > pointArrive.position.y)
+            if (Portes[0].position.y > pointArrive.position.y - 0.1f)
             {
                 activated = true;
             }

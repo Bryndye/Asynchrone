@@ -57,7 +57,7 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
 
     private void Update()
     {
-        if (Input.GetKeyDown(InputSwitchCamera))
+        if (Input.GetKeyDown(InputSwitchCamera) && PlayerCntrlerRbt != null)
         {
             Camera_Manager();
         }

@@ -17,12 +17,14 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
     [Header("Spawn Positions")]
     public Transform SpawnPointR;
     public Transform SpawnPointH;
-    bool done;
+    bool inCinematic;
 
     [Header("Playing AIs")]
     public List<anAI> myAIs;
     [HideInInspector]
     public List<anAI> myAIs_Checkpoint;
+
+
 
     private void Awake()
     {
@@ -38,7 +40,16 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
     {
         AiCheck();
     }
-    //private void 
+
+
+    private void Update()
+    {
+        if (inCinematic && Input.GetKeyDown(KeyCode.Space))
+        {
+            SetPlayer();
+        }
+    }
+
     public void GetSpawn(Transform spawnHum, Transform spawnRbt)
     {
         SpawnPointH = spawnHum;
@@ -52,15 +63,13 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
         if (mp.RobotPlayer) mp.PlayerCntrlerRbt.InCinematic = true;
         cm.anim.SetTrigger("dead");
 
-        if (SpawnPointR != null && !done)
-        {
-            done = true;
-            Invoke(nameof(EndAnim), 1f);
-        }
+        Invoke(nameof(EndAnim), 1f);
     }
 
     private void EndAnim()
     {
+        inCinematic = true;
+        cm.mortZone.SetActive(true);
         if (SpawnPointH != null)
         {
             mp.PlayerControllerHm.NavPlayer.Warp(SpawnPointH.position);
@@ -73,19 +82,25 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
             mp.PlayerRobotTransform.rotation = SpawnPointH.rotation;
             //mp.pc2.anim.SetBool("Walking", false);
         }
-        AiRespawn();
-        Invoke(nameof(SetPlayer), 1f);
+        //Invoke(nameof(SetPlayer), 1f);
     }
 
     private void SetPlayer()
     {
+        cm.mortZone.SetActive(false);
+        cm.anim.SetTrigger("respawn");
+        AiRespawn();
+
         mp.PlayerControllerHm.InCinematic = false;
         if (mp.RobotPlayer) mp.PlayerCntrlerRbt.InCinematic = false;
-        done = false;
+        inCinematic = false;
 
         mySpawnSituation = SpawnSituation.Playing;
+        //cm.anim.SetBool("respawn", false);
     }
 
+
+    #region AI
     public void AiCheck()
     {
         myAIs_Checkpoint = new List<anAI>();
@@ -112,4 +127,5 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
         }
         myAIs = myAIs_Checkpoint;
     }
+    #endregion
 }

@@ -16,6 +16,8 @@ public class CanvasManager : Singleton<CanvasManager>
     [SerializeField] 
     private GameObject checkpoint_t;
 
+    public GameObject mortZone;
+
     [Header("Char anim")]
     public Text dialogueHere;
     private bool skip;
@@ -34,6 +36,7 @@ public class CanvasManager : Singleton<CanvasManager>
     [SerializeField]
     private GameObject zoneDialogue;
 
+    #region UI Spell
     [Header("Bts Spells")]
     public Image ProfilPlayer;
     public GameObject UIHuman;
@@ -43,6 +46,7 @@ public class CanvasManager : Singleton<CanvasManager>
 
     [SerializeField]
     private Text textDiversion, textCrouch, textSwitchCamera;
+    #endregion
 
     #region UIInteraction
     [Header("Interaction UI")]

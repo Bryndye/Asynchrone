@@ -17,7 +17,6 @@ public class CinematicManager : MonoBehaviour
         mP = ManagerPlayers.Instance;
         cm = CanvasManager.Instance;
 
-        //cameraMain = Camera.main;
         cameraCinematic = transform.GetChild(0).GetComponent<Camera>();
     }
 
@@ -32,11 +31,6 @@ public class CinematicManager : MonoBehaviour
         Invoke(nameof(EndCinematic), time);
     }
 
-    //private void Update()
-    //{
-    //    cameraCinematic.transform.position = Vector3.Lerp(cameraCinematic.transform.position, cameraMain.transform.position, time * 100);
-    //    cameraCinematic.transform.eulerAngles = Vector3.Lerp(cameraCinematic.transform.eulerAngles, cameraMain.transform.eulerAngles, time * 100);
-    //}
 
     private void EndCinematic()
     {
@@ -46,7 +40,6 @@ public class CinematicManager : MonoBehaviour
         }
         checkInCinematic(false);
         gameObject.SetActive(false);
-        //Destroy(gameObject);
     }
 
     private void checkInCinematic(bool inCinematic)
