@@ -5,23 +5,32 @@ using UnityEngine.SceneManagement;
 
 public class MenuInGame : Singleton<MenuInGame>
 {
-    private void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
 
-        if (Instance != this)
-        {
-            Destroy(gameObject);
-        }
-    }
-    
+    [SerializeField]
+    private GameObject menuInGame;
+
     void Update()
     {
-        Scene sc = SceneManager.GetActiveScene();
-        if (Input.GetKeyDown(KeyCode.Escape) && sc.buildIndex != 0)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene(0);
-            //Debug.Log("Back to menu");
+            ActiveMenu(true);
+            Time.timeScale = 0;
         }
+    }
+
+    public void BackToPlay()
+    {
+        Time.timeScale = 1;
+        ActiveMenu(false);
+    }
+
+    private void ActiveMenu(bool active) => menuInGame.SetActive(active);
+
+
+    public void BackToMenu()
+    {
+        Time.timeScale = 1;
+        PlayerPrefs.SetInt("indexLevel", 0);
+        SceneManager.LoadScene(7);
     }
 }

@@ -25,9 +25,7 @@ public class ManagerMission : MonoBehaviour
             bt.transform.SetParent(list_bt);
             bt.transform.localScale = new Vector3(1,1,1);
 
-            Bt_On bo = bt.GetComponent<Bt_On>();
-            menu.btAnim.Add(bo);
-            bo.InitBt(i, this);
+            bt.GetComponent<Bt_On>().InitBt(i, this);
 
             Button b = bt.GetComponentInChildren<Button>();
             int index = missions[i].indexLevel;

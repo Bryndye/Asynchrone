@@ -32,10 +32,4 @@ public class Bt_On : MonoBehaviour
     }
 
     public void AnimPointerExit() => MineAnim.Play("btExit");
-    /*
-    public void DisableParent()
-    {
-        MineAnim.Play("btOnThis");
-        Debug.Log("oui");
-    }*/
 }

@@ -47,12 +47,6 @@ public class LoadLevel : MonoBehaviour
 
     bool done = false;
 
-    private void Awake()
-    {
-        PlayerPrefs.SetInt("indexLevel", indexOfNextlevel);
-        PlayerPrefs.SetString("nameLevel", nameOfNextlevel);
-    }
-
     private void OnTriggerStay(Collider other)
     {
         if (done)
@@ -82,6 +76,10 @@ public class LoadLevel : MonoBehaviour
         else if (players.Count >= 1)
         {
             done = true;
+
+            PlayerPrefs.SetInt("indexLevel", indexOfNextlevel);
+            PlayerPrefs.SetString("nameLevel", nameOfNextlevel);
+
             cm.ActiveLoadScreen();
             //SM.GetASound("Ascenseur_Fermeture", transform);
         }
