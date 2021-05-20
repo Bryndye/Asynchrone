@@ -12,7 +12,6 @@ public class ReglageSon : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(PlayerPrefs.GetFloat("musicVolume"));
         OnChangeMusic(PlayerPrefs.GetFloat("musicVolume"));
     }
 
