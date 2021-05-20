@@ -298,6 +298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
   checkpoint_t: {fileID: 0}
+  mortZone: {fileID: 0}
   dialogueHere: {fileID: 246869180}
   sentences: []
   audioc: []
@@ -306,6 +307,8 @@ MonoBehaviour:
   UIHuman: {fileID: 0}
   UIRobot: {fileID: 0}
   btDiversion: {fileID: 0}
+  btSwichCam: {fileID: 0}
+  btCrouch: {fileID: 0}
   textDiversion: {fileID: 0}
   textCrouch: {fileID: 0}
   textSwitchCamera: {fileID: 0}
@@ -2621,7 +2624,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c91fa0777b5d71f43830b82baa1ab6d5, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c91fa0777b5d71f43830b82baa1ab6d5, type: 3}
@@ -5192,7 +5195,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cdf001d3e6fe53e47be7c718c599d78d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1092408308860062549, guid: cdf001d3e6fe53e47be7c718c599d78d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8532,7 +8535,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: da4816010eb25f04d8044514c63151a5, type: 2}
-  - {fileID: 2100000, guid: 2e23a113a512b594ab31f09f088cb68a, type: 2}
+  - {fileID: 9083421890127983685, guid: 8c6b4381fea092f489cd23b855f046b5, type: 3}
   - {fileID: 2100000, guid: 019d49d6894b0c9428299d5155eaed8e, type: 2}
   - {fileID: 2100000, guid: c10dd92c67df83e4299640d10e723d13, type: 2}
   - {fileID: 2100000, guid: aa883df4a043d4547a71e3abb4061639, type: 2}
@@ -8976,7 +8979,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: da4816010eb25f04d8044514c63151a5, type: 2}
-  - {fileID: 2100000, guid: 2e23a113a512b594ab31f09f088cb68a, type: 2}
+  - {fileID: 9083421890127983685, guid: 8c6b4381fea092f489cd23b855f046b5, type: 3}
   - {fileID: 2100000, guid: 019d49d6894b0c9428299d5155eaed8e, type: 2}
   - {fileID: 2100000, guid: c10dd92c67df83e4299640d10e723d13, type: 2}
   - {fileID: 2100000, guid: aa883df4a043d4547a71e3abb4061639, type: 2}

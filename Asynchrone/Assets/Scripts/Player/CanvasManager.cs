@@ -72,7 +72,10 @@ public class CanvasManager : Singleton<CanvasManager>
 
     private void Start()
     {
-        btSwichCam.enabled = managerPlayers.PlayerCntrlerRbt;
+        if (managerPlayers != null)
+        {
+            btSwichCam.enabled = managerPlayers.PlayerCntrlerRbt;
+        }
     }
 
     void Update()                                       //UPDATE
