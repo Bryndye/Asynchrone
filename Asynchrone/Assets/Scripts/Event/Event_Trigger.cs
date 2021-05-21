@@ -48,6 +48,7 @@ public class Event_Trigger : MonoBehaviour
     public GameObject[] iaToActivate;
 
     [Header("Dialogues")]
+    [TextArea(5, 30)]
     public string[] dialogues;
     public AudioClip[] audioC;
 
