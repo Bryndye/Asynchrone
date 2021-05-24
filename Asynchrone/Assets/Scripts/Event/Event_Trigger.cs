@@ -113,7 +113,6 @@ public class Event_Trigger : MonoBehaviour
         for (int i = 0; i < iaToActivate.Length; i++)
         {
             iaToActivate[i].SetActive(true);
-            Debug.Log("ia");
         }
     }
 
