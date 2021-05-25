@@ -437,15 +437,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 48072952}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isGlobal: 1
-  priority: 0
+  priority: 2
   blendDistance: 0
-  weight: 0
+  weight: 1
   sharedProfile: {fileID: 11400000, guid: d92cf50cd9d69ab40aa34c29f94c1404, type: 2}
 --- !u!4 &48072954
 Transform:
@@ -5403,7 +5403,7 @@ PrefabInstance:
     - target: {fileID: 216393996474381078, guid: bf38451ac23ee2a48965f4fe7b52de7d, type: 3}
       propertyPath: sharedProfile
       value: 
-      objectReference: {fileID: 11400000, guid: d92cf50cd9d69ab40aa34c29f94c1404, type: 2}
+      objectReference: {fileID: 11400000, guid: 21f0e7bef040306468a6ac85e3185680, type: 2}
     - target: {fileID: 216393996474381079, guid: bf38451ac23ee2a48965f4fe7b52de7d, type: 3}
       propertyPath: m_Name
       value: Global Volume
