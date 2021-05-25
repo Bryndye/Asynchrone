@@ -19,6 +19,7 @@ public class anAI : MonoBehaviour
 
     [Header("Composants")]
     NavMeshAgent myNavMeshAgent;
+    Animator myAnimator;
     [HideInInspector] public AudioSource myVoice;
     [HideInInspector] public AudioSource myMoveSound;
     public GameObject SkinRobot;
@@ -110,10 +111,18 @@ public class anAI : MonoBehaviour
         myNavMeshAgent = GetComponent<NavMeshAgent>();
         myVoice = transform.GetChild(5).GetComponent<AudioSource>();
         myMoveSound = transform.GetChild(6).GetComponent<AudioSource>();
+
         if(myClasse == Classe.Basic)
+        {
+            myAnimator = transform.GetChild(3).GetComponent<Animator>();
             myMoveSound.clip = Resources.Load<AudioClip>("Audio/SFXClips/Propulsor");
-        else
+        }
+           
+        else{
+            myAnimator = transform.GetChild(4).GetComponent<Animator>();
             myMoveSound.clip = Resources.Load<AudioClip>("Audio/SFXClips/Drone");
+        }
+            
         myMoveSound.Play();
         SM = SpawnMANAGER.Instance;
         IAM = IAManager.Instance;
@@ -775,6 +784,7 @@ public class anAI : MonoBehaviour
                 myNavMeshAgent.SetDestination(LogicPatrol()[StepPatrolIndex]);
                 mySituation = Situation.PatrolMove;
                 AlreadyInteracted = false;
+                myAnimator.SetTrigger("Move");
             }
             else
             {
@@ -789,6 +799,7 @@ public class anAI : MonoBehaviour
         if (mySituation == Situation.PatrolMove && myNavMeshAgent.remainingDistance < 0.1f)
         {
             mySituation = Situation.PatrolWait;
+            myAnimator.SetTrigger("Idle");
         }
         else if (mySituation == Situation.PatrolWait)
         {
@@ -843,6 +854,7 @@ public class anAI : MonoBehaviour
             myNavMeshAgent.isStopped = false;
 
         myNavMeshAgent.SetDestination(BasePosition);
+        myAnimator.SetTrigger("Move");
         mySituation = Situation.GuardMove;
     }
 
@@ -854,6 +866,7 @@ public class anAI : MonoBehaviour
             if (!myNavMeshAgent.isStopped)
                 myNavMeshAgent.isStopped = true;
             mySituation = Situation.None;
+            myAnimator.SetTrigger("Idle");
         }
     }
 
@@ -907,6 +920,7 @@ public class anAI : MonoBehaviour
             Speak(VoiceFor.Seen);
             SoundM.GetASound("Seen", transform, true);
             MM.PressureKeepersCount += 1;
+            myAnimator.SetTrigger("Seen");
         }
         TempsInterrogation += Time.deltaTime;
         if (TempsInterrogation >= LatenceInterrogation)
@@ -927,6 +941,7 @@ public class anAI : MonoBehaviour
         myNavMeshAgent.speed = PursuitSpeed;
         myNavMeshAgent.destination = Vus[0].position;
         Speak(VoiceFor.StartPursuit);
+        myAnimator.SetTrigger("Move");
     }
 
     void Pursuit()
@@ -964,6 +979,7 @@ public class anAI : MonoBehaviour
         myNavMeshAgent.speed = NormalSpeed;
         PursuitLastPosition = transform.position + transform.forward;
         Speak(VoiceFor.EndPursuit);
+        myAnimator.SetTrigger("Seen");
     }
 
     void Kill()
@@ -975,6 +991,8 @@ public class anAI : MonoBehaviour
             SoundM.GetASound("RoboticPunch", transform);
         else
             SoundM.GetASound("Taser", transform);
+
+        myAnimator.SetTrigger("Attack");
     }
 
     #endregion
@@ -1009,7 +1027,10 @@ public class anAI : MonoBehaviour
         Vus = new List<Transform>();
 
         if (Comportement == myBehaviour.Guard && EtapesRotation.Count == 0)
+        {
+            myAnimator.SetTrigger("Idle");
             EtapesRotation.Add(BasePosition + transform.forward);
+        }
 
         if (Comportement == myBehaviour.Patrol)
             NextPatrolStep();
