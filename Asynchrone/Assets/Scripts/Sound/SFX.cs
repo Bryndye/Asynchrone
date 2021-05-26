@@ -37,7 +37,7 @@ public class SFX : MonoBehaviour
         myAudiosource.clip = Resources.Load<AudioClip>("Audio/SFXClips/" + mySoundName);
         PlayingLatence = myAudiosource.clip.length;
 
-        if (isUI)
+        if (isUI && CameraManager.Instance != null)
         {
             transform.parent = CameraManager.Instance.transform;
             myAudiosource.spatialBlend = 0;

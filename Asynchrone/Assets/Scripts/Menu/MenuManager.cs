@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 
 public class MenuManager : MonoBehaviour
 {
+    SoundManager SM;
     public static MenuManager InstanceMM;
 
     [SerializeField] Menu[] menus;
@@ -16,6 +17,11 @@ public class MenuManager : MonoBehaviour
         InstanceMM = this;
         for (int i = 0; i < menus.Length; i++)
             CloseMenu(menus[i]);
+        SM = SoundManager.Instance;     
+    }
+
+    private void Start()
+    {
         OpenMenu(BackToTitleName);
     }
 
@@ -32,6 +38,8 @@ public class MenuManager : MonoBehaviour
                 CloseMenu(menus[i]);
             }
         }
+
+        SM.GetASound("ButtonUIClick", transform, true);
     }
 
     public void OpenMenu(Menu menu)
@@ -44,6 +52,7 @@ public class MenuManager : MonoBehaviour
             }
         }
         menu.Open();
+        SM.GetASound("ButtonUIClick", transform, true);
     }
 
     public void CloseMenu(Menu menu)
@@ -53,6 +62,7 @@ public class MenuManager : MonoBehaviour
 
     public void Quit()
     {
+        SM.GetASound("ButtonUIClick", transform, true);
         Application.Quit();
     }
 
