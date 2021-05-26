@@ -123,8 +123,7 @@ public class Interaction : MonoBehaviour
                 if (Portes[i] != null)
                 {
                     Portes[i].gameObject.SetActive(!Portes[i].gameObject.activeSelf);
-                    if (cameraManager != null)
-                        cameraManager.GetTargetPorte(Portes);
+                    cameraManager.GetTargetPorte(Portes);
 
                     if (InteractionSoundName != "")
                     {
