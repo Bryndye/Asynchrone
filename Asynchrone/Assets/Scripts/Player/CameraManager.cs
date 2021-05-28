@@ -59,8 +59,6 @@ public class CameraManager : Singleton<CameraManager>
 
 
 
-
-
     public void GetTargetPorte(Transform[] target)
     {
         TargetPorte = target;
@@ -77,6 +75,7 @@ public class CameraManager : Singleton<CameraManager>
         }
         else
         {
+            timer = 0;
             //Debug.Log("reset array");
             TargetPorte = new Transform[0];
         }
