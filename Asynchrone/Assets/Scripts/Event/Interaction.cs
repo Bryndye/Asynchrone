@@ -171,11 +171,10 @@ public class Interaction : MonoBehaviour
     {
         if (ActivePince && !activated && PlayerControlRef == playerControlGet)
         {
-            activated = true;
-
             Portes[0].position = Vector3.Lerp(Portes[0].transform.position, pointArrive.position, 0.01f);
             if (Portes[0].position.y > pointArrive.position.y - 0.1f)
             {
+                activated = true;
             }
         }
     }

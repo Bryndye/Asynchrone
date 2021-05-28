@@ -312,6 +312,10 @@ public class PlayerController : MonoBehaviour
 
     public void Death()
     {
+        InCinematic = true;
+        SetDesination(raycastNull());
+        //myAnim.SetTrigger("Mort")
+
         targetClickMouse = null;
         spawnManager.mySpawnSituation = SpawnSituation.DeathProcess;
         spawnManager.Respawn();

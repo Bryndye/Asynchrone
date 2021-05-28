@@ -59,8 +59,8 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
 
     public void Respawn()
     {
-        mp.PlayerControllerHm.InCinematic = true;
-        if (mp.RobotPlayer) mp.PlayerCntrlerRbt.InCinematic = true;
+        //mp.PlayerControllerHm.InCinematic = true;
+        //if (mp.RobotPlayer) mp.PlayerCntrlerRbt.InCinematic = true;
         cm.anim.SetTrigger("dead");
 
         Invoke(nameof(EndAnim), 1f);
