@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Holgram 1
-  m_Shader: {fileID: -6465566751694194690, guid: 95c588ed1d3b11242933841ebc8e99a1, type: 3}
+  m_Name: VisionDiv
+  m_Shader: {fileID: -6465566751694194690, guid: 101b469f14455c0499a66e0c8b203962, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -19,10 +19,6 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - Texture2D_524D166A:
-        m_Texture: {fileID: 2800000, guid: 8389a89e55cdece45bf75cbccf434f6d, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -51,8 +47,12 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Texture:
+        m_Texture: {fileID: 2800000, guid: 54fdd943adc74594e855f6a59ed3698c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_EFB5A713: 1
+    - _Alpha: 1
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -75,15 +75,14 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_963D7AD: {r: 0.007843138, g: 0.7254902, b: 0, a: 0}
-    - Color_C70C9884: {r: 0.75686276, g: 0.60784316, b: 0, a: 1}
-    - Vector2_7830BF34: {r: 1, g: 50, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorVision: {r: 0.00777549, g: 0.7264151, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _Taille: {r: 1, g: 15, b: 0, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &4958737249058004061
+--- !u!114 &3228887456215790562
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
