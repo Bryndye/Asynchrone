@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     LayerMask ingoreDiv;
     [SerializeField] 
     LayerMask ingorePlayers;
-    //[SerializeField] 
+    public GameObject signPlayerControlled;
     Transform targetClickMouse;
 
     [Space]
