@@ -229,6 +229,7 @@ public class PlayerController : MonoBehaviour
                         trapInter.Called();
                     }
                 }
+                StopSignInteraction();
                 Invoke(nameof(StopPlayerWhenAction), cooldownInteraction);
                 targetClickMouse = null;
             }
@@ -322,7 +323,8 @@ public class PlayerController : MonoBehaviour
             return;
         }
         signOnClickInteraction.SetActive(true);
-        signOnClickInteraction.transform.position = targetClickMouse.position;
+        signOnClickInteraction.transform.position = targetClickMouse.position + new Vector3(0,0.1f,0);
+
     }
 
     private void StopSignInteraction() => signOnClickInteraction.SetActive(false);
