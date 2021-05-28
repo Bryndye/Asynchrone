@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour
                 }*/
             }
             CheckDisInteraction();
+            SetSignOnInteraction();
             WalkAnim();
             CrouchedAnim();
         }
@@ -100,7 +101,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-    #region Mouse/Interaction element decor
+    #region Mouse
     private bool canMove = true;
     private void OnClickMouseR()
     {
@@ -142,7 +143,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-    #region Position/Destination
+    #region Destination/Distance
 
     private void SetDesination(RaycastHit raycastHit, bool inter = false)
     {
@@ -155,11 +156,13 @@ public class PlayerController : MonoBehaviour
         {
             targetClickMouse = null;
             NavPlayer.SetDestination(raycastHit.point);
+            StopSignInteraction();
         }
         else
         {
             targetClickMouse = null;
             NavPlayer.SetDestination(transform.position);
+            StopSignInteraction();
         }
     }
 
@@ -307,6 +310,25 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
+
+
+    #region Gestion Interaction Sign
+    [SerializeField]
+    private GameObject signOnClickInteraction;
+    private void SetSignOnInteraction()
+    {
+        if (targetClickMouse == null)
+        {
+            return;
+        }
+        signOnClickInteraction.SetActive(true);
+        signOnClickInteraction.transform.position = targetClickMouse.position;
+    }
+
+    private void StopSignInteraction() => signOnClickInteraction.SetActive(false);
+
+
+    #endregion
 
 
 
