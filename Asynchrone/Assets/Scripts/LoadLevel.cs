@@ -42,7 +42,6 @@ public class LoadLevel : MonoBehaviour
     }
 
     [SerializeField] private int indexOfNextlevel;
-    [SerializeField] private string nameOfNextlevel;
     [SerializeField] private List<GameObject> players;
 
     bool done = false;
@@ -68,6 +67,9 @@ public class LoadLevel : MonoBehaviour
                 if(mp.PlayerRobotTransform != null)
                     mp.PlayerCntrlerRbt.InCinematic = true;
                 done = true;
+
+                PlayerPrefs.SetInt("indexLevel", indexOfNextlevel);
+
                 cm.anim.SetTrigger("Transition");
                 SM.GetASound("Ascenseur_Fermeture", transform);
                 MM.CloseMusic();
@@ -78,8 +80,6 @@ public class LoadLevel : MonoBehaviour
             done = true;
 
             PlayerPrefs.SetInt("indexLevel", indexOfNextlevel);
-            PlayerPrefs.SetString("nameLevel", nameOfNextlevel);
-
             cm.ActiveLoadScreen();
             //SM.GetASound("Ascenseur_Fermeture", transform);
         }

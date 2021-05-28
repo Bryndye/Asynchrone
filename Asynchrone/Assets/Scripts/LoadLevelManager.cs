@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class LoadLevelManager : MonoBehaviour
 {
     public int indexOfNextlevel;
-    public string nameOfNextlevel;
 
     [SerializeField]
     private GameObject textLoading, textEspace;
@@ -15,7 +14,6 @@ public class LoadLevelManager : MonoBehaviour
     void Awake()
     {
         indexOfNextlevel = PlayerPrefs.GetInt("indexLevel");
-        nameOfNextlevel = PlayerPrefs.GetString("nameLevel");
         StartCoroutine(LoadScene());
     }
 
@@ -24,8 +22,7 @@ public class LoadLevelManager : MonoBehaviour
         yield return null;
 
         //Begin to load the Scene you specify
-        AsyncOperation asyncOperation = !string.IsNullOrEmpty(nameOfNextlevel) && SceneManager.GetSceneByName(nameOfNextlevel).IsValid() ?
-            SceneManager.LoadSceneAsync(nameOfNextlevel) : SceneManager.LoadSceneAsync(indexOfNextlevel);
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(indexOfNextlevel);
 
         //Don't let the Scene activate until you allow it to
         asyncOperation.allowSceneActivation = false;
