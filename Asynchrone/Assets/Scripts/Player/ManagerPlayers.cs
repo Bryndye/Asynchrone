@@ -70,6 +70,9 @@ public class ManagerPlayers : Singleton<ManagerPlayers>
         {
             onPlayerHuman = !onPlayerHuman;
 
+            PlayerControllerHm.signPlayerControlled.SetActive(onPlayerHuman);
+            PlayerCntrlerRbt.signPlayerControlled.SetActive(!onPlayerHuman);
+
             cameraManager.Target = onPlayerHuman ? PlayerHumanTransform : PlayerRobotTransform;
 
             PlayerControllerHm.CanPlay = onPlayerHuman;
