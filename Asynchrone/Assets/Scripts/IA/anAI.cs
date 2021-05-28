@@ -16,6 +16,7 @@ public class anAI : MonoBehaviour
     IAManager IAM;
     SoundManager SoundM;
     MusicManager MM;
+    Human SinglH;
 
     [Header("Composants")]
     NavMeshAgent myNavMeshAgent;
@@ -28,6 +29,7 @@ public class anAI : MonoBehaviour
     [Header("Global")]
     public Classe myClasse;
     public bool EnnemiTué;
+    GameObject myRagdoll;
     [Space]
 
     [Header("Speeds")]
@@ -128,6 +130,7 @@ public class anAI : MonoBehaviour
         IAM = IAManager.Instance;
         SoundM = SoundManager.Instance;
         MM = MusicManager.Instance;
+        SinglH = Human.Instance;
 
         if (!SM.myAIs.Contains(this))
             SM.myAIs.Add(this);
@@ -1035,6 +1038,13 @@ public class anAI : MonoBehaviour
         if (Comportement == myBehaviour.Patrol)
             NextPatrolStep();
 
+        if (myRagdoll)
+        {
+            Destroy(myRagdoll);
+            myRagdoll = null;
+        }
+            
+
         if (!myUI)
         {
             myUI = Instantiate(Resources.Load<GameObject>("UI/aFollowingState"));
@@ -1069,6 +1079,15 @@ public class anAI : MonoBehaviour
             MM.PressureKeepersCount -= 1;
 
         IAM.RemoveIA(this);
+
+        if(myClasse == Classe.Basic)
+        {
+            myRagdoll = Instantiate(Resources.Load<GameObject>("AI/Robot_Ragdoll"), transform.position, transform.rotation);
+            myRagdoll.SetActive(true);
+            Vector3 dir = transform.position - SinglH.transform.position;
+            myRagdoll.transform.GetChild(3).GetComponent<Rigidbody>().AddForce(dir * 10 + transform.up, ForceMode.Impulse);
+        }
+
         myUI.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }
