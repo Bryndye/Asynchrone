@@ -7309,15 +7309,15 @@ PrefabInstance:
       objectReference: {fileID: 287132423}
     - target: {fileID: 8518872121989377911, guid: 2acecc43ee947db4ca3b76a23a262adc, type: 3}
       propertyPath: m_BoundingSphereOverride.w
-      value: 5.65625
+      value: 0.00000000918245
       objectReference: {fileID: 0}
     - target: {fileID: 8518872121989377911, guid: 2acecc43ee947db4ca3b76a23a262adc, type: 3}
       propertyPath: m_BoundingSphereOverride.x
-      value: 0
+      value: 8.45e-43
       objectReference: {fileID: 0}
     - target: {fileID: 8518872121989377911, guid: 2acecc43ee947db4ca3b76a23a262adc, type: 3}
       propertyPath: m_BoundingSphereOverride.y
-      value: 5.0884e-41
+      value: 1.84e-43
       objectReference: {fileID: 0}
     - target: {fileID: 8518872121989377911, guid: 2acecc43ee947db4ca3b76a23a262adc, type: 3}
       propertyPath: m_BoundingSphereOverride.z
@@ -9733,19 +9733,19 @@ PrefabInstance:
       objectReference: {fileID: 1396970202}
     - target: {fileID: 8518872121989377911, guid: 2acecc43ee947db4ca3b76a23a262adc, type: 3}
       propertyPath: m_BoundingSphereOverride.w
-      value: 0.03515625
+      value: 0.0000000014281296
       objectReference: {fileID: 0}
     - target: {fileID: 8518872121989377911, guid: 2acecc43ee947db4ca3b76a23a262adc, type: 3}
       propertyPath: m_BoundingSphereOverride.x
-      value: 4
+      value: 8.45e-43
       objectReference: {fileID: 0}
     - target: {fileID: 8518872121989377911, guid: 2acecc43ee947db4ca3b76a23a262adc, type: 3}
       propertyPath: m_BoundingSphereOverride.y
-      value: 0
+      value: 1.61e-43
       objectReference: {fileID: 0}
     - target: {fileID: 8518872121989377911, guid: 2acecc43ee947db4ca3b76a23a262adc, type: 3}
       propertyPath: m_BoundingSphereOverride.z
-      value: NaN
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2acecc43ee947db4ca3b76a23a262adc, type: 3}
@@ -10490,7 +10490,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
       propertyPath: dialogues.Array.data[0]
-      value: "Fais clique droit sur la borne \xE0 ta gauche pour recharger ta diversion."
+      value: '[ Fais un clic droit sur la borne lumineuse pour recharger ta diversion
+        ]'
       objectReference: {fileID: 0}
     - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
       propertyPath: dialogues.Array.data[1]
@@ -13892,8 +13893,8 @@ GameObject:
   - component: {fileID: 899859811}
   - component: {fileID: 899859815}
   - component: {fileID: 899859814}
-  - component: {fileID: 899859813}
   - component: {fileID: 899859812}
+  - component: {fileID: 899859813}
   m_Layer: 10
   m_Name: Porte (1)
   m_TagString: Untagged
@@ -13942,8 +13943,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 278.3021, y: 245.49086, z: 9.268435}
+  m_Center: {x: -4.1335208e-19, y: 0.000038146973, z: 0.000029087074}
 --- !u!23 &899859814
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -19159,8 +19160,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
       propertyPath: dialogues.Array.data[1]
-      value: "Jumes : OK mais fais vite s\u2019il te pla\xEEt! Je ne suis pas tr\xE8s
-        rassur\xE9, seul..."
+      value: "Jumes : OK mais fais vite ! Je ne suis pas tr\xE8s rassur\xE9, seul..."
       objectReference: {fileID: 0}
     - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
       propertyPath: dialogues.Array.data[2]
@@ -19181,7 +19181,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14.05
+      value: 17.887968
       objectReference: {fileID: 0}
     - target: {fileID: 5144311302265030004, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
       propertyPath: m_LocalPosition.y
@@ -19225,7 +19225,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6494321005084589022, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
       propertyPath: m_Size.z
-      value: 4.340873
+      value: 12.3351
       objectReference: {fileID: 0}
     - target: {fileID: 6494321005084589022, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
       propertyPath: m_Center.x
@@ -19233,7 +19233,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6494321005084589022, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
       propertyPath: m_Center.z
-      value: 0.17107105
+      value: -1.6240044
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
@@ -21083,9 +21083,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
       propertyPath: dialogues.Array.data[0]
-      value: "Appuie sur Z pour pr\xE9parer ta diversion, et fais clic droit pour
-        placer un hologramme de diversion. Tu peux appuyer de nouveau sur Z pour
-        d\xE9truire l\u2019hologramme. "
+      value: "[ Appuie sur Left Shift pour pr\xE9parer ta diversion, et fais clic
+        droit pour placer un hologramme de diversion. Tu peux appuyer de nouveau
+        sur Left Shift pour d\xE9truire l\u2019hologramme ]"
       objectReference: {fileID: 0}
     - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
       propertyPath: dialogues.Array.data[1]
@@ -22146,19 +22146,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4998373817487662597, guid: 94837b14c2f273a4a9a8f8b127dd5f75, type: 3}
       propertyPath: m_BoundingSphereOverride.w
-      value: 1.72441e-40
+      value: 0.0000000012576242
       objectReference: {fileID: 0}
     - target: {fileID: 4998373817487662597, guid: 94837b14c2f273a4a9a8f8b127dd5f75, type: 3}
       propertyPath: m_BoundingSphereOverride.x
-      value: 1.72441e-40
+      value: 8.45e-43
       objectReference: {fileID: 0}
     - target: {fileID: 4998373817487662597, guid: 94837b14c2f273a4a9a8f8b127dd5f75, type: 3}
       propertyPath: m_BoundingSphereOverride.y
-      value: 1.72441e-40
+      value: 1.61e-43
       objectReference: {fileID: 0}
     - target: {fileID: 4998373817487662597, guid: 94837b14c2f273a4a9a8f8b127dd5f75, type: 3}
       propertyPath: m_BoundingSphereOverride.z
-      value: 1.72441e-40
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5004898450192599617, guid: 94837b14c2f273a4a9a8f8b127dd5f75, type: 3}
       propertyPath: Portes.Array.size
@@ -22630,9 +22630,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
       propertyPath: dialogues.Array.data[0]
-      value: "V4trek : Regarde, ce robot monte la garde. On ne va pas pouvoir passer
-        sans attirer son attention. Attends-moi en bas, et surtout ne te fais pas
-        rep\xE9rer ! Je vais voir ce que je peux faire..."
+      value: "V4trek : Regarde, ce robot monte la garde. Je vais devoir attirer son
+        attention. Attends-moi en bas, et surtout ne te fais pas rep\xE9rer !"
       objectReference: {fileID: 0}
     - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
       propertyPath: dialogues.Array.data[1]
@@ -22641,8 +22640,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
       propertyPath: dialogues.Array.data[2]
-      value: "V4trek : Il faudra que tu le neutralises discr\xE8tement, on ne pourra
-        pas passer, sinon."
+      value: "V4trek : Tu devras le neutraliser discr\xE8tement."
       objectReference: {fileID: 0}
     - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
       propertyPath: dialogues.Array.data[3]
