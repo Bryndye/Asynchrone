@@ -7,7 +7,7 @@ public class RencontreManager : MonoBehaviour
 {
     public Animator animRbt;
     public Animator animHm;
-    private int indexOfNextlevel;
+    public int indexOfNextlevel;
 
     CanvasManager cm
     {
