@@ -31,7 +31,7 @@ Transform:
   - {fileID: 3139985658571602794}
   - {fileID: 8129480088189943141}
   m_Father: {fileID: 5004898450192599646}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: -90}
 --- !u!114 &3961865678320915850
 MonoBehaviour:
@@ -182,9 +182,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 4442385508879581767}
   - {fileID: 7141956130422783654}
   - {fileID: 2134108914552244142}
-  - {fileID: 4442385508879581767}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -203,7 +203,7 @@ MonoBehaviour:
   whichPlayer: 0
   activated: 0
   myUI: {fileID: 2271633976501123161, guid: e6191c13c44aa3a42a03983a55300187, type: 3}
-  myRenderer: {fileID: 5478431033615594880}
+  myRenderer: {fileID: 3309489084808018216}
   PlayerControlRef: {fileID: 0}
   Pince: 0
   pointArrive: {fileID: 0}
@@ -350,7 +350,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5004898450192599646}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &4998373817487662597
 Light:
@@ -422,7 +422,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: b36d6592cb804834d9a3d75538bf640e, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b36d6592cb804834d9a3d75538bf640e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -478,5 +478,10 @@ GameObject:
 --- !u!4 &4442385508879581767 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b36d6592cb804834d9a3d75538bf640e, type: 3}
+  m_PrefabInstance: {fileID: 4191795069531006380}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &3309489084808018216 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: b36d6592cb804834d9a3d75538bf640e, type: 3}
   m_PrefabInstance: {fileID: 4191795069531006380}
   m_PrefabAsset: {fileID: 0}

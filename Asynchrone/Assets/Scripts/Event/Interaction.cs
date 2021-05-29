@@ -55,11 +55,11 @@ public class Interaction : MonoBehaviour
 
     private void SetUI()
     {
-        myRenderer = GetComponent<Renderer>();
-        if (myRenderer == null)
-        {
-            myRenderer = GetComponentInChildren<Renderer>();
-        }
+        //myRenderer = GetComponent<Renderer>();
+        //if (myRenderer == null)
+        //{
+        //    myRenderer = GetComponentInChildren<Renderer>();
+        //}
 
         if (whichPlayer == whichPlayer.Human)
         {
