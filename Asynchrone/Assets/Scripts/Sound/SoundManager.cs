@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class SoundManager : Singleton<SoundManager>
 {
     [HideInInspector]public List<GameObject> SFX_Pool;
-    int PoolIndex = 0;
+    public int PoolIndex = 0;
 
     private void Awake()
     {

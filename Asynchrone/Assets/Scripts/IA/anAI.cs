@@ -957,6 +957,8 @@ public class anAI : MonoBehaviour
             if (Vus[0].gameObject.name == "Fake_Robot(Clone)" && Vector3.Distance(ScaledPosition, transform.position) < 1.5f)
             {
                 EnnemiTué = true;
+                if (Vus[0].transform.childCount > 1)
+                    Vus[0].transform.GetChild(1).transform.parent = null;
                 Destroy(Vus[0].gameObject);
                 StopPursuit();
             }
