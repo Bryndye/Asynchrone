@@ -10,7 +10,7 @@ public class CanvasManager : Singleton<CanvasManager>
     ManagerPlayers managerPlayers;
     PlayerController playerController;
 
-    [HideInInspector]
+    //[HideInInspector]
     public Animator anim;
 
     [SerializeField] 
