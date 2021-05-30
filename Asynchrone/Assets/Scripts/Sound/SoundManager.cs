@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class SoundManager : Singleton<SoundManager>
 {
+    [SerializeField] private AudioMixer musicMixer;
+    [SerializeField] private AudioMixer soundMixer;
+
     [HideInInspector]public List<GameObject> SFX_Pool;
     public int PoolIndex = 0;
 
@@ -12,6 +16,9 @@ public class SoundManager : Singleton<SoundManager>
     {
         if (Instance != this)
             Destroy(this);
+
+        soundMixer.SetFloat("SoundVolume", ConvertedValue(PlayerPrefs.GetFloat("SoundVolume")));
+        musicMixer.SetFloat("MusicVolume", ConvertedValue(PlayerPrefs.GetFloat("MusicVolume")));
     }
 
     private void Start()
@@ -36,4 +43,7 @@ public class SoundManager : Singleton<SoundManager>
         if (PoolIndex > 49)
             PoolIndex = 0;
     }
+
+    float ConvertedValue(float ValueToGive) { return -80f + ValueToGive * 80f; }
+    float GetValue(float MixerValue) { return MixerValue / 80 + 1; }
 }

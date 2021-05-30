@@ -37,6 +37,7 @@ public class ReglageSon : MonoBehaviour
         musicVolume = sliderMusique.value;
         musicVolumeText.text = Mathf.RoundToInt(musicVolume * 100) + "%";
         musicMixer.SetFloat("MusicVolume", ConvertedValue(musicVolume));
+        PlayerPrefs.SetFloat("MusicVolume", musicVolume);
     }
 
     void LoadSoundValues()
@@ -52,6 +53,7 @@ public class ReglageSon : MonoBehaviour
         soundVolume = sliderSound.value;
         soundVolumeText.text = Mathf.RoundToInt(soundVolume * 100) + "%";
         soundMixer.SetFloat("SoundVolume", ConvertedValue(soundVolume));
+        PlayerPrefs.SetFloat("SoundVolume", soundVolume);
     }
 
     float ConvertedValue(float ValueToGive) { return -80f + ValueToGive * 80f; }
