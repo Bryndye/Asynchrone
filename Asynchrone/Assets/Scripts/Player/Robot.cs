@@ -10,7 +10,6 @@ public class Robot : Singleton<Robot>
     SoundManager SM;
 
     [Header("Diversion")]
-    [SerializeField] LayerMask ignoreWall;
     [SerializeField] float rangeDis;
     [HideInInspector] public bool CanDiv;
     [HideInInspector] public GameObject RobotDiv;

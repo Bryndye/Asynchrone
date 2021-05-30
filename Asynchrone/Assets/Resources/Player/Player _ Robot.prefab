@@ -222,15 +222,15 @@ MonoBehaviour:
   CanPlay: 0
   ingoreDiv:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 13312
   ingorePlayers:
     serializedVersion: 2
-    m_Bits: 7940
+    m_Bits: 24324
   signPlayerControlled: {fileID: 3630131640240625237}
   InCinematic: 0
   FeedbackClick: {fileID: 1745249769378136, guid: d1698044ca4fff84e977528d3067773d, type: 3}
-  minDistanceInteraction: 1
-  cooldownInteraction: 1
+  minDistanceInteraction: 1.5
+  cooldownInteraction: 0.8
   signOnClickInteraction: {fileID: 7074322402706236929}
 --- !u!114 &4183304568682466910
 MonoBehaviour:
@@ -244,9 +244,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3b970393553e1040949972dfc4fcaf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ignoreWall:
-    serializedVersion: 2
-    m_Bits: 4
   rangeDis: 10
   CanDiv: 0
   RobotDiv: {fileID: 0}
