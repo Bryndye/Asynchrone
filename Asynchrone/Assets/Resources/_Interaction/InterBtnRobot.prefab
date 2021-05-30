@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8507351450181090092}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &8518872121989377911
 Light:
@@ -88,7 +88,7 @@ Light:
   m_BounceIntensity: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 7.919941, z: 6.73e-43, w: 3.2267303}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 4e-44}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -122,8 +122,8 @@ Transform:
   m_LocalPosition: {x: -3.68, y: 0.3, z: 3.99}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 5798812009886994388}
   - {fileID: 8640540783584838276}
+  - {fileID: 5798812009886994388}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -206,7 +206,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 26cc6e019eb2bbf459ccc2a98fd794cf, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 26cc6e019eb2bbf459ccc2a98fd794cf, type: 3}
       propertyPath: m_LocalScale.x
