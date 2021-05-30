@@ -14,10 +14,10 @@ public class SkipCinematic : MonoBehaviour
     bool isSpace;
     float time;
 
-    //private void Start()
-    //{
-    //    isSpace = true;
-    //}
+    private void Start()
+    {
+        isSpace = true;
+    }
 
     private void Update()
     {
