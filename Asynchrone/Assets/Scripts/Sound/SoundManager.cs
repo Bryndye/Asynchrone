@@ -10,7 +10,7 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] private AudioMixer soundMixer;
 
     [HideInInspector]public List<GameObject> SFX_Pool;
-    public int PoolIndex = 0;
+    [HideInInspector] public int PoolIndex = 0;
 
     private void Awake()
     {
@@ -35,13 +35,13 @@ public class SoundManager : Singleton<SoundManager>
 
     public void GetASound(string mySoundName, Transform myNewParent, bool isUI = false)
     {
-        GameObject toGive = SFX_Pool[PoolIndex];
+        GameObject toGive = transform.GetChild(0).gameObject;
 
         toGive.GetComponent<SFX>().NewJob(mySoundName, myNewParent, isUI);
 
-        PoolIndex += 1;
+        /*PoolIndex += 1;
         if (PoolIndex > 49)
-            PoolIndex = 0;
+            PoolIndex = 0;*/
     }
 
     float ConvertedValue(float ValueToGive) { return -80f + ValueToGive * 80f; }
