@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class Robot : Singleton<Robot>
 {
+    CanvasManager canvasManager;
     NavMeshAgent nav;
     ManagerPlayers managerPlayers;
     SoundManager SM;
@@ -31,6 +32,7 @@ public class Robot : Singleton<Robot>
         nav = GetComponent<NavMeshAgent>();
         managerPlayers = ManagerPlayers.Instance;
         SM = SoundManager.Instance;
+        canvasManager = CanvasManager.Instance;
         managerPlayers.RobotPlayer = this;
         managerPlayers.PlayerRobotTransform = transform;
 
@@ -57,6 +59,7 @@ public class Robot : Singleton<Robot>
                 if (Input.GetKeyDown(managerPlayers.InputDiversion) && RobotDiv != null)
                 {
                     Destroy(RobotDiv);
+                    canvasManager.ChangeSpriteDiv(false);
                 }
             }
         }
@@ -81,6 +84,7 @@ public class Robot : Singleton<Robot>
                 SM.GetASound("DiversionSet", RobotDiv.transform);
                 StockDivManager();
                 CanDiv = false;
+                canvasManager.ChangeSpriteDiv(true);
             }
         }
     }

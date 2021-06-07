@@ -8,6 +8,7 @@ public class Human : Singleton<Human>
 {
     #region var
     ManagerPlayers managerPlayers;
+    CanvasManager canvasManager;
     NavMeshAgent nav;
     CapsuleCollider cc;
 
@@ -31,6 +32,8 @@ public class Human : Singleton<Human>
         managerPlayers = ManagerPlayers.Instance;
         managerPlayers.HumanPlayer = this;
         managerPlayers.PlayerHumanTransform = transform;
+
+        canvasManager = CanvasManager.Instance;
 
         nav = GetComponent<NavMeshAgent>();
         speed = nav.speed;
@@ -84,6 +87,7 @@ public class Human : Singleton<Human>
         float center;
         isAccroupi = !isAccroupi;
 
+        canvasManager.ChangeSpriteCrouch(!isAccroupi);
 
         if (isAccroupi)
         {
@@ -103,6 +107,7 @@ public class Human : Singleton<Human>
             center = 0;
             nav.areaMask -= 1 << NavMesh.GetAreaFromName("Human");
         }
+
         nav.height = h;
         nav.speed = speed / sp;
         cc.height = size / si;

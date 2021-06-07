@@ -47,6 +47,10 @@ public class CanvasManager : Singleton<CanvasManager>
 
     [SerializeField]
     private Text textDiversion, textCrouch, textSwitchCamera;
+    [Space]
+
+    [SerializeField]
+    private Sprite spriteStand, spriteCrouch, spriteDiv, spriteDivSuprr;
     #endregion
 
 
@@ -120,6 +124,7 @@ public class CanvasManager : Singleton<CanvasManager>
     }
     #endregion
 
+
     #region ButtonSpell
     public void SwitchCamera() => managerPlayers.Camera_Manager();
 
@@ -140,6 +145,30 @@ public class CanvasManager : Singleton<CanvasManager>
         else
         {
             Destroy(managerPlayers.RobotPlayer.RobotDiv);
+        }
+    }
+
+    public void ChangeSpriteCrouch(bool crouch)
+    {
+        if (crouch)
+        {
+            btCrouch.GetComponent<Image>().sprite = spriteCrouch;
+        }
+        else
+        {
+            btCrouch.GetComponent<Image>().sprite = spriteStand;
+        }
+    }
+
+    public void ChangeSpriteDiv(bool dived)
+    {
+        if (dived)
+        {
+            btDiversion.GetComponent<Image>().sprite = spriteDivSuprr;
+        }
+        else
+        {
+            btDiversion.GetComponent<Image>().sprite = spriteDiv;
         }
     }
     #endregion
@@ -171,10 +200,12 @@ public class CanvasManager : Singleton<CanvasManager>
             if (managerPlayers.RobotPlayer.RobotDiv != null)
             {
                 btDiversion.interactable = true;
+                //div destructible
             }
             else
             {
                 btDiversion.interactable = managerPlayers.RobotPlayer.HasDiversion;
+                //has div and dont
             }
         }
     }

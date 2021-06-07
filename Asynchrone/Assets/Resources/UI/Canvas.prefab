@@ -661,6 +661,10 @@ MonoBehaviour:
   textDiversion: {fileID: 1682614334836449411}
   textCrouch: {fileID: 6741632793008914103}
   textSwitchCamera: {fileID: 79611388535460276}
+  spriteStand: {fileID: 21300000, guid: 91d69dced1d44a340bfc3b1b4780f163, type: 3}
+  spriteCrouch: {fileID: 21300000, guid: 139ae862ffea6da4595c71efde42982a, type: 3}
+  spriteDiv: {fileID: 21300000, guid: a6c2ea4dea7b38649bf87d6ea4eb1480, type: 3}
+  spriteDivSuprr: {fileID: 21300000, guid: 2a483a52da280ab4491800221186d69a, type: 3}
   accrocheInteraction: {fileID: 3679655272794146264}
   accrocheAIstate: {fileID: 448969096306928386}
   latence: 0.03
@@ -2109,7 +2113,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 139ae862ffea6da4595c71efde42982a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 91d69dced1d44a340bfc3b1b4780f163, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2841,6 +2845,10 @@ PrefabInstance:
     - target: {fileID: 1313328953805363116, guid: 8fad1992fdb55d249a8935ce39e87051, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2647508656809732828, guid: 8fad1992fdb55d249a8935ce39e87051, type: 3}
+      propertyPath: m_Text
+      value: 0%
       objectReference: {fileID: 0}
     - target: {fileID: 4260117255433963107, guid: 8fad1992fdb55d249a8935ce39e87051, type: 3}
       propertyPath: m_AnchorMax.y
