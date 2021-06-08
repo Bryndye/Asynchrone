@@ -37,7 +37,9 @@ public class Interaction : MonoBehaviour
 
     public bool Distributeur;
     [SerializeField]
-    private GameObject _feedBackActivated;
+    private GameObject feedBackActivated;
+    [SerializeField]
+    private MeshRenderer encadrement;
     [Header("Sounds")]
     string InteractionSoundName;
 
@@ -47,8 +49,8 @@ public class Interaction : MonoBehaviour
         managerPlayers = ManagerPlayers.Instance;
         SoundM = SoundManager.Instance;
 
-        if (_feedBackActivated != null)
-            _feedBackActivated.SetActive(false);
+        if (feedBackActivated != null)
+            feedBackActivated.SetActive(false);
 
 
     }
@@ -132,8 +134,8 @@ public class Interaction : MonoBehaviour
                 }
             }
 
-            if (_feedBackActivated != null)
-                _feedBackActivated.SetActive(true);
+            if (feedBackActivated != null)
+                feedBackActivated.SetActive(true);
         }
     }
 
@@ -174,6 +176,7 @@ public class Interaction : MonoBehaviour
             Portes[0].position = Vector3.Lerp(Portes[0].transform.position, pointArrive.position, 0.01f);
             if (Portes[0].position.y > pointArrive.position.y - 0.1f)
             {
+                cameraManager.GetTargetPorte(Portes);
                 activated = true;
             }
         }
@@ -188,9 +191,9 @@ public class Interaction : MonoBehaviour
 
     private void SetColorOutline()
     {
-        if (_feedBackActivated != null)
+        if (feedBackActivated != null)
         {
-            _feedBackActivated.GetComponent<Light>().color = whichPlayer == whichPlayer.Human ? Color.yellow : Color.cyan;
+            feedBackActivated.GetComponent<Light>().color = whichPlayer == whichPlayer.Human ? Color.yellow : Color.cyan;
         }
         if (TryGetComponent(out Outline outline))
         {
