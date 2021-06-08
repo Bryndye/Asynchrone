@@ -124,6 +124,11 @@ public class Interaction : MonoBehaviour
             {
                 if (Portes[i] != null)
                 {
+                    if (Portes[i].parent.TryGetComponent(out EncadrementFeedback encafb))
+                    {
+                        encafb.SetColorLight(Portes[i].gameObject.activeSelf);
+                    }
+
                     Portes[i].gameObject.SetActive(!Portes[i].gameObject.activeSelf);
                     cameraManager.GetTargetPorte(Portes);
 
