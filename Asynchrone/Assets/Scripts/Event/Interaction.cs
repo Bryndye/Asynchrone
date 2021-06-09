@@ -124,13 +124,13 @@ public class Interaction : MonoBehaviour
             {
                 if (Portes[i] != null)
                 {
-                    if (Portes[i].parent.TryGetComponent(out EncadrementFeedback encafb))
-                    {
-                        encafb.SetColorLight(Portes[i].gameObject.activeSelf);
-                    }
-
                     Portes[i].gameObject.SetActive(!Portes[i].gameObject.activeSelf);
                     cameraManager.GetTargetPorte(Portes);
+
+                    if (Portes[i].parent.TryGetComponent(out EncadrementFeedback encafb))
+                    {
+                        encafb.SetColorLight();
+                    }
 
                     if (InteractionSoundName != "")
                     {
@@ -173,15 +173,19 @@ public class Interaction : MonoBehaviour
         }
     }
 
-
+    bool done = false;
     public void CallPince()
     {
         if (ActivePince && !activated && PlayerControlRef == playerControlGet)
         {
+            if (!done)
+            {
+                done = true;
+                cameraManager.GetTargetPorte(Portes);
+            }
             Portes[0].position = Vector3.Lerp(Portes[0].transform.position, pointArrive.position, 0.01f);
             if (Portes[0].position.y > pointArrive.position.y - 0.1f)
             {
-                cameraManager.GetTargetPorte(Portes);
                 activated = true;
             }
         }

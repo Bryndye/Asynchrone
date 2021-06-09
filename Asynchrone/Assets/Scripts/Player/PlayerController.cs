@@ -6,6 +6,8 @@ using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
+    public whichPlayer myPlayer;
+
     #region var
     [HideInInspector] 
     public Animator AnimPlayer;
@@ -52,14 +54,9 @@ public class PlayerController : MonoBehaviour
             if (CanPlay)
             {
                 InputManager();
-                /*
-                if (Input.GetKeyDown(KeyCode.T))
-                {
-                    sm.Respawn();
-                }*/
             }
+            UpdatePosSign();
             CheckDisInteraction();
-            SetSignOnInteraction();
             WalkAnim();
             CrouchedAnim();
         }
@@ -151,6 +148,7 @@ public class PlayerController : MonoBehaviour
         {
             targetClickMouse = raycastHit.collider.transform;
             //Debug.Log(targetClickMouse);
+            ActiveSignOnInteraction();
         }
         else if(raycastHit.point != Vector3.zero)
         {
@@ -316,15 +314,32 @@ public class PlayerController : MonoBehaviour
     #region Gestion Interaction Sign
     [SerializeField]
     private GameObject signOnClickInteraction;
-    private void SetSignOnInteraction()
+    private void ActiveSignOnInteraction()
     {
-        if (targetClickMouse == null)
+        if (targetClickMouse.TryGetComponent(out Interaction interaction))
         {
-            return;
+            if (interaction.whichPlayer == myPlayer)
+            {
+                Debug.Log(true);
+                signOnClickInteraction.SetActive(true);
+            }
+            else
+            {
+                signOnClickInteraction.SetActive(false);
+            }
         }
-        signOnClickInteraction.SetActive(true);
-        signOnClickInteraction.transform.position = targetClickMouse.position + new Vector3(0,0.1f,0);
+        else
+        {
+            signOnClickInteraction.SetActive(false);
+        }
+    }
 
+    private void UpdatePosSign()
+    {
+        if (signOnClickInteraction.activeSelf)
+        {
+            signOnClickInteraction.transform.position = targetClickMouse.position + new Vector3(0, 0.1f, 0);
+        }
     }
 
     private void StopSignInteraction() => signOnClickInteraction.SetActive(false);

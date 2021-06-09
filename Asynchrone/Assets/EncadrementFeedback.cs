@@ -5,8 +5,15 @@ using UnityEngine;
 public class EncadrementFeedback : MonoBehaviour
 {
     [SerializeField]
+    private GameObject porte;
     //private MeshRenderer renderer;
-    public bool isOpenned;
+    private bool isOpenned 
+    {
+        get
+        {
+            return porte.activeSelf;
+        }
+    }
 
     [SerializeField]
     private GameObject closeEncadrement, openEncadrement;
@@ -30,10 +37,10 @@ public class EncadrementFeedback : MonoBehaviour
 
     private void Start()
     {
-        SetColorLight(isOpenned);
+        SetColorLight();
     }
 
-    public void SetColorLight(bool open)
+    public void SetColorLight()
     {
         //if (isOpenned)
         //{
@@ -46,10 +53,10 @@ public class EncadrementFeedback : MonoBehaviour
         //    //renderer.materials[1] = closeMat;
         //}
 
-        isOpenned = open;
+        //isOpenned = open;
 
-        openEncadrement.SetActive(isOpenned);
-        closeEncadrement.SetActive(!isOpenned);
+        openEncadrement.SetActive(!isOpenned);
+        closeEncadrement.SetActive(isOpenned);
 
         //renderer.SetPropertyBlock(Mpb);
     }
