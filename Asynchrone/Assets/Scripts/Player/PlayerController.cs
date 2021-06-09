@@ -320,7 +320,6 @@ public class PlayerController : MonoBehaviour
         {
             if (interaction.whichPlayer == myPlayer)
             {
-                Debug.Log(true);
                 signOnClickInteraction.SetActive(true);
             }
             else
