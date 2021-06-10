@@ -7,6 +7,10 @@ public class DoubleInteraction : MonoBehaviour
     private CameraManager cm;
     private Interaction[] interactions;
 
+    [SerializeField]
+    private Interaction interRbt, interHm;
+    //private DoubleFeedback doubleFB;
+
     void Awake() { 
         interactions = GetComponentsInChildren<Interaction>();
         cm = CameraManager.Instance;
@@ -20,12 +24,31 @@ public class DoubleInteraction : MonoBehaviour
 
     private void Update()
     {
+        if (activated == true)
+        {
+            return;
+        }
         if (interactions[0].activated && interactions[1].activated)
         {
             ok = true;
             CallEvent();
         }
+        ActiveLight();
+    }
 
+    private void ActiveLight()
+    {
+        if (Portes[0].parent.TryGetComponent(out DoubleFeedback doubleFB))
+        {
+            if (interHm.activated)
+            {
+                doubleFB.ActiveHuman();
+            }
+            if (interRbt.activated)
+            {
+                doubleFB.ActiveRobot();
+            }
+        }
     }
 
     public void CallEvent()
@@ -41,6 +64,12 @@ public class DoubleInteraction : MonoBehaviour
                     Portes[i].gameObject.SetActive(!Portes[i].gameObject.activeSelf);
                     if (cm != null)
                         cm.GetTargetPorte(Portes);
+
+                    if (Portes[i].parent.TryGetComponent(out EncadrementFeedback encafb))
+                    {
+                        encafb.SetColorLight();
+                    }
+
                 }
             }
         }
