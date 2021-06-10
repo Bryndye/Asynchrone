@@ -42,11 +42,11 @@ public class DoubleInteraction : MonoBehaviour
         {
             if (interHm.activated)
             {
-                doubleFB.ActiveHuman();
+                doubleFB.ActiveHuman(true);
             }
             if (interRbt.activated)
             {
-                doubleFB.ActiveRobot();
+                doubleFB.ActiveRobot(true);
             }
         }
     }

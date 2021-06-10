@@ -13,13 +13,13 @@ public class DoubleFeedback : MonoBehaviour
         lightRobot.SetActive(false);
     }
 
-    public void ActiveHuman()
+    public void ActiveHuman(bool active)
     {
-        lightHuman.SetActive(true);
+        lightHuman.SetActive(active);
     }
 
-    public void ActiveRobot()
+    public void ActiveRobot(bool active)
     {
-        lightRobot.SetActive(true);
+        lightRobot.SetActive(active);
     }
 }

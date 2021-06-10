@@ -19,13 +19,14 @@ public class LoadLevel : MonoBehaviour
             return CanvasManager.Instance;
         }
     }
-    CameraManager camM
-    {
-        get
-        {
-            return CameraManager.Instance;
-        }
-    }
+    //CameraManager camM
+    //{
+    //    get
+    //    {
+    //        return CameraManager.Instance;
+    //    }
+    //}
+
     SoundManager SM
     {
         get
@@ -40,11 +41,19 @@ public class LoadLevel : MonoBehaviour
             return MusicManager.Instance;
         }
     }
+    DoubleFeedback doubleFB;
 
     [SerializeField] private int indexOfNextlevel;
     [SerializeField] private List<GameObject> players;
 
+
+
     bool done = false;
+
+    private void Awake()
+    {
+        doubleFB = GetComponent<DoubleFeedback>();
+    }
 
     private void OnTriggerStay(Collider other)
     {
@@ -57,16 +66,28 @@ public class LoadLevel : MonoBehaviour
             if (!players.Contains(other.gameObject))
             {
                 players.Add(other.gameObject);
+                if (other.gameObject.TryGetComponent(out PlayerController pc))
+                {
+                    if (pc.myPlayer == whichPlayer.Human)
+                    {
+                        doubleFB.ActiveHuman(true);
+                    }
+                    else
+                    {
+                        doubleFB.ActiveRobot(true);
+                    }
+                }
             }
         }
         if (mp != null)
         {
             if (players.Count >= 2 || mp.PlayerRobotTransform == null && players.Count >= 1)
             {
+                done = true;
+
                 mp.PlayerControllerHm.InCinematic = true;
                 if(mp.PlayerRobotTransform != null)
                     mp.PlayerCntrlerRbt.InCinematic = true;
-                done = true;
 
                 PlayerPrefs.SetInt("indexLevel", indexOfNextlevel);
 
@@ -85,6 +106,7 @@ public class LoadLevel : MonoBehaviour
         }
     }
 
+
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -92,6 +114,17 @@ public class LoadLevel : MonoBehaviour
             if (players.Contains(other.gameObject))
             {
                 players.Remove(other.gameObject);
+            }
+            if (other.gameObject.TryGetComponent(out PlayerController pc))
+            {
+                if (pc.myPlayer == whichPlayer.Human)
+                {
+                    doubleFB.ActiveHuman(false);
+                }
+                else
+                {
+                    doubleFB.ActiveRobot(false);
+                }
             }
         }
     }
