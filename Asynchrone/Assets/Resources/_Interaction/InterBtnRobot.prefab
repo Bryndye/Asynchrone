@@ -102,9 +102,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8507351450181090092}
   - component: {fileID: 8507351450181090099}
+  - component: {fileID: 1264961162699870368}
   - component: {fileID: 3188967905389879926}
   - component: {fileID: 8213937402829514627}
-  - component: {fileID: 1264961162699870368}
   m_Layer: 13
   m_Name: InterBtnRobot
   m_TagString: Interaction
@@ -146,13 +146,25 @@ MonoBehaviour:
   myRenderer: {fileID: 7467657354860198379}
   PlayerControlRef: {fileID: 0}
   Pince: 0
-  PosInitials: []
   pointArrive: {fileID: 0}
   ActivePince: 0
   Portes: []
+  PosInitials: []
   Distributeur: 0
   feedBackActivated: {fileID: 0}
-  encadrement: {fileID: 0}
+--- !u!114 &1264961162699870368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8507351450181090088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f95e900815430b4dbd6d4fc23c2e842, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ActivatedSave: 0
 --- !u!208 &3188967905389879926
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -182,18 +194,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.5, z: 1}
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!114 &1264961162699870368
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8507351450181090088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f95e900815430b4dbd6d4fc23c2e842, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3514831594640772914
 MonoBehaviour:
   m_ObjectHideFlags: 0
