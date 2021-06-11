@@ -15,7 +15,7 @@ public class Interaction : MonoBehaviour
 
     public whichPlayer whichPlayer;
     [SerializeField] 
-    public bool activated;
+    public bool Activated;
     [SerializeField]
     private GameObject myUI;
     [SerializeField]
@@ -34,12 +34,12 @@ public class Interaction : MonoBehaviour
 
 
     public Transform[] Portes;
+    [HideInInspector] public Vector3[] PosInitials;
 
     public bool Distributeur;
     [SerializeField]
     private GameObject feedBackActivated;
-    [SerializeField]
-    private MeshRenderer encadrement;
+
     [Header("Sounds")]
     string InteractionSoundName;
 
@@ -51,18 +51,10 @@ public class Interaction : MonoBehaviour
 
         if (feedBackActivated != null)
             feedBackActivated.SetActive(false);
-
-
     }
 
     private void SetUI()
     {
-        //myRenderer = GetComponent<Renderer>();
-        //if (myRenderer == null)
-        //{
-        //    myRenderer = GetComponentInChildren<Renderer>();
-        //}
-
         if (whichPlayer == whichPlayer.Human)
         {
             myUI = Instantiate(Resources.Load<GameObject>("UI/Following/Interaction Humain"));
@@ -79,25 +71,33 @@ public class Interaction : MonoBehaviour
         PlayerControlRef = whichPlayer == whichPlayer.Human ? managerPlayers.PlayerControllerHm : managerPlayers.PlayerCntrlerRbt;
         SetUI();
         SetColorOutline();
+
+        if (Pince)
+        {
+            PosInitials = new Vector3[Portes.Length];
+            for (int i = 0; i < Portes.Length; i++)
+            {
+                PosInitials[i] = Portes[i].position;
+            }
+        }
     }
 
     public void SetPlayerController(PlayerController pcCalled) => playerControlGet = pcCalled;
 
 
-    private void InteractionDone(bool active)
+    public void InteractionDone(bool active)
     {
         myUI.SetActive(active);
         if (GetComponentInChildren<Outline>() != null)
         {
             GetComponentInChildren<Outline>().enabled = active;
         }
-        //enabled = active;
     }
 
     private void Update()
     {
         CallPince();
-        if (activated)
+        if (Activated)
         {
             InteractionDone(false);
         }
@@ -111,9 +111,9 @@ public class Interaction : MonoBehaviour
 
     public void CallActivePorte()
     {
-        if (!activated && PlayerControlRef == playerControlGet)
+        if (!Activated && PlayerControlRef == playerControlGet)
         {
-            activated = true;
+            Activated = true;
 
             if(whichPlayer == whichPlayer.Human)
                 SoundM.GetASound("Button_Clic", transform);
@@ -129,7 +129,7 @@ public class Interaction : MonoBehaviour
 
                     if (Portes[i].parent.TryGetComponent(out EncadrementFeedback encafb))
                     {
-                        encafb.SetColorLight();
+                        encafb.SetEncadrementColor();
                     }
 
                     if (InteractionSoundName != "")
@@ -176,7 +176,7 @@ public class Interaction : MonoBehaviour
     bool done = false;
     public void CallPince()
     {
-        if (ActivePince && !activated && PlayerControlRef == playerControlGet)
+        if (ActivePince && !Activated && PlayerControlRef == playerControlGet)
         {
             if (!done)
             {
@@ -186,7 +186,7 @@ public class Interaction : MonoBehaviour
             Portes[0].position = Vector3.Lerp(Portes[0].transform.position, pointArrive.position, 0.01f);
             if (Portes[0].position.y > pointArrive.position.y - 0.1f)
             {
-                activated = true;
+                Activated = true;
             }
         }
     }

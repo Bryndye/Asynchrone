@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public enum SpawnSituation { Playing, DeathProcess }
-
-public class SpawnMANAGER : Singleton<SpawnMANAGER>
+public enum SavingState { None, Running }
+public class SpawnManager : Singleton<SpawnManager>
 {
     [Header("External references")]
     ManagerPlayers mp;
@@ -13,6 +13,7 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
    
     [Header("Global")]
     public SpawnSituation mySpawnSituation;
+    public SavingState mySavingState; 
 
     [Header("Spawn Positions")]
     public Transform SpawnPointR;
@@ -50,12 +51,18 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
         }
     }
 
+    //trigger checkpoint
     public void GetSpawn(Transform spawnHum, Transform spawnRbt)
     {
+        mySavingState = SavingState.Running;
+        Invoke(nameof(StopSaving), 1f);
+
         SpawnPointH = spawnHum;
         if (mp.RobotPlayer)
             SpawnPointR = spawnRbt;
     }
+
+    private void StopSaving() => mySavingState = SavingState.None;
 
     public void Respawn()
     {

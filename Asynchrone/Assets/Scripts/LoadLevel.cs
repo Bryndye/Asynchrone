@@ -19,13 +19,6 @@ public class LoadLevel : MonoBehaviour
             return CanvasManager.Instance;
         }
     }
-    //CameraManager camM
-    //{
-    //    get
-    //    {
-    //        return CameraManager.Instance;
-    //    }
-    //}
 
     SoundManager SM
     {

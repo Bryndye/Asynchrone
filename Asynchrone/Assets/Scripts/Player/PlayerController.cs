@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] 
     public NavMeshAgent NavPlayer;
     private ManagerPlayers managerPlayers;
-    private SpawnMANAGER spawnManager;
+    private SpawnManager spawnManager;
     SoundManager SM;
     //[HideInInspector] 
     public bool CanPlay = true;
@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()                                //AWAKE
     {
         managerPlayers = ManagerPlayers.Instance;
-        spawnManager = SpawnMANAGER.Instance;
+        spawnManager = SpawnManager.Instance;
         SM = SoundManager.Instance;
         NavPlayer = GetComponent<NavMeshAgent>();
 
@@ -179,7 +179,7 @@ public class PlayerController : MonoBehaviour
 
                 if (targetClickMouse.TryGetComponent(out Interaction interaction))
                 {
-                    if (interaction.activated || interaction.PlayerControlRef != this)
+                    if (interaction.Activated || interaction.PlayerControlRef != this)
                     {
                         SetDesination(raycastNull());
                         targetClickMouse = null;

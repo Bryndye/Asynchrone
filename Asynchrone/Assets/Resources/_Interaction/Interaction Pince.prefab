@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 1303438652686737788}
   - component: {fileID: 5208392042236360761}
   - component: {fileID: 1492333019988081474}
+  - component: {fileID: 2055818480204417866}
   m_Layer: 13
   m_Name: Interaction Pince
   m_TagString: Interaction
@@ -82,11 +83,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   whichPlayer: 0
-  activated: 0
+  Activated: 0
   myUI: {fileID: 2271633976501123161, guid: e6191c13c44aa3a42a03983a55300187, type: 3}
   myRenderer: {fileID: 0}
   PlayerControlRef: {fileID: 0}
   Pince: 1
+  PosInitials: []
   pointArrive: {fileID: 2605815441474558143}
   ActivePince: 0
   Portes:
@@ -123,6 +125,18 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.9
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2055818480204417866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1303438652686737767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f95e900815430b4dbd6d4fc23c2e842, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1605695970467952918
 GameObject:
   m_ObjectHideFlags: 0

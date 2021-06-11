@@ -12,7 +12,7 @@ public enum Classe { Basic, Drone };
 public class anAI : MonoBehaviour
 {
     [Header("Externe")]
-    SpawnMANAGER SM;
+    SpawnManager SM;
     IAManager IAM;
     SoundManager SoundM;
     MusicManager MM;
@@ -126,7 +126,7 @@ public class anAI : MonoBehaviour
         }
             
         myMoveSound.Play();
-        SM = SpawnMANAGER.Instance;
+        SM = SpawnManager.Instance;
         IAM = IAManager.Instance;
         SoundM = SoundManager.Instance;
         MM = MusicManager.Instance;

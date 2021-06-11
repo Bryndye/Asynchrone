@@ -14,23 +14,29 @@ public class DoubleInteraction : MonoBehaviour
     void Awake() { 
         interactions = GetComponentsInChildren<Interaction>();
         cm = CameraManager.Instance;
+
+        PosInitials = new Vector3[Portes.Length];
+        for (int i = 0; i < Portes.Length; i++)
+        {
+            PosInitials[i] = Portes[i].position;
+        }
     }
 
-    bool ok;
-    bool activated;
+    [HideInInspector] public bool Activated;
 
     public Transform[] Portes;
+    [HideInInspector] public Vector3[] PosInitials;
 
+    
 
     private void Update()
     {
-        if (activated == true)
+        if (Activated == true)
         {
             return;
         }
-        if (interactions[0].activated && interactions[1].activated)
+        if (interactions[0].Activated && interactions[1].Activated)
         {
-            ok = true;
             CallEvent();
         }
         ActiveLight();
@@ -40,11 +46,11 @@ public class DoubleInteraction : MonoBehaviour
     {
         if (Portes[0].parent.TryGetComponent(out DoubleFeedback doubleFB))
         {
-            if (interHm.activated)
+            if (interHm.Activated)
             {
                 doubleFB.ActiveHuman(true);
             }
-            if (interRbt.activated)
+            if (interRbt.Activated)
             {
                 doubleFB.ActiveRobot(true);
             }
@@ -53,9 +59,9 @@ public class DoubleInteraction : MonoBehaviour
 
     public void CallEvent()
     {
-        if (!activated)
+        if (!Activated)
         {
-            activated = true;
+            Activated = true;
 
             for (int i = 0; i < Portes.Length; i++)
             {
@@ -67,7 +73,7 @@ public class DoubleInteraction : MonoBehaviour
 
                     if (Portes[i].parent.TryGetComponent(out EncadrementFeedback encafb))
                     {
-                        encafb.SetColorLight();
+                        encafb.SetEncadrementColor();
                     }
 
                 }
