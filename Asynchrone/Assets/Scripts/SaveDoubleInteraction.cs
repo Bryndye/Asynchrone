@@ -31,7 +31,7 @@ public class SaveDoubleInteraction : MonoBehaviour
         {
             //save data
             saveDone = true;
-            Debug.Log("Save data Doubleinteraction : " + saveDone);
+            //Debug.Log("Save data Doubleinteraction : " + saveDone);
 
             activatedSave = myDoubleInteraction.Activated;
 
@@ -49,7 +49,7 @@ public class SaveDoubleInteraction : MonoBehaviour
         {
             //load save
             loadDone = true;
-            Debug.Log("Load data Doubleinteraction : " + gameObject.name);
+            //Debug.Log("Load data Doubleinteraction : " + gameObject.name);
 
             myDoubleInteraction.Activated = activatedSave;
 
