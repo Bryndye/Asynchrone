@@ -327,10 +327,15 @@ public class PlayerController : MonoBehaviour
                 signOnClickInteraction.SetActive(false);
             }
         }
+        else if (myPlayer == whichPlayer.Robot && targetClickMouse.TryGetComponent(out trap_interaction trap))
+        {
+            signOnClickInteraction.SetActive(true);
+        }
         else
         {
             signOnClickInteraction.SetActive(false);
         }
+
     }
 
     private void UpdatePosSign()

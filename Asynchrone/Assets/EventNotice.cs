@@ -11,6 +11,7 @@ public class EventNotice : MonoBehaviour
     private void Start()
     {
         noticeImage.gameObject.SetActive(false);
+        noticeActive.SetActive(false);
     }
 
 

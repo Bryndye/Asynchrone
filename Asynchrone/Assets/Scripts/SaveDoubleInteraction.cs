@@ -25,13 +25,13 @@ public class SaveDoubleInteraction : MonoBehaviour
         activePortes = new bool[myDoubleInteraction.Portes.Length];
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (spawnManager.mySavingState == SavingState.Running && !saveDone)
         {
             //save data
             saveDone = true;
-            Debug.Log("Save data Doubleinteraction : " + gameObject.name);
+            Debug.Log("Save data Doubleinteraction : " + saveDone);
 
             activatedSave = myDoubleInteraction.Activated;
 
@@ -41,7 +41,7 @@ public class SaveDoubleInteraction : MonoBehaviour
             }
 
         }
-        else
+        else if (spawnManager.mySavingState == SavingState.None)
         {
             saveDone = false;
         }
@@ -74,7 +74,7 @@ public class SaveDoubleInteraction : MonoBehaviour
                 }
             }
         }
-        else
+        else if (spawnManager.mySpawnSituation == SpawnSituation.Playing)
         {
             loadDone = false;
         }
