@@ -10,7 +10,7 @@ public class EventNotice : MonoBehaviour
 
     private void Start()
     {
-        noticeImage.gameObject.SetActive(false);
+        //noticeImage.gameObject.SetActive(false);
         noticeActive.SetActive(false);
     }
 
@@ -19,10 +19,11 @@ public class EventNotice : MonoBehaviour
     {
         //done
         noticeActive.SetActive(true);
+        noticeImage.gameObject.SetActive(true);
     }
 
-    public void ActiveNotice()
+    private void OnTriggerExit(Collider other)
     {
-        noticeImage.gameObject.SetActive(!noticeImage.gameObject.activeSelf);
+        noticeActive.SetActive(false);
     }
 }
