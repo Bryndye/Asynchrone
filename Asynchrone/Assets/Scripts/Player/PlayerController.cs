@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +7,15 @@ using UnityEngine.AI;
 public class PlayerController : MonoBehaviour
 {
     public whichPlayer myPlayer;
+
+    //private enum interactionSelect
+    //{
+    //    interaction,
+    //    trap,
+    //    ia,
+    //    none
+    //}
+    //private interactionSelect interSelected = interactionSelect.none;
 
     #region var
     [HideInInspector] 
@@ -163,6 +172,26 @@ public class PlayerController : MonoBehaviour
             StopSignInteraction();
         }
     }
+
+    //private void CheckWhichInteraction()
+    //{
+    //    if (targetClickMouse.TryGetComponent(out Interaction interaction))
+    //    {
+    //        interSelected = interactionSelect.interaction;
+    //    }
+    //    else if (targetClickMouse.TryGetComponent(out anAI ia))
+    //    {
+    //        interSelected = interactionSelect.ia;
+    //    }
+    //    else if (targetClickMouse.TryGetComponent(out trap_interaction trap))
+    //    {
+    //        interSelected = interactionSelect.trap;
+    //    }
+    //    else
+    //    {
+    //        interSelected = interactionSelect.none;
+    //    }
+    //}
 
 
     [Space]
@@ -326,6 +355,10 @@ public class PlayerController : MonoBehaviour
             {
                 signOnClickInteraction.SetActive(false);
             }
+        }
+        else if (myPlayer == whichPlayer.Human && targetClickMouse.TryGetComponent(out anAI ia))
+        {
+            signOnClickInteraction.SetActive(true);
         }
         else if (myPlayer == whichPlayer.Robot && targetClickMouse.TryGetComponent(out trap_interaction trap))
         {
