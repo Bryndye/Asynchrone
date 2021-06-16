@@ -120,16 +120,20 @@ public class Interaction : MonoBehaviour
             else if (whichPlayer == whichPlayer.Robot)
                 SoundM.GetASound("Hack", transform);
 
+            //Invoke(nameof(DesactivatePorte), 1f);
+
             for (int i = 0; i < Portes.Length; i++)
             {
                 if (Portes[i] != null)
                 {
+                    //DesactivatePorte(Portes[i].gameObject);
                     Portes[i].gameObject.SetActive(!Portes[i].gameObject.activeSelf);
                     cameraManager.GetTargetPorte(Portes);
 
                     if (Portes[i].parent.TryGetComponent(out EncadrementFeedback encafb))
                     {
-                        encafb.SetEncadrementColor();
+                        encafb.SetEncadrementColor(!Portes[i].gameObject.activeSelf);
+                        encafb.AnimDoor(!Portes[i].gameObject.activeSelf);
                     }
 
                     if (InteractionSoundName != "")
@@ -144,6 +148,15 @@ public class Interaction : MonoBehaviour
         }
     }
 
+    private void DesactivatePorte()
+    {
+        //porte.gameObject.SetActive(!porte.activeSelf);
+        for (int i = 0; i < Portes.Length; i++)
+        {
+            Portes[i].gameObject.SetActive(!Portes[i].gameObject.activeSelf);
+            Debug.Log("lol");
+        }
+    }
 
     public void CallDistri() 
     {

@@ -30,6 +30,7 @@ public class CheckPoint : MonoBehaviour
             {
                 sm.GetSpawn(spawnHm, spawnRbt);
             }
+            AllSavesInteraction.Instance.SavesData();
             sm.AiCheck();
             cm.ActiveCheckpointText();
             done = true;

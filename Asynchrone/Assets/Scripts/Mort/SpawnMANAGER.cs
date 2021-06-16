@@ -10,6 +10,7 @@ public class SpawnManager : Singleton<SpawnManager>
     [Header("External references")]
     ManagerPlayers mp;
     CanvasManager cm;
+    AllSavesInteraction allSaves;
    
     [Header("Global")]
     public SpawnSituation mySpawnSituation;
@@ -31,10 +32,11 @@ public class SpawnManager : Singleton<SpawnManager>
     {
         if (Instance != this)
         {
-            Destroy(gameObject);
+            Destroy(this);
         }
         mp = ManagerPlayers.Instance;
         cm = CanvasManager.Instance;
+        allSaves = AllSavesInteraction.Instance;
     }
 
     private void Start()
@@ -77,6 +79,9 @@ public class SpawnManager : Singleton<SpawnManager>
     {
         inCinematic = true;
         cm.mortZone.SetActive(true);
+
+        allSaves.LoadSaves();
+
         if (SpawnPointH != null)
         {
             mp.PlayerControllerHm.NavPlayer.Warp(SpawnPointH.position);

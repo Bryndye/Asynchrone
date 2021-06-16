@@ -6,6 +6,8 @@ public class EncadrementFeedback : MonoBehaviour
 {
     [SerializeField]
     private GameObject porte;
+    [SerializeField]
+    private Animator myAnim;
     private bool isOpenned 
     {
         get
@@ -32,13 +34,27 @@ public class EncadrementFeedback : MonoBehaviour
 
     private void Start()
     {
-        SetEncadrementColor();
+        myAnim.gameObject.SetActive(isOpenned);
+
+        SetEncadrementColor(!isOpenned);
     }
 
-    public void SetEncadrementColor()
+    public void SetEncadrementColor(bool open)
     {
-        openEncadrement.SetActive(!isOpenned);
-        closeEncadrement.SetActive(isOpenned);
+        openEncadrement.SetActive(open);
+        closeEncadrement.SetActive(!open);
     }
 
+    public void AnimDoor(bool open)
+    {
+        myAnim.gameObject.SetActive(true);
+        if (open)
+        {
+            myAnim.SetTrigger("Open");
+        }
+        else
+        {
+            myAnim.SetTrigger("Close");
+        }
+    }
 }

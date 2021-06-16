@@ -12,8 +12,6 @@ public class SaveInteraction : MonoBehaviour
     bool activePinceSave;
     bool[] activePortes;
 
-    bool saveDone = false;
-    bool loadDone = false;
 
     private void Awake()
     {
@@ -23,69 +21,60 @@ public class SaveInteraction : MonoBehaviour
         activePortes = new bool[myInteraction.Portes.Length];
     }
 
-    private void FixedUpdate()
+    private void Start()
     {
-        if (spawnManager.mySavingState == SavingState.Running && !saveDone)
-        {
-            //save data
-            saveDone = true;
-            //Debug.Log("Save data interaction : " + gameObject.name);
+        AllSavesInteraction.Instance.savesInteraction.Add(this);
+    }
 
-            ActivatedSave = myInteraction.Activated;
+
+    public void SaveData()
+    {
+        //Debug.Log("Save data inter : " + gameObject.name);
+
+        ActivatedSave = myInteraction.Activated;
+
+        if (myInteraction.Pince)
+        {
+            activePinceSave = myInteraction.ActivePince;
+        }
+        else
+        {
+            for (int i = 0; i < activePortes.Length; i++)
+            {
+                activePortes[i] = myInteraction.Portes[i].gameObject.activeSelf;
+            }
+        }
+    }
+
+    public void LoadData()
+    {
+        myInteraction.Activated = ActivatedSave;
+        myInteraction.ActivePince = activePinceSave;
+
+        if (ActivatedSave == false)
+        {
+            myInteraction.InteractionDone(true);
 
             if (myInteraction.Pince)
             {
-                activePinceSave = myInteraction.ActivePince;
+                for (int i = 0; i < myInteraction.Portes.Length; i++)
+                {
+                    myInteraction.Portes[i].position = myInteraction.PosInitials[i];
+                }
             }
             else
             {
                 for (int i = 0; i < activePortes.Length; i++)
                 {
-                    activePortes[i] = myInteraction.Portes[i].gameObject.activeSelf;
-                }
-            }
-        }
-        else
-        {
-            saveDone = false;
-        }
-        if (spawnManager.mySpawnSituation == SpawnSituation.DeathProcess && !loadDone)
-        {
-            //load save
-            loadDone = true;
-            //Debug.Log("Load data interaction : " + gameObject.name);
+                    myInteraction.Portes[i].gameObject.SetActive(activePortes[i]);
 
-            myInteraction.Activated = ActivatedSave;
-            myInteraction.ActivePince = activePinceSave;
-
-            if (ActivatedSave == false)
-            {
-                myInteraction.InteractionDone(true);
-
-                if (myInteraction.Pince)
-                {
-                    for (int i = 0; i < myInteraction.Portes.Length; i++)
+                    if (myInteraction.Portes[i].parent.TryGetComponent(out EncadrementFeedback encafb))
                     {
-                        myInteraction.Portes[i].position = myInteraction.PosInitials[i];
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < activePortes.Length; i++)
-                    {
-                         myInteraction.Portes[i].gameObject.SetActive(activePortes[i]);
-
-                        if (myInteraction.Portes[i].parent.TryGetComponent(out EncadrementFeedback encafb))
-                        {
-                            encafb.SetEncadrementColor();
-                        }
+                        encafb.SetEncadrementColor(!activePortes[i]);
+                        encafb.AnimDoor(!activePortes[i]);
                     }
                 }
             }
-        }
-        else
-        {
-            loadDone = false;
         }
     }
 }

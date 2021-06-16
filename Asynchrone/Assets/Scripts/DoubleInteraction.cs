@@ -11,9 +11,14 @@ public class DoubleInteraction : MonoBehaviour
     private Interaction interRbt, interHm;
     //private DoubleFeedback doubleFB;
 
+    [Header("Sounds")]
+    string InteractionSoundName;
+    SoundManager SoundM;
+
     void Awake() { 
         interactions = GetComponentsInChildren<Interaction>();
         cm = CameraManager.Instance;
+        SoundM = SoundManager.Instance;
 
         PosInitials = new Vector3[Portes.Length];
         for (int i = 0; i < Portes.Length; i++)
@@ -37,7 +42,7 @@ public class DoubleInteraction : MonoBehaviour
         }
         if (interactions[0].Activated && interactions[1].Activated)
         {
-            CallEvent();
+            CallDoor();
         }
         ActiveLight();
     }
@@ -57,27 +62,44 @@ public class DoubleInteraction : MonoBehaviour
         }
     }
 
-    public void CallEvent()
+    public void CallDoor()
     {
         if (!Activated)
         {
             Activated = true;
+
+            //Invoke(nameof(DesactivatePorte), 1f);
+
 
             for (int i = 0; i < Portes.Length; i++)
             {
                 if (Portes[i] != null)
                 {
                     Portes[i].gameObject.SetActive(!Portes[i].gameObject.activeSelf);
-                    if (cm != null)
-                        cm.GetTargetPorte(Portes);
+                    cm.GetTargetPorte(Portes);
 
                     if (Portes[i].parent.TryGetComponent(out EncadrementFeedback encafb))
                     {
-                        encafb.SetEncadrementColor();
+                        encafb.SetEncadrementColor(!Portes[i].gameObject.activeSelf);
+                        encafb.AnimDoor(!Portes[i].gameObject.activeSelf);
                     }
-
                 }
             }
+
+            if (InteractionSoundName != "")
+            {
+                SoundM.GetASound("Porte", transform);
+            }
+        }
+    }
+
+    private void DesactivatePorte()
+    {
+        //porte.gameObject.SetActive(!porte.activeSelf);
+        for (int i = 0; i < Portes.Length; i++)
+        {
+            Portes[i].gameObject.SetActive(!Portes[i].gameObject.activeSelf);
+            Debug.Log("lol");
         }
     }
 }
