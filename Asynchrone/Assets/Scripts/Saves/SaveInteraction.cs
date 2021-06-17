@@ -33,7 +33,7 @@ public class SaveInteraction : MonoBehaviour
 
         ActivatedSave = myInteraction.Activated;
 
-        if (myInteraction.Pince)
+        if (myInteraction.interType == Interaction.interactionType.Distributeur)
         {
             activePinceSave = myInteraction.ActivePince;
         }
@@ -55,7 +55,7 @@ public class SaveInteraction : MonoBehaviour
         {
             myInteraction.InteractionDone(true);
 
-            if (myInteraction.Pince)
+            if (myInteraction.interType == Interaction.interactionType.Pince)
             {
                 for (int i = 0; i < myInteraction.Portes.Length; i++)
                 {

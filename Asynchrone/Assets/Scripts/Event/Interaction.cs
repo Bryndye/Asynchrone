@@ -9,6 +9,14 @@ public enum whichPlayer
 }
 public class Interaction : MonoBehaviour
 {
+    public enum interactionType
+    {
+        Porte,
+        Distributeur,
+        Pince
+    }
+    public interactionType interType;
+
     private CameraManager cameraManager;
     private ManagerPlayers managerPlayers;
     SoundManager SoundM;
@@ -28,7 +36,7 @@ public class Interaction : MonoBehaviour
     private PlayerController playerControlGet;
 
     [Header("Pince")]
-    public bool Pince;
+    //public bool Pince;
     [SerializeField] Transform pointArrive;
     [HideInInspector] public bool ActivePince;
 
@@ -36,7 +44,7 @@ public class Interaction : MonoBehaviour
     public Transform[] Portes;
     [HideInInspector] public Vector3[] PosInitials;
 
-    public bool Distributeur;
+    //public bool Distributeur;
     [SerializeField]
     private GameObject feedBackActivated;
 
@@ -72,7 +80,7 @@ public class Interaction : MonoBehaviour
         SetUI();
         SetColorOutline();
 
-        if (Pince)
+        if (interType == interactionType.Pince)
         {
             PosInitials = new Vector3[Portes.Length];
             for (int i = 0; i < Portes.Length; i++)
@@ -107,15 +115,32 @@ public class Interaction : MonoBehaviour
         }
     }
 
-
+    public void Event()
+    {
+        switch (interType)
+        {
+            case interactionType.Porte:
+                Invoke(nameof(CallActivePorte), 0.5f);
+                break;
+            case interactionType.Distributeur:
+                CallDistri();
+                break;
+            case interactionType.Pince:
+                Invoke(nameof(SetPince), 0.5f);
+                break;
+            default:
+                break;
+        }
+    }
 
     public void CallActivePorte()
     {
         if (!Activated && PlayerControlRef == playerControlGet)
         {
             Activated = true;
+            InteractionDone(false);
 
-            if(whichPlayer == whichPlayer.Human)
+            if (whichPlayer == whichPlayer.Human)
                 SoundM.GetASound("Button_Clic", transform);
             else if (whichPlayer == whichPlayer.Robot)
                 SoundM.GetASound("Hack", transform);
@@ -186,13 +211,19 @@ public class Interaction : MonoBehaviour
         }
     }
 
+
     bool done = false;
+    private void SetPince()
+    {
+        ActivePince = true;
+    }
     public void CallPince()
     {
         if (ActivePince && !Activated && PlayerControlRef == playerControlGet)
         {
             if (!done)
             {
+                InteractionDone(false);
                 done = true;
                 cameraManager.GetTargetPorte(Portes);
             }
@@ -203,6 +234,9 @@ public class Interaction : MonoBehaviour
             }
         }
     }
+
+
+
 
 
 

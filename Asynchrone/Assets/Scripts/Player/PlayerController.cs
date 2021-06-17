@@ -208,6 +208,17 @@ public class PlayerController : MonoBehaviour
 
                 if (targetClickMouse.TryGetComponent(out Interaction interaction))
                 {
+                    switch (interaction.interType)
+                    {
+                        case Interaction.interactionType.Porte:
+                            break;
+                        case Interaction.interactionType.Distributeur:
+                            break;
+                        case Interaction.interactionType.Pince:
+                            break;
+                        default:
+                            break;
+                    }
                     if (interaction.Activated || interaction.PlayerControlRef != this)
                     {
                         SetDesination(raycastNull());
@@ -215,21 +226,24 @@ public class PlayerController : MonoBehaviour
                         return;
                     }
 
-                    if (!managerPlayers.onPlayerHuman && interaction.Distributeur)
+                    if (!managerPlayers.onPlayerHuman && interaction.interType == Interaction.interactionType.Distributeur)
                     {
-                        interaction.CallDistri();
+                        interaction.Event();
+                        //interaction.CallDistri();
                         SetAnim("Interaction", false, true);
                     }
-                    else if (interaction.Pince)
+                    else if (interaction.interType == Interaction.interactionType.Pince)
                     {
+                        interaction.Event();
                         interaction.SetPlayerController(this);
-                        interaction.ActivePince = true;
+                        //interaction.ActivePince = true;
                         SetAnim("Interaction", false, true);
                     }
                     else
                     {
+                        interaction.Event();
                         interaction.SetPlayerController(this);
-                        interaction.CallActivePorte();
+                        //interaction.CallActivePorte();
                         SetAnim("Interaction", false, true);
                     }
                     CanPlay = false;
