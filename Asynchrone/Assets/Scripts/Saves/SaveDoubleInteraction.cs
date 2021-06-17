@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SaveDoubleInteraction : MonoBehaviour
 {
-    SpawnManager spawnManager;
+    SpawnMANAGER spawnManager;
 
     SaveInteraction[] mySaveInteractions;
     DoubleInteraction myDoubleInteraction;
@@ -16,7 +16,7 @@ public class SaveDoubleInteraction : MonoBehaviour
 
     private void Awake()
     {
-        spawnManager = SpawnManager.Instance;
+        spawnManager = SpawnMANAGER.Instance;
         myDoubleInteraction = GetComponent<DoubleInteraction>();
         mySaveInteractions = GetComponentsInChildren<SaveInteraction>();
 

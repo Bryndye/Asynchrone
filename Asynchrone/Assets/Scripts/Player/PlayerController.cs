@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] 
     public NavMeshAgent NavPlayer;
     private ManagerPlayers managerPlayers;
-    private SpawnManager spawnManager;
+    private SpawnMANAGER spawnManager;
     SoundManager SM;
     //[HideInInspector] 
     public bool CanPlay = true;
@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()                                //AWAKE
     {
         managerPlayers = ManagerPlayers.Instance;
-        spawnManager = SpawnManager.Instance;
+        spawnManager = SpawnMANAGER.Instance;
         SM = SoundManager.Instance;
         NavPlayer = GetComponent<NavMeshAgent>();
 

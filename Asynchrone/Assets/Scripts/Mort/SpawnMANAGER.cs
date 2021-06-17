@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public enum SpawnSituation { Playing, DeathProcess }
 public enum SavingState { None, Running }
-public class SpawnManager : Singleton<SpawnManager>
+public class SpawnMANAGER : Singleton<SpawnMANAGER>
 {
     [Header("External references")]
     ManagerPlayers mp;
