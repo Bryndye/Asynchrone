@@ -5,7 +5,7 @@ using UnityEngine;
 public class CheckPoint : MonoBehaviour
 {
     ManagerPlayers mp;
-    SpawnManager sm;
+    SpawnMANAGER sm;
     CanvasManager cm;
     private bool done;
 
@@ -14,7 +14,7 @@ public class CheckPoint : MonoBehaviour
 
     private void Awake()
     {
-        sm = SpawnManager.Instance;
+        sm = SpawnMANAGER.Instance;
         mp = ManagerPlayers.Instance;
         cm = CanvasManager.Instance;
     }

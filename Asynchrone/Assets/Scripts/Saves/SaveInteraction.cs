@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SaveInteraction : MonoBehaviour
 {
-    SpawnManager spawnManager;
+    SpawnMANAGER spawnManager;
     Interaction myInteraction;
 
     [Header("Save data Interaction")]
@@ -15,7 +15,7 @@ public class SaveInteraction : MonoBehaviour
 
     private void Awake()
     {
-        spawnManager = SpawnManager.Instance;
+        spawnManager = SpawnMANAGER.Instance;
         myInteraction = GetComponent<Interaction>();
 
         activePortes = new bool[myInteraction.Portes.Length];

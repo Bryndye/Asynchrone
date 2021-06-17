@@ -68,7 +68,7 @@ public class Event_Trigger : MonoBehaviour
 
     private void Update()
     {
-        if (reactivable && SpawnManager.Instance.mySpawnSituation == SpawnSituation.DeathProcess)
+        if (reactivable && SpawnMANAGER.Instance.mySpawnSituation == SpawnSituation.DeathProcess)
         {
             done = false;
         }
