@@ -36,7 +36,6 @@ public class Interaction : MonoBehaviour
     private PlayerController playerControlGet;
 
     [Header("Pince")]
-    //public bool Pince;
     [SerializeField] Transform pointArrive;
     [HideInInspector] public bool ActivePince;
 
@@ -44,7 +43,6 @@ public class Interaction : MonoBehaviour
     public Transform[] Portes;
     [HideInInspector] public Vector3[] PosInitials;
 
-    //public bool Distributeur;
     [SerializeField]
     private GameObject feedBackActivated;
 
@@ -120,13 +118,13 @@ public class Interaction : MonoBehaviour
         switch (interType)
         {
             case interactionType.Porte:
-                Invoke(nameof(CallActivePorte), 0.5f);
+                Invoke(nameof(CallActivePorte), 0.4f);
                 break;
             case interactionType.Distributeur:
-                CallDistri();
+                Invoke(nameof(CallDistri), 0.2f);
                 break;
             case interactionType.Pince:
-                Invoke(nameof(SetPince), 0.5f);
+                Invoke(nameof(SetPince), 0.4f);
                 break;
             default:
                 break;
@@ -145,13 +143,10 @@ public class Interaction : MonoBehaviour
             else if (whichPlayer == whichPlayer.Robot)
                 SoundM.GetASound("Hack", transform);
 
-            //Invoke(nameof(DesactivatePorte), 1f);
-
             for (int i = 0; i < Portes.Length; i++)
             {
                 if (Portes[i] != null)
                 {
-                    //DesactivatePorte(Portes[i].gameObject);
                     Portes[i].gameObject.SetActive(!Portes[i].gameObject.activeSelf);
                     cameraManager.GetTargetPorte(Portes);
 
@@ -183,6 +178,8 @@ public class Interaction : MonoBehaviour
         }
     }
 
+
+
     public void CallDistri() 
     {
         if (!managerPlayers.RobotPlayer.HasDiversion && !managerPlayers.onPlayerHuman)
@@ -210,6 +207,8 @@ public class Interaction : MonoBehaviour
             SoundM.GetASound("DiversionFull", transform, true);
         }
     }
+
+
 
 
     bool done = false;
