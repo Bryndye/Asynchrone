@@ -88,7 +88,7 @@ Light:
   m_BounceIntensity: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 9, y: 0, z: 0, w: 1e-45}
+  m_BoundingSphereOverride: {x: 0, y: 1.2746e-41, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -140,18 +140,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bedd869d7fe02f7429ed1d8e3d5e7b77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interType: 0
   whichPlayer: 1
   Activated: 0
   myUI: {fileID: 2271633976501123161, guid: fde081fda6247e046b2fc2074cc39184, type: 3}
   myRenderer: {fileID: 7467657354860198379}
   PlayerControlRef: {fileID: 0}
-  Pince: 0
   pointArrive: {fileID: 0}
   ActivePince: 0
   Portes: []
   PosInitials: []
-  Distributeur: 0
-  feedBackActivated: {fileID: 0}
+  feedBackActivated: {fileID: 5832811751166518159}
 --- !u!114 &1264961162699870368
 MonoBehaviour:
   m_ObjectHideFlags: 0

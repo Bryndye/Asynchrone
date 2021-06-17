@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2227875247747556990}
   - component: {fileID: 2227875247747556989}
+  - component: {fileID: 8833313629433667141}
   m_Layer: 0
   m_Name: DoubleInterHmRbt
   m_TagString: Untagged
@@ -47,8 +48,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interRbt: {fileID: 7564692407939978028}
   interHm: {fileID: 6602268412266324057}
+  Activated: 0
   Portes:
   - {fileID: 0}
+  PosInitials: []
+--- !u!114 &8833313629433667141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2227875247747556988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22ba48a465652494e8713057ee6ecb99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2227875246192060447
 PrefabInstance:
   m_ObjectHideFlags: 0

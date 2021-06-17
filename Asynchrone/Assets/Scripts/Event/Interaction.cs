@@ -56,7 +56,7 @@ public class Interaction : MonoBehaviour
         SoundM = SoundManager.Instance;
 
         if (feedBackActivated != null)
-            feedBackActivated.SetActive(false);
+            feedBackActivated.SetActive(true);
     }
 
     private void SetUI()
@@ -164,7 +164,7 @@ public class Interaction : MonoBehaviour
             }
 
             if (feedBackActivated != null)
-                feedBackActivated.SetActive(true);
+                feedBackActivated.SetActive(false);
         }
     }
 

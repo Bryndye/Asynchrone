@@ -79,27 +79,11 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(managerPlayers.InputMovement))
         {
-            OnClickMouseR();
+            OnClickMouseR(true);
         }
         if (Input.GetKey(managerPlayers.InputMovement) && canMove)
-        {            
-            time += Time.deltaTime;
-
-            if (time > 0.4f)
-            {
-                time = 0;
-                RaycastHit hit;
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ingorePlayers))
-                {
-                    if (NavPlayer.CalculatePath(hit.point, NavPlayer.path))
-                    {
-                        SetDesination(hit, false);
-                    }
-                }
-            }
-
+        {
+            OnClickMouseR(false);
         }
     }
 
@@ -109,7 +93,7 @@ public class PlayerController : MonoBehaviour
 
     #region Mouse
     private bool canMove = true;
-    private void OnClickMouseR()
+    private void OnClickMouseR(bool stay)
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -126,8 +110,11 @@ public class PlayerController : MonoBehaviour
         {
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ingorePlayers))
             {
-                // play particle system
-                Instantiate(FeedbackClick, hit.point, transform.rotation);
+                if (stay)
+                {
+                    // play particle system
+                    Instantiate(FeedbackClick, hit.point, transform.rotation);
+                }
 
                 //check s'il y a une interaction pour ensuite appeler la fonction de celle-ci
                 if (hit.collider.tag == "Interaction")
@@ -153,7 +140,7 @@ public class PlayerController : MonoBehaviour
 
     private void SetDesination(RaycastHit raycastHit, bool inter = false)
     {
-        if (raycastHit.collider != null && inter)
+        if (raycastHit.collider != null && inter && targetClickMouse != raycastHit.collider.gameObject)
         {
             targetClickMouse = raycastHit.collider.transform;
             //Debug.Log(targetClickMouse);

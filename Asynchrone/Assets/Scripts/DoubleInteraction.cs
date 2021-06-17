@@ -44,20 +44,23 @@ public class DoubleInteraction : MonoBehaviour
         {
             CallDoor();
         }
+        //est appele en runtime
         ActiveLight();
     }
 
-    private void ActiveLight()
+    public void ActiveLight()
     {
         if (Portes[0].parent.TryGetComponent(out DoubleFeedback doubleFB))
         {
             if (interHm.Activated)
             {
                 doubleFB.ActiveHuman(true);
+                cm.GetTargetPorte(Portes);
             }
             if (interRbt.Activated)
             {
                 doubleFB.ActiveRobot(true);
+                cm.GetTargetPorte(Portes);
             }
         }
     }
@@ -76,7 +79,6 @@ public class DoubleInteraction : MonoBehaviour
                 if (Portes[i] != null)
                 {
                     Portes[i].gameObject.SetActive(!Portes[i].gameObject.activeSelf);
-                    cm.GetTargetPorte(Portes);
 
                     if (Portes[i].parent.TryGetComponent(out EncadrementFeedback encafb))
                     {
