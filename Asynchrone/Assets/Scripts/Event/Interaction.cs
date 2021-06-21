@@ -191,18 +191,9 @@ public class Interaction : MonoBehaviour
         else
         {
             CanvasManager canvasManager = CanvasManager.Instance;
-            string[] dia = new string[1];
-
-            if (managerPlayers.onPlayerHuman)
-            {
-                dia[0] = "Je ne peux pas l'utiliser. Vatrek devrait réussir.";
-                canvasManager.StartDiaEffect(dia);
-            }
-            else
-            {
-                dia[0] = "Je suis déjà rechargé à bloc!";
-                canvasManager.StartDiaEffect(dia);
-            }
+      
+            //dia[0] = "Je suis déjà rechargé à bloc!";
+            //canvasManager.StartDiaEffect(dia);
 
             SoundM.GetASound("DiversionFull", transform, true);
         }

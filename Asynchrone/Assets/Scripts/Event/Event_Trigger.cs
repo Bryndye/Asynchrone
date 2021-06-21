@@ -48,9 +48,11 @@ public class Event_Trigger : MonoBehaviour
     public GameObject[] iaToActivate;
 
     [Header("Dialogues")]
-    [TextArea(5, 30)]
-    public string[] dialogues;
-    public AudioClip[] audioC;
+    public MyDialogue[] myDialogues;
+    private string[] dialogues;
+    private Sprite[] myPortraits;
+    private string[] myNames;
+    //public AudioClip[] audioC;
 
     [Header("Porte")]
     public GameObject PorteMesh;
@@ -59,9 +61,24 @@ public class Event_Trigger : MonoBehaviour
 
     private void Awake()
     {
+        SetDialogue();
+
         for (int i = 0; i < iaToActivate.Length; i++)
         {
             iaToActivate[i].SetActive(false);
+        }
+    }
+
+    private void SetDialogue()
+    {
+        dialogues = new string[myDialogues.Length];
+        myPortraits = new Sprite[myDialogues.Length];
+        myNames = new string[myDialogues.Length];
+        for (int i = 0; i < myDialogues.Length; i++)
+        {
+            dialogues[i] = myDialogues[i].dialogues;
+            myPortraits[i] = myDialogues[i].portrait;
+            myNames[i] = myDialogues[i].nom.ToString();
         }
     }
 
@@ -118,9 +135,9 @@ public class Event_Trigger : MonoBehaviour
 
     private void EventDialogue()
     {
-        if (cm.dialogueHere != null && dialogues.Length > 0)
+        if (cm.dialogueText != null && dialogues.Length > 0)
         {
-            cm.StartDiaEffect(dialogues, audioC);
+            cm.StartDiaEffect(dialogues, myPortraits, myNames);
         }
     }
 
@@ -128,7 +145,7 @@ public class Event_Trigger : MonoBehaviour
     private void PorteTime()
     {
         PorteMesh.SetActive(false);
-        Invoke(nameof(ActivePorte),2f);
+        Invoke(nameof(ActivePorte), 2f);
     }
     private void ActivePorte()
     {
@@ -139,9 +156,6 @@ public class Event_Trigger : MonoBehaviour
 
     #region EditMoi
 
-    bool audio;
-    bool ia;
-    bool porte;
 
     private void OnDrawGizmos()
     {
@@ -161,35 +175,36 @@ public class Event_Trigger : MonoBehaviour
 
     private void EditNom()
     {
-        if (eventToTrigger == typeEvent.Audio)
+        switch (eventToTrigger)
         {
-            gameObject.name = "Evt audio " + nameEvent;
-            audio = true;
-        }
-        else
-        {
-            audio = false;
-        }
-        if (eventToTrigger == typeEvent.ActiveIA)
-        {
-            gameObject.name = "Evt ia " + nameEvent;
-            ia = true;
-        }
-        else
-        {
-            ia = false;
-        }
-        if (eventToTrigger == typeEvent.Porte1side)
-        {
-            gameObject.name = "Evt Porte " + nameEvent;
-            porte = true;
-
-        }
-        else
-        {
-            porte = false;
+            case typeEvent.Audio:
+                gameObject.name = "Evt audio " + nameEvent;
+                break;
+            case typeEvent.ActiveIA:
+                gameObject.name = "Evt ia " + nameEvent;
+                break;
+            case typeEvent.Porte1side:
+                gameObject.name = "Evt Porte " + nameEvent;
+                break;
+            default:
+                break;
         }
     }
 
     #endregion
 }
+
+[System.Serializable]
+public class MyDialogue
+{
+    public enum NomChara
+    {
+        V4trek,
+        Jumes
+    }
+    public NomChara nom;
+    public Sprite portrait;
+    [TextArea(5, 30)]
+    public string dialogues;
+}
+
