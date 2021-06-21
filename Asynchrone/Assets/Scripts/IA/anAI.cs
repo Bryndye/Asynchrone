@@ -584,8 +584,15 @@ public class anAI : MonoBehaviour
         triangles[triangles.Length - 2] = triangles[triangles.Length - 4];
         triangles[triangles.Length - 1] = 1;
 
+        Vector2[] uvs = new Vector2[verticles.Length];
+        for(int i = 0; i < uvs.Length; i++)
+        {
+            uvs[i] = new Vector2(verticles[i].x, verticles[i].z);
+        }
+
         viewMesh3.Clear();
         viewMesh3.vertices = verticles;
+        viewMesh3.uv = uvs;
         viewMesh3.triangles = triangles;
         viewMesh3.RecalculateNormals();
     }
