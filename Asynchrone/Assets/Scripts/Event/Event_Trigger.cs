@@ -78,7 +78,14 @@ public class Event_Trigger : MonoBehaviour
         {
             dialogues[i] = myDialogues[i].dialogues;
             myPortraits[i] = myDialogues[i].portrait;
-            myNames[i] = myDialogues[i].nom.ToString();
+            if (myDialogues[i].nom == MyDialogue.NomChara.BossInconnu)
+            {
+                myNames[i] = "???";
+            }
+            else
+            {
+                myNames[i] = myDialogues[i].nom.ToString();
+            }
         }
     }
 
@@ -200,7 +207,9 @@ public class MyDialogue
     public enum NomChara
     {
         V4trek,
-        Jumes
+        Jumes,
+        Boss,
+        BossInconnu
     }
     public NomChara nom;
     public Sprite portrait;

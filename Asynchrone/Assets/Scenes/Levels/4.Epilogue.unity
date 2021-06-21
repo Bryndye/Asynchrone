@@ -299,10 +299,11 @@ MonoBehaviour:
   anim: {fileID: 0}
   checkpoint_t: {fileID: 0}
   mortZone: {fileID: 0}
-  dialogueHere: {fileID: 246869180}
-  sentences: []
-  audioc: []
+  Dialogues: []
   zoneDialogue: {fileID: 1857965689}
+  dialogueText: {fileID: 0}
+  portraitSprite: {fileID: 0}
+  nomText: {fileID: 0}
   ProfilPlayer: {fileID: 0}
   UIHuman: {fileID: 0}
   UIRobot: {fileID: 0}
@@ -312,6 +313,10 @@ MonoBehaviour:
   textDiversion: {fileID: 0}
   textCrouch: {fileID: 0}
   textSwitchCamera: {fileID: 0}
+  spriteStand: {fileID: 0}
+  spriteCrouch: {fileID: 0}
+  spriteDiv: {fileID: 0}
+  spriteDivSuprr: {fileID: 0}
   accrocheInteraction: {fileID: 0}
   accrocheAIstate: {fileID: 0}
   latence: 0.03
@@ -1570,6 +1575,10 @@ PrefabInstance:
       value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.size
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
       propertyPath: dialogues.Array.data[0]
       value: "??? : C\u2019\xE9tait tr\xE8s divertissant de voir comment vous vous
         \xEAtes d\xE9brouill\xE9s pour en arriver jusqu\u2019ici."
@@ -1615,6 +1624,128 @@ PrefabInstance:
     - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
       propertyPath: dialogues.Array.data[10]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[0].nom
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[1].nom
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[6].nom
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[8].nom
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[9].nom
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[10].nom
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[11].nom
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[0].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: eb12b30ddf562e945a72477c27635780, type: 3}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[1].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 54ea2951a627b114b8474bddee057ae1, type: 3}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[3].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: e0a786de82923054b95968911a13050e, type: 3}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[5].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: e95e40abeb4bf12489d14eb0ee530c8a, type: 3}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[6].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: e0a786de82923054b95968911a13050e, type: 3}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[7].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: e95e40abeb4bf12489d14eb0ee530c8a, type: 3}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[8].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: eb12b30ddf562e945a72477c27635780, type: 3}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[9].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: e0a786de82923054b95968911a13050e, type: 3}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[0].dialogues
+      value: "C\u2019\xE9tait tr\xE8s divertissant de voir comment vous vous \xEAtes
+        d\xE9brouill\xE9s pour arriver jusqu\u2019ici."
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[10].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: eb12b30ddf562e945a72477c27635780, type: 3}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[11].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: eb12b30ddf562e945a72477c27635780, type: 3}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[1].dialogues
+      value: C'est quoi cette voix ?!
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[2].dialogues
+      value: Oh non...
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[3].dialogues
+      value: "V4trek, r\xE9ponds-moi ! C\u2019est qui ?!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[4].dialogues
+      value: "C\u2019est..."
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[5].dialogues
+      value: "C\u2019est l\u2019Administrateur !"
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[6].dialogues
+      value: "Alors c\u2019est lui qui contr\xF4le l\u2019usine ?!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[7].dialogues
+      value: "Il nous a pi\xE9g\xE9s !"
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[8].dialogues
+      value: "Tu n\u2019avais toujours pas compris ?"
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[9].dialogues
+      value: "Dis-moi que t\u2019as une solution pour nous sortir d\u2019ici !"
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[10].dialogues
+      value: "Vous voulez d\xE9j\xE0 partir ? On vient \xE0 peine de faire connaissance,
+        restez encore un peu avec nous."
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[11].dialogues
+      value: "Bon retour \xE0 la maison, V4trek..."
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[12].dialogues
+      value: "Dis-moi que t\u2019as une solution pour nous sortir d\u2019ici !"
       objectReference: {fileID: 0}
     - target: {fileID: 2382837117831925816, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
       propertyPath: m_Name
@@ -1726,6 +1857,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
       propertyPath: dialogues.Array.data[0]
       value: "V4trek : Voil\xE0 la salle des serveurs\u2026 On va pouvoir r\xE9cup\xE9rer
         les informations qu\u2019on voulait ! Il faut se d\xE9p\xEAcher avant qu\u2019on
@@ -1743,6 +1878,27 @@ PrefabInstance:
     - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
       propertyPath: dialogues.Array.data[3]
       value: 'Jumes : OK !'
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[1].nom
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[0].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: e95e40abeb4bf12489d14eb0ee530c8a, type: 3}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[1].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 219d30285b4b48a40a02ee12daf7043a, type: 3}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[0].dialogues
+      value: "Voil\xE0 la salle des serveurs\u2026 Je me charge de pirater les plans
+        de production !"
+      objectReference: {fileID: 0}
+    - target: {fileID: 358561392258687000, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
+      propertyPath: myDialogues.Array.data[1].dialogues
+      value: "Tr\xE8s bien je vais monter la garde, fais vite."
       objectReference: {fileID: 0}
     - target: {fileID: 2382837117831925816, guid: 09864e8fc30866d4aab09285cbcacb81, type: 3}
       propertyPath: m_Name
