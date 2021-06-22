@@ -16,6 +16,8 @@ public class Interaction : MonoBehaviour
         Pince
     }
     public interactionType interType;
+    [SerializeField]
+    private bool reutilisable;
 
     private CameraManager cameraManager;
     private ManagerPlayers managerPlayers;
@@ -135,8 +137,11 @@ public class Interaction : MonoBehaviour
     {
         if (!Activated && PlayerControlRef == playerControlGet)
         {
-            Activated = true;
-            InteractionDone(false);
+            if (!reutilisable)
+            {
+                Activated = true;
+                InteractionDone(false);
+            }
 
             if (whichPlayer == whichPlayer.Human)
                 SoundM.GetASound("Button_Clic", transform);
