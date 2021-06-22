@@ -11,12 +11,24 @@ public class SkipCinematic : MonoBehaviour
     [SerializeField]
     int indexLevel;
 
+    [SerializeField]
+    private bool autoSkip = false;
     bool isSpace;
     float time;
 
     private void Start()
     {
         isSpace = true;
+        if (autoSkip)
+        {
+            Invoke(nameof(AutoSkipLevel), 10f);
+        }
+    }
+
+    private void AutoSkipLevel()
+    {
+        PlayerPrefs.SetInt("indexLevel", indexLevel);
+        SceneManager.LoadScene(7);
     }
 
     private void Update()
@@ -36,7 +48,7 @@ public class SkipCinematic : MonoBehaviour
         }
 
         time += Time.deltaTime;
-        if (time > 3 && isSpace)
+        if (time > 3 && isSpace && !autoSkip)
         {
             isSpace = false;
             spaceText.SetActive(false);

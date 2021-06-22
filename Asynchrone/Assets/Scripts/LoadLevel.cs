@@ -36,6 +36,7 @@ public class LoadLevel : MonoBehaviour
     }
     DoubleFeedback doubleFB;
 
+    [SerializeField] private bool aCinematic;
     [SerializeField] private int indexOfNextlevel;
     [SerializeField] private List<GameObject> players;
 
@@ -46,6 +47,14 @@ public class LoadLevel : MonoBehaviour
     private void Awake()
     {
         doubleFB = GetComponent<DoubleFeedback>();
+    }
+
+    private void Start()
+    {
+        if (aCinematic)
+        {
+            PlayerPrefs.SetInt("indexLevel", indexOfNextlevel);
+        }
     }
 
     private void OnTriggerStay(Collider other)
