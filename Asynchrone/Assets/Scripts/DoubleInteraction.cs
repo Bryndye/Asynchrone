@@ -15,6 +15,8 @@ public class DoubleInteraction : MonoBehaviour
     string InteractionSoundName;
     SoundManager SoundM;
 
+    bool doneH;
+    bool doneR;
     void Awake() { 
         interactions = GetComponentsInChildren<Interaction>();
         cm = CameraManager.Instance;
@@ -50,15 +52,21 @@ public class DoubleInteraction : MonoBehaviour
 
     public void ActiveLight()
     {
+        if (doneH && doneR)
+        {
+            return;
+        }
         if (Portes[0].parent.TryGetComponent(out DoubleFeedback doubleFB))
         {
-            if (interHm.Activated)
+            if (interHm.Activated && !doneH)
             {
+                doneH = true;
                 doubleFB.ActiveHuman(true);
                 cm.GetTargetPorte(Portes);
             }
-            if (interRbt.Activated)
+            if (interRbt.Activated && !doneR)
             {
+                doneR = true;
                 doubleFB.ActiveRobot(true);
                 cm.GetTargetPorte(Portes);
             }
