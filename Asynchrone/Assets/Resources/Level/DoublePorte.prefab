@@ -109,7 +109,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1295255621303511111}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.000000119209275}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -6.42, y: 1.444, z: 5.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -348,7 +348,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2721715231708503155}
   m_LocalRotation: {x: -0.00000025288108, y: -0.00000025288108, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1004987734830835749}
@@ -440,7 +440,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2721715231791466880}
   m_LocalRotation: {x: 0.0000003055646, y: 0.00000030556464, z: -0.70710677, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0, z: 15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6107188362918528107}
@@ -822,6 +822,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 625737662939968020}
     m_Modifications:
+    - target: {fileID: 7011895973568948388, guid: 00577d82da3d5a84f9917f19a8ca2954, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8143755936399250379, guid: 00577d82da3d5a84f9917f19a8ca2954, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -931,6 +935,10 @@ PrefabInstance:
     - target: {fileID: 2897809693317615323, guid: 9456cd82fa9bbde49aee18ed707950ff, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4070192264431711668, guid: 9456cd82fa9bbde49aee18ed707950ff, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9456cd82fa9bbde49aee18ed707950ff, type: 3}
