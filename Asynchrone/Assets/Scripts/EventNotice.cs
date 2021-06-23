@@ -53,7 +53,7 @@ public class EventNotice : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         //noticeImage.gameObject.SetActive(false);
         noticeActive.SetActive(false);
@@ -63,12 +63,18 @@ public class EventNotice : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //done
-        noticeActive.SetActive(true);
-        noticeImage.gameObject.SetActive(true);
+        if (other.CompareTag("Player"))
+        {
+            noticeActive.SetActive(true);
+            noticeImage.gameObject.SetActive(true);
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        noticeActive.SetActive(false);
+        if (other.CompareTag("Player"))
+        {
+            noticeActive.SetActive(false);
+        }
     }
 }
