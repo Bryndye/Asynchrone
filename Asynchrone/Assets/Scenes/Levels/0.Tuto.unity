@@ -11331,7 +11331,7 @@ GameObject:
   - component: {fileID: 507145975}
   - component: {fileID: 507145974}
   m_Layer: 2
-  m_Name: Evt audio Intro
+  m_Name: Evt audio suite intro
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11363,17 +11363,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reactivable: 0
-  nameEvent: Intro
+  nameEvent: suite intro
   eventToTrigger: 0
   iaToActivate: []
   myDialogues:
-  - nom: 1
-    portrait: {fileID: 21300000, guid: 219d30285b4b48a40a02ee12daf7043a, type: 3}
-    dialogues: "Je m\u2019appelle Jumes et bienvenue dans mon monde."
-  - nom: 1
-    portrait: {fileID: 21300000, guid: e0a786de82923054b95968911a13050e, type: 3}
-    dialogues: "Ici, les robots nous ont remplac\xE9s et on a d\xFB fuir les villes,
-      mais je n\u2019ai jamais accept\xE9 cette situation !"
   - nom: 1
     portrait: {fileID: 21300000, guid: 219d30285b4b48a40a02ee12daf7043a, type: 3}
     dialogues: "Avant, je travaillais en tant qu'ing\xE9nieur dans l\u2019usine d\u2019\xE0
@@ -12469,14 +12462,13 @@ GameObject:
   - component: {fileID: 576809777}
   - component: {fileID: 576809778}
   - component: {fileID: 576809779}
-  - component: {fileID: 576809780}
   m_Layer: 0
   m_Name: Cinematique
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &576809777
 Transform:
   m_ObjectHideFlags: 0
@@ -12525,19 +12517,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: 10
   anim: {fileID: 576809778}
---- !u!65 &576809780
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 576809776}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 5, z: 20}
-  m_Center: {x: -10, y: 0, z: 5}
 --- !u!1001 &577446311
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30263,6 +30242,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 355163206465121922, guid: e2ef5c291378a464f8f2b78a3db3b27e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1007677710480409982, guid: e2ef5c291378a464f8f2b78a3db3b27e, type: 3}
       propertyPath: m_Size.x
       value: 15.748926
@@ -46941,6 +46924,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 355163206465121922, guid: e2ef5c291378a464f8f2b78a3db3b27e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1007677710480409982, guid: e2ef5c291378a464f8f2b78a3db3b27e, type: 3}
       propertyPath: m_Size.x
       value: 15.748926

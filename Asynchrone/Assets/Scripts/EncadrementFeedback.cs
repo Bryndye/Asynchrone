@@ -51,10 +51,16 @@ public class EncadrementFeedback : MonoBehaviour
         if (open)
         {
             myAnim.SetTrigger("Open");
+            Invoke(nameof(DesactivateDoor), 0.9f);
         }
         else
         {
             myAnim.SetTrigger("Close");
         }
+    }
+
+    private void DesactivateDoor()
+    {
+        myAnim.gameObject.SetActive(false);
     }
 }
