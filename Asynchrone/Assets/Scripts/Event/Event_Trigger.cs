@@ -208,7 +208,7 @@ public class MyDialogue
     {
         V4trek,
         Jumes,
-        Boss,
+        Administrateur,
         BossInconnu
     }
     public NomChara nom;

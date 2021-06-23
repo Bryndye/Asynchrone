@@ -57,7 +57,7 @@ public class LoadLevel : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (done)
         {
@@ -68,7 +68,7 @@ public class LoadLevel : MonoBehaviour
             if (!players.Contains(other.gameObject))
             {
                 players.Add(other.gameObject);
-                if (other.gameObject.TryGetComponent(out PlayerController pc))
+                if (other.gameObject.TryGetComponent(out PlayerController pc) && mp.PlayerRobotTransform != null)
                 {
                     if (pc.myPlayer == whichPlayer.Human)
                     {
