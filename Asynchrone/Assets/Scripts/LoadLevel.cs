@@ -94,7 +94,8 @@ public class LoadLevel : MonoBehaviour
                 PlayerPrefs.SetInt("indexLevel", indexOfNextlevel);
 
                 cm.anim.SetTrigger("Transition");
-                SM.GetASound("Ascenseur_Fermeture", transform);
+                if(players.Count > 1)
+                    SM.GetASound("Ascenseur_Fermeture", transform);
                 MM.CloseMusic();
             }
         }
