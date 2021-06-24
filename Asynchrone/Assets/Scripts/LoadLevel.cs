@@ -99,14 +99,14 @@ public class LoadLevel : MonoBehaviour
                 MM.CloseMusic();
             }
         }
-        else if (players.Count >= 1)
-        {
-            done = true;
+        //else if (players.Count >= 1)
+        //{
+        //    done = true;
 
-            PlayerPrefs.SetInt("indexLevel", indexOfNextlevel);
-            cm.ActiveLoadScreen();
-            //SM.GetASound("Ascenseur_Fermeture", transform);
-        }
+        //    PlayerPrefs.SetInt("indexLevel", indexOfNextlevel);
+        //    cm.ActiveLoadScreen();
+        //    //SM.GetASound("Ascenseur_Fermeture", transform);
+        //}
     }
 
 
@@ -118,7 +118,7 @@ public class LoadLevel : MonoBehaviour
             {
                 players.Remove(other.gameObject);
             }
-            if (other.gameObject.TryGetComponent(out PlayerController pc))
+            if (other.gameObject.TryGetComponent(out PlayerController pc) && mp.PlayerRobotTransform != null)
             {
                 if (pc.myPlayer == whichPlayer.Human)
                 {
