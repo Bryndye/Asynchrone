@@ -9,13 +9,15 @@ public class EventNotice : MonoBehaviour
     [SerializeField] private Image noticeImage;
     
     [SerializeField]
-    GameObject noticeInteractJumes, noticeInteractV4trek, noticeKill, noticeDiversion;
+    GameObject noticeInteractJumes, noticeInteractV4trek, noticeKill, noticeDiversion, noticeVision, noticeSwitch;
     private enum selectNotice
     {
         InteractJumes,
         InteractV4trek,
         Kill,
-        Diversion
+        Diversion,
+        Vision,
+        SwitchPerso
     }
     [SerializeField]
     selectNotice selectionNotice;
@@ -29,24 +31,48 @@ public class EventNotice : MonoBehaviour
                 noticeInteractJumes.SetActive(true);
                 noticeInteractV4trek.SetActive(false);
                 noticeKill.SetActive(false);
+                noticeVision.SetActive(false);
+                noticeSwitch.SetActive(false);
                 break;
             case selectNotice.InteractV4trek:
                 noticeDiversion.SetActive(false);
                 noticeInteractJumes.SetActive(false);
                 noticeInteractV4trek.SetActive(true);
                 noticeKill.SetActive(false);
+                noticeVision.SetActive(false);
+                noticeSwitch.SetActive(false);
                 break;
             case selectNotice.Kill:
                 noticeDiversion.SetActive(false);
                 noticeInteractJumes.SetActive(false);
                 noticeInteractV4trek.SetActive(false);
                 noticeKill.SetActive(true);
+                noticeVision.SetActive(false);
+                noticeSwitch.SetActive(false);
                 break;
             case selectNotice.Diversion:
                 noticeDiversion.SetActive(true);
                 noticeInteractJumes.SetActive(false);
                 noticeInteractV4trek.SetActive(false);
                 noticeKill.SetActive(false);
+                noticeVision.SetActive(false);
+                noticeSwitch.SetActive(false);
+                break;
+            case selectNotice.Vision:
+                noticeDiversion.SetActive(false);
+                noticeInteractJumes.SetActive(false);
+                noticeInteractV4trek.SetActive(false);
+                noticeKill.SetActive(false);
+                noticeVision.SetActive(true);
+                noticeSwitch.SetActive(false);
+                break;
+            case selectNotice.SwitchPerso:
+                noticeDiversion.SetActive(false);
+                noticeInteractJumes.SetActive(false);
+                noticeInteractV4trek.SetActive(false);
+                noticeKill.SetActive(false);
+                noticeVision.SetActive(false);
+                noticeSwitch.SetActive(true);
                 break;
             default:
                 break;
