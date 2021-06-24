@@ -9,7 +9,7 @@ public class EventNotice : MonoBehaviour
     [SerializeField] private Image noticeImage;
     
     [SerializeField]
-    GameObject noticeInteractJumes, noticeInteractV4trek, noticeKill, noticeDiversion, noticeVision, noticeSwitch;
+    GameObject global,noticeInteractJumes, noticeInteractV4trek, noticeKill, noticeDiversion, noticeVision, noticeSwitch;
     private enum selectNotice
     {
         InteractJumes,
@@ -77,6 +77,11 @@ public class EventNotice : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public void ActiveNotice()
+    {
+        global.SetActive(!global.activeSelf);
     }
 
     private void Awake()
