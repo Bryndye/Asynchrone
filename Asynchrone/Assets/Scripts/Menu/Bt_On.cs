@@ -9,6 +9,8 @@ public class Bt_On : MonoBehaviour
     Animator MineAnim;
     Button bt;
 
+    SoundManager SM;
+
     int index;
     ManagerMission Mm;
 
@@ -22,6 +24,8 @@ public class Bt_On : MonoBehaviour
     {
         MineAnim = GetComponent<Animator>();
         bt = GetComponentInChildren<Button>();
+
+        SM = SoundManager.Instance;
     }
 
     public void AnimPointer()
@@ -29,6 +33,8 @@ public class Bt_On : MonoBehaviour
         MineAnim.Play("btOnThis");
         if (Mm != null)
             Mm.LoadDetails(index);
+
+        SM.GetASound("Bouton_Over", null, true);
     }
 
     public void AnimPointerExit() => MineAnim.Play("btExit");
