@@ -277,17 +277,21 @@ public class PlayerController : MonoBehaviour
 
 
     #region AnimManager
-    private void SetAnim(string var, bool active, bool trigger)
+    private void SetAnim(string paramName, bool active, bool isTrigger)
     {
         if (AnimPlayer)
         {
-            if (trigger)
+            if (isTrigger)
             {
-                AnimPlayer.SetTrigger(var);
+                foreach (AnimatorControllerParameter param in AnimPlayer.parameters)
+                {
+                    if (param.name == paramName)
+                       AnimPlayer.SetTrigger(paramName);
+                }
             }
             else
             {
-                AnimPlayer.SetBool(var, active);
+                AnimPlayer.SetBool(paramName, active);
             }
         }
     }
