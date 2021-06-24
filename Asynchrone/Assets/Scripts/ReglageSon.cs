@@ -17,6 +17,8 @@ public class ReglageSon : MonoBehaviour
     [SerializeField] private AudioMixer soundMixer;
     [SerializeField] private Slider sliderSound;
     [SerializeField] private Text soundVolumeText;
+    [Space]
+    public AnimationCurve SoundTranslate;
 
     private void Start()
     {
@@ -56,6 +58,15 @@ public class ReglageSon : MonoBehaviour
         PlayerPrefs.SetFloat("SoundVolume", soundVolume);
     }
 
-    float ConvertedValue(float ValueToGive) { return -80f + ValueToGive * 80f; }
+    float ConvertedValue(float ValueToGive) { return -80f + GetCurveTranslated(ValueToGive) * 80f; }
     float GetValue(float MixerValue) { return MixerValue / 80 + 1; }
+
+    float GetCurveTranslated(float ValueToGive, bool inX = true)
+    {
+        float toReturn = 0;
+
+        toReturn = SoundTranslate.Evaluate(ValueToGive);
+
+        return toReturn;
+    }
 }
