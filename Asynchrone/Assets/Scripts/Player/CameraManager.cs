@@ -44,7 +44,7 @@ public class CameraManager : Singleton<CameraManager>
             Vector3 smooth = new Vector3(TargetPorte[index].position.x, 1, TargetPorte[index].position.z) - transform.position;
             transform.position += smooth / speed;
 
-            if (timer >= 2)
+            if (timer >= 1.5f)
             {
                 ResetTargets();
             }
