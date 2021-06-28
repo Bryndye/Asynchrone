@@ -29,7 +29,7 @@ public class SoundManager : Singleton<SoundManager>
             SFX_Pool.Add(newAudio);
         }
 
-        if (SceneManager.GetActiveScene().buildIndex > 1)
+        if (SceneManager.GetActiveScene().buildIndex > 1 && SceneManager.GetActiveScene().buildIndex != 8)
             GetASound("Ascenseur_Ouverture", null, true);
     }
 
