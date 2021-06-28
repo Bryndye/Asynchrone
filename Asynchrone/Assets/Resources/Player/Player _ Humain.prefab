@@ -234,7 +234,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 1
   m_WalkableMask: 263
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 0
 --- !u!114 &8287809917983190509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,6 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 288248f1696e3d242aa3ea3490d5bdb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myPlayer: 0
   AnimPlayer: {fileID: 0}
   NavPlayer: {fileID: 0}
   CanPlay: 0
@@ -259,7 +260,7 @@ MonoBehaviour:
   signPlayerControlled: {fileID: 853597777254521778}
   InCinematic: 0
   FeedbackClick: {fileID: 1745249769378136, guid: d1698044ca4fff84e977528d3067773d, type: 3}
-  minDistanceInteraction: 1.5
+  minDistanceInteraction: 1.4
   cooldownInteraction: 0.8
   signOnClickInteraction: {fileID: 8159874258243013825}
 --- !u!114 &8287809917983190511

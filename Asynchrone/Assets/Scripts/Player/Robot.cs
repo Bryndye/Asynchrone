@@ -75,7 +75,7 @@ public class Robot : Singleton<Robot>
     {
         if (hit.collider.gameObject.layer != 10)
         {
-            Vector3 point = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+            Vector3 point = new Vector3(hit.point.x, hit.point.y, hit.point.z);
             Vector3 dir = (transform.position - point).normalized;
 
             if (CheckWall(dir, point))
