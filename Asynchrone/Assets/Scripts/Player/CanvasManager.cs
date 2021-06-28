@@ -44,6 +44,7 @@ public class CanvasManager : Singleton<CanvasManager>
     private Image portraitSprite;
     [SerializeField]
     private Text nomText;
+    [SerializeField] private Image PortraitFond, CadreFond;
 
 
     #region UI Spell
@@ -243,6 +244,8 @@ public class CanvasManager : Singleton<CanvasManager>
         nomText.text = noms[index];
         LaunchAudio();
 
+        UpdateDialogueColor(noms[index]);
+
         foreach (char letter in Dialogues[index].ToCharArray())
         {
             dialogueText.text += letter;
@@ -318,6 +321,24 @@ public class CanvasManager : Singleton<CanvasManager>
          }
          skip = false;
      }
+
+    void UpdateDialogueColor(string CharacterName)
+    {
+        Color ToUpdateWith = GetCharacterColor(CharacterName);
+        CadreFond.color = ToUpdateWith;
+        PortraitFond.color = ToUpdateWith;
+        nomText.color = ToUpdateWith;
+    }
+
+    Color GetCharacterColor(string CharacterName)
+    {
+        if (CharacterName.Contains("Jumes"))
+            return new Color(249f, 242f, 0);
+        else if (CharacterName.Contains("V4trek"))
+            return new Color(0f, 136f, 169f);
+        else
+            return new Color(206f, 0f, 0f);
+    }
 
      [Space]
      [SerializeField] float latence = 0.1f;

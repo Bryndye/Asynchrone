@@ -653,6 +653,8 @@ MonoBehaviour:
   dialogueText: {fileID: 9037791728206585551}
   portraitSprite: {fileID: 2803469448098839404}
   nomText: {fileID: 7748685802110422574}
+  PortraitFond: {fileID: 613758201647357639}
+  CadreFond: {fileID: 2056946931036242142}
   ProfilPlayer: {fileID: 2856903925946898079}
   UIHuman: {fileID: 4773080977982946543}
   UIRobot: {fileID: 4026149809184075172}
@@ -848,7 +850,7 @@ GameObject:
   - component: {fileID: 8834924780217531637}
   - component: {fileID: 2056946931036242142}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: Background_Line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -870,8 +872,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000020504, y: -0.00000059605}
-  m_SizeDelta: {x: 820, y: 120}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 850, y: 137.0359}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8834924780217531637
 CanvasRenderer:
@@ -894,14 +896,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: ee79250fb4592a34d911e12a8f5a7b6d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1262,8 +1264,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -306.18, y: -230.97}
-  m_SizeDelta: {x: 181.35352, y: 57.023926}
+  m_AnchoredPosition: {x: -158.76, y: -230.97}
+  m_SizeDelta: {x: 476.18585, y: 57.023926}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &326707537681497308
 CanvasRenderer:
@@ -2858,7 +2860,7 @@ GameObject:
   - component: {fileID: 7261819022363713337}
   - component: {fileID: 1775593145447526067}
   m_Layer: 5
-  m_Name: B&ackground
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2905,7 +2907,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
