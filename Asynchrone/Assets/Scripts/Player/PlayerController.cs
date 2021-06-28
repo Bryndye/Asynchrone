@@ -281,17 +281,19 @@ public class PlayerController : MonoBehaviour
     {
         if (AnimPlayer)
         {
-            if (isTrigger)
+            foreach (AnimatorControllerParameter param in AnimPlayer.parameters)
             {
-                foreach (AnimatorControllerParameter param in AnimPlayer.parameters)
+                if (param.name == paramName)
                 {
-                    if (param.name == paramName)
-                       AnimPlayer.SetTrigger(paramName);
+                    if (isTrigger)
+                    {
+                        AnimPlayer.SetTrigger(paramName);
+                    }
+                    else
+                    {
+                        AnimPlayer.SetBool(paramName, active);
+                    }
                 }
-            }
-            else
-            {
-                AnimPlayer.SetBool(paramName, active);
             }
         }
     }
