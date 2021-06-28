@@ -192,6 +192,7 @@ public class Interaction : MonoBehaviour
             //trigger Anim successfull
             managerPlayers.RobotPlayer.HasDiversion = true;
             SoundM.GetASound("DiversionGet", transform);
+            Destroy(Instantiate(feedBackActivated, transform.position, transform.rotation), 0.5f );
         }
         else
         {
@@ -242,7 +243,7 @@ public class Interaction : MonoBehaviour
 
     private void SetColorOutline()
     {
-        if (feedBackActivated != null)
+        if (feedBackActivated != null && interType != interactionType.Distributeur)
         {
             feedBackActivated.GetComponent<Light>().color = whichPlayer == whichPlayer.Human ? Color.yellow : Color.cyan;
         }
