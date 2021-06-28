@@ -54,6 +54,7 @@ public class LoadLevel : MonoBehaviour
         if (aCinematic)
         {
             PlayerPrefs.SetInt("indexLevel", indexOfNextlevel);
+            SceneManager.LoadScene(9);
         }
     }
 
