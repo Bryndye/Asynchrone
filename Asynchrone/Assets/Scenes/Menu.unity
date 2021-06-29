@@ -363,14 +363,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 267773042}
     m_Modifications:
-    - target: {fileID: 4820895700849953195, guid: 8f7f8c1ea7e74e742abbbd052da33642, type: 3}
-      propertyPath: m_Text
-      value: Jouer
-      objectReference: {fileID: 0}
-    - target: {fileID: 4820895700849953195, guid: 8f7f8c1ea7e74e742abbbd052da33642, type: 3}
-      propertyPath: m_FontData.m_FontSize
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 4820895701246519789, guid: 8f7f8c1ea7e74e742abbbd052da33642, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -519,46 +511,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7232247777829651135, guid: 8f7f8c1ea7e74e742abbbd052da33642, type: 3}
-      propertyPath: m_Delegates.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7232247777829651135, guid: 8f7f8c1ea7e74e742abbbd052da33642, type: 3}
-      propertyPath: m_Delegates.Array.data[2].eventID
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 7232247777829651135, guid: 8f7f8c1ea7e74e742abbbd052da33642, type: 3}
-      propertyPath: m_Delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7232247777829651135, guid: 8f7f8c1ea7e74e742abbbd052da33642, type: 3}
-      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7232247777829651135, guid: 8f7f8c1ea7e74e742abbbd052da33642, type: 3}
-      propertyPath: m_Delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7232247777829651135, guid: 8f7f8c1ea7e74e742abbbd052da33642, type: 3}
-      propertyPath: m_Delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 416538558}
-    - target: {fileID: 7232247777829651135, guid: 8f7f8c1ea7e74e742abbbd052da33642, type: 3}
-      propertyPath: m_Delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7232247777829651135, guid: 8f7f8c1ea7e74e742abbbd052da33642, type: 3}
-      propertyPath: m_Delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: AnimPointerExit
-      objectReference: {fileID: 0}
-    - target: {fileID: 7232247777829651135, guid: 8f7f8c1ea7e74e742abbbd052da33642, type: 3}
-      propertyPath: m_Delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Bt_On, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 7232247777829651135, guid: 8f7f8c1ea7e74e742abbbd052da33642, type: 3}
-      propertyPath: m_Delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2233279563565733355, guid: 8f7f8c1ea7e74e742abbbd052da33642, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8f7f8c1ea7e74e742abbbd052da33642, type: 3}
@@ -633,17 +585,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &416538558 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4258379586257048378, guid: 8f7f8c1ea7e74e742abbbd052da33642, type: 3}
-  m_PrefabInstance: {fileID: 161936919}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30260ad07c8ecc544b6071c6b57a6209, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &468868775
 GameObject:
   m_ObjectHideFlags: 0

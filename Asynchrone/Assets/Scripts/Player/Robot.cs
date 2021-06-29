@@ -80,7 +80,7 @@ public class Robot : Singleton<Robot>
 
             if (CheckWall(dir, point))
             {
-                RobotDiv = Instantiate(Resources.Load<GameObject>("Player/Fake_Robot"), point, Quaternion.identity);
+                RobotDiv = Instantiate(Resources.Load<GameObject>("Player/Fake_Robot"), new Vector3(point.x, transform.position.y - 1, point.z ), Quaternion.identity);
                 SM.GetASound("DiversionSet", RobotDiv.transform);
                 StockDivManager();
                 CanDiv = false;
