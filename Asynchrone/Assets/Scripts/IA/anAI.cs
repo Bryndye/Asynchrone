@@ -356,7 +356,7 @@ public class anAI : MonoBehaviour
                             HitLowWall = false;
                     }
 
-                    if (!HitWall && !HitLowWall && HightDistance <= 1)
+                    if (!HitWall && !HitLowWall && HightDistance <= 1.5f)
                     {
                         Vus.Add(theTarget);
                     }
