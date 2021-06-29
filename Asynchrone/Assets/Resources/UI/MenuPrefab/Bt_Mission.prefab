@@ -67,7 +67,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 00dd946494802da4d86dd1535ca6e609, type: 3}
-    m_FontSize: 18
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -78,7 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'MISSION 0: Introduction'
+  m_Text: Jouer
 --- !u!1 &4820895700866771917
 GameObject:
   m_ObjectHideFlags: 0
@@ -375,6 +375,22 @@ MonoBehaviour:
             m_BoolArgument: 1
           m_CallState: 1
   - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4258379586257048378}
+          m_TargetAssemblyTypeName: Bt_On, Assembly-CSharp
+          m_MethodName: AnimPointerExit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 1
+  - eventID: 9
     callback:
       m_PersistentCalls:
         m_Calls:
