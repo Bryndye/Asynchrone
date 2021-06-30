@@ -81,6 +81,10 @@ public class Robot : Singleton<Robot>
             if (CheckWall(dir, point))
             {
                 RobotDiv = Instantiate(Resources.Load<GameObject>("Player/Fake_Robot"), new Vector3(point.x, transform.position.y - 1, point.z ), Quaternion.identity);
+                managerPlayers.PlayerCntrlerRbt.SetAnim("Div", true, true);
+                managerPlayers.PlayerCntrlerRbt.NavPlayer.updateRotation = false;
+                transform.LookAt(RobotDiv.transform.position);
+                managerPlayers.PlayerCntrlerRbt.NavPlayer.updateRotation = true;
                 SM.GetASound("DiversionSet", RobotDiv.transform);
                 StockDivManager();
                 CanDiv = false;

@@ -8,15 +8,6 @@ public class PlayerController : MonoBehaviour
 {
     public whichPlayer myPlayer;
 
-    //private enum interactionSelect
-    //{
-    //    interaction,
-    //    trap,
-    //    ia,
-    //    none
-    //}
-    //private interactionSelect interSelected = interactionSelect.none;
-
     #region var
     [HideInInspector] 
     public Animator AnimPlayer;
@@ -42,8 +33,6 @@ public class PlayerController : MonoBehaviour
 
     float time;
     #endregion
-
-
 
 
     private void Awake()                                //AWAKE
@@ -277,7 +266,7 @@ public class PlayerController : MonoBehaviour
 
 
     #region AnimManager
-    private void SetAnim(string paramName, bool active, bool isTrigger)
+    public void SetAnim(string paramName, bool active, bool isTrigger)
     {
         if (AnimPlayer)
         {
@@ -319,10 +308,6 @@ public class PlayerController : MonoBehaviour
         {
             SetAnim("Crouched", managerPlayers.HumanPlayer.isAccroupi, false);
         }
-    }
-    public void DivAnim()
-    {
-        SetAnim("Div", true, true);
     }
 
     [SerializeField]
