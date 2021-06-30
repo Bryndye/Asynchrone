@@ -26969,6 +26969,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 128e4fcd26feb3a418a8ddf92ab0ab14, type: 3}
   m_PrefabInstance: {fileID: 1227167349}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &1231680075 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8286598118630437434, guid: 0aace02819b51844bb06fe7dae7a5eca, type: 3}
+  m_PrefabInstance: {fileID: 2065031100}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1232951093
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -50622,6 +50627,10 @@ PrefabInstance:
       value: Interaction Pince
       objectReference: {fileID: 0}
     - target: {fileID: 1303438652686737788, guid: 0aace02819b51844bb06fe7dae7a5eca, type: 3}
+      propertyPath: myRenderer
+      value: 
+      objectReference: {fileID: 1231680075}
+    - target: {fileID: 1303438652686737788, guid: 0aace02819b51844bb06fe7dae7a5eca, type: 3}
       propertyPath: Portes.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -50631,15 +50640,15 @@ PrefabInstance:
       objectReference: {fileID: 194469652}
     - target: {fileID: 1314924178242876728, guid: 0aace02819b51844bb06fe7dae7a5eca, type: 3}
       propertyPath: m_BoundingSphereOverride.w
-      value: 7.4942363e-10
+      value: -4.617031
       objectReference: {fileID: 0}
     - target: {fileID: 1314924178242876728, guid: 0aace02819b51844bb06fe7dae7a5eca, type: 3}
       propertyPath: m_BoundingSphereOverride.x
-      value: 0
+      value: 7.96e-43
       objectReference: {fileID: 0}
     - target: {fileID: 1314924178242876728, guid: 0aace02819b51844bb06fe7dae7a5eca, type: 3}
       propertyPath: m_BoundingSphereOverride.y
-      value: 9.753e-42
+      value: 9.4e-44
       objectReference: {fileID: 0}
     - target: {fileID: 1314924178242876728, guid: 0aace02819b51844bb06fe7dae7a5eca, type: 3}
       propertyPath: m_BoundingSphereOverride.z
