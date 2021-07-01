@@ -68,11 +68,11 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(managerPlayers.InputMovement))
         {
-            OnClickMouseR(true);
-        }
-        if (Input.GetKey(managerPlayers.InputMovement) && canMove)
-        {
             OnClickMouseR(false);
+        }
+        else if (Input.GetKey(managerPlayers.InputMovement) && canMove)
+        {
+            OnClickMouseR(true);
         }
     }
 
@@ -99,7 +99,14 @@ public class PlayerController : MonoBehaviour
         {
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~ingorePlayers))
             {
-                if (stay)
+                if (!NavPlayer.CalculatePath(hit.point, NavPlayer.path))
+                {
+                    //Debug.Log("No path found");
+                    SetDesination(raycastNull());
+                    return;
+                }
+
+                if (!stay)
                 {
                     // play particle system
                     Instantiate(FeedbackClick, hit.point, transform.rotation);
@@ -110,9 +117,9 @@ public class PlayerController : MonoBehaviour
                 {
                     SetDesination(hit, true);
                 }
-                else if (NavPlayer.CalculatePath(hit.point, NavPlayer.path))
+                else
                 {
-                    SetDesination(hit, false);
+                    SetDesination(hit);
                 }
             }
         }
@@ -135,39 +142,19 @@ public class PlayerController : MonoBehaviour
             //Debug.Log(targetClickMouse);
             ActiveSignOnInteraction();
         }
-        else if(raycastHit.point != Vector3.zero)
+        else if(raycastHit.point != Vector3.zero && !inter)
         {
             targetClickMouse = null;
             NavPlayer.SetDestination(raycastHit.point);
             StopSignInteraction();
         }
-        else
+        else if (!inter)
         {
             targetClickMouse = null;
             NavPlayer.SetDestination(transform.position);
             StopSignInteraction();
         }
     }
-
-    //private void CheckWhichInteraction()
-    //{
-    //    if (targetClickMouse.TryGetComponent(out Interaction interaction))
-    //    {
-    //        interSelected = interactionSelect.interaction;
-    //    }
-    //    else if (targetClickMouse.TryGetComponent(out anAI ia))
-    //    {
-    //        interSelected = interactionSelect.ia;
-    //    }
-    //    else if (targetClickMouse.TryGetComponent(out trap_interaction trap))
-    //    {
-    //        interSelected = interactionSelect.trap;
-    //    }
-    //    else
-    //    {
-    //        interSelected = interactionSelect.none;
-    //    }
-    //}
 
 
     [Space]
@@ -184,17 +171,6 @@ public class PlayerController : MonoBehaviour
 
                 if (targetClickMouse.TryGetComponent(out Interaction interaction))
                 {
-                    switch (interaction.interType)
-                    {
-                        case Interaction.interactionType.Porte:
-                            break;
-                        case Interaction.interactionType.Distributeur:
-                            break;
-                        case Interaction.interactionType.Pince:
-                            break;
-                        default:
-                            break;
-                    }
                     if (interaction.Activated || interaction.PlayerControlRef != this)
                     {
                         SetDesination(raycastNull());
@@ -205,21 +181,18 @@ public class PlayerController : MonoBehaviour
                     if (!managerPlayers.onPlayerHuman && interaction.interType == Interaction.interactionType.Distributeur)
                     {
                         interaction.Event();
-                        //interaction.CallDistri();
                         SetAnim("Interaction", false, true);
                     }
                     else if (interaction.interType == Interaction.interactionType.Pince)
                     {
                         interaction.Event();
                         interaction.SetPlayerController(this);
-                        //interaction.ActivePince = true;
                         SetAnim("Interaction", false, true);
                     }
                     else
                     {
                         interaction.Event();
                         interaction.SetPlayerController(this);
-                        //interaction.CallActivePorte();
                         SetAnim("Interaction", false, true);
                     }
                     CanPlay = false;
@@ -244,6 +217,7 @@ public class PlayerController : MonoBehaviour
                     if (managerPlayers.PlayerCntrlerRbt == this)
                     {
                         trapInter.Called();
+                        SetDesination(raycastNull());
                     }
                 }
                 StopSignInteraction();
