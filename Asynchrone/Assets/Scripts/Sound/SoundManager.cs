@@ -12,18 +12,20 @@ public class SoundManager : Singleton<SoundManager>
     [HideInInspector]public List<GameObject> SFX_Pool;
     [HideInInspector] public int PoolIndex = 0;
 
+    public AnimationCurve SoundTranslate;
+
     private void Awake()
     {
         if (Instance != this)
             Destroy(this);
-
-        soundMixer.SetFloat("SoundVolume", ConvertedValue(PlayerPrefs.GetFloat("SoundVolume")));
-        musicMixer.SetFloat("MusicVolume", ConvertedValue(PlayerPrefs.GetFloat("MusicVolume")));
     }
 
     private void Start()
     {
-        for(int i = 0; i < 50; i++)
+        soundMixer.SetFloat("SoundVolume", ConvertedValue(PlayerPrefs.GetFloat("SoundVolume")));
+        musicMixer.SetFloat("MusicVolume", ConvertedValue(PlayerPrefs.GetFloat("MusicVolume")));
+
+        for (int i = 0; i < 50; i++)
         {
             GameObject newAudio = Instantiate(Resources.Load<GameObject>("Audio/aSFX"), transform.position, transform.rotation, transform);
             SFX_Pool.Add(newAudio);
@@ -44,6 +46,15 @@ public class SoundManager : Singleton<SoundManager>
             PoolIndex = 0;*/
     }
 
-    float ConvertedValue(float ValueToGive) { return -80f + ValueToGive * 80f; }
+    float ConvertedValue(float ValueToGive) { return -80f + GetCurveTranslated(ValueToGive) * 80f; }
     float GetValue(float MixerValue) { return MixerValue / 80 + 1; }
+
+    float GetCurveTranslated(float ValueToGive, bool inX = true)
+    {
+        float toReturn = 0;
+
+        toReturn = SoundTranslate.Evaluate(ValueToGive);
+
+        return toReturn;
+    }
 }

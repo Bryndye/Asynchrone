@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class ReglageSon : MonoBehaviour
 {
+    SoundManager SM;
+
     [Header("Music Elements")]
     float musicVolume;
     [SerializeField] private AudioMixer musicMixer;
@@ -17,8 +19,11 @@ public class ReglageSon : MonoBehaviour
     [SerializeField] private AudioMixer soundMixer;
     [SerializeField] private Slider sliderSound;
     [SerializeField] private Text soundVolumeText;
-    [Space]
-    public AnimationCurve SoundTranslate;
+
+    private void Awake()
+    {
+        SM = SoundManager.Instance;
+    }
 
     private void Start()
     {
@@ -28,8 +33,9 @@ public class ReglageSon : MonoBehaviour
 
     void LoadMusicValues()
     {
-        musicMixer.GetFloat("MusicVolume", out musicVolume);
-        musicVolume = GetValue(musicVolume);
+        //musicMixer.GetFloat("MusicVolume", out musicVolume);
+        
+        musicVolume = PlayerPrefs.GetFloat("MusicVolume");
         sliderMusique.value = musicVolume;
         musicVolumeText.text = Mathf.RoundToInt(musicVolume * 100) + "%";
     }
@@ -44,8 +50,9 @@ public class ReglageSon : MonoBehaviour
 
     void LoadSoundValues()
     {
-        soundMixer.GetFloat("SoundVolume", out soundVolume);
-        soundVolume = GetValue(soundVolume);
+        //soundMixer.GetFloat("SoundVolume", out soundVolume);
+
+        soundVolume = PlayerPrefs.GetFloat("SoundVolume");
         sliderSound.value = soundVolume;
         soundVolumeText.text = Mathf.RoundToInt(soundVolume * 100) + "%";
     }
@@ -65,7 +72,7 @@ public class ReglageSon : MonoBehaviour
     {
         float toReturn = 0;
 
-        toReturn = SoundTranslate.Evaluate(ValueToGive);
+        toReturn = SM.SoundTranslate.Evaluate(ValueToGive);
 
         return toReturn;
     }
