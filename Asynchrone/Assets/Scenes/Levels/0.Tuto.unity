@@ -14935,81 +14935,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 650150693}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &651440001
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 651440004}
-  - component: {fileID: 651440003}
-  - component: {fileID: 651440002}
-  m_Layer: 2
-  m_Name: Evt audio Intro
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!65 &651440002
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 651440001}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 5, z: 20}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &651440003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 651440001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52ebabd560935b045960e13b3ac92e69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reactivable: 0
-  nameEvent: Intro
-  eventToTrigger: 0
-  iaToActivate: []
-  myDialogues:
-  - nom: 1
-    portrait: {fileID: 21300000, guid: 219d30285b4b48a40a02ee12daf7043a, type: 3}
-    dialogues: "Avant, je travaillais en tant qu'ing\xE9nieur dans l\u2019usine d\u2019\xE0
-      c\xF4t\xE9. Je construisais des robots avec mon fid\xE8le ami. "
-  - nom: 1
-    portrait: {fileID: 21300000, guid: 219d30285b4b48a40a02ee12daf7043a, type: 3}
-    dialogues: "Maintenant, je r\xE9cup\xE8re de la ferraille \xE0 la d\xE9charge
-      pour gagner ma vie... "
-  - nom: 1
-    portrait: {fileID: 21300000, guid: 219d30285b4b48a40a02ee12daf7043a, type: 3}
-    dialogues: "D'ailleurs je dois le retrouver l\xE0-bas afin qu\u2019on discute
-      de notre plan..."
-  PorteMesh: {fileID: 0}
---- !u!4 &651440004
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 651440001}
-  m_LocalRotation: {x: -0, y: -0.37170044, z: -0, w: 0.9283527}
-  m_LocalPosition: {x: 74.53, y: 0.96, z: 68.42}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 27
-  m_LocalEulerAnglesHint: {x: 0, y: -43.641, z: 0}
 --- !u!1001 &652901642
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40433,6 +40358,18 @@ MonoBehaviour:
   - nom: 1
     portrait: {fileID: 21300000, guid: 1b5bb80392953e84cbb8e1cdb2c6e0a8, type: 3}
     dialogues: "Ici, les robots nous ont remplac\xE9s et on a d\xFB fuir les villes."
+  - nom: 1
+    portrait: {fileID: 21300000, guid: 1b5bb80392953e84cbb8e1cdb2c6e0a8, type: 3}
+    dialogues: "Avant, je travaillais en tant qu'ing\xE9nieur dans l\u2019usine d\u2019\xE0
+      c\xF4t\xE9. Je construisais des robots avec mon fid\xE8le ami. "
+  - nom: 1
+    portrait: {fileID: 21300000, guid: 1b5bb80392953e84cbb8e1cdb2c6e0a8, type: 3}
+    dialogues: "Maintenant, je r\xE9cup\xE8re de la ferraille \xE0 la d\xE9charge
+      pour gagner ma vie... "
+  - nom: 1
+    portrait: {fileID: 21300000, guid: 1b5bb80392953e84cbb8e1cdb2c6e0a8, type: 3}
+    dialogues: "D'ailleurs je dois le retrouver l\xE0-bas afin qu\u2019on discute
+      de notre plan..."
   PorteMesh: {fileID: 0}
 --- !u!4 &1768284592
 Transform:
@@ -42403,6 +42340,73 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1848781703}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1849744988
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1849744991}
+  - component: {fileID: 1849744990}
+  - component: {fileID: 1849744989}
+  m_Layer: 2
+  m_Name: Evt audio Intro
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1849744989
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1849744988}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 5, z: 20}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1849744990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1849744988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52ebabd560935b045960e13b3ac92e69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reactivable: 0
+  nameEvent: Intro
+  eventToTrigger: 0
+  iaToActivate: []
+  myDialogues:
+  - nom: 1
+    portrait: {fileID: 21300000, guid: 219d30285b4b48a40a02ee12daf7043a, type: 3}
+    dialogues: "Mon ami est rest\xE9 \xE0 proximit\xE9 de l\u2019usine pour y espionner
+      les robots. On se retrouve \xE0 la d\xE9charge pour \xE9changer nos informations..."
+  PorteMesh: {fileID: 0}
+--- !u!4 &1849744991
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1849744988}
+  m_LocalRotation: {x: -0, y: -0.50107235, z: -0, w: 0.86540544}
+  m_LocalPosition: {x: 38.81, y: 0.96, z: 27.42}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 27
+  m_LocalEulerAnglesHint: {x: 0, y: -60.142, z: 0}
 --- !u!1001 &1849992624
 PrefabInstance:
   m_ObjectHideFlags: 0
