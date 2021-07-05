@@ -41,8 +41,11 @@ public class EncadrementFeedback : MonoBehaviour
 
     public void SetEncadrementColor(bool open)
     {
-        openEncadrement.SetActive(open);
-        closeEncadrement.SetActive(!open);
+        if (openEncadrement != null && closeEncadrement != null)
+        {
+            openEncadrement.SetActive(open);
+            closeEncadrement.SetActive(!open);
+        }
     }
 
     public void AnimDoor(bool open)
