@@ -201,7 +201,7 @@ public class PlayerController : MonoBehaviour
 
                 else if (targetClickMouse.TryGetComponent(out anAI ai))
                 {
-                    if (managerPlayers.onPlayerHuman && ai.Killable())
+                    if (managerPlayers.PlayerControllerHm == this && ai.Killable())
                     {
                         SetDesination(raycastNull());
                         SetAnim("Attack", false, true);
