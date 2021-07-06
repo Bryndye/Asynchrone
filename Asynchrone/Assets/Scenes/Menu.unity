@@ -2982,7 +2982,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: BACK
+  m_Text: RETOUR
 --- !u!222 &1316636148
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4447,8 +4447,8 @@ MonoBehaviour:
   - Name: "La d\xE9charge"
     indexLevel: 1
     Illustration: {fileID: 21300000, guid: 2ef0a372b6c351a44979359874d2997c, type: 3}
-    Context: "Un m\xE9canicien tente de s'infiltrer dans une usine contr\xF4l\xE9e
-      par de dangereux robots pour trouver des objets de valeur."
+    Context: "Un m\xE9canicien tente de s'infiltrer dans une d\xE9charge surveill\xE9e
+      par de dangereux robots afin de retrouver son ami pour \xE9changer des informations."
   - Name: Les bureaux
     indexLevel: 2
     Illustration: {fileID: 21300000, guid: 24862dff6309db9459ebe731a120975b, type: 3}
@@ -4919,6 +4919,10 @@ PrefabInstance:
     - target: {fileID: 5824200731198126014, guid: 8fad1992fdb55d249a8935ce39e87051, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5824200731198126015, guid: 8fad1992fdb55d249a8935ce39e87051, type: 3}
+      propertyPath: Name
+      value: Options
       objectReference: {fileID: 0}
     - target: {fileID: 5824200731313101339, guid: 8fad1992fdb55d249a8935ce39e87051, type: 3}
       propertyPath: m_AnchorMax.y
