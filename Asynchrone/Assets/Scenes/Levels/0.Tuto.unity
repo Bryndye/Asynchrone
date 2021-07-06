@@ -13942,6 +13942,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: 10
   anim: {fileID: 576809778}
+  active: {fileID: 1352521051}
 --- !u!1001 &577446311
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29924,6 +29925,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EventNotice Inter (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8559657037608513176, guid: e2ef5c291378a464f8f2b78a3db3b27e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8559657037608513179, guid: e2ef5c291378a464f8f2b78a3db3b27e, type: 3}
       propertyPath: selectionNotice
       value: 0
@@ -34302,6 +34307,11 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 176.61269, y: 97.334496, z: 160.3526}
   m_Center: {x: -6.7618723, y: -0.65952486, z: 2.6399157}
+--- !u!1 &1352521051 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8559657037608513176, guid: e2ef5c291378a464f8f2b78a3db3b27e, type: 3}
+  m_PrefabInstance: {fileID: 1194354778}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1365757883
 GameObject:
   m_ObjectHideFlags: 0

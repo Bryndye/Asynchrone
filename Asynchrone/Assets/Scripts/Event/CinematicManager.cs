@@ -7,6 +7,7 @@ public class CinematicManager : MonoBehaviour
     ManagerPlayers mP;
     [SerializeField] float time;
     [SerializeField] Animator anim;
+    [SerializeField] GameObject active;
     CanvasManager cm;
 
     Camera cameraMain;
@@ -38,6 +39,7 @@ public class CinematicManager : MonoBehaviour
         {
             cm.BandeDisAppear();
         }
+        active.SetActive(true);
         checkInCinematic(false);
         gameObject.SetActive(false);
     }
