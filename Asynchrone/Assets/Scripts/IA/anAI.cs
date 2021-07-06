@@ -124,7 +124,9 @@ public class anAI : MonoBehaviour
             myAnimator = transform.GetChild(4).GetComponent<Animator>();
             myMoveSound.clip = Resources.Load<AudioClip>("Audio/SFXClips/Drone");
         }
-            
+
+        myMoveSound.time = Random.Range(0f, 2f);
+        myMoveSound.pitch = Random.Range(0.6f, 1.2F);
         myMoveSound.Play();
         SM = SpawnMANAGER.Instance;
         IAM = IAManager.Instance;
