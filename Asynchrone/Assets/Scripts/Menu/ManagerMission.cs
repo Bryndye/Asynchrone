@@ -53,6 +53,11 @@ public class ManagerMission : MonoBehaviour
             context.text = missions[index].Context;
     }
 
+    public void StartNewGame()
+    {
+        PlayerPrefs.SetInt("indexLevel", 1);
+        SceneManager.LoadScene("5.LoadLevel");
+    }
 }
 
 [System.Serializable]
