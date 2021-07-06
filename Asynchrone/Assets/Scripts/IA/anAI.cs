@@ -126,7 +126,7 @@ public class anAI : MonoBehaviour
         }
 
         myMoveSound.pitch = Random.Range(0.6f, 1.2F);
-        myMoveSound.Play();
+        myMoveSound.PlayDelayed(Random.Range(0f,0.4f));
         SM = SpawnMANAGER.Instance;
         IAM = IAManager.Instance;
         SoundM = SoundManager.Instance;
