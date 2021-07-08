@@ -53,6 +53,7 @@ public class Robot : Singleton<Robot>
 
                 if (Input.GetKeyDown(managerPlayers.InputDiversion) && RobotDiv == null && HasDiversion)
                 {
+                    canvasManager.ChangeSpriteDiv(false);
                     StartDiv();
                 }
                 

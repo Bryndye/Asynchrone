@@ -154,6 +154,7 @@ public class CanvasManager : Singleton<CanvasManager>
         }
         else
         {
+            ChangeSpriteDiv(false);
             Destroy(managerPlayers.RobotPlayer.RobotDiv);
         }
     }

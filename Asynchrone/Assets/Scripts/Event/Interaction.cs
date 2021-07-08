@@ -55,7 +55,6 @@ public class Interaction : MonoBehaviour
         cameraManager = CameraManager.Instance;
         managerPlayers = ManagerPlayers.Instance;
         SoundM = SoundManager.Instance;
-
         if (feedBackActivated != null)
             feedBackActivated.SetActive(true);
     }
@@ -183,17 +182,19 @@ public class Interaction : MonoBehaviour
 
     public void CallDistri() 
     {
+        CanvasManager canvasManager = CanvasManager.Instance;
+
         if (!managerPlayers.RobotPlayer.HasDiversion && !managerPlayers.onPlayerHuman)
         {
             //trigger Anim successfull
+            canvasManager.ChangeSpriteDiv(false);
             managerPlayers.RobotPlayer.HasDiversion = true;
             SoundM.GetASound("DiversionGet", transform);
             Destroy(Instantiate(feedBackActivated, transform.position, transform.rotation), 0.5f );
         }
         else
         {
-            CanvasManager canvasManager = CanvasManager.Instance;
-      
+            canvasManager.ChangeSpriteDiv(false);
             //dia[0] = "Je suis déjà rechargé à bloc!";
             //canvasManager.StartDiaEffect(dia);
 
