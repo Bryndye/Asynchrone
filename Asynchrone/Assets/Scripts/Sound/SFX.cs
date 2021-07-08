@@ -14,7 +14,7 @@ public class SFX : MonoBehaviour
     float PlayingLatence;
     bool Playing;
 
-    bool MustLower => SM.mySpawnSituation == SpawnSituation.DeathProcess;
+    bool MustLower = false;
 
     private void Awake()
     {
@@ -36,15 +36,20 @@ public class SFX : MonoBehaviour
             }
         }
 
-        if (myAudiosource.volume != 0 && MustLower)
+        if (SM)
         {
-            myAudiosource.volume -= Time.deltaTime;
-            myAudiosource.volume = Mathf.Clamp(myAudiosource.volume, 0f, 1f);
-        }
-        else if (myAudiosource.volume != 1 && !MustLower)
-        {
-            myAudiosource.volume = Mathf.Clamp(myAudiosource.volume, 0f, 1f);
-            myAudiosource.volume += Time.deltaTime;
+            MustLower = SM.mySpawnSituation == SpawnSituation.DeathProcess;
+
+            if (myAudiosource.volume != 0 && MustLower)
+            {
+                myAudiosource.volume -= Time.deltaTime;
+                myAudiosource.volume = Mathf.Clamp(myAudiosource.volume, 0f, 1f);
+            }
+            else if (myAudiosource.volume != 1 && !MustLower)
+            {
+                myAudiosource.volume = Mathf.Clamp(myAudiosource.volume, 0f, 1f);
+                myAudiosource.volume += Time.deltaTime;
+            }
         }
     }
 
