@@ -11,6 +11,7 @@ public class SaveDoubleInteraction : MonoBehaviour
 
     [Header("Save Data")]
     bool activatedSave;
+    bool doneHSave, doneRSave;
     bool[] activePortes;
 
 
@@ -34,6 +35,8 @@ public class SaveDoubleInteraction : MonoBehaviour
 
         activatedSave = myDoubleInteraction.Activated;
 
+        doneHSave = myDoubleInteraction.doneH;
+        doneRSave = myDoubleInteraction.doneR;
         for (int i = 0; i < activePortes.Length; i++)
         {
             activePortes[i] = myDoubleInteraction.Portes[i].gameObject.activeSelf;
@@ -45,6 +48,9 @@ public class SaveDoubleInteraction : MonoBehaviour
         //Debug.Log("load data Doubleinteraction : ");
 
         myDoubleInteraction.Activated = activatedSave;
+
+        myDoubleInteraction.doneH = doneHSave;
+        myDoubleInteraction.doneR = doneRSave;
 
         if (activatedSave == false)
         {

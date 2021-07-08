@@ -15,8 +15,8 @@ public class DoubleInteraction : MonoBehaviour
     string InteractionSoundName;
     SoundManager SoundM;
 
-    bool doneH;
-    bool doneR;
+    public bool doneH;
+    public bool doneR;
     void Awake() { 
         interactions = GetComponentsInChildren<Interaction>();
         cm = CameraManager.Instance;
