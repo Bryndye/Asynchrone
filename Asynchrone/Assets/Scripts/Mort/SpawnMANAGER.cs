@@ -94,7 +94,7 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
             mp.PlayerRobotTransform.rotation = SpawnPointH.rotation;
             mp.PlayerCntrlerRbt.AnimPlayer.SetBool("Walking", false);
         }
-        else if (mp.RobotPlayer != null)
+        if (mp.RobotPlayer && mp.RobotPlayer.RobotDiv != null)
         {
             Destroy(mp.RobotPlayer.RobotDiv);
         }
