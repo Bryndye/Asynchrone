@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SFX : MonoBehaviour
 {
+    SpawnMANAGER SM;
+
     SoundManager SoundM;
     AudioSource myAudiosource;
 
@@ -12,9 +14,12 @@ public class SFX : MonoBehaviour
     float PlayingLatence;
     bool Playing;
 
+    bool MustLower => SM.mySpawnSituation == SpawnSituation.DeathProcess;
+
     private void Awake()
     {
         SoundM = SoundManager.Instance;
+        SM = SpawnMANAGER.Instance;
         myAudiosource = GetComponent<AudioSource>();
     }
 
@@ -29,6 +34,17 @@ public class SFX : MonoBehaviour
                 Playing = false;
                 EndJob();
             }
+        }
+
+        if (myAudiosource.volume != 0 && MustLower)
+        {
+            myAudiosource.volume -= Time.deltaTime;
+            myAudiosource.volume = Mathf.Clamp(myAudiosource.volume, 0f, 1f);
+        }
+        else if (myAudiosource.volume != 1 && !MustLower)
+        {
+            myAudiosource.volume = Mathf.Clamp(myAudiosource.volume, 0f, 1f);
+            myAudiosource.volume += Time.deltaTime;
         }
     }
 

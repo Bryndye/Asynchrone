@@ -23,6 +23,7 @@ public class anAI : MonoBehaviour
     Animator myAnimator;
     [HideInInspector] public AudioSource myVoice;
     [HideInInspector] public AudioSource myMoveSound;
+    bool MustLower => SM.mySpawnSituation == SpawnSituation.DeathProcess;
     public GameObject SkinRobot;
     public GameObject SkinDrone;
 
@@ -264,6 +265,17 @@ public class anAI : MonoBehaviour
             else if (mySituation == Situation.Pursuit)
             {
                 Pursuit();
+            }
+
+            if (myMoveSound.volume != 0 && MustLower)
+            {
+                myMoveSound.volume -= Time.deltaTime;
+                myMoveSound.volume = Mathf.Clamp(myMoveSound.volume, 0f, 1f);
+            }
+            else if (myMoveSound.volume != 1 && !MustLower)
+            {
+                myMoveSound.volume = Mathf.Clamp(myMoveSound.volume, 0f, 1f);
+                myMoveSound.volume += Time.deltaTime;
             }
         }
     }
