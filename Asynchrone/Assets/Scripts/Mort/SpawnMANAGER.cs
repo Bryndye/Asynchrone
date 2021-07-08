@@ -10,7 +10,10 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
     [Header("External references")]
     ManagerPlayers mp;
     CanvasManager cm;
-    AllSavesInteraction allSaves;
+    AllSavesInteraction allSaves
+    {
+        get { return AllSavesInteraction.Instance; }
+    }
    
     [Header("Global")]
     public SpawnSituation mySpawnSituation;
@@ -36,7 +39,7 @@ public class SpawnMANAGER : Singleton<SpawnMANAGER>
         }
         mp = ManagerPlayers.Instance;
         cm = CanvasManager.Instance;
-        allSaves = AllSavesInteraction.Instance;
+        //allSaves = AllSavesInteraction.Instance;
     }
 
     private void Start()

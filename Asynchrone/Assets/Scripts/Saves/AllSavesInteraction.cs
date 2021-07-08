@@ -13,6 +13,7 @@ public class AllSavesInteraction : MonoBehaviour
     {
         if (Instance != null)
         {
+            Debug.LogError("All saves destroyed");
             Destroy(this);
         }
         Instance = this;
