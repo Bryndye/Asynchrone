@@ -57,6 +57,7 @@ public class SaveInteraction : MonoBehaviour
 
             if (myInteraction.interType == Interaction.interactionType.Pince)
             {
+                myInteraction.done = false;
                 for (int i = 0; i < myInteraction.Portes.Length; i++)
                 {
                     myInteraction.Portes[i].position = myInteraction.PosInitials[i];

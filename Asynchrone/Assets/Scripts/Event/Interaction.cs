@@ -205,7 +205,7 @@ public class Interaction : MonoBehaviour
 
 
 
-    bool done = false;
+    public bool done = false;
     private void SetPince()
     {
         ActivePince = true;
