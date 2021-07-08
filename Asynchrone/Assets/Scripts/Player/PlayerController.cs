@@ -218,6 +218,8 @@ public class PlayerController : MonoBehaviour
                     {
                         trapInter.Called();
                         SetDesination(raycastNull());
+                        canMove = false;
+                        Invoke(nameof(CanMove), 0.2f);
                     }
                 }
                 StopSignInteraction();
